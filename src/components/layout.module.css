@@ -12,7 +12,7 @@
   display: flex;
   flex: 1;
   background-color: #f0f0f0;
-  padding: 1.8rem 1.6rem;
+  padding: 0 1.6rem;
 }
 
 .footerLeft {
@@ -27,6 +27,7 @@
   flex: 1;
   float: right;
   text-align: right;
+  padding-top: 1.8rem;
   padding-left: 1.5rem;
 }
 
@@ -54,7 +55,6 @@
 }
 
 .footerNavItem {
-  flex: 0 0 auto;
   list-style-type: none;
   margin-right: 3rem;
 }
@@ -63,6 +63,7 @@
   text-shadow: none;
   font-size: 1.4rem;
   line-height: 1.5;
+  font-weight: normal;
 }
 
 .footerBottomContent {
