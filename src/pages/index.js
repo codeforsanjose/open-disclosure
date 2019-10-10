@@ -4,6 +4,14 @@ import { Link } from "gatsby"
 import "typeface-roboto"
 import Layout from "../components/layout"
 
+const splashImage = {
+  photographer: "Andrii Ganzevych",
+  url:
+    "https://unsplash.com/@odya_kun?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge",
+}
+const totalFundsRaised = "$6,297,678"
+const electionYear = "2018"
+
 export default () => (
   <Layout>
     <div className={indexStyles.primaryContainer}>
@@ -25,9 +33,9 @@ export default () => (
         </li>
       </ul>
       <h2 className={indexStyles.subheader}>
-        Total contributions flowing into San José’s 2018 Election:
+        Total contributions flowing into San José’s {electionYear} Election:
       </h2>
-      <p className={indexStyles.totalFundsRaised}>$6,297,678</p>
+      <p className={indexStyles.totalFundsRaised}>{totalFundsRaised}</p>
       <button className={indexStyles.button}>
         <Link className={indexStyles.buttonText} to="/page-2/">
           <strong className={indexStyles.headerButtonText}>
@@ -38,9 +46,7 @@ export default () => (
       <div className={indexStyles.imgCredit}>
         <p>
           Modified from source by{" "}
-          <a href="https://unsplash.com/@odya_kun?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge">
-            Andrii Ganzevych
-          </a>
+          <a href={splashImage.url}>{splashImage.photographer}</a>
         </p>
       </div>
     </div>
