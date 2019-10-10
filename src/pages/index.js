@@ -1,9 +1,11 @@
 import React from "react"
 import indexStyles from "./index.module.css"
 import { Link } from "gatsby"
+import "typeface-roboto"
+import Layout from "../components/layout"
 
 export default () => (
-  <div className={indexStyles.container}>
+  <Layout>
     <div className={indexStyles.primaryContainer}>
       <div>
         <h1 className={indexStyles.header}>
@@ -44,17 +46,16 @@ export default () => (
         </p>
       </div>
     </div>
-
     <div className={indexStyles.subContainer}>
-      <div className={indexStyles.topText}>
-        <h3>
+      <div>
+        <h3 className={indexStyles.topText}>
           Open Disclosure was created to empower San José voters with timely,
           accurate, and useful information about the role of money in local
           elections.
         </h3>
       </div>
-      <div className={indexStyles.subText}>
-        <p>
+      <div>
+        <p className={indexStyles.subText}>
           This site pulls data from the City of San José’s campaign finance
           reporting database to produce easy to understand graphs that clearly
           show the source of campaign funds and how they are being spent to sway
@@ -62,21 +63,24 @@ export default () => (
           revealing the potential influence behind local politics.
         </p>
       </div>
-      <div className={indexStyles.subText}>
-        <p>
+      <div>
+        <p className={indexStyles.subText}>
           We hope to raise awareness, promote electoral accountability, and
           promote civic engagement and political participation by Oakland
           residents.
         </p>
       </div>
     </div>
+    <div className={indexStyles.border} />
 
     <div className={indexStyles.subContainer}>
-      <div className={indexStyles.topText}>
-        <h3>Sign up for daily campaign finance alerts.</h3>
+      <div>
+        <h3 className={indexStyles.topText}>
+          Sign up for daily campaign finance alerts.
+        </h3>
       </div>
-      <div className={indexStyles.subText}>
-        <p>
+      <div>
+        <p className={indexStyles.subText}>
           Every day, San José's lobbyists, candidates, and decisionmakers are
           required to disclose their finances. Open Disclosure Alerts help you
           stay on top of the influence of money on your local politics.
@@ -88,7 +92,5 @@ export default () => (
         </Link>
       </button>
     </div>
-  </div>
+  </Layout>
 )
-
-// <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@odya_kun?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Andrii Ganzevych"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Andrii Ganzevych</span></a>
