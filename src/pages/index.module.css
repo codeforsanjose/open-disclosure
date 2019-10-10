@@ -87,11 +87,11 @@ li {
 
 .landingDescription {
   padding: 50px;
-  align-items: center;
 }
 
 .landingDescriptionHeader {
   text-align: center;
+  margin: auto;
   margin-bottom: 0.9rem;
   box-sizing: border-box;
   font-size: 2.2rem;
@@ -107,6 +107,7 @@ li {
   color: #555;
   font-weight: 300;
   text-align: center;
+  margin: auto;
   margin-bottom: 5px;
   font-size: 1.8rem;
   line-height: 1.5;
