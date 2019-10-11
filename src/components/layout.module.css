@@ -56,13 +56,13 @@
 
 .footerNavItem {
   list-style-type: none;
+  max-height: 2.1rem;
   margin-right: 3rem;
 }
 
 .footerNavItemText {
   text-shadow: none;
   font-size: 1.4rem;
-  line-height: 1.5;
   font-weight: normal;
 }
 
@@ -80,4 +80,19 @@
   font-size: 1.4rem;
   color: #808080;
   font-weight: normal;
+}
+
+@media screen and (max-width: 760px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footerRight {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .footerNav {
+    flex-flow: column nowrap;
+  }
 }
