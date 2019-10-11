@@ -7,27 +7,27 @@ export default class Layout extends React.PureComponent {
   links = [
     {
       name: "About",
-      endpoint: "",
+      endpoint: "/index/",
     },
     {
       name: "Press",
-      endpoint: "",
+      endpoint: "/index/",
     },
     {
       name: "FAQ",
-      endpoint: "",
+      endpoint: "/index/",
     },
     {
       name: "Join us",
-      endpoint: "",
+      endpoint: "/index/",
     },
     {
       name: "Open Source",
-      endpoint: "",
+      endpoint: "/index/",
     },
     {
       name: "Register to vote",
-      endpoint: "",
+      endpoint: "/index/",
     },
   ]
 
@@ -47,8 +47,11 @@ export default class Layout extends React.PureComponent {
               </h2>
               <nav>
                 <ul className={layoutStyles.footerNav}>
-                  {this.links.map(item => (
-                    <li className={layoutStyles.footerNavItem}>
+                  {this.links.map((item, index) => (
+                    <li
+                      key={`footer nav item ${index}`}
+                      className={layoutStyles.footerNavItem}
+                    >
                       <Link
                         className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
                         to={item.endpoint}

@@ -5,42 +5,79 @@ import "typeface-roboto"
 import Layout from "../components/layout"
 
 export default class MainPage extends React.PureComponent {
-  splashImage = {
-    photographer: "Andrii Ganzevych",
-    url:
-      "https://unsplash.com/@odya_kun?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge",
+  constructor(props) {
+    super(props)
+    this.state = { windowIsGreaterThan760px: true }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.splashImage = {
+      photographer: "Andrii Ganzevych",
+      url:
+        "https://unsplash.com/@odya_kun?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge",
+    }
+    this.totalFundsRaised = "$6,297,678"
+    this.electionYear = "2018"
   }
-  totalFundsRaised = "$6,297,678"
-  electionYear = "2018"
+
+  componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener("resize", this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ windowIsGreaterThan760px: window.innerWidth >= 760 })
+  }
 
   render() {
+    const { windowIsGreaterThan760px } = this.state
+
     return (
       <Layout>
         <div className={indexStyles.primaryContainer}>
           <h1 className={indexStyles.header}>
-            Track the money in San José elections
+            {windowIsGreaterThan760px
+              ? "Track the money in San José elections"
+              : "Open Disclosure San José"}
           </h1>
-          <ul className={indexStyles.headerList}>
-            <li className={indexStyles.headerListItem}>
-              Who is contributing to the candidates?
-            </li>
-            <li className={indexStyles.headerListItem}>
-              How much money has each candidate raised?
-            </li>
-            <li className={indexStyles.headerListItem}>
-              Who is spending money to influence local ballot measures outcomes?
-            </li>
-            <li className={indexStyles.headerListItem}>
-              Are the sources of political spending local?
-            </li>
-          </ul>
-          <h2 className={indexStyles.subheader}>
-            Total contributions flowing into San José’s {this.electionYear}{" "}
-            Election:
-          </h2>
-          <p className={indexStyles.totalFundsRaised}>
-            {this.totalFundsRaised}
-          </p>
+          {windowIsGreaterThan760px ? (
+            <ul className={indexStyles.headerList}>
+              <li className={indexStyles.headerListItem}>
+                Who is contributing to the candidates?
+              </li>
+              <li className={indexStyles.headerListItem}>
+                How much money has each candidate raised?
+              </li>
+              <li className={indexStyles.headerListItem}>
+                Who is spending money to influence local ballot measures
+                outcomes?
+              </li>
+              <li className={indexStyles.headerListItem}>
+                Are the sources of political spending local?
+              </li>
+            </ul>
+          ) : (
+            <p className={indexStyles.headerListSmallText}>
+              Bringing campaign money to light
+            </p>
+          )}
+          {windowIsGreaterThan760px ? (
+            <div>
+              <h2 className={indexStyles.subheader}>
+                Total contributions flowing into San José’s {this.electionYear}{" "}
+                Election:
+              </h2>
+              <p className={indexStyles.totalFundsRaised}>
+                {this.totalFundsRaised}
+              </p>
+            </div>
+          ) : (
+            <p className={indexStyles.subheaderSmallText}>
+              Track the money in San José elections
+            </p>
+          )}
           <button className={indexStyles.button}>
             <Link className={indexStyles.buttonText} to="/page-2/">
               <strong className={indexStyles.headerButtonText}>
