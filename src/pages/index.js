@@ -35,7 +35,7 @@ export default class MainPage extends React.PureComponent {
     const { windowIsGreaterThan760px } = this.state
 
     return (
-      <Layout>
+      <Layout hideHeader>
         <div className={indexStyles.primaryContainer}>
           <h1 className={indexStyles.header}>
             {windowIsGreaterThan760px
@@ -79,7 +79,7 @@ export default class MainPage extends React.PureComponent {
             </p>
           )}
           <button className={indexStyles.button}>
-            <Link className={indexStyles.buttonText} to="/page-2/">
+            <Link className={indexStyles.buttonText} to="/electionInfo/">
               <strong className={indexStyles.headerButtonText}>
                 Follow the money
               </strong>

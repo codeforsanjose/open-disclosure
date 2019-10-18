@@ -7,6 +7,47 @@
   text-decoration: none;
 }
 
+.topBar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color: #fff;
+  background-color: #006ea3;
+  border-bottom: 5px #0489c8 solid;
+  padding: 0.9rem 1.6rem;
+  text-decoration: none;
+}
+
+.topBarText {
+  color: #fff;
+  text-decoration: none;
+  line-height: 1.3;
+  font-size: 3rem;
+  font-weight: 300;
+  font-weight: lighter;
+}
+
+.headerNav {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.headerNavItem {
+  list-style-type: none;
+  max-height: 2.1rem;
+  margin-right: 3rem;
+}
+
+.headerNavItemText {
+  line-height: 1rem;
+  color: #fff;
+  text-shadow: none;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
 .footer {
   border-top: 3px #ffdd1f solid;
   display: flex;
@@ -35,6 +76,7 @@
   color: #555;
   font-size: 3rem;
   font-weight: 300;
+  display: block;
 }
 
 .headerTextBlue {
@@ -47,8 +89,8 @@
 }
 
 .footerNav {
-  flex-flow: row nowrap;
   display: flex;
+  flex-flow: row nowrap;
   margin-top: 0;
   margin-bottom: 1.8rem;
   padding: 0;

@@ -1,0 +1,25 @@
+html {
+  font-size: 10px;
+  line-height: 1.15;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  max-width: 80rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0.9rem;
+  margin-bottom: 0.45rem;
+}

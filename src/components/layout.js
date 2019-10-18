@@ -7,43 +7,70 @@ export default class Layout extends React.PureComponent {
   links = [
     {
       name: "About",
-      endpoint: "/index/",
+      endpoint: "/",
     },
     {
       name: "Press",
-      endpoint: "/index/",
+      endpoint: "/",
     },
     {
       name: "FAQ",
-      endpoint: "/index/",
+      endpoint: "/",
     },
     {
       name: "Join us",
-      endpoint: "/index/",
+      endpoint: "/",
     },
     {
       name: "Open Source",
-      endpoint: "/index/",
+      endpoint: "/",
     },
     {
       name: "Register to vote",
-      endpoint: "/index/",
+      endpoint: "/",
     },
   ]
+
+  renderHeader() {
+    if (this.props.hideHeader) return null
+    return (
+      <div className={layoutStyles.topBar}>
+        <Link className={layoutStyles.topBarText} to={"/"}>
+          Open Disclosure San José
+        </Link>
+        <nav>
+          <ul className={layoutStyles.headerNav}>
+            {this.links.slice(0, 3).map((item, index) => (
+              <li
+                key={`header nav item ${index}`}
+                className={layoutStyles.headerNavItem}
+              >
+                <Link
+                  className={`${layoutStyles.headerNavItemText} ${layoutStyles.link}`}
+                  to={item.endpoint}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    )
+  }
 
   render() {
     return (
       <div className={layoutStyles.container}>
+        {this.renderHeader()}
         {this.props.children}
         <div className={layoutStyles.footer}>
           <div className={layoutStyles.footerLeft}>
             <div className={layoutStyles.header}>
               <h2 className={layoutStyles.headerText}>
                 Open
-                <span className={layoutStyles.headerTextBlue}>
-                  Disclosure
-                </span>{" "}
-                <span className={layoutStyles.headerTextBold}>San José</span>
+                <span className={layoutStyles.headerTextBlue}>Disclosure</span>
+                <span className={layoutStyles.headerTextBold}> San José</span>
               </h2>
               <nav>
                 <ul className={layoutStyles.footerNav}>
@@ -70,7 +97,6 @@ export default class Layout extends React.PureComponent {
                   className={layoutStyles.link}
                   href="https://www.codeforsanjose.com/"
                 >
-                  {" "}
                   Code for San José
                 </a>
               </h5>
