@@ -38,10 +38,10 @@
   list-style-type: none;
   max-height: 2.1rem;
   margin-right: 3rem;
+  line-height: 1;
 }
 
 .headerNavItemText {
-  line-height: 1rem;
   color: #fff;
   text-shadow: none;
   font-size: 1.4rem;
