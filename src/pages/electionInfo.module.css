@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0.9rem 1.6rem;
+}
+
+.header {
+  flex: 1;
+  flex-direction: row;
+}
+
+.title {
+  color: #006ea3;
+  font-weight: 400;
+}
+
+.date {
+  color: #006ea3;
+  font-size: 2.2rem;
+  font-weight: bold;
+  float: left;
+}
+
+.updatedAt {
+  font-size: 1.4rem;
+  float: right;
+}
+
+.body {
+  display: flex;
+}
+
+.sidebar {
+  flex: 2;
+}
+
+.main {
+  flex: 5;
+}
