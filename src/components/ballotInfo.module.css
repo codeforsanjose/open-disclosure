@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.9rem 1.6rem;
+}
+
+.header {
+  flex-grow: 1;
+  border-bottom: 2px #ffdd1f solid;
+  padding-bottom: 0.9rem;
+}
+
+.officeTitle {
+  color: #555;
+  line-height: 1.3;
+  font-family: "Roboto", sans-serif;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.candidateItem {
+  display: flex;
+  flex-direction: row;
+  padding: 1.8rem 0;
+  border-bottom: 1px #f0f0f0 solid;
+}
+
+.imageContainer {
+  overflow: hidden;
+  max-height: 8rem;
+}
+
+.image {
+  height: auto;
+  width: 8rem;
+}
+
+.candidateInfo {
+  margin-left: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.candidateInfo p {
+  line-height: 2.7rem;
+  margin: 0;
+}
+
+.candidateName {
+  color: #006ea3;
+}
+
+.candidateOccupation {
+  color: #555;
+}
+
+.amountCollected {
+  color: #909090;
+  font-size: 1.7rem;
+  font-style: italic;
+}
+
+.money {
+  color: #555;
+  font-size: 1.9rem;
+  font-style: normal;
+  margin-left: 0.9rem;
+}
