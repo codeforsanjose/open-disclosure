@@ -17,11 +17,12 @@ In addition to the MVP, the user can also view a heat/bubble map of where the do
 Source of inspiration: https://www.opendisclosure.io
 
 ## California Election Information:
-The Presidential Primary Election is March 3, 2020 in the state of California. There will be elections for:
+The Presidential Primary Election is on March 3, 2020 in the state of California. There will be elections for:
 - President of the United States
 - United States Representative in Congress
 - California State Senator and Member of the State Assembly
-After the primary, the general election is November 3, 2020
+
+After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/presidential-primary-election-march-3-2020/election-guide/)
 
 ## How to Contribute
