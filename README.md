@@ -1,5 +1,5 @@
 # Open Disclosure
-A dashboard for people to track campaign finances for candidates running in the California Primary Election (March 3, 2020), and the General Election (November 3, 2020. The goal of Open Disclosure is to help voters understand who/what PACs are donating money to the candidates/measures, and information about the donors -- are they from the same jurisdiction (city/county/state), California, or outside of California?
+A web app to track campaign finances for the California Primary Election (March 3, 2020), and the General Election (November 3, 2020. The goal of Open Disclosure is to help voters understand who/what Political Action Committees (PACs) are donating money to the candidates/measures. Are the donors from the same jurisdiction (city/county/state) as the candidate's intended office or outside of the jurisdiction? Are the donors individuals, or Political Action Committees (PACs)? What is the donor history of the PAC(s)?
 
 ## MVP Draft Stories
 1. A user can see a list of election categories:
