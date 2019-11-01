@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react"
 import ballotInfoStyles from "./ballotInfo.module.css"
+import { Link } from "gatsby"
 
 export default class BallotInfo extends PureComponent {
   candidates = [
@@ -32,16 +33,21 @@ export default class BallotInfo extends PureComponent {
               className={ballotInfoStyles.candidateItem}
             >
               <div className={ballotInfoStyles.imageContainer}>
-                <img
-                  src={candidate.imgSrc}
-                  className={ballotInfoStyles.image}
-                />
+                <Link className={ballotInfoStyles.link} to={"/"}>
+                  <img
+                    src={candidate.imgSrc}
+                    className={ballotInfoStyles.image}
+                  />
+                </Link>
               </div>
               <div className={ballotInfoStyles.candidateInfo}>
-                <p className={ballotInfoStyles.candidateName}>
-                  {candidate.name}
-                  {candidate.incumbent ? " - elected" : null}
-                </p>
+                <Link className={ballotInfoStyles.link} to={"/"}>
+                  <p className={ballotInfoStyles.candidateName}>
+                    {candidate.name}
+                    {candidate.incumbent ? " - elected" : null}
+                  </p>
+                </Link>
+
                 <p className={ballotInfoStyles.candidateOccupation}>
                   {candidate.occupation
                     ? candidate.incumbent

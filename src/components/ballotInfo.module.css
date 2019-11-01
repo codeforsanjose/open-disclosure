@@ -26,6 +26,10 @@
   border-bottom: 1px #f0f0f0 solid;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .imageContainer {
   overflow: hidden;
   max-height: 8rem;
