@@ -7,7 +7,7 @@ import BallotInfo from "../components/ballotInfo"
 export default class electionInfo extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = { windowIsGreaterThan760px: true }
+    this.state = { windowIsGreaterThan760px: true, selectedCategory: "Mayor" }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.electionDate = "November 6, 2018 Election"
     this.lastUpdated = "Content last updated Oct. 13, 2019"
@@ -127,6 +127,10 @@ export default class electionInfo extends PureComponent {
                 smallWindowStyle={this.applySmallWindowStyle({
                   padding: "0rem 1.6rem",
                 })}
+                selectedCategory={this.state.selectedCategory}
+                selectItem={selectedCategory =>
+                  this.setState({ selectedCategory })
+                }
               />
             </div>
             <div
