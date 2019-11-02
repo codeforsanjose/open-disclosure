@@ -22,7 +22,10 @@ export default class BallotInfo extends PureComponent {
 
   render() {
     return (
-      <div className={ballotInfoStyles.container}>
+      <div
+        className={ballotInfoStyles.container}
+        style={this.props.smallWindowStyle}
+      >
         <div className={ballotInfoStyles.header}>
           <h2 className={ballotInfoStyles.officeTitle}>Mayor</h2>
         </div>

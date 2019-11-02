@@ -4,7 +4,7 @@ import sideNavStyles from "./sideNav.module.css"
 export default class sideNav extends PureComponent {
   render() {
     return (
-      <nav>
+      <nav style={this.props.smallWindowStyle}>
         {this.props.menuItems.map((menuItem, menuIndex) => (
           <div key={`menuItem ${menuIndex}`} className={sideNavStyles.section}>
             <div className={sideNavStyles.border} />

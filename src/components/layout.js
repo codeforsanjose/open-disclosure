@@ -32,11 +32,13 @@ export default class Layout extends React.PureComponent {
   ]
 
   renderHeader() {
-    if (this.props.hideHeader) return null
+    const { hideHeader, windowIsLarge } = this.props
+
+    if (hideHeader) return null
     return (
       <div className={layoutStyles.topBar}>
         <Link className={layoutStyles.topBarText} to={"/"}>
-          Open Disclosure San José
+          {windowIsLarge ? "Open Disclosure San José" : "ODSJ"}
         </Link>
         <nav>
           <ul className={layoutStyles.headerNav}>
