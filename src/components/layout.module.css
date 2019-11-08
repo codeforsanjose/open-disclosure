@@ -1,0 +1,98 @@
+.container {
+  font-family: "Roboto", sans-serif;
+}
+
+.link {
+  color: #006ea3;
+  text-decoration: none;
+}
+
+.footer {
+  border-top: 3px #ffdd1f solid;
+  display: flex;
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 0 1.6rem;
+}
+
+.footerLeft {
+  flex: 2;
+  float: left;
+  line-height: 1.5;
+  color: #303030;
+  font-size: 1.4rem;
+}
+
+.footerRight {
+  flex: 1;
+  float: right;
+  text-align: right;
+  padding: 1.8rem 0;
+  padding-left: 1.5rem;
+}
+
+.headerText {
+  color: #555;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.headerTextBlue {
+  color: #006ea3;
+}
+
+.headerTextBold {
+  color: #808080;
+  font-weight: normal;
+}
+
+.footerNav {
+  flex-flow: row nowrap;
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 1.8rem;
+  padding: 0;
+}
+
+.footerNavItem {
+  list-style-type: none;
+  max-height: 2.1rem;
+  margin-right: 3rem;
+}
+
+.footerNavItemText {
+  text-shadow: none;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.footerBottomContent {
+  line-height: 1.3;
+}
+
+.tagline {
+  color: #555;
+  font-size: 1.7rem;
+  font-weight: normal;
+}
+
+.footerStipulation {
+  font-size: 1.4rem;
+  color: #808080;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 760px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footerRight {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .footerNav {
+    flex-flow: column nowrap;
+  }
+}

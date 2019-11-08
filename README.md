@@ -33,3 +33,4 @@ Communicate with the team on Slack (channel: #open-disclosure). [Join our Slack]
 Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
 
 Made with <3 by Code for San José
+
