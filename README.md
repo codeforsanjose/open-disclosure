@@ -1,7 +1,11 @@
 # Open Disclosure
-A web app to track campaign finances for the California Primary Election (March 3, 2020), and the General Election (November 3, 2020. The goal of Open Disclosure is to help voters understand who/what Political Action Committees (PACs) are donating money to the candidates/measures. Are the donors from the same jurisdiction (city/county/state) as the candidate's intended office or outside of the jurisdiction? Are the donors individuals, or Political Action Committees (PACs)? What is the donor history of the PAC(s)?
+A web app to track campaign finances for the California Primary Election (March 3, 2020), and the General Election (November 3, 2020. The goal of Open Disclosure is to help voters understand who/what Political Action Committees (PACs) are donating money to the candidates/measures. Are the donors from the same jurisdiction (city/county/state) as the candidate's intended office or outside of the jurisdiction? Are the donors individuals, or Political Action Committees (PACs)? What is the donor history of the PAC(s)? We are inspired by Open Oakland's Open Disclosure: https://www.opendisclosure.io
 
-## MVP Draft Stories
+
+## Draft Stories
+Minimal Viable Product (MVP) / Version 1:
+The aim is to have a prototype website with simple visualizations up and running by December 31, 2019.  
+
 1. A user can see a list of election categories:
 - President of the United States
 - United States Representative in Congress
@@ -12,9 +16,10 @@ A web app to track campaign finances for the California Primary Election (March 
 5. The user can see a list of where the donors are from: San Jose, Santa Clara County, California, Other States
 
 Version 2:
-In addition to the MVP, the user can also view a heat/bubble map of where the donors are from
+The aim is to prettify the website and visualizations from January - February 2020, ideally by February 3, 2020, one month before the Primary Election on March 3, 2020. 
 
-Source of inspiration: https://www.opendisclosure.io
+1. General improvements to UX/UI of website
+2. The user can also view a heat or bubble map of where the donors are from. 
 
 ## California Election Information:
 The Presidential Primary Election is on March 3, 2020 in the state of California. There will be elections for:
