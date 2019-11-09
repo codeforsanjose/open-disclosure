@@ -30,12 +30,14 @@ The Presidential Primary Election is on March 3, 2020 in the state of California
 After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/presidential-primary-election-march-3-2020/election-guide/)
 
+## How to Run this Project
+1. git clone https://github.com/codeforsanjose/open-disclosure.git
+2. cd open-disclosure/
+
 ## How to Contribute
-[Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
-
-Communicate with the team on Slack (channel: #open-disclosure). [Join our Slack](https://slackin-c4sj.herokuapp.com/) or [Log onto our Slack](https://codeforsanjose.slack.com/)
-
-Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
+0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
+- Communicate with the team on Slack (channel: #open-disclosure). 
+- [Join our Slack](https://slackin-c4sj.herokuapp.com/) or [Log onto our Slack](https://codeforsanjose.slack.com/)
+- Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
 
 Made with <3 by Code for San José
-
