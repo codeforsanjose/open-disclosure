@@ -1,0 +1,210 @@
+.container {
+	margin-left: 1.6rem;
+}
+
+.container section {
+	display: flex;
+	flex-direction: column;
+	margin: 0 1.6rem;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.header {
+	display: flex;
+	flex-direction: row !important;
+}
+
+.candidateName {
+	color: #555;
+	line-height: 1.3;
+	font-size: 3rem;
+	font-weight: 300;
+}
+
+.mainBorder {
+	border-bottom: 2px #ffdd1f solid;
+	padding-bottom: 0.9rem;
+	margin-bottom: 0.9rem;
+}
+
+.image {
+	height: 10rem;
+	width: 10rem;
+	border-radius: 50%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.headerRight {
+	margin-left: 1.6rem;
+}
+
+.headerRight p {
+	color: #909090;
+	font-style: italic;
+}
+
+.headerRight ul {
+	text-decoration: none;
+}
+
+.candidateOccupation {
+	line-height: 1.3;
+	font-weight: 400;
+	font-size: 1.7rem;
+	margin-bottom: 0.45rem;
+}
+
+.expenditureCeiling {
+	/* max-width: 35rem; */
+	font-size: 1.5rem;
+	margin-bottom: 0.9rem;
+	line-height: 1.5;
+}
+
+.hoverInfo {
+	visibility: hidden;
+	max-width: 20rem;
+	background-color: #303030;
+	border-radius: 2px;
+	padding: 8px 10px;
+	margin: 2.25rem 0 0 -15rem;
+	position: absolute;
+	z-index: 1;
+}
+
+.hoverInfoContainer {
+	color: #006ea3;
+	margin-left: 0.25rem;
+	display: inline-block;
+	height: 2.25rem;
+	width: 4rem;
+}
+
+.hoverInfoContainer:hover .hoverInfo,
+.hoverInfo:hover {
+	visibility: visible;
+}
+
+.hoverInfo p {
+	font-size: 1.25rem;
+	color: #fff;
+}
+
+.hoverInfo a {
+	color: #ffdd1f;
+}
+
+.candidateLinks {
+	padding-left: 0;
+	text-decoration: none;
+	list-style: none;
+	color: #006ea3;
+	margin-top: 0;
+}
+
+.candidateLink {
+	display: flex;
+}
+
+.candidateLink a {
+	line-height: 1;
+	font-weight: 400;
+	text-shadow: none;
+	margin-left: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.currentBalance {
+	line-height: 1.3;
+	font-size: 1.9rem;
+	font-weight: 300;
+}
+
+.subBorder {
+	border-top: 1px #808080 solid;
+}
+
+.currentBalance div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 1.8rem 0;
+	color: #808080;
+}
+
+.candidateContributions p {
+	color: #109618;
+}
+
+.candidateExpenditures p {
+	color: #9f0a07;
+}
+
+.candidateCommitteesHeader {
+	color: #006ea3;
+	line-height: 1.3;
+	font-size: 3rem;
+	font-weight: 300;
+}
+
+.candidateCommittees ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.candidateCommittees ul li {
+	text-shadow: none;
+}
+
+.independentExpenditures .row {
+	line-height: 1.3;
+	color: #808080;
+	font-size: 2.2rem;
+	font-weight: 400;
+	color: #909090;
+	padding: 0.9rem 0;
+	margin: 1.8rem 0;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.independentExpendituresHeader .hoverInfoContainer {
+	font-size: 1.4rem;
+	margin-left: 0.5rem;
+}
+
+.spendingBreakdownHeader {
+	color: #555;
+	line-height: 1.3;
+	font-size: 3rem;
+	font-weight: 300;
+}
+
+.spendingBreakdownContentContainer {
+	justify-content: space-between;
+}
+
+.spendingBreakdownContent {
+	display: flex;
+	flex: 1;
+}
+
+.spendingBreakdownSubheader {
+	color: #909090;
+	font-size: 1.9rem;
+	font-style: italic;
+	margin-bottom: 0.9rem;
+	margin-top: 0.9rem;
+}
+
+@media screen and (max-width: 760px) {
+	.row {
+		flex-direction: column;
+	}
+}

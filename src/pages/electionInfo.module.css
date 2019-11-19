@@ -1,41 +1,44 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  padding: 0.9rem 1.6rem;
+	display: flex;
+	flex-direction: column;
+	padding: 0.9rem 1.6rem;
 }
 
 .header {
-  flex: 1;
-  flex-direction: row;
+}
+
+.header div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .title {
-  color: #006ea3;
-  font-weight: 400;
+	color: #006ea3;
+	font-weight: 400;
 }
 
 .date {
-  color: #006ea3;
-  font-size: 2.2rem;
-  line-height: 3.3rem;
-  font-weight: bold;
-  float: left;
+	color: #006ea3;
+	font-size: 2.2rem;
+	line-height: 3.3rem;
+	font-weight: bold;
+	margin: 0;
 }
 
 .updatedAt {
-  font-size: 1.4rem;
-  line-height: 2.1rem;
-  float: right;
+	font-size: 1.4rem;
+	line-height: 2.1rem;
 }
 
 .body {
-  display: flex;
+	display: flex;
 }
 
 .sidebar {
-  flex: 2;
+	flex: 2;
 }
 
 .main {
-  flex: 5;
+	flex: 5;
 }
