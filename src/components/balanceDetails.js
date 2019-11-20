@@ -16,7 +16,7 @@ export class BalanceDetails extends PureComponent {
 				<p className={balanceDetailStyles.moneyTotal}>${amount}</p>
 				<div className={balanceDetailStyles.spendingList}></div>
 				{moreInfo ? (
-					<p>
+					<p className={balanceDetailStyles.contributions}>
 						<a>See all contributions</a>
 					</p>
 				) : null}

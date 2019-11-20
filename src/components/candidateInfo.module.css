@@ -61,7 +61,6 @@
 }
 
 .expenditureCeiling {
-	/* max-width: 35rem; */
 	font-size: 1.5rem;
 	margin-bottom: 0.9rem;
 	line-height: 1.5;
@@ -204,7 +203,27 @@
 }
 
 @media screen and (max-width: 760px) {
+	.container {
+		margin-left: 0;
+	}
+
 	.row {
 		flex-direction: column;
+	}
+
+	.header {
+		flex-direction: column !important;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.image {
+		margin: 1.8rem 0;
+		height: 20rem;
+		width: 20rem;
+	}
+
+	.currentBalance div {
+		margin: 1rem 0;
 	}
 }

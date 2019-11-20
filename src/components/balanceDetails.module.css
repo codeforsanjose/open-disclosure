@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	flex: 1;
+	padding: 0.9rem 0;
 }
 
 .container p a {
@@ -29,4 +30,8 @@
 	line-height: 1;
 	margin-bottom: 1.8rem;
 	text-align: left;
+}
+
+.contributions {
+	margin: 1.8rem 0;
 }

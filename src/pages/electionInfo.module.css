@@ -4,9 +4,6 @@
 	padding: 0.9rem 1.6rem;
 }
 
-.header {
-}
-
 .header div {
 	display: flex;
 	flex-direction: row;
@@ -41,4 +38,10 @@
 
 .main {
 	flex: 5;
+}
+
+@media screen and (max-width: 760px) {
+	.header div {
+		flex-direction: column;
+	}
 }
