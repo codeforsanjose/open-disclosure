@@ -29,7 +29,7 @@ def convert_readable_time(longTime):
     ret = time.strftime("%b %d, %Y", t)
     return ret
 
-# interesting_fieldnames = ['Entity_Nam L', 'Cum_YTD', 'Tran_Date', 'Rpt_Date', 'Amount']
+
 with open('liccardo_2018.csv', 'r') as fd: # a normal csv format output
     c = Counter()
     columns = ['Name', 'Pic']
