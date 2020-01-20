@@ -11,10 +11,7 @@ export default class electionInfo extends PureComponent {
     super(props)
     this.state = {
       windowIsGreaterThan760px: true,
-      selectedCategory: {
-        measureName: "Measure AA",
-        description: "San José Children's Initiative",
-      },
+      selectedCategory: "Mayor",
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.electionDate = "November 6, 2018 Election"
@@ -149,19 +146,20 @@ export default class electionInfo extends PureComponent {
                 borderBottom: "2px #ffdd1f solid",
               })}
             >
-              {
-                // <BallotInfo
-                //   selectedCategory={selectedCategory}
-                //   smallWindowStyle={this.applySmallWindowStyle({
-                //     padding: "0.9rem 0 1.8rem",
-                //   })}
-                // />
-              }
               {selectedCategory.measureName ? (
                 <MeasureInfo selectedCategory={selectedCategory} />
               ) : (
-                <CandidateInfo selectedCategory={selectedCategory} />
+                <BallotInfo
+                  selectedCategory={selectedCategory}
+                  smallWindowStyle={this.applySmallWindowStyle({
+                    padding: "0.9rem 0 1.8rem",
+                  })}
+                />
               )}
+              {
+                // Clicking on candidate on ballot info should use/go to page with this component
+                // <CandidateInfo selectedCategory={selectedCategory} />
+              }
             </div>
           </div>
         </div>
