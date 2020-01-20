@@ -1,0 +1,83 @@
+.container {
+  margin-left: 1.6rem;
+  color: #555;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.measureName {
+  font-size: 4rem;
+  font-weight: 400;
+}
+
+.measureDescription,
+.contributionDetails h2 {
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.referendumSummary {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1.6rem;
+  padding: 1rem 0;
+}
+
+.referendumSummary h3 {
+  color: #808080;
+  font-size: 2.2rem;
+  font-weight: 400;
+}
+
+.referendumSummary p {
+  margin: 0.9rem 0;
+  line-height: 1.5;
+}
+
+.mainBorder {
+  border-bottom: 2px #ffdd1f solid;
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.image {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.headerRight {
+  margin-left: 1.6rem;
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    margin-left: 0;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .header {
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .image {
+    margin: 1.8rem 0;
+    height: 20rem;
+    width: 20rem;
+  }
+
+  .currentBalance div {
+    margin: 1rem 0;
+  }
+}
