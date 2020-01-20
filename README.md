@@ -36,8 +36,27 @@ After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/presidential-primary-election-march-3-2020/election-guide/)
 
 ## How to Run this Project
-1. git clone https://github.com/codeforsanjose/open-disclosure.git
-2. cd open-disclosure/
+1. Clone the project to your local machine.
+```sh
+$ git clone https://github.com/codeforsanjose/open-disclosure.git
+```
+2. If not yet installed, install Gatsby globally to your machine.
+```ssh
+$ npm install -g gatsby-cli
+```
+3. Go into the project folder.
+```ssh
+$ cd open-disclosure/
+```
+4. Install dependencies.
+```ssh
+$ npm install --save
+```
+5. Run local Gatsby server.
+```ssh
+$ gatsby develop
+```
+6. Open webpage in http://localhost:8000.
 
 ## How to Contribute
 0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
