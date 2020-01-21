@@ -16,9 +16,10 @@ export default class sideNav extends PureComponent {
                 <div
                   key={`sectionItem ${sectionItemIndex}`}
                   className={`${sideNavStyles.sectionItem} ${sideNavStyles.measureItem}`}
-                  onClick={() => this.props.selectItem(sectionItem.measureName)}
+                  onClick={() => this.props.selectItem(sectionItem)}
                   style={
-                    this.props.selectedCategory === sectionItem.measureName
+                    this.props.selectedCategory.measureName ===
+                    sectionItem.measureName
                       ? { backgroundColor: "#ffdd1f" }
                       : {}
                   }

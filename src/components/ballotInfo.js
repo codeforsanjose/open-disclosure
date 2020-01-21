@@ -21,13 +21,15 @@ export default class BallotInfo extends PureComponent {
   })
 
   render() {
+    const { selectedCategory } = this.props
+
     return (
       <div
         className={ballotInfoStyles.container}
         style={this.props.smallWindowStyle}
       >
         <div className={ballotInfoStyles.header}>
-          <h2 className={ballotInfoStyles.officeTitle}>Mayor</h2>
+          <h2 className={ballotInfoStyles.officeTitle}>{selectedCategory}</h2>
         </div>
         <div className={ballotInfoStyles.candidateList}>
           {this.candidates.map((candidate, index) => (
