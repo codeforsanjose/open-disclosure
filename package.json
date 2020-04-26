@@ -14,9 +14,12 @@
   },
   "dependencies": {
     "gatsby": "^2.15.28",
+    "gatsby-plugin-sass": "^2.2.1",
+    "node-sass": "^4.13.1",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-icons": "^3.8.0",
+    "typeface-bitter": "^0.0.71",
     "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
