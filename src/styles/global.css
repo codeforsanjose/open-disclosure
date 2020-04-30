@@ -1,12 +1,17 @@
 html {
-	font-size: 10px;
-	line-height: 1.15;
-	font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  line-height: 1.15;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
-	font-size: 1.8rem;
-	margin: 0;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -16,8 +21,8 @@ h4,
 h5,
 h6,
 p {
-	max-width: 80rem;
-	margin: 0;
+  color: #0a2852;
+  margin: 0;
 }
 
 h1,
@@ -26,15 +31,15 @@ h3,
 h4,
 h5,
 h6 {
-	margin-top: 0.9rem;
-	margin-bottom: 0.45rem;
+  margin-top: 0.9rem;
+  margin-bottom: 0.45rem;
 }
 
 a {
-	color: #006ea3;
+  color: #006ea3;
 }
 
 a,
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
 }

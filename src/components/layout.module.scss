@@ -61,6 +61,10 @@
   padding: 1.8rem 0;
   flex-direction: column;
 
+  .headerText {
+    align-self: auto;
+  }
+
   nav {
     display: flex;
     padding-top: 3rem;
