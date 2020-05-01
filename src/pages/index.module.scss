@@ -48,12 +48,13 @@
   .sectionItemContainer {
     flex: 1;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   .sectionItem {
     align-items: baseline;
     text-align: start;
+    max-width: 337px;
   }
 
   .sectionItemHeader {
