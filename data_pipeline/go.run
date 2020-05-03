@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+# Clean up csv files
+if test -f "*.csv"; then
+   rm *.csv
+fi
+
+# Enable following command if filename contains blank space
+./convert_fnspace.sh
+
+# Convert Excel format to csv format
+./convert_xls2csv.sh
+
+# Aggregate all csv files into one master csv file (master.csv)
+./allcsv2one.sh
