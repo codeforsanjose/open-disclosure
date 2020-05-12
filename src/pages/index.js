@@ -1,8 +1,11 @@
 import React from "react"
-import indexStyles from "./index.module.css"
+import mainPageStyles from "./index.module.scss"
 import { Link } from "gatsby"
 import "typeface-roboto"
+import "typeface-bitter"
 import Layout from "../components/layout"
+import Button from "../components/button"
+import Shadow from "../components/shadow"
 
 export default class MainPage extends React.PureComponent {
   constructor(props) {
@@ -33,102 +36,92 @@ export default class MainPage extends React.PureComponent {
 
   render() {
     const { windowIsGreaterThan760px } = this.state
+    const explore = [
+      {
+        header: "Compare local candidates",
+        subheader: "See who's spending and raising the most",
+        button: "Compare candidates",
+      },
+      {
+        header: "Take action on measures",
+        subheader: "Track spending on upcoming ballot measures",
+        button: "View ballot measures",
+      },
+      {
+        header: "Get the finance facts",
+        subheader: "Learn more about campaign finance data",
+        button: "Get informed",
+      },
+    ]
 
     return (
       <Layout windowIsLarge={windowIsGreaterThan760px}>
-        <div className={indexStyles.primaryContainer}>
-          <h1 className={indexStyles.header}>
-            {windowIsGreaterThan760px
-              ? "Track the money in San José elections"
-              : "Open Disclosure San José"}
-          </h1>
-          {windowIsGreaterThan760px ? (
-            <ul className={indexStyles.headerList}>
-              <li className={indexStyles.headerListItem}>
-                Who is contributing to the candidates?
-              </li>
-              <li className={indexStyles.headerListItem}>
-                How much money has each candidate raised?
-              </li>
-              <li className={indexStyles.headerListItem}>
-                Who is spending money to influence local ballot measures
-                outcomes?
-              </li>
-              <li className={indexStyles.headerListItem}>
-                Are the sources of political spending local?
-              </li>
-            </ul>
-          ) : (
-            <p className={indexStyles.headerListSmallText}>
-              Bringing campaign money to light
-            </p>
-          )}
-          {windowIsGreaterThan760px ? (
-            <div>
-              <h2 className={indexStyles.subheader}>
-                Total contributions flowing into San José’s {this.electionYear}{" "}
-                Election:
-              </h2>
-              <p className={indexStyles.totalFundsRaised}>
-                {this.totalFundsRaised}
-              </p>
-            </div>
-          ) : (
-            <p className={indexStyles.subheaderSmallText}>
+        <div className={mainPageStyles.container}>
+          <section className={mainPageStyles.header}>
+            <h1 className={mainPageStyles.headerText}>
+              More Money,
+              <br />
+              More Transparency.
+            </h1>
+            <h3 className={mainPageStyles.headerSubtext}>
               Track the money in San José elections
+            </h3>
+            <Shadow color="#ff5c66">
+              <Button text="Follow the money" />
+            </Shadow>
+          </section>
+          <section className={mainPageStyles.explore}>
+            <h1 className={mainPageStyles.exploreHeader}>Explore the Data</h1>
+            <p className={mainPageStyles.exploreSubheader}>
+              Over $6,404,634 flowing into 2020 San Jose elections
             </p>
-          )}
-          <button className={indexStyles.button}>
-            <Link className={indexStyles.buttonText} to="/electionInfo/">
-              <strong className={indexStyles.headerButtonText}>
-                Follow the money
-              </strong>
-            </Link>
-          </button>
-          <div className={indexStyles.imgCredit}>
-            <p>
-              Modified from source by{" "}
-              <a href={this.splashImage.url}>{this.splashImage.photographer}</a>
-            </p>
-          </div>
-        </div>
-        <div className={indexStyles.landingDescription}>
-          <h3 className={indexStyles.landingDescriptionHeader}>
-            Open Disclosure was created to empower San José voters with timely,
-            accurate, and useful information about the role of money in local
-            elections.
-          </h3>
-          <p className={indexStyles.landingDescriptionParagraph}>
-            This site pulls data from the City of San José’s campaign finance
-            reporting database to produce easy to understand graphs that clearly
-            show the source of campaign funds and how they are being spent to
-            sway election results. Our goal is to increase government
-            transparency by revealing the potential influence behind local
-            politics.
-          </p>
-          <p className={indexStyles.landingDescriptionParagraph}>
-            We hope to raise awareness, promote electoral accountability, and
-            promote civic engagement and political participation by San José
-            residents.
-          </p>
-        </div>
-
-        <div className={indexStyles.border} />
-
-        <div className={indexStyles.landingDescription}>
-          <h3 className={indexStyles.landingDescriptionHeader}>
-            Sign up for daily campaign finance alerts.
-          </h3>
-          <p className={indexStyles.landingDescriptionParagraph}>
-            Every day, San José's lobbyists, candidates, and decisionmakers are
-            required to disclose their finances. Open Disclosure Alerts help you
-            stay on top of the influence of money on your local politics.
-          </p>
-          <button className={indexStyles.button}>
-            <Link className={indexStyles.buttonText} to="/page-2/">
-              Sign up for daily alerts
-            </Link>
-          </button>
+            <div className={mainPageStyles.sectionItemContainer}>
+              {explore.map((item, i) => (
+                <div id={`item ${i}`} className={mainPageStyles.sectionItem}>
+                  <img src="https://picsum.photos/337/164" />
+                  <h3 className={mainPageStyles.sectionItemHeader}>
+                    {item.header}
+                  </h3>
+                  <p className={mainPageStyles.sectionItemSubheader}>
+                    {item.subheader}
+                  </p>
+                  <Button textStyle={{ fontSize: "2rem" }} text={item.button} />
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className={mainPageStyles.about}>
+            <div className={mainPageStyles.aboutText}>
+              <h1>Committed to Fact-Based Reporting</h1>
+              <p>
+                Open Disclosure was created to empower San Jose voters with
+                timely, accurate, and useful information about the role of money
+                in local elections.
+              </p>
+              <h3>About Open San Jose</h3>
+            </div>
+            <div className={mainPageStyles.aboutImage}>
+              <Shadow reverse big color="rgba(234, 60, 71, 0.8)">
+                <img src="https://picsum.photos/340/300" />
+              </Shadow>
+            </div>
+          </section>
+          <section
+            className={`${mainPageStyles.about} ${mainPageStyles.reverse}`}
+          >
+            <div className={mainPageStyles.aboutText}>
+              <h1>Register to Vote</h1>
+              <p>
+                Make your voice heard. Register to vote in less than 2 minutes.
+              </p>
+              <h3>Register to vote</h3>
+            </div>
+            <div className={mainPageStyles.aboutImage}>
+              <Shadow reverse big color="rgba(64, 150, 199, 0.8)">
+                <img src="https://picsum.photos/340/300" />
+              </Shadow>
+            </div>
+          </section>
         </div>
       </Layout>
     )

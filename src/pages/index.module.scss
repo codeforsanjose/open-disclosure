@@ -1,0 +1,104 @@
+.container {
+  section {
+    display: flex;
+    flex: 1;
+    padding: 10rem;
+    flex-direction: column;
+  }
+
+  h1,
+  h2 {
+    font-family: "Bitter";
+  }
+
+  h1 {
+    color: #0073b5;
+  }
+
+  .header {
+    background-color: lightblue;
+  }
+
+  .headerText {
+    color: white;
+    font-size: 4rem;
+  }
+
+  .headerSubtext {
+    color: white;
+    font-weight: normal;
+    font-size: 2.3rem;
+    margin: 3rem 0;
+  }
+
+  .explore {
+    padding-top: 7rem;
+    text-align: center;
+  }
+
+  .exploreHeader {
+    font-size: 4rem;
+  }
+
+  .exploreSubheader {
+    padding: 2rem 0;
+    font-size: 2.4rem;
+  }
+
+  .sectionItemContainer {
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .sectionItem {
+    align-items: baseline;
+    text-align: start;
+    max-width: 337px;
+  }
+
+  .sectionItemHeader {
+    font-family: "Bitter";
+    font-size: 2.4rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .sectionItemSubheader {
+    font-size: 2rem;
+    padding: 2rem 0;
+  }
+
+  .about {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .aboutText {
+    justify-content: center;
+    flex: 1;
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+    h3 {
+      color: #ea3c47;
+      margin: 2rem 0;
+      text-decoration: underline;
+      text-underline-offset: 1rem;
+      text-decoration-thickness: 0.3rem;
+    }
+  }
+
+  .aboutImage {
+    flex: 1;
+    align-items: flex-end;
+  }
+
+  .reverse {
+    flex-direction: row-reverse;
+    .aboutImage {
+      align-items: flex-start;
+    }
+  }
+}
