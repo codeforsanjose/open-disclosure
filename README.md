@@ -50,7 +50,7 @@ $ cd open-disclosure/
 ```
 4. Install dependencies.
 ```ssh
-$ npm install --save
+$ npm install
 ```
 5. Run local Gatsby server.
 ```ssh
