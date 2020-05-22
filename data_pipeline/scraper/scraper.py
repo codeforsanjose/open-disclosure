@@ -20,7 +20,7 @@ from time import sleep
 from dircreator import DirCreator
 
 # Default website wait time.
-DEFAULT_SLEEP_TIME = 4
+DEFAULT_SLEEP_TIME = 5
 
 
 class SjcWebsite():
@@ -139,7 +139,10 @@ class Scraper():
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
         self.website.navigateToSearchPage(self.driver)
 
-        for search_page_num in range(1, self.website.numPages(self.driver)+1):
+        for search_page_num in range(14, self.website.numPages(self.driver)+1):
+            # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
+            self.website.navigateToPage(self.driver, search_page_num)
+
             # This code downloads every entry on a search results page.
             for entry_index in range(self.website.numberOfEntries(self.driver)):
                 # We have to re-navigate to the correct page every time since sometimes, using the 'back' button
