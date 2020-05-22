@@ -139,7 +139,7 @@ class Scraper():
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
         self.website.navigateToSearchPage(self.driver)
 
-        for search_page_num in range(14, self.website.numPages(self.driver)+1):
+        for search_page_num in range(1, self.website.numPages(self.driver)+1):
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
 
