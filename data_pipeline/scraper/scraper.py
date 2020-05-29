@@ -22,6 +22,12 @@ from dircreator import DirCreator
 # Default website wait time.
 DEFAULT_SLEEP_TIME = 5
 
+SEARCH_FORM_ADDRESS = 'https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx'
+SEARCH_BUTTON_ID = 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD'
+ERROR_DIALOG_BUTTON_ID = 'ctl00_GridContent_popupCantContinueDialog_Button1'
+EXCEL_LINK_XPATH = '//td[@class="dxgvCommandColumn_Glass dxgv"]//img[@title="Export Transaction Details To Excel"]'
+PAGE_ENTRY_XPATH = '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]'
+
 
 class SjcWebsite():
     """This class represents an interface to interact with the elements on the SJC website.
@@ -30,14 +36,13 @@ class SjcWebsite():
     website, while still requiring users to understand how to navigate around the website.
     """
     def navigateToSearchPage(self, driver):
-        driver.get(
-        "https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx")
+        driver.get(SEARCH_FORM_ADDRESS)
         WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD')))
+            EC.presence_of_element_located((By.ID, SEARCH_BUTTON_ID)))
 
         # Search, which will load up the content on the page.
         # Search terms are left blank, indicating "all content".
-        driver.find_element_by_xpath('//*[@id="ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD"]').click()
+        driver.find_element_by_id(SEARCH_BUTTON_ID).click()
         sleep(DEFAULT_SLEEP_TIME)
 
 
@@ -48,17 +53,16 @@ class SjcWebsite():
 
     # Finds all the Excel files linked on the page and downloads them.
     def downloadExcel(self, driver):
-        excel_files = driver.find_elements_by_xpath(
-            '//td[@class="dxgvCommandColumn_Glass dxgv"]//img[@title="Export Transaction Details To Excel"]')
+        excel_files = driver.find_elements_by_xpath(EXCEL_LINK_XPATH)
         for excel_file in excel_files:
             excel_file.click()
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
-        return driver.find_elements_by_xpath('//*[@id="ctl00_GridContent_popupCantContinueDialog_Button1"]')
+        return driver.find_elements_by_id(ERROR_DIALOG_BUTTON_ID)
 
     def closeErrorDialog(self, driver):
-        driver.find_elements_by_xpath('//*[@id="ctl00_GridContent_popupCantContinueDialog_Button1"]')[0].click()
+        driver.find_element_by_id(ERROR_DIALOG_BUTTON_ID).click()
         sleep(DEFAULT_SLEEP_TIME)
 
     # Navigates to the Nth page of the search results.
@@ -96,12 +100,10 @@ class SjcWebsite():
 
     # Determines the number of
     def numberOfEntries(self, driver):
-        return len(driver.find_elements_by_xpath(
-            '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]'))
+        return len(driver.find_elements_by_xpath(PAGE_ENTRY_XPATH))
 
     def clickEntryIndex(self, driver, index):
-        driver.find_elements_by_xpath(
-            '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]')[index].click()
+        driver.find_elements_by_xpath(PAGE_ENTRY_XPATH)[index].click()
         sleep(DEFAULT_SLEEP_TIME)
 
 class Scraper():
@@ -129,10 +131,6 @@ class Scraper():
                  "plugins.plugins_list": [plugs]}
         options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-        # bypass chromedriver headless security
-        # self.driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
-        # params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': self.path_dir}}
-        # self.driver.execute("send_command", params)
 
 
     def scrape(self):
