@@ -19,65 +19,103 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from dircreator import DirCreator
 
+# Default website wait time.
+DEFAULT_SLEEP_TIME = 5
+
+SEARCH_FORM_ADDRESS = 'https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx'
+SEARCH_BUTTON_ID = 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD'
+ERROR_DIALOG_BUTTON_ID = 'ctl00_GridContent_popupCantContinueDialog_Button1'
+EXCEL_LINK_XPATH = '//td[@class="dxgvCommandColumn_Glass dxgv"]//img[@title="Export Transaction Details To Excel"]'
+PAGE_ENTRY_XPATH = '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]'
+
+
+class SjcWebsite():
+    """This class represents an interface to interact with the elements on the SJC website.
+
+    It abstracts away details like "what CSS class does a specific button have", and implementation details of the
+    website, while still requiring users to understand how to navigate around the website.
+    """
+    def navigateToSearchPage(self, driver):
+        driver.get(SEARCH_FORM_ADDRESS)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, SEARCH_BUTTON_ID)))
+
+        # Search, which will load up the content on the page.
+        # Search terms are left blank, indicating "all content".
+        driver.find_element_by_id(SEARCH_BUTTON_ID).click()
+        sleep(DEFAULT_SLEEP_TIME)
+
+
+    # Use the browser back button.
+    def clickBackButton(self, driver):
+        driver.execute_script("window.history.go(-1)")
+        sleep(DEFAULT_SLEEP_TIME)
+
+    # Finds all the Excel files linked on the page and downloads them.
+    def downloadExcel(self, driver):
+        excel_files = driver.find_elements_by_xpath(EXCEL_LINK_XPATH)
+        for excel_file in excel_files:
+            excel_file.click()
+
+    # Returns a boolean.
+    def errorDialogExists(self, driver):
+        return driver.find_elements_by_id(ERROR_DIALOG_BUTTON_ID)
+
+    def closeErrorDialog(self, driver):
+        driver.find_element_by_id(ERROR_DIALOG_BUTTON_ID).click()
+        sleep(DEFAULT_SLEEP_TIME)
+
+    # Navigates to the Nth page of the search results.
+    def navigateToPage(self, driver, target_page):
+        while not '[{}]'.format(target_page) == driver.find_element_by_class_name('dxp-current').text:
+            page_elements = driver.find_elements_by_class_name('dxp-num')
+
+            page_nums = []
+            for el in page_elements:
+                try:
+                    page_nums.append(int(el.text))
+                except ValueError:
+                    pass
+            assert page_nums, 'No page nums found to click.'
+
+            # Click on the page that we can click on closest to our target page.
+            closest_page = page_nums[0]
+            for page in page_nums:
+                if abs(target_page - page) < abs(target_page - closest_page):
+                    closest_page = page
+
+            driver.find_element(By.XPATH, "//*[text()='{}']".format(closest_page)).click()
+            sleep(DEFAULT_SLEEP_TIME)
+
+    # Determine the number of pages of search results present.
+    def numPages(self, driver):
+        page_elements = driver.find_elements_by_class_name('dxp-num')
+        page_nums = []
+        for el in page_elements:
+            try:
+                page_nums.append(int(el.text))
+            except ValueError:
+                pass
+        return max(page_nums)
+
+    # Determines the number of
+    def numberOfEntries(self, driver):
+        return len(driver.find_elements_by_xpath(PAGE_ENTRY_XPATH))
+
+    def clickEntryIndex(self, driver, index):
+        driver.find_elements_by_xpath(PAGE_ENTRY_XPATH)[index].click()
+        sleep(DEFAULT_SLEEP_TIME)
 
 class Scraper():
     def __init__(self):
         # create data folder in current directory to store files
+        self.website = SjcWebsite()
         new_dir = DirCreator()
         new_dir.createFolder()
         self.path_dir = new_dir.changeDirectory()
 
-        # time to sleep()
-        self.s = 2
-
-        self.drivers = []
-        self.driver = None
-
-    def scrape(self):
-        # create drivers for each page on site
-        self.__initDrivers()
-
-        error_dialog = False
-        end = False
-        for i in range(6, 9):
-            # This code is from IterForms, it downloads the forms on a page.
-            sleep(self.s + 2)
-            forms = self.driver.find_elements_by_xpath(
-                '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]')
-
-            for ind, form in enumerate(forms):
-                sleep(self.s)
-                if not error_dialog:
-                    for x in range(i):
-                        othername = self.driver.find_element_by_css_selector('[alt="Next"]').find_element_by_xpath('..')
-                        othername.click()
-                        sleep(self.s + 1)
-                error_dialog = False
-
-                forms = self.driver.find_elements_by_xpath(
-                    '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]')
-                forms[ind].click()
-
-                sleep(self.s + 1)
-
-                # TODO(walek): Update this to use contains
-                if self.driver.find_elements_by_xpath('//*[@id="ctl00_GridContent_popupCantContinueDialog_Button1"]'):
-                    self.driver.find_elements_by_xpath('//*[@id="ctl00_GridContent_popupCantContinueDialog_Button1"]')[0].click()
-                    error_dialog = True
-                    continue
-
-                self.driver.find_elements_by_xpath('//table[@class="dxgvControl_Glass dxgv"]')
-                self.__downloadExcel(self.driver)
-
-                # Go back a page
-                self.__clickBackButton(self.driver)
-
-            sleep(self.s)
-
-
-    def __initDrivers(self):
         options = webdriver.ChromeOptions()
-        #options.headless = True
+        # options.headless = True
         options.add_argument("--ignore-certificate-errors")
         options.add_argument("--test_type")
         options.add_argument('--no-sandbox')
@@ -94,46 +132,32 @@ class Scraper():
         options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-        # bypass chromedriver headless security
-        # self.driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
-        # params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': self.path_dir}}
-        # self.driver.execute("send_command", params)
 
-        self.driver.get(
-        "https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx")
-        try:
-            WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD')))
-        except TimeoutException:
-            print("Loading took too long.")
+    def scrape(self):
+        # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
+        self.website.navigateToSearchPage(self.driver)
 
-        try:
-            print("still in the __init")
-            self.__clickSubmitButton(self.driver)
-            print("click submit button entered")
-        except:
-            print("couldn't do one of the click submit button")
+        for search_page_num in range(1, self.website.numPages(self.driver)+1):
+            # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
+            self.website.navigateToPage(self.driver, search_page_num)
 
-        self.drivers.append(self.driver)
+            # This code downloads every entry on a search results page.
+            for entry_index in range(self.website.numberOfEntries(self.driver)):
+                # We have to re-navigate to the correct page every time since sometimes, using the 'back' button
+                # will result in the website bringing us back to page 1.
+                self.website.navigateToPage(self.driver, search_page_num)
+                self.website.clickEntryIndex(self.driver, entry_index)
+
+                if self.website.errorDialogExists(self.driver):
+                    # If there are no forms for a specific entry, we get an error message.
+                    self.website.closeErrorDialog(self.driver)
+                else:
+                    # If there are forms, then we will be brought to the "forms" page.
+                    self.website.downloadExcel(self.driver)
+                    self.website.clickBackButton(self.driver)
 
 
-    def __clickSubmitButton(self, driver):
-        driver.find_element_by_xpath('//*[@id="ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD"]').click()
-
-    def __clickBackButton(self, driver):
-        driver.execute_script("window.history.go(-1)")
-
-    def __downloadExcel(self, driver):
-        excel = driver.find_elements_by_xpath(
-            '//td[@class="dxgvCommandColumn_Glass dxgv"]//img[@title="Export Transaction Details To Excel"]')
-        sleep(self.s + 1)
-
-        for exfile in excel:
-            print(exfile)
-
-print("starting script")
 start_time = time.time()
 s = Scraper()
-
 s.scrape()
 print("--- {} seconds ---".format(time.time() - start_time))
