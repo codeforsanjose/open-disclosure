@@ -1,4 +1,5 @@
 import os
+import platform
 
 import xlrd
 import csv
@@ -8,10 +9,16 @@ import pdb
 pdb.set_trace()
 
 cwd = os.getcwd()
+AGGREAGATE_DATA_SET = 'Office_Sought'
 
-filenames = glob.glob(cwd + '\\data\\*.xls')
+if "Windows" in platform.platform():
+    file_delimiters = '\\'
+else:
+    file_delimiters = '/'
 
-with open('your_csv_file.csv', 'w') as your_csv_file:
+filenames = glob.glob(cwd + '_data_{}_*.xls'.replace('_', file_delimiters).format(AGGREAGATE_DATA_SET))
+
+with open('aggregated_data_{}.csv'.format(AGGREAGATE_DATA_SET), 'w') as your_csv_file:
     wr = csv.writer(your_csv_file, quoting=csv.QUOTE_ALL)
 
     count = 0
