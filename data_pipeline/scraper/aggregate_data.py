@@ -9,7 +9,7 @@ import pdb
 pdb.set_trace()
 
 cwd = os.getcwd()
-AGGREAGATE_DATA_SET = 'Office_Sought'
+AGGREAGATE_DATA_SET = 'Ballot_Measure'
 
 if "Windows" in platform.platform():
     file_delimiters = '\\'
@@ -29,4 +29,3 @@ with open('aggregated_data_{}.csv'.format(AGGREAGATE_DATA_SET), 'w') as your_csv
         sheet = wb.sheet_by_index(0)
         for rownum in range(sheet.nrows):
             wr.writerow(sheet.row_values(rownum))
-
