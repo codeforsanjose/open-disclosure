@@ -1,41 +1,40 @@
-import multiprocessing
 import os
-import re
-import shutil
-import sys
 import time
-from multiprocessing.dummy import Pool
+from dircreator import DirCreator
 from time import sleep
 
 import chromedriver_binary  # Adds chromedriver binary to path
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
-from dircreator import DirCreator
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Default website wait time.
-DEFAULT_SLEEP_TIME = 5
+# Currently un-used
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
+# ----------------------------------------------------------------------------
+#                               Global Variables
+# ----------------------------------------------------------------------------
 BALLOT_TYPE = 'Ballot Measure'
-
+DEFAULT_SLEEP_TIME = 3
 SEARCH_FORM_ADDRESS = 'https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx'
-SEARCH_TABLE_ID = 'ctl00_GridContent_gridFilers_DXMainTable'
-SEARCH_TABLE_XPATH = '//*[@id="ctl00_GridContent_gridFilers_DXMainTable"]'
+
+# Selenium parsing variables
+# Do Not Edit, append only
 SEARCH_TABLE_ROW_ID = 'ctl00_GridContent_gridFilers_DXDataRow'
 SEARCH_TABLE_ROW_XPATH_CONTAINS = '//*[contains(@id,"ctl00_GridContent_gridFilers_DXDataRow")]'
 SEARCH_BUTTON_ID = 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD'
-SEARCH_TABLE_BALLOT_TYPE_ID = 'ctl00_GridContent_gridFilers_col8'
+SEARCH_TABLE_INDEX_CLICKABLE_ID = 'ctl00_GridContent_gridFilers_DXCBtn0Img'
 
 FORM_TABLE_ROW_XPATH_CONTAINS = '//*[contains(@id,"ctl00_DefaultContent_gridFilingForms_DXDataRow")]'
 FORM_TABLE_ROW_ID = 'ctl00_DefaultContent_gridFilingForms_DXDataRow'
+FORM_TABLE_MAIN_TABLE_ID = 'ctl00_DefaultContent_gridFilingForms_DXMainTable'
 
 ERROR_DIALOG_BUTTON_ID = 'ctl00_GridContent_popupCantContinueDialog_Button1'
-EXCEL_LINK_XPATH = '//td[@class="dxgvCommandColumn_Glass dxgv"]//img[@title="Export Transaction Details To Excel"]'
 PAGE_ENTRY_XPATH = '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]'
 
 
@@ -54,37 +53,50 @@ class SjcWebsite():
         # Search, which will load up the content on the page.
         # Search terms are left blank, indicating "all content".
         driver.find_element_by_id(SEARCH_BUTTON_ID).click()
-        sleep(DEFAULT_SLEEP_TIME)
-
 
     # Use the browser back button.
     def clickBackButton(self, driver):
         driver.execute_script("window.history.go(-1)")
-        sleep(3)
 
-    # Finds all the Excel files linked on the page and downloads them.
-    # First create dict that handles ammendments, to ensure we're only downloading the latest/most accurate
+    def verifySearchTableLoadComplete(self, driver):
+        # print("\nValidating SEARCH TABLE")
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, SEARCH_TABLE_INDEX_CLICKABLE_ID)))
+
+        # print("SEARCH TABLE Loaded Succesfully\n")
+    
+    def verifyDownloadFormTableLoadComplete(self, driver):
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, FORM_TABLE_MAIN_TABLE_ID)))
+
     def downloadExcel(self, driver):
+        # Finds all the Excel files linked on the page and downloads them.
+        # First create array that handles ammendments, to ensure we're only downloading the latest/most accurate
+
+        FILER_ID = 'ctl00_DefaultContent_lblFilerNames'
+        filer_name = driver.find_element_by_id(FILER_ID).text
+        print('--- FILER NAME: {}'.format(filer_name))
+
         numFormTableRows = driver.find_elements_by_xpath(FORM_TABLE_ROW_XPATH_CONTAINS)
-        downloadExcelRows = {}
+        downloadExcelRows = []
         for i in range(len(numFormTableRows)):
             formTable_FormType = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[1]'.format(FORM_TABLE_ROW_ID,i))[0].text
             formTable_FilingPeriod = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(FORM_TABLE_ROW_ID,i))[0].text
             if '-A' in formTable_FormType:
                 formTable_FormType = formTable_FormType[:-2]
             uniqueKeyFormId = '{} ~ {}'.format(formTable_FormType,formTable_FilingPeriod)
-            if uniqueKeyFormId in downloadExcelRows:
-                downloadExcelRows[uniqueKeyFormId].append(i)
-            else:
-                downloadExcelRows[uniqueKeyFormId] = [i]
 
-        for key,value in downloadExcelRows.items():
-            try:
-                downloadLinkElement = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[6]/a'.format(FORM_TABLE_ROW_ID,value[0]))[0]
-            except IndexError:
-                continue
-            else:
-                downloadLinkElement.click()
+            if uniqueKeyFormId not in downloadExcelRows:
+                downloadExcelRows.append(uniqueKeyFormId)
+                try:
+                    downloadLinkElement = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[6]/a'.format(FORM_TABLE_ROW_ID,i))[0]
+                except IndexError:
+                    downloadExcelRows.remove(uniqueKeyFormId)
+                    continue
+                # else:
+                #     # downloadLinkElement.click()
+                #     print("Download {}".format(i))
+        print(downloadExcelRows)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -92,7 +104,8 @@ class SjcWebsite():
 
     def closeErrorDialog(self, driver):
         driver.find_element_by_id(ERROR_DIALOG_BUTTON_ID).click()
-        sleep(DEFAULT_SLEEP_TIME)
+        WebDriverWait(driver, 10).until(
+            EC.invisibility_of_element_located((By.ID, ERROR_DIALOG_BUTTON_ID)))
 
     # Navigates to the Nth page of the search results.
     def navigateToPage(self, driver, target_page):
@@ -112,9 +125,11 @@ class SjcWebsite():
             for page in page_nums:
                 if abs(target_page - page) < abs(target_page - closest_page):
                     closest_page = page
-
             driver.find_element(By.XPATH, "//*[text()='{}']".format(closest_page)).click()
-            sleep(3)
+
+            # Verify navigation to closest_page before re-entering while loop
+            WebDriverWait(driver, 10).until(
+                EC.text_to_be_present_in_element((By.XPATH, '//b[@class="dxp-num dxp-current"]'), '[{}]'.format(closest_page)))
 
     # Determine the number of pages of search results present.
     def numPages(self, driver):
@@ -132,11 +147,12 @@ class SjcWebsite():
         return len(driver.find_elements_by_xpath(PAGE_ENTRY_XPATH))
 
     def clickEntryIndex(self, driver, index):
-        driver.find_elements_by_xpath(PAGE_ENTRY_XPATH)[index].click()
-        sleep(DEFAULT_SLEEP_TIME)
+        print("~~~~ CLICK ENTRY INDEX {} ~~~~".format(index))
+        # driver.find_elements_by_xpath(PAGE_ENTRY_XPATH)[index].click()
+        driver.find_element_by_xpath('//*[@id="ctl00_GridContent_gridFilers_DXCBtn{}"]'.format(index)).click()
 
     def numTableEntries(self, driver, search_page_num):
-        # Loop through all all items in the search table and retrieve the data
+        # Loop through all all items in the search table and retrieve the data            
         numTableRows = driver.find_elements_by_xpath(SEARCH_TABLE_ROW_XPATH_CONTAINS)
         followTableRowNums = ((search_page_num - 1 ) * 10)
         numTableRowEntries = []
@@ -157,7 +173,13 @@ class Scraper():
         self.path_dir = new_dir.changeDirectory()
 
         options = webdriver.ChromeOptions()
-        # options.headless = True
+        
+        # Uncomment block BELOW for headless data-retrieval 
+        # options.add_argument("--headless")
+        # options.add_argument("--disable-gpu")
+        # options.add_argument("--window-size=1280,800")
+        # Uncomment block ABOVE for headless data-retrieval
+
         options.add_argument("--ignore-certificate-errors")
         options.add_argument("--test_type")
         options.add_argument('--no-sandbox')
@@ -178,9 +200,11 @@ class Scraper():
     def scrape(self):
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
         self.website.navigateToSearchPage(self.driver)
+        self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver)+1):
-            print("PAGE {}".format(search_page_num))
+        # for search_page_num in range(7,9):
+            print("\n ----> PAGE {}".format(search_page_num))
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
 
@@ -189,14 +213,20 @@ class Scraper():
                 self.website.navigateToPage(self.driver, search_page_num)
 
                 self.website.clickEntryIndex(self.driver, entry_index % 10)
+                
+                sleep(DEFAULT_SLEEP_TIME)
 
                 if self.website.errorDialogExists(self.driver):
+                    print("ERROR DIALOG: NO DATA")
                     # If there are no forms for a specific entry, we get an error message.
                     self.website.closeErrorDialog(self.driver)
                 else:
                     # If there are forms, then we will be brought to the "forms" page.
+                    self.website.verifyDownloadFormTableLoadComplete(self.driver)
                     self.website.downloadExcel(self.driver)
+
                     self.website.clickBackButton(self.driver)
+                    self.website.verifySearchTableLoadComplete(self.driver)
 
 
 start_time = time.time()
