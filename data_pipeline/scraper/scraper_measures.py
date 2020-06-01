@@ -59,11 +59,8 @@ class SjcWebsite():
         driver.execute_script("window.history.go(-1)")
 
     def verifySearchTableLoadComplete(self, driver):
-        # print("\nValidating SEARCH TABLE")
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, SEARCH_TABLE_INDEX_CLICKABLE_ID)))
-
-        # print("SEARCH TABLE Loaded Succesfully\n")
     
     def verifyDownloadFormTableLoadComplete(self, driver):
         WebDriverWait(driver, 10).until(
@@ -72,11 +69,6 @@ class SjcWebsite():
     def downloadExcel(self, driver):
         # Finds all the Excel files linked on the page and downloads them.
         # First create array that handles ammendments, to ensure we're only downloading the latest/most accurate
-
-        FILER_ID = 'ctl00_DefaultContent_lblFilerNames'
-        filer_name = driver.find_element_by_id(FILER_ID).text
-        print('--- FILER NAME: {}'.format(filer_name))
-
         numFormTableRows = driver.find_elements_by_xpath(FORM_TABLE_ROW_XPATH_CONTAINS)
         downloadExcelRows = []
         for i in range(len(numFormTableRows)):
@@ -93,10 +85,8 @@ class SjcWebsite():
                 except IndexError:
                     downloadExcelRows.remove(uniqueKeyFormId)
                     continue
-                # else:
-                #     # downloadLinkElement.click()
-                #     print("Download {}".format(i))
-        print(downloadExcelRows)
+                else:
+                    downloadLinkElement.click()
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -147,8 +137,6 @@ class SjcWebsite():
         return len(driver.find_elements_by_xpath(PAGE_ENTRY_XPATH))
 
     def clickEntryIndex(self, driver, index):
-        print("~~~~ CLICK ENTRY INDEX {} ~~~~".format(index))
-        # driver.find_elements_by_xpath(PAGE_ENTRY_XPATH)[index].click()
         driver.find_element_by_xpath('//*[@id="ctl00_GridContent_gridFilers_DXCBtn{}"]'.format(index)).click()
 
     def numTableEntries(self, driver, search_page_num):
@@ -161,7 +149,6 @@ class SjcWebsite():
             tableData_SupportOrOppose = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[8]'.format(SEARCH_TABLE_ROW_ID,i))[0].text
             if tableData_BallotType == BALLOT_TYPE and tableData_SupportOrOppose != 'Oppose':
                 numTableRowEntries.append(i)
-        print("SEARCH TABLE INDEX: {}".format(numTableRowEntries))
         return numTableRowEntries
 
 class Scraper():
@@ -204,7 +191,6 @@ class Scraper():
 
         for search_page_num in range(1, self.website.numPages(self.driver)+1):
         # for search_page_num in range(7,9):
-            print("\n ----> PAGE {}".format(search_page_num))
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
 
@@ -217,7 +203,6 @@ class Scraper():
                 sleep(DEFAULT_SLEEP_TIME)
 
                 if self.website.errorDialogExists(self.driver):
-                    print("ERROR DIALOG: NO DATA")
                     # If there are no forms for a specific entry, we get an error message.
                     self.website.closeErrorDialog(self.driver)
                 else:
