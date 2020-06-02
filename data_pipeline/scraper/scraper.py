@@ -1,6 +1,5 @@
 import os
 import time
-from dircreator import DirCreator
 from time import sleep
 
 import chromedriver_binary  # Adds chromedriver binary to path
@@ -15,6 +14,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+
+# Custom python module
+from dircreator import DirCreator
+from preproccessing import PreProcessing
 
 class SjcWebsite():
     """This class represents an interface to interact with the elements on the SJC website.
@@ -77,7 +80,6 @@ class SjcWebsite():
                 try:
                     downloadLinkElement = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[6]/a'.format(self.FORM_TABLE_ROW_ID,i))[0]
                 except IndexError:
-                    # downloadExcelRows.remove(uniqueKeyFormId)
                     continue
                 else:
                     downloadLinkElement.click()
@@ -148,14 +150,14 @@ class SjcWebsite():
 class Scraper():
     def __init__(self, BALLOT_TYPE):
         self.BALLOT_TYPE = BALLOT_TYPE
-        self.DEFAULT_SLEEP_TIME = 2
+        self.DEFAULT_SLEEP_TIME = 5
         self.SEARCH_FORM_ADDRESS = 'https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx'
 
         # create data folder in current directory to store files
         self.website = SjcWebsite()
-        new_dir = DirCreator(['data',self.BALLOT_TYPE])
-        new_dir.createFolder()
-        self.download_dir = new_dir.changeDirectory()
+        self.new_dir = DirCreator(['data',self.BALLOT_TYPE])
+        self.new_dir.createFolder()
+        self.download_dir = self.new_dir.getDirectory()
 
 
         options = webdriver.ChromeOptions()
@@ -190,7 +192,6 @@ class Scraper():
         self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver)+1):
-        # for search_page_num in range(7,9):
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
         
@@ -212,12 +213,20 @@ class Scraper():
 
                     self.website.clickBackButton(self.driver)
                     self.website.verifySearchTableLoadComplete(self.driver)
+        
+        # Custom module to aggregate data into single CSV
+        preproccessing = PreProcessing(self)
+        preproccessing.aggregateData()
+
+        # Close browser once scrape is complete
+        self.driver.quit()
 
 
 start_time = time.time()
 # Insert what type of scrape
 # 'Ballot Measure' OR 'Office Sought'
-BALLOT_TYPE = "Ballot Measure"
+BALLOT_TYPE = "Office Sought"
 s = Scraper(BALLOT_TYPE)
 s.scrape()
+
 print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))

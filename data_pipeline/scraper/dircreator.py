@@ -8,16 +8,15 @@ class DirCreator():
             folder_delimiter = '\\'
         else:
             folder_delimiter = '/'
+        self.folder_delimiter = folder_delimiter
         self.path = os.getcwd()
         self.download_dir = folder_delimiter.join(download_dir).replace(' ','_')
-        self.folder = os.path.join(self.path, self.download_dir)
-
+        self.folder = os.path.join(self.path, self.download_dir) + self.folder_delimiter
+        
     def createFolder(self):
         if not os.path.exists(self.folder):
             os.makedirs(self.folder)
 
-    def changeDirectory(self):
-        if os.path.exists(self.download_dir):
-            print(self.download_dir)
-            os.chdir(self.download_dir)
-            return os.path.abspath(self.folder)
+    def getDirectory(self):
+        if os.path.exists(self.folder):
+            return self.folder
