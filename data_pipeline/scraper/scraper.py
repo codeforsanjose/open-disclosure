@@ -223,10 +223,15 @@ class Scraper():
 
 
 start_time = time.time()
-# Insert what type of scrape
-# 'Ballot Measure' OR 'Office Sought'
-BALLOT_TYPE = "Office Sought"
-s = Scraper(BALLOT_TYPE)
+# Select Ballot type with array index
+BALLOT_TYPES = ['Ballot Measure', 'Office Sought']
+s = Scraper(BALLOT_TYPES[0])
 s.scrape()
+# Loop through both Ballot Types, uncomment below and comment above
+# for BALLOT_TYPE in BALLOT_TYPES:
+#     print("Scraping: {}".format(BALLOT_TYPE))
+#     s = Scraper(BALLOT_TYPE)
+#     s.scrape()
+#     print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))
 
 print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))

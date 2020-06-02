@@ -21,15 +21,17 @@ class PreProcessing():
             new_worksheet = csv.writer(new_aggregate_csv, quoting=csv.QUOTE_ALL)
 
             # Loop through all workbooks (EXCEL)
+            header = False
             for filename in self.filenames:
                 # Open worksheet
                 wb = xlrd.open_workbook(filename)
                 sheet = wb.sheet_by_index(0)
 
                 # Only pull excel header from the first file to reduce duplicates
-                if self.filenames.index(filename) == 0:
-                    for rownum in range(sheet.nrows):
-                        new_worksheet.writerow(sheet.row_values(rownum))
-                else:
+                if header:
                     for rownum in range(1, sheet.nrows):
                         new_worksheet.writerow(sheet.row_values(rownum))
+                else:
+                    for rownum in range(sheet.nrows):
+                        new_worksheet.writerow(sheet.row_values(rownum))
+                    header = True
