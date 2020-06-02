@@ -12,11 +12,11 @@ cwd = os.getcwd()
 AGGREAGATE_DATA_SET = 'Ballot_Measure'
 
 if "Windows" in platform.platform():
-    file_delimiters = '\\'
+    folder_delimiter = '\\'
 else:
-    file_delimiters = '/'
+    folder_delimiter = '/'
 
-filenames = glob.glob(cwd + '_data_{}_*.xls'.replace('_', file_delimiters).format(AGGREAGATE_DATA_SET))
+filenames = glob.glob(cwd + '_data_{}_*.xls'.replace('_', folder_delimiter).format(AGGREAGATE_DATA_SET))
 
 with open('aggregated_data_{}.csv'.format(AGGREAGATE_DATA_SET), 'w') as your_csv_file:
     wr = csv.writer(your_csv_file, quoting=csv.QUOTE_ALL)
