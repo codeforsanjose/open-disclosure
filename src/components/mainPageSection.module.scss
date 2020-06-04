@@ -1,0 +1,53 @@
+$primaryGreen: #008254;
+$primaryWhite: #fff;
+$primaryOffWhite: #fafafa;
+
+// Resizes Figma values to a 6:5 ratio and converts to rem
+@function resize($size) {
+  $numerator: 6;
+  $denominator: 5;
+  @return ($denominator * ($size / 10)) / $numerator + rem;
+}
+
+.outerContainer {
+  background-color: $primaryWhite;
+  padding: 5rem 10rem;
+}
+
+.innerContainer {
+  max-width: 1440px;
+}
+
+.sectionHeader {
+  * {
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: resize(45);
+    font-family: "DM Sans";
+  }
+
+  p {
+    font-size: resize(20);
+    font-family: "Lato";
+  }
+}
+
+.sectionBody {
+  margin-top: resize(41);
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.secondary {
+  background-color: $primaryGreen;
+  .sectionHeader * {
+    color: $primaryWhite;
+  }
+}
+
+.offWhite {
+  background-color: $primaryOffWhite;
+}

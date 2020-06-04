@@ -1,34 +1,64 @@
+$primaryBlack: #1b1b1b;
+$primaryGreen: #008254;
+$secondaryGreen: #eafff7;
+$underline: #00825466;
+
+// Resizes Figma values to a 6:5 ratio and converts to rem
+@function resize($size) {
+  @return (5 * ($size / 10)) / 6 + rem;
+}
+
 .container {
   section {
     display: flex;
     flex: 1;
-    padding: 10rem;
+    // padding: 10rem;
     flex-direction: column;
   }
 
   h1,
+  h2,
+  h3,
+  p {
+    color: $primaryBlack;
+  }
+
+  h1,
   h2 {
-    font-family: "Bitter";
+    font-family: "DM Sans";
   }
 
-  h1 {
-    color: #0073b5;
+  h3 {
+    font-family: "Lato";
   }
 
-  .header {
-    background-color: lightblue;
+  .hero {
+    flex-direction: row;
+    padding: 0;
+    padding: 2.2rem 3rem 6.2rem 4.6rem;
   }
 
-  .headerText {
-    color: white;
-    font-size: 4rem;
+  .heroLeft {
+    flex: 1;
+    justify-content: center;
   }
 
-  .headerSubtext {
-    color: white;
+  .heroText {
+    color: $primaryBlack;
+    font-size: resize(54);
+    line-height: resize(70);
+  }
+
+  .heroSubtext {
+    color: $primaryBlack;
     font-weight: normal;
-    font-size: 2.3rem;
-    margin: 3rem 0;
+    font-size: resize(28);
+    line-height: 3.4rem;
+    margin: 1rem 0 resize(62);
+  }
+
+  .heroButtonContainer {
+    flex-direction: row;
   }
 
   .explore {
@@ -52,13 +82,11 @@
   }
 
   .sectionItem {
-    align-items: baseline;
-    text-align: start;
+    align-items: center;
     max-width: 337px;
   }
 
   .sectionItemHeader {
-    font-family: "Bitter";
     font-size: 2.4rem;
     margin: 2rem 0 1rem;
   }
@@ -82,11 +110,8 @@
       margin-bottom: 2rem;
     }
     h3 {
-      color: #ea3c47;
+      color: $primaryGreen;
       margin: 2rem 0;
-      text-decoration: underline;
-      text-underline-offset: 1rem;
-      text-decoration-thickness: 0.3rem;
     }
   }
 

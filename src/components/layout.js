@@ -11,11 +11,11 @@ export default class Layout extends React.PureComponent {
 
   links = [
     {
-      name: "Ballot Measures",
+      name: "Candidates",
       endpoint: "/",
     },
     {
-      name: "Candidates",
+      name: "Measures",
       endpoint: "/",
     },
     {
@@ -74,96 +74,100 @@ export default class Layout extends React.PureComponent {
       <div className={layoutStyles.container}>
         {this.props.hideHeader ? null : (
           <header className={layoutStyles.header}>
-            {this.renderLogo()}
-            <nav>
-              <ul className={layoutStyles.headerNav}>
-                {this.links.map((item, index) => (
-                  <li
-                    key={`header nav item ${index}`}
-                    className={layoutStyles.headerNavItem}
-                  >
-                    <Link className={layoutStyles.link} to={item.endpoint}>
-                      <strong className={layoutStyles.headerNavItemText}>
-                        {item.name}
-                      </strong>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <div className={layoutStyles.headerInner}>
+              {this.renderLogo()}
+              <nav>
+                <ul className={layoutStyles.headerNav}>
+                  {this.links.map((item, index) => (
+                    <li
+                      key={`header nav item ${index}`}
+                      className={layoutStyles.headerNavItem}
+                    >
+                      <Link className={layoutStyles.link} to={item.endpoint}>
+                        <strong className={layoutStyles.headerNavItemText}>
+                          {item.name}
+                        </strong>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
           </header>
         )}
         {this.props.children}
         <div className={layoutStyles.footer}>
-          <div className={layoutStyles.footerTop}>
-            <div className={layoutStyles.footerLeft}>
-              {this.renderLogo(false)}
-              <nav>
-                <ul className={layoutStyles.footerNav}>
-                  <div className={layoutStyles.footerNavSection}>
-                    {this.links.map((item, index) => (
-                      <li
-                        key={`footer nav item ${index}`}
-                        className={layoutStyles.footerNavItem}
-                      >
-                        <Link
-                          className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
-                          to={item.endpoint}
+          <div className={layoutStyles.footerInner}>
+            <div className={layoutStyles.footerTop}>
+              <div className={layoutStyles.footerLeft}>
+                {this.renderLogo(false)}
+                <nav>
+                  <ul className={layoutStyles.footerNav}>
+                    <div className={layoutStyles.footerNavSection}>
+                      {this.links.map((item, index) => (
+                        <li
+                          key={`footer nav item ${index}`}
+                          className={layoutStyles.footerNavItem}
                         >
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </div>
-                  <div className={layoutStyles.footerNavSection}>
-                    {this.footerLinks.map((item, index) => (
-                      <li
-                        key={`footer nav item ${index}`}
-                        className={layoutStyles.footerNavItem}
-                      >
-                        <Link
-                          className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
-                          to={item.endpoint}
+                          <Link
+                            className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
+                            to={item.endpoint}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </div>
+                    <div className={layoutStyles.footerNavSection}>
+                      {this.footerLinks.map((item, index) => (
+                        <li
+                          key={`footer nav item ${index}`}
+                          className={layoutStyles.footerNavItem}
                         >
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </div>
-                </ul>
-              </nav>
-            </div>
-            <div className={layoutStyles.footerRight}>
-              <div className={layoutStyles.footerRightInner}>
-                {/* To-Do: Replace with image */}
-                <div className={layoutStyles.imgPlaceholder} />
-                <h5>Updates delivered to your inbox</h5>
-                <form onSubmit={this.handleSubmit}>
-                  <input
-                    className={layoutStyles.emailInput}
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                  />
-                  <input
-                    className={layoutStyles.submitForm}
-                    type="submit"
-                    value="Subscribe"
-                  />
-                </form>
+                          <Link
+                            className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
+                            to={item.endpoint}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </div>
+                  </ul>
+                </nav>
+              </div>
+              <div className={layoutStyles.footerRight}>
+                <div className={layoutStyles.footerRightInner}>
+                  {/* To-Do: Replace with image */}
+                  <div className={layoutStyles.imgPlaceholder} />
+                  <h5>Updates delivered to your inbox</h5>
+                  <form onSubmit={this.handleSubmit}>
+                    <input
+                      className={layoutStyles.emailInput}
+                      type="email"
+                      placeholder="Enter your email address"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                    />
+                    <input
+                      className={layoutStyles.submitForm}
+                      type="submit"
+                      value="Subscribe"
+                    />
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={layoutStyles.footerBottom}>
-            <p>Brought to you by Code for San José</p>
-            <p>
-              Campaign finance data provided by the City of San José Public
-              Ethics Commission Public Portal for Campaign Finance and Lobbyist
-              Disclosure. Candidate and ballot measure information gathered from
-              information provided to the Santa Clara County Registrar of Voters
-              by the City of San José.
-            </p>
+            <div className={layoutStyles.footerBottom}>
+              <p>Brought to you by Code for San José</p>
+              <p>
+                Campaign finance data provided by the City of San José Public
+                Ethics Commission Public Portal for Campaign Finance and
+                Lobbyist Disclosure. Candidate and ballot measure information
+                gathered from information provided to the Santa Clara County
+                Registrar of Voters by the City of San José.
+              </p>
+            </div>
           </div>
         </div>
       </div>
