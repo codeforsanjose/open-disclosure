@@ -1,0 +1,56 @@
+$primaryBlack: #1b1b1b;
+$primaryGreen: #008254; 
+$primaryWhite: #fff;
+$secondaryBlue: #deeffe;
+
+.item {
+  background-color: transparent;
+  margin-top: 5rem;
+
+  img{
+    margin: auto;
+    max-width: 18rem;
+    max-height: 18rem;
+    object-fit: contain;
+    z-index: 2;
+    border: 8px solid $secondaryBlue;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  div {
+    margin-top: -9rem;
+    padding: 10rem 10rem 4rem;
+    background-color: $primaryWhite;
+    z-index: 1;
+    text-align: center;
+
+    h2{
+      margin: 0;
+      color: $primaryBlack;
+      font-size: 2rem;
+      line-height: 2.6rem;
+    }
+
+    h3 {
+      color: $primaryBlack;
+      font-size: 4rem;
+      line-height: 5.2rem;
+    }
+  }
+
+  div:hover {
+    box-shadow: 0px 4px 50px rgba(201, 201, 201, 0.7);
+  }
+
+  p {
+    color: #555555;
+    font-size: 1.4rem;
+    line-height: 1.82rem;
+  }
+
+  .amountRaised {
+    color: $primaryGreen;
+  }
+
+}

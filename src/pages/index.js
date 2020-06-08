@@ -1,14 +1,19 @@
+// Libraries
 import React from "react"
+import { ReactSVG } from "react-svg"
+// Styles
 import mainPageStyles from "./index.module.scss"
+// Components
 import Layout from "../components/layout"
 import Button from "../components/button"
 import Shadow from "../components/shadow"
-import { ReactSVG } from "react-svg"
-import blob from "./../../static/images/Blob.svg"
 import MainPageSection from "../components/MainPageSection"
-import snapshotStyles from "../components/snapshotItem.module.scss"
-import candidateStyles from "../components/candidateItem.module.scss"
-import miscStyles from "../components/miscItem.module.scss"
+import SnapshotItem from '../components/snapshotItem'
+import CandidateItem from '../components/candidateItem'
+import BehindTheScenesItem from '../components/behindTheScenesItem'
+// Images
+import blob from "./../../static/images/Blob.svg"
+import tertiary from './../../static/images/Tertiary.svg'
 
 export default class MainPage extends React.PureComponent {
   state = { windowIsGreaterThan760px: true }
@@ -29,143 +34,87 @@ export default class MainPage extends React.PureComponent {
     })
   }
 
-  sectionItem(title, description, items, renderItems, styles) {
-    this.title = title
-    this.description = description
-    this.items = items
-    this.styles = styles
-    this.renderItems = () =>
-      this.items.map(item => renderItems(item, this.styles))
+  snapshot = {
+    title: "San José live election snapshot",
+    description: "See which San José candidates are raising and spending the most in local elections.",
+    items: [
+      {
+        number: "31%",
+        description1: "Of donations",
+        description2: "from the city of San José",
+      },
+      {
+        number: "$335,992",
+        description1: "Amount raised",
+        description2: "to date",
+      },
+      {
+        number: "34",
+        description1: "Candidates",
+        description2: "running",
+      },
+    ],
+    renderItems: SnapshotItem,
   }
 
-  renderSnapshotItems = (item, styles) => (
-    <div className={styles.item}>
-      <h2 className={styles.title}>{item.number}</h2>
-      <p className={styles.description}>{item.description1}</p>
-      <p className={styles.description}>{item.description2}</p>
-    </div>
-  )
+  candidates = {
+    title: "Get the facts before you vote",
+    description: "Find out which San José candidates are raising and spending the most in local elections.",
+    items: [
+      {
+        name: "Sam Liccardo",
+        position: "Mayor Incumbent",
+        amount: "$654,876",
+        image: "https://picsum.photos/180",
+      },
+      {
+        name: "Steve Brown",
+        position: "Mayoral candidate",
+        amount: "$600,000",
+        image: "https://picsum.photos/180",
+      },
+      {
+        name: "Tyrone Wade",
+        position: "Mayoral candidate",
+        amount: "$52,100",
+        image: "https://picsum.photos/180",
+      },
+      ],
+    renderItems: CandidateItem,
+    footer: () => (<ReactSVG src={tertiary} />)
+  }
 
-  renderCandidateItems = (item, styles) => (
-    <div className={styles.item}>
-      <img className={styles.title} src={item.image} />
-      <div>
-        <h2 className={styles.title}>{item.name}</h2>
-        <p className={styles.description}>{item.position}</p>
-        <p className={styles.description}>{item.amount}</p>
-      </div>
-    </div>
-  )
-
-  renderMiscItems = (item, styles) => (
-    <div className={styles.item}>
-      <img className={styles.title} src={item.image} />
-      <p className={styles.description}>{item.description1}</p>
-      <p className={styles.description}>{item.description2}</p>
-      <Button text={item.buttonText} />
-    </div>
-  )
+  behindTheScenes = {
+    title: "Go behind the scenes",
+    description: "Over $6,404,634 flowing into 2020 San Jose elections.",
+    items: [
+      {
+        title: "Take action on measures",
+        description1: "Track who opposes or supports",
+        description2: "upcoming ballot measures.",
+        buttonText: "View ballot measures",
+        image: "https://picsum.photos/300",
+      },
+      {
+        title: "Compare local candidates",
+        description1: "See who’s spending and raising",
+        description2: "the most.",
+        buttonText: "Browse candidates",
+        image: "https://picsum.photos/300",
+      },
+      {
+        title: "Get the finance facts",
+        description1: "Learn more about campaign",
+        description2: "finance data.",
+        buttonText: "Visit FAQs",
+        image: "https://picsum.photos/300",
+      },
+      ],
+    renderItems: BehindTheScenesItem
+  }
 
   render() {
     const { windowIsGreaterThan760px } = this.state
-    const explore = [
-      {
-        header: "Compare local candidates",
-        subheader: "See who's spending and raising the most",
-        button: "Compare candidates",
-      },
-      {
-        header: "Take action on measures",
-        subheader: "Track spending on upcoming ballot measures",
-        button: "View ballot measures",
-      },
-      {
-        header: "Get the finance facts",
-        subheader: "Learn more about campaign finance data",
-        button: "Get informed",
-      },
-    ]
-
-    const snapshot = new this.sectionItem(
-      "San José live election snapshot",
-      "See which San José candidates are raising and spending the most in local elections.",
-      [
-        {
-          number: "31%",
-          description1: "Of donations",
-          description2: "from the city of San José",
-        },
-        {
-          number: "$335,992",
-          description1: "Amount raised",
-          description2: "to date",
-        },
-        {
-          number: "34",
-          description1: "Candidates",
-          description2: "running",
-        },
-      ],
-      this.renderSnapshotItems,
-      snapshotStyles
-    )
-
-    const candidates = new this.sectionItem(
-      "Get the facts before you vote",
-      "Find out which San José candidates are raising and spending the most in local elections.",
-      [
-        {
-          name: "Sam Liccardo",
-          position: "Mayor Incumbent",
-          amount: "$654,876",
-          image: "https://picsum.photos/180",
-        },
-        {
-          name: "Steve Brown",
-          position: "Mayoral candidate",
-          amount: "$600,000",
-          image: "https://picsum.photos/180",
-        },
-        {
-          name: "Tyrone Wade",
-          position: "Mayoral candidate",
-          amount: "$52,100",
-          image: "https://picsum.photos/180",
-        },
-      ],
-      this.renderCandidateItems,
-      candidateStyles
-    )
-
-    const misc = new this.sectionItem(
-      "Go behind the scenes",
-      "Over $6,404,634 flowing into 2020 San Jose elections.",
-      [
-        {
-          title: "Take action on measures",
-          description1: "Track who opposes or supports",
-          description2: "upcoming ballot measures.",
-          buttonText: "View ballot measures",
-          image: "https://picsum.photos/300",
-        },
-        {
-          title: "Compare local candidates",
-          description1: "See who’s spending and raising",
-          description2: "the most.",
-          buttonText: "Browse candidates",
-          image: "https://picsum.photos/300",
-        },
-        {
-          title: "Get the finance facts",
-          description1: "Learn more about campaign",
-          description2: "finance data.",
-          buttonText: "Visit FAQs",
-          image: "https://picsum.photos/300",
-        },
-      ],
-      this.renderMiscItems,
-      miscStyles
-    )
 
     return (
       <Layout windowIsLarge={windowIsGreaterThan760px}>
@@ -192,33 +141,11 @@ export default class MainPage extends React.PureComponent {
               <ReactSVG src={blob} />
             </div>
           </section>
-          <MainPageSection secondary {...snapshot}></MainPageSection>
-          <MainPageSection offWhite {...candidates}></MainPageSection>
-          <MainPageSection {...misc}></MainPageSection>
-
-          {/* <section className={mainPageStyles.explore}>
-            <h1 className={mainPageStyles.exploreHeader}>Explore the Data</h1>
-            <p className={mainPageStyles.exploreSubheader}>
-              Over $6,404,634 flowing into 2020 San Jose elections
-            </p>
-            <div className={mainPageStyles.sectionItemContainer}>
-              {explore.map((item, i) => (
-                <div id={`item ${i}`} className={mainPageStyles.sectionItem}>
-                  <img src="https://picsum.photos/337/164" />
-                  <h3 className={mainPageStyles.sectionItemHeader}>
-                    {item.header}
-                  </h3>
-                  <p className={mainPageStyles.sectionItemSubheader}>
-                    {item.subheader}
-                  </p>
-                  <Button
-                    textStyle={{ fontWeight: "normal" }}
-                    text={item.button}
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
+          <MainPageSection secondary {...this.snapshot}></MainPageSection>
+          <MainPageSection offWhite {...this.candidates}></MainPageSection>
+          <MainPageSection {...this.behindTheScenes}></MainPageSection>
+          
+          {/* 
           <section className={mainPageStyles.about}>
             <div className={mainPageStyles.aboutText}>
               <h1>Power to the People</h1>

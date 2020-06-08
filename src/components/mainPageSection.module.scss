@@ -41,6 +41,11 @@ $primaryOffWhite: #fafafa;
   justify-content: space-around;
 }
 
+.sectionFooter {
+  align-items: center;
+  padding: 7rem 0 2rem;
+}
+
 .secondary {
   background-color: $primaryGreen;
   .sectionHeader * {
