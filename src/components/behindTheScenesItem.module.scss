@@ -1,0 +1,22 @@
+$primaryBlack: #1b1b1b;
+
+.container {
+  align-items: center;
+
+  h3, p {
+    color: $primaryBlack;
+  }
+  
+  h3 {
+    font-size: 2.8rem;
+    padding: 0.9rem;
+  }
+
+  p {
+    font-size: 2rem;
+  }
+
+  .footer {
+    margin-top: 4rem;
+  }
+}

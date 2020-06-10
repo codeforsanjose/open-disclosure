@@ -1,6 +1,5 @@
 // Libraries
 import React from "react"
-import { ReactSVG } from "react-svg"
 // Styles
 import mainPageStyles from "./index.module.scss"
 // Components
@@ -12,8 +11,12 @@ import SnapshotItem from '../components/snapshotItem'
 import CandidateItem from '../components/candidateItem'
 import BehindTheScenesItem from '../components/behindTheScenesItem'
 // Images
-import blob from "./../../static/images/Blob.svg"
-import tertiary from './../../static/images/Tertiary.svg'
+import blob from "./../../static/images/Blob.png"
+import tertiary from './../../static/images/Tertiary.png'
+import blue from './../../static/images/blue.png'
+import orange from './../../static/images/orange.png'
+import green from './../../static/images/green.png'
+
 
 export default class MainPage extends React.PureComponent {
   state = { windowIsGreaterThan760px: true }
@@ -81,7 +84,7 @@ export default class MainPage extends React.PureComponent {
       },
       ],
     renderItems: CandidateItem,
-    footer: () => (<ReactSVG src={tertiary} />)
+    footer: () => (<img height='37px' width='285px' src={tertiary} />)
   }
 
   behindTheScenes = {
@@ -93,21 +96,21 @@ export default class MainPage extends React.PureComponent {
         description1: "Track who opposes or supports",
         description2: "upcoming ballot measures.",
         buttonText: "View ballot measures",
-        image: "https://picsum.photos/300",
+        image: blue,
       },
       {
         title: "Compare local candidates",
         description1: "See who’s spending and raising",
         description2: "the most.",
         buttonText: "Browse candidates",
-        image: "https://picsum.photos/300",
+        image: orange,
       },
       {
         title: "Get the finance facts",
         description1: "Learn more about campaign",
         description2: "finance data.",
         buttonText: "Visit FAQs",
-        image: "https://picsum.photos/300",
+        image: green,
       },
       ],
     renderItems: BehindTheScenesItem
@@ -133,14 +136,15 @@ export default class MainPage extends React.PureComponent {
                 in local San José elections.
               </h3>
               <div className={mainPageStyles.heroButtonContainer}>
-                <Button secondary text="View measures" />
+                <Button secondary text="View measures" containerStyle={{marginRight: '1.6rem'}}/>
                 <Button text="Explore candidates" />
               </div>
             </div>
             <div className={mainPageStyles.heroRight}>
-              <ReactSVG src={blob} />
+              <img height='701' width='724' src={blob} />
             </div>
           </section>
+          
           <MainPageSection secondary {...this.snapshot}></MainPageSection>
           <MainPageSection offWhite {...this.candidates}></MainPageSection>
           <MainPageSection {...this.behindTheScenes}></MainPageSection>

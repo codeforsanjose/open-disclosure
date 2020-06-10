@@ -3,11 +3,14 @@ import styles from './behindTheScenesItem.module.scss'
 import Button from './button'
 
 const BehindTheScenesItem = item => (
-  <div className={styles.item}>
-    <img className={styles.title} src={item.image} />
-    <p className={styles.description}>{item.description1}</p>
-    <p className={styles.description}>{item.description2}</p>
-    <Button text={item.buttonText} />
+  <div className={styles.container}>
+    <img height='315px' src={item.image} />
+    <h3>{item.title}</h3>
+    <p>{item.description1}</p>
+    <p>{item.description2}</p>
+    <div className={styles.footer}>
+      <Button text={item.buttonText} />
+    </div>
   </div>
 )
 

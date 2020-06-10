@@ -12,13 +12,9 @@ const MainPageSection = props => (
         <p>{props.description}</p>
       </div>
       <div className={styles.sectionBody}>{props.items.map(item => props.renderItems(item))}</div>
-      <div className={styles.sectionFooter}>
-        {props.footer ? (<a href='/'>{props.footer()}</a>) : null}
+      {props.footer ? (<div className={styles.sectionFooter}><a href='/'>{props.footer()}</a></div>) : null}
       </div>
-    </div>
   </section>
 )
 
 export default MainPageSection
-
-  // < div className = { styles.sectionBody } > { props.renderItems() }</div >
