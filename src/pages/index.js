@@ -7,15 +7,20 @@ import Layout from "../components/layout"
 import Button from "../components/button"
 import Shadow from "../components/shadow"
 import MainPageSection from "../components/MainPageSection"
+import MainPagePic from '../components/mainPagePic'
 import SnapshotItem from '../components/snapshotItem'
 import CandidateItem from '../components/candidateItem'
 import BehindTheScenesItem from '../components/behindTheScenesItem'
 // Images
-import blob from "./../../static/images/Blob.png"
+import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from './../../static/images/Tertiary.png'
 import blue from './../../static/images/blue.png'
 import orange from './../../static/images/orange.png'
 import green from './../../static/images/green.png'
+import aboutBlob from './../../static/images/aboutBlob.png'
+import learnMore from './../../static/images/learnMore.png'
+import voteBlob from './../../static/images/voteBlob.png'
+import registerToVote from './../../static/images/registerToVote.png'
 
 
 export default class MainPage extends React.PureComponent {
@@ -116,6 +121,23 @@ export default class MainPage extends React.PureComponent {
     renderItems: BehindTheScenesItem
   }
 
+  about = {
+    title: 'Power to the people',
+    description: 'Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections',
+    linkTo: '/',
+    linkImg: learnMore,
+    image: aboutBlob,
+  }
+
+  vote = {
+    title: 'Your voice matters',
+    description: 'Register to vote or see if you\'re already registered in less than two minutes',
+    linkTo: '/',
+    linkImg: registerToVote,
+    image: voteBlob,
+  }
+
+
   render() {
     const { windowIsGreaterThan760px } = this.state
 
@@ -141,14 +163,16 @@ export default class MainPage extends React.PureComponent {
               </div>
             </div>
             <div className={mainPageStyles.heroRight}>
-              <img height='701' width='724' src={blob} />
+              <img height='701' width='724' src={headerBlob} />
             </div>
           </section>
-          
+
           <MainPageSection secondary {...this.snapshot}></MainPageSection>
           <MainPageSection offWhite {...this.candidates}></MainPageSection>
           <MainPageSection {...this.behindTheScenes}></MainPageSection>
-          
+          <MainPagePic {...this.about} />
+          <MainPagePic {...this.vote} reversed />
+
           {/* 
           <section className={mainPageStyles.about}>
             <div className={mainPageStyles.aboutText}>

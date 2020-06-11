@@ -26,6 +26,7 @@ $primaryOffWhite: #fafafa;
 
   h2 {
     font-size: resize(45);
+    margin-bottom: 2rem;
     font-family: "DM Sans";
   }
 
@@ -36,7 +37,7 @@ $primaryOffWhite: #fafafa;
 }
 
 .sectionBody {
-  margin-top: resize(41);
+  margin-top: 4rem;
   flex-direction: row;
   justify-content: space-around;
 }
