@@ -1,6 +1,7 @@
 import os
 import time
 from time import sleep
+import json
 
 import chromedriver_binary  # Adds chromedriver binary to path
 from webdriver_manager.chrome import ChromeDriverManager
@@ -16,19 +17,21 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
 # Custom python module
-from dircreator import DirCreator
-from preproccessing import PreProcessing
+from dirmanager import DirManager
+
 
 class SjcWebsite():
-    """This class represents an interface to interact with the elements on the SJC website.
-
+    """
+    This class represents an interface to interact with the elements on the SJC website.
     It abstracts away details like "what CSS class does a specific button have", and implementation details of the
     website, while still requiring users to understand how to navigate around the website.
     """
 
     def __init__(self):
-        # Selenium parsing variables
-        # Do Not Edit, append only
+        """
+        Selenium parsing variables
+        Do Not Edit, append only
+        """
         self.SEARCH_TABLE_ROW_ID = 'ctl00_GridContent_gridFilers_DXDataRow'
         self.SEARCH_TABLE_ROW_XPATH_CONTAINS = '//*[contains(@id,"ctl00_GridContent_gridFilers_DXDataRow")]'
         self.SEARCH_BUTTON_ID = 'ctl00_DefaultContent_ASPxRoundPanel1_btnFindFilers_CD'
@@ -68,6 +71,7 @@ class SjcWebsite():
         # First create array that handles ammendments, to ensure we're only downloading the latest/most accurate
         numFormTableRows = driver.find_elements_by_xpath(self.FORM_TABLE_ROW_XPATH_CONTAINS)
         downloadExcelRows = []
+        count = 0
         for i in range(len(numFormTableRows)):
             formTable_FormType = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[1]'.format(self.FORM_TABLE_ROW_ID,i))[0].text
             formTable_FilingPeriod = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.FORM_TABLE_ROW_ID,i))[0].text
@@ -83,6 +87,21 @@ class SjcWebsite():
                     continue
                 else:
                     downloadLinkElement.click()
+                    print(count)
+                    count += 1
+
+        FILER_ID = 'ctl00_DefaultContent_lblFilerNames'
+        filer_name = driver.find_element_by_id(FILER_ID).text
+        imported_data = {}
+
+        if os.path.isfile('candidate_info.json'):
+            with open('candidate_info.json', 'r') as fp:
+                imported_data = json.load(fp)
+
+        imported_data[filer_name].append(count)
+
+        with open('candidate_info.json', 'w') as fp:
+            json.dump(imported_data, fp, indent=4)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -147,6 +166,33 @@ class SjcWebsite():
                 numTableRowEntries.append(i)
         return numTableRowEntries
 
+    def getCandidatesData(self, driver, search_page_num, BALLOT_TYPE):
+        # Extract Filer Name and Candidate Name
+        numTableRows = driver.find_elements_by_xpath(self.SEARCH_TABLE_ROW_XPATH_CONTAINS)
+        followTableRowNums = ((search_page_num - 1 ) * 10)
+        candidates = {}
+        imported_data = {}
+        for i in range(0 + followTableRowNums, len(numTableRows) + followTableRowNums):
+            tableData_BallotType = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[9]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+            tableData_SupportOrOppose = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[8]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+
+            tableData_FilerName = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[3]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+            tableData_CandNameL = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+            tableData_CandNameF = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[5]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+
+            if tableData_BallotType == BALLOT_TYPE and tableData_SupportOrOppose != 'Oppose':
+                candidates[tableData_FilerName] = [tableData_CandNameL, tableData_CandNameF]
+
+        if os.path.isfile('candidate_info.json'):
+            with open('candidate_info.json', 'r') as fp:
+                imported_data = json.load(fp)
+
+        merged_candidate_data = {**imported_data, **candidates}
+
+        with open('candidate_info.json', 'w') as fp:
+            json.dump(merged_candidate_data, fp, indent=4)
+
+
 class Scraper():
     def __init__(self, BALLOT_TYPE):
         self.BALLOT_TYPE = BALLOT_TYPE
@@ -155,10 +201,11 @@ class Scraper():
 
         # create data folder in current directory to store files
         self.website = SjcWebsite()
-        self.new_dir = DirCreator(['data',self.BALLOT_TYPE])
+
+        self.download_dir_folder = ['data', self.BALLOT_TYPE]
+        self.new_dir = DirManager(self.download_dir_folder)
         self.new_dir.createFolder()
         self.download_dir = self.new_dir.getDirectory()
-
 
         options = webdriver.ChromeOptions()
         
@@ -192,8 +239,11 @@ class Scraper():
         self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver)+1):
+        # while False:
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
+
+            self.website.getCandidatesData(self.driver, search_page_num, self.BALLOT_TYPE)
         
             for entry_index in self.website.numTableEntries(self.driver, search_page_num, self.BALLOT_TYPE):
                 # will result in the website bringing us back to page 1.
@@ -213,10 +263,13 @@ class Scraper():
 
                     self.website.clickBackButton(self.driver)
                     self.website.verifySearchTableLoadComplete(self.driver)
+
         
-        # Custom module to aggregate data into single CSV
-        preproccessing = PreProcessing(self)
-        preproccessing.aggregateData()
+        
+        # # Custom module to execute preproccessing on the data post-scrape
+        # from preproccessing import PreProcessing
+        # preproccessing = PreProcessing(self.new_dir.folder, self.BALLOT_TYPE)
+        # preproccessing.aggregateData()
 
         # Close browser once scrape is complete
         self.driver.quit()
@@ -225,13 +278,11 @@ class Scraper():
 start_time = time.time()
 # Select Ballot type with array index
 BALLOT_TYPES = ['Ballot Measure', 'Office Sought']
-s = Scraper(BALLOT_TYPES[0])
+s = Scraper(BALLOT_TYPES[1])
 s.scrape()
 # Loop through both Ballot Types, uncomment below and comment above
 # for BALLOT_TYPE in BALLOT_TYPES:
-#     print("Scraping: {}".format(BALLOT_TYPE))
 #     s = Scraper(BALLOT_TYPE)
 #     s.scrape()
-#     print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))
 
 print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))
