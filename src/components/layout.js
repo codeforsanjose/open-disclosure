@@ -1,176 +1,129 @@
+// Libraries
 import React from "react"
-import { Link } from "gatsby"
-import layoutStyles from "./layout.module.scss"
-import "typeface-roboto"
-import "typeface-bitter"
+// Styles
+import styles from "./layout.module.scss"
+// Components
+import Navbar from './navbar'
+import Logo from './logo'
 
 export default class Layout extends React.PureComponent {
-  state = {
-    value: "",
-  }
+                 state = {
+                   value: "",
+                 }
 
-  links = [
-    {
-      name: "Candidates",
-      endpoint: "/",
-    },
-    {
-      name: "Measures",
-      endpoint: "/",
-    },
-    {
-      name: "About",
-      endpoint: "/",
-    },
-    {
-      name: "FAQ",
-      endpoint: "/",
-    },
-  ]
+                 links = [
+                   {
+                     name: "Candidates",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "Measures",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "About",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "FAQ",
+                     endpoint: "/",
+                   },
+                 ]
 
-  footerLinks = [
-    {
-      name: "Join Us",
-      endpoint: "/",
-    },
-    {
-      name: "Find Your Ballot",
-      endpoint: "/",
-    },
-    {
-      name: "Open Source",
-      endpoint: "/",
-    },
-    {
-      name: "Press",
-      endpoint: "/",
-    },
-  ]
+                 footerLinks = [
+                   {
+                     name: "Join Us",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "Find your ballot",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "Open source",
+                     endpoint: "/",
+                   },
+                   {
+                     name: "Press",
+                     endpoint: "/",
+                   },
+                 ]
 
-  handleSubmit() {}
+                 handleSubmit() {}
 
-  handleChange = ({ target: { value } }) => {
-    console.log(value)
-    this.setState({ value })
-  }
+                 handleChange = ({ target: { value } }) => {
+                   console.log(value)
+                   this.setState({ value })
+                 }
 
-  renderLogo(truncate = true) {
-    const { windowIsLarge } = this.props
-    const logo = () => (
-      <p>
-        <strong>Open Disclosure</strong> San José
-      </p>
-    )
+                 renderNavItems = items => (
+                   <ul>
+                     {items.map((item, index) => (
+                       <li
+                         key={`footer nav item ${item.name}`}
+                         className={styles.footerNavItem}
+                       >
+                         <a
+                           className={`${styles.footerNavItemText} ${styles.link}`}
+                           href={item.endpoint}
+                         >
+                           {item.name}
+                         </a>
+                       </li>
+                     ))}
+                   </ul>
+                 )
 
-    return (
-      <Link className={layoutStyles.headerText} to={"/"}>
-        {windowIsLarge ? logo() : truncate ? <p>ODSJ</p> : logo()}
-      </Link>
-    )
-  }
+                 render() {
+                   return (
+                     <div className={styles.container}>
+                       <Navbar links={this.links} />
 
-  render() {
-    return (
-      <div className={layoutStyles.container}>
-        {this.props.hideHeader ? null : (
-          <header className={layoutStyles.header}>
-            <div className={layoutStyles.headerInner}>
-              {this.renderLogo()}
-              <nav>
-                <ul className={layoutStyles.headerNav}>
-                  {this.links.map((item, index) => (
-                    <li
-                      key={`header nav item ${index}`}
-                      className={layoutStyles.headerNavItem}
-                    >
-                      <Link className={layoutStyles.link} to={item.endpoint}>
-                        <strong className={layoutStyles.headerNavItemText}>
-                          {item.name}
-                        </strong>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </header>
-        )}
-        {this.props.children}
-        <div className={layoutStyles.footer}>
-          <div className={layoutStyles.footerInner}>
-            <div className={layoutStyles.footerTop}>
-              <div className={layoutStyles.footerLeft}>
-                {this.renderLogo(false)}
-                <nav>
-                  <ul className={layoutStyles.footerNav}>
-                    <div className={layoutStyles.footerNavSection}>
-                      {this.links.map((item, index) => (
-                        <li
-                          key={`footer nav item ${index}`}
-                          className={layoutStyles.footerNavItem}
-                        >
-                          <Link
-                            className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
-                            to={item.endpoint}
-                          >
-                            {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </div>
-                    <div className={layoutStyles.footerNavSection}>
-                      {this.footerLinks.map((item, index) => (
-                        <li
-                          key={`footer nav item ${index}`}
-                          className={layoutStyles.footerNavItem}
-                        >
-                          <Link
-                            className={`${layoutStyles.footerNavItemText} ${layoutStyles.link}`}
-                            to={item.endpoint}
-                          >
-                            {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </div>
-                  </ul>
-                </nav>
-              </div>
-              <div className={layoutStyles.footerRight}>
-                <div className={layoutStyles.footerRightInner}>
-                  {/* To-Do: Replace with image */}
-                  <div className={layoutStyles.imgPlaceholder} />
-                  <h5>Updates delivered to your inbox</h5>
-                  <form onSubmit={this.handleSubmit}>
-                    <input
-                      className={layoutStyles.emailInput}
-                      type="email"
-                      placeholder="Enter your email address"
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                    />
-                    <input
-                      className={layoutStyles.submitForm}
-                      type="submit"
-                      value="Subscribe"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className={layoutStyles.footerBottom}>
-              <p>Brought to you by Code for San José</p>
-              <p>
-                Campaign finance data provided by the City of San José Public
-                Ethics Commission Public Portal for Campaign Finance and
-                Lobbyist Disclosure. Candidate and ballot measure information
-                gathered from information provided to the Santa Clara County
-                Registrar of Voters by the City of San José.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+                       {this.props.children}
+                       
+                       <footer className={styles.footer}>
+                         <div className={styles.footerInner}>
+                           <div className={styles.footerTop}>
+                             <div className={styles.footerLeft}>
+                               <Logo />
+                               <nav className={styles.footerNav}>
+                                {this.renderNavItems(this.links)}
+                                {this.renderNavItems(this.footerLinks)}
+                               </nav>
+                             </div>
+                             <div className={styles.footerRight}>
+                              <h2>Updates delivered to your inbox</h2>
+                              <form onSubmit={this.handleSubmit}>
+                                <input
+                                  className={styles.emailInput}
+                                  type="email"
+                                  placeholder="Enter your email address"
+                                  value={this.state.value}
+                                  onChange={this.handleChange}
+                                />
+                                <input
+                                  className={styles.submitForm}
+                                  type="submit"
+                                  value="Subscribe"
+                                />
+                              </form>
+                             </div>
+                           </div>
+                           <div className={styles.footerBottom}>
+                             <p>Brought to you by Code for San José</p>
+                             <p>
+                               Campaign finance data provided by the City of San
+                               José Public Ethics Commission Public Portal for
+                               Campaign Finance and Lobbyist Disclosure.
+                               Candidate and ballot measure information gathered
+                               from information provided to the Santa Clara
+                               County Registrar of Voters by the City of San
+                               José.
+                             </p>
+                           </div>
+                         </div>
+                       </footer>
+                     </div>
+                   )
+                 }
+               }

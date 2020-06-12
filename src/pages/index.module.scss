@@ -27,7 +27,6 @@ $underline: #00825466;
 
   .hero {
     flex-direction: row;
-    padding: 0;
     padding: 2.2rem 3rem 6.2rem 4.6rem;
   }
 
@@ -36,87 +35,8 @@ $underline: #00825466;
     justify-content: center;
   }
 
-  .heroText {
-    color: $primaryBlack;
-    font-size: resize(54);
-    line-height: resize(70);
-  }
-
-  .heroSubtext {
-    color: $primaryBlack;
-    font-weight: normal;
-    font-size: resize(28);
-    line-height: 3.4rem;
-    margin: 1rem 0 resize(62);
-  }
-
   .heroButtonContainer {
     flex-direction: row;
-  }
-
-  .explore {
-    padding-top: 7rem;
-    text-align: center;
-  }
-
-  .exploreHeader {
-    font-size: 4rem;
-  }
-
-  .exploreSubheader {
-    padding: 2rem 0;
-    font-size: 2.4rem;
-  }
-
-  .sectionItemContainer {
-    flex: 1;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .sectionItem {
-    align-items: center;
-    max-width: 337px;
-  }
-
-  .sectionItemHeader {
-    font-size: 2.4rem;
-    margin: 2rem 0 1rem;
-  }
-
-  .sectionItemSubheader {
-    font-size: 2rem;
-    padding: 2rem 0;
-  }
-
-  .about {
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .aboutText {
-    justify-content: center;
-    flex: 1;
-
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 2rem;
-    }
-    h3 {
-      color: $primaryGreen;
-      margin: 2rem 0;
-    }
-  }
-
-  .aboutImage {
-    flex: 1;
-    align-items: flex-end;
-  }
-
-  .reverse {
-    flex-direction: row-reverse;
-    .aboutImage {
-      align-items: flex-start;
-    }
+    margin-top: 6.2rem;
   }
 }

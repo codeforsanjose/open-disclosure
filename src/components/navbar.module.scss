@@ -1,0 +1,55 @@
+$primaryBlack: #1b1b1b;
+$primaryWhite: #fff;
+$secondaryGreen: #E3F9F1;
+$hoverGreen: #025B3C;
+
+.navbar {
+  align-items: center;
+  background-color: $primaryWhite;
+  box-shadow: 0px 2px 6px rgba(201, 201, 201, 0.7);
+  font-family: "Lato";
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}
+
+.logo {
+  color: $hoverGreen;
+  font-size: 2.8rem; 
+}
+
+.navigation {
+  flex-direction: row;
+  list-style-type: none;
+
+  li {
+    margin-left: 6rem;
+    font-size: 1.8rem;
+  }
+
+  li:hover {
+    .link {
+      color: $hoverGreen;
+    }
+    .selected {
+      opacity: 1;
+    }
+  }
+}
+
+.selected {
+  border-bottom: 8px solid $secondaryGreen;
+  opacity: 0;
+  margin-top: -8px;
+  z-index: 2;
+}
+
+.link, .link:visited {
+  color: $primaryBlack;
+  font-weight: bold;
+  z-index: 3;
+}

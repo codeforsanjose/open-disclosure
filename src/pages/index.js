@@ -12,6 +12,7 @@ import SnapshotItem from '../components/snapshotItem'
 import CandidateItem from '../components/candidateItem'
 import BehindTheScenesItem from '../components/behindTheScenesItem'
 // Images
+import title from "./../../static/images/title.png"
 import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from './../../static/images/Tertiary.png'
 import blue from './../../static/images/blue.png'
@@ -144,19 +145,9 @@ export default class MainPage extends React.PureComponent {
     return (
       <Layout windowIsLarge={windowIsGreaterThan760px}>
         <div className={mainPageStyles.container}>
-          <section className={mainPageStyles.hero}>
+          <header className={mainPageStyles.hero}>
             <div className={mainPageStyles.heroLeft}>
-              <h1 className={mainPageStyles.heroText}>
-                More money,
-                <br />
-                more transparency.
-              </h1>
-              <div />
-              <h3 className={mainPageStyles.heroSubtext}>
-                Keep tabs on the influence of money
-                <br />
-                in local San José elections.
-              </h3>
+              <img height='232px' width='607px' src={title} />
               <div className={mainPageStyles.heroButtonContainer}>
                 <Button secondary text="View measures" containerStyle={{marginRight: '1.6rem'}}/>
                 <Button text="Explore candidates" />
@@ -165,7 +156,7 @@ export default class MainPage extends React.PureComponent {
             <div className={mainPageStyles.heroRight}>
               <img height='701' width='724' src={headerBlob} />
             </div>
-          </section>
+          </header>
 
           <MainPageSection secondary {...this.snapshot}></MainPageSection>
           <MainPageSection offWhite {...this.candidates}></MainPageSection>
@@ -173,39 +164,6 @@ export default class MainPage extends React.PureComponent {
           <MainPagePic {...this.about} />
           <MainPagePic {...this.vote} reversed />
 
-          {/* 
-          <section className={mainPageStyles.about}>
-            <div className={mainPageStyles.aboutText}>
-              <h1>Power to the People</h1>
-              <p>
-                Open Disclosure was created to empower San Jose voters with
-                timely, accurate, and useful information about the role of money
-                in local elections.
-              </p>
-              <h3>Learn More -></h3>
-            </div>
-            <div className={mainPageStyles.aboutImage}>
-              <Shadow reverse big color="rgba(234, 60, 71, 0.8)">
-                <img src="https://picsum.photos/340/300" />
-              </Shadow>
-            </div>
-          </section>
-          <section
-            className={`${mainPageStyles.about} ${mainPageStyles.reverse}`}
-          >
-            <div className={mainPageStyles.aboutText}>
-              <h1>Register to Vote</h1>
-              <p>
-                Make your voice heard. Register to vote in less than 2 minutes.
-              </p>
-              <h3>Register to vote</h3>
-            </div>
-            <div className={mainPageStyles.aboutImage}>
-              <Shadow reverse big color="rgba(64, 150, 199, 0.8)">
-                <img src="https://picsum.photos/340/300" />
-              </Shadow>
-            </div>
-          </section> */}
         </div>
       </Layout>
     )
