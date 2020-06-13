@@ -77,6 +77,8 @@ $ gatsby develop
 
 ## How to Launch the Scraper
 
+### MacOS:
+
 ```
 % cd data_pipeline/scraper 
 % virtualenv env
@@ -86,6 +88,9 @@ $ gatsby develop
 
 (env) % python ./scraper.py
 ```
+### Windows:
+
+TBD
 
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
