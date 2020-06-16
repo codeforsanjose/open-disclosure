@@ -1,7 +1,7 @@
 // Libraries
 import React from "react"
 // Styles
-import mainPageStyles from "./index.module.scss"
+import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
 import Button from "../components/button"
@@ -140,21 +140,26 @@ export default class MainPage extends React.PureComponent {
 
 
   render() {
-    const { windowIsGreaterThan760px } = this.state
-
     return (
-      <Layout windowIsLarge={windowIsGreaterThan760px}>
-        <div className={mainPageStyles.container}>
-          <header className={mainPageStyles.hero}>
-            <div className={mainPageStyles.heroLeft}>
-              <img height='232px' width='607px' src={title} />
-              <div className={mainPageStyles.heroButtonContainer}>
+      <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
+        <div className={styles.container}>
+          <header className={styles.hero}>
+            <div className={styles.heroLeft}>
+              <h1>More money,
+                <br />
+                more transparency.
+              </h1>
+              <h2>Keep tabs on the influence of money
+                <br />
+                in local San José elections.
+              </h2>
+              <div className={styles.heroButtonContainer}>
                 <Button secondary text="View measures" containerStyle={{marginRight: '1.6rem'}}/>
                 <Button text="Explore candidates" />
               </div>
             </div>
-            <div className={mainPageStyles.heroRight}>
-              <img height='701' width='724' src={headerBlob} />
+            <div className={styles.heroRight}>
+              <img className="responsive" width="724px" src={headerBlob} />
             </div>
           </header>
 

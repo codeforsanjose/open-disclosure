@@ -9,7 +9,7 @@ const MainPagePic = (props) => {
   
   return (
     <section className={`${styles.container} ${reversed && styles.reversed}`}>
-      <img height='695px' width='665px' src={image} />
+      <img className="responsive" width="665px" src={image} />
       <div className={styles.content}>
         <h2>{title}</h2>
         <p>{description}</p>

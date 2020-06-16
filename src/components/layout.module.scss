@@ -4,7 +4,6 @@ $primaryGreen: #008254;
 .footer {
   background-color: #fafafa;
   padding: 0 6rem;
-  font-family: "Lato";
 }
 
 .footerInner {
@@ -40,7 +39,6 @@ $primaryGreen: #008254;
   a {
     display: block;
     text-shadow: none;
-    color: $primaryBlack;
     font-size: 2rem;
     line-height: 2.6rem;
   }
@@ -52,7 +50,6 @@ $primaryGreen: #008254;
   h2 {
     font-family: "DM Sans";
     font-size: 2.4rem;
-    color: $primaryBlack;
   }
 
   form {
@@ -77,28 +74,12 @@ $primaryGreen: #008254;
   padding: 1.3rem 2rem;
 }
 
-.emailInput::placeholder {
-  color: #555555;
-  opacity: 1;
-}
-
-/* Chrome/Opera/Safari */
-.emailInput::-webkit-input-placeholder {
-  color: #555555;
-  opacity: 1;
-}
-/* Firefox 19+ */
-.emailInput::-moz-placeholder {
-  color: #555555;
-  opacity: 1;
-}
-/* IE 10+ */
-.emailInput:-ms-input-placeholder {
-  color: #555555;
-  opacity: 1;
-}
-/* Firefox 18- */
-.emailInput:-moz-placeholder {
+.emailInput::placeholder, 
+.emailInput::-webkit-input-placeholder, 
+.emailInput:-ms-input-placeholder,
+.emailInput::-moz-placeholder,
+.emailInput:-moz-placeholder
+ {
   color: #555555;
   opacity: 1;
 }
@@ -123,7 +104,6 @@ $primaryGreen: #008254;
 
   p {
     font-size: 1.6rem;
-    color: $primaryBlack;
   }
 
   p:first-child {
@@ -137,20 +117,20 @@ $primaryGreen: #008254;
   }
 
   .footerTop {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
   }
 
   .footerLeft {
-    padding-left: 0;
     padding-bottom: 0;
+    padding-left: 0;
     text-align: left;
   }
 
   .footerRight {
     align-items: normal;
-    padding-top: 0;
     padding-bottom: 3rem;
+    padding-top: 0;
 
     h5 {
       font-size: 1.75rem;
@@ -167,7 +147,7 @@ $primaryGreen: #008254;
   }
 
   .submitForm {
-    max-width: 50%;
     align-self: center;
+    max-width: 50%;
   }
 }

@@ -1,28 +1,22 @@
 $primaryOffWhite: #fafafa;
 
-@function resize($size) {
-  $numerator: 6;
-  $denominator: 5;
-  @return ($denominator * ($size / 10)) / $numerator + rem;
-}
-
 .item {
   text-align: center;
 
   h2,
   p {
     color: $primaryOffWhite;
-    font-family: "DM Sans";
     font-weight: bold;
   }
 
   h2 {
-    font-size: resize(100);
-    line-height: resize(130);
+    font-size: 10rem;
+    line-height: 13rem;
   }
 
   p {
-    font-size: resize(20);
-    line-height: resize(31.2);
+    font-family: "DM Sans";
+    font-size: 2rem;
+    line-height: 2.6rem;
   }
 }

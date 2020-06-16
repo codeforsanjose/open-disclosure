@@ -1,15 +1,15 @@
 .container {
-  flex-direction: row;
   align-items: center;
+  flex-direction: row;
   padding: 9rem 4.6rem;
-
-  div {
+  
+  .content {
     padding: 10rem;
     
     h2 {
       font-size: 4.5rem;
     }
-
+  
     p {
       font-size: 2rem;
       line-height: 2.6rem;
@@ -17,6 +17,7 @@
     }
   }
 }
+
 
 .reversed {
   flex-direction: row-reverse;
