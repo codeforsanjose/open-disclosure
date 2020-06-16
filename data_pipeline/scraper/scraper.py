@@ -18,6 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 # Custom python module
 from dirmanager import DirManager
+from preprocessing import PreProcessing
 
 
 class SjcWebsite():
@@ -87,21 +88,9 @@ class SjcWebsite():
                     continue
                 else:
                     downloadLinkElement.click()
-                    print(count)
                     count += 1
-
-        FILER_ID = 'ctl00_DefaultContent_lblFilerNames'
-        filer_name = driver.find_element_by_id(FILER_ID).text
-        imported_data = {}
-
-        if os.path.isfile('candidate_info.json'):
-            with open('candidate_info.json', 'r') as fp:
-                imported_data = json.load(fp)
-
-        imported_data[filer_name].append(count)
-
-        with open('candidate_info.json', 'w') as fp:
-            json.dump(imported_data, fp, indent=4)
+        print('NUM DOWNLOADS {}'.format(count))
+        self.preprocessing.insertCandidates(count, self.CANDIDATENAME)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -154,58 +143,46 @@ class SjcWebsite():
     def clickEntryIndex(self, driver, index):
         driver.find_element_by_xpath('//*[@id="ctl00_GridContent_gridFilers_DXCBtn{}"]'.format(index)).click()
 
-    def numTableEntries(self, driver, search_page_num, BALLOT_TYPE):
+    def numTableEntries(self, driver, search_page_num):
         # Loop through all all items in the search table and retrieve the data            
         numTableRows = driver.find_elements_by_xpath(self.SEARCH_TABLE_ROW_XPATH_CONTAINS)
         followTableRowNums = ((search_page_num - 1 ) * 10)
         numTableRowEntries = []
         for i in range(0 + followTableRowNums, len(numTableRows) + followTableRowNums):
-            tableData_BallotType = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[9]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
-            tableData_SupportOrOppose = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[8]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
-            if tableData_BallotType == BALLOT_TYPE and tableData_SupportOrOppose != 'Oppose':
-                numTableRowEntries.append(i)
+            numTableRowEntries.append(i)
         return numTableRowEntries
 
-    def getCandidatesData(self, driver, search_page_num, BALLOT_TYPE):
-        # Extract Filer Name and Candidate Name
-        numTableRows = driver.find_elements_by_xpath(self.SEARCH_TABLE_ROW_XPATH_CONTAINS)
-        followTableRowNums = ((search_page_num - 1 ) * 10)
-        candidates = {}
-        imported_data = {}
-        for i in range(0 + followTableRowNums, len(numTableRows) + followTableRowNums):
-            tableData_BallotType = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[9]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
-            tableData_SupportOrOppose = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[8]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+    def getCandidatesData(self, driver, entry_index):
+        tableData_CandNameL = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        tableData_CandNameF = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[5]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
 
-            tableData_FilerName = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[3]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
-            tableData_CandNameL = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
-            tableData_CandNameF = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[5]'.format(self.SEARCH_TABLE_ROW_ID,i))[0].text
+        self.FILERNAME = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[3]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        self.CANDIDATENAME = '{} {}'.format(tableData_CandNameF, tableData_CandNameL)
+        print('CANIDATE NAME ->{}<-'.format(self.CANDIDATENAME))
 
-            if tableData_BallotType == BALLOT_TYPE and tableData_SupportOrOppose != 'Oppose':
-                candidates[tableData_FilerName] = [tableData_CandNameL, tableData_CandNameF]
+    # def restartTracker(self):
+    #     if os.path.isfile('restart_tracker.json'):
+    #         with open('restart_tracker.json', 'r') as fp:
+    #             imported_data = json.load(fp)
 
-        if os.path.isfile('candidate_info.json'):
-            with open('candidate_info.json', 'r') as fp:
-                imported_data = json.load(fp)
-
-        merged_candidate_data = {**imported_data, **candidates}
-
-        with open('candidate_info.json', 'w') as fp:
-            json.dump(merged_candidate_data, fp, indent=4)
-
+    #     with open('restart_tracker.json', 'w') as fp:
+    #         json.dump(merged_candidate_data, fp, indent=4)
 
 class Scraper():
-    def __init__(self, BALLOT_TYPE):
-        self.BALLOT_TYPE = BALLOT_TYPE
+    def __init__(self):
         self.DEFAULT_SLEEP_TIME = 5
         self.SEARCH_FORM_ADDRESS = 'https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx'
 
         # create data folder in current directory to store files
         self.website = SjcWebsite()
 
-        self.download_dir_folder = ['data', self.BALLOT_TYPE]
+        # self.download_dir_folder = ['data', self.BALLOT_TYPE]
+        self.download_dir_folder = ['data']
         self.new_dir = DirManager(self.download_dir_folder)
         self.new_dir.createFolder()
         self.download_dir = self.new_dir.getDirectory()
+
+        self.website.preprocessing = PreProcessing(self.download_dir)
 
         options = webdriver.ChromeOptions()
         
@@ -233,22 +210,25 @@ class Scraper():
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 
+
     def scrape(self):
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
         self.website.navigateToSearchPage(self.driver, self.SEARCH_FORM_ADDRESS)
         self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver)+1):
-        # while False:
+            print('PAGE {}'.format(search_page_num))
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
-
-            self.website.getCandidatesData(self.driver, search_page_num, self.BALLOT_TYPE)
         
-            for entry_index in self.website.numTableEntries(self.driver, search_page_num, self.BALLOT_TYPE):
+            for entry_index in self.website.numTableEntries(self.driver, search_page_num):
+                print('INDEX {}'.format(entry_index))
                 # will result in the website bringing us back to page 1.
+
+                # self.website.restartTracker(search_page_num)
+
                 self.website.navigateToPage(self.driver, search_page_num)
-                
+                self.website.getCandidatesData(self.driver, entry_index)
                 self.website.clickEntryIndex(self.driver, entry_index % 10)
                 
                 sleep(self.DEFAULT_SLEEP_TIME)
@@ -259,30 +239,26 @@ class Scraper():
                 else:
                     # If there are forms, then we will be brought to the "forms" page.
                     self.website.verifyDownloadFormTableLoadComplete(self.driver)
-                    self.website.downloadExcel(self.driver)
+                    if self.website.CANDIDATENAME == "Santa Clara County Government Attorneys' Association PAC":
+                        self.website.downloadExcel(self.driver)
 
                     self.website.clickBackButton(self.driver)
                     self.website.verifySearchTableLoadComplete(self.driver)
 
-        
-        
-        # # Custom module to execute preproccessing on the data post-scrape
-        # from preproccessing import PreProcessing
-        # preproccessing = PreProcessing(self.new_dir.folder, self.BALLOT_TYPE)
-        # preproccessing.aggregateData()
-
         # Close browser once scrape is complete
         self.driver.quit()
 
+        # ---------------------------------------------------------------
+        # Custom module to execute preprocessing on the data post-scrape
+        # Needs more work!!
+        # ---------------------------------------------------------------
+        # from preprocessing import PreProcessing
+        # preprocessing = PreProcessing(self.new_dir.folder, self.BALLOT_TYPE)
+        self.website.preprocessing.aggregateData()
+
 
 start_time = time.time()
-# Select Ballot type with array index
-BALLOT_TYPES = ['Ballot Measure', 'Office Sought']
-s = Scraper(BALLOT_TYPES[1])
+s = Scraper()
 s.scrape()
-# Loop through both Ballot Types, uncomment below and comment above
-# for BALLOT_TYPE in BALLOT_TYPES:
-#     s = Scraper(BALLOT_TYPE)
-#     s.scrape()
 
 print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))

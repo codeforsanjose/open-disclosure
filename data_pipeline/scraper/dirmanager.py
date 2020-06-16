@@ -10,7 +10,7 @@ class DirManager():
             self.folder_delimiter = '/'
         self.path = os.getcwd()
         sub_directory = self.folder_delimiter.join(input_directory).replace(' ','_')
-        self.folder = os.path.join(self.path, sub_directory) + self.folder_delimiter
+        self.folder = os.path.join(self.path, sub_directory)
 
         
     def createFolder(self):
