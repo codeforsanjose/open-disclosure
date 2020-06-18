@@ -142,7 +142,6 @@ export default class MainPage extends React.PureComponent {
   render() {
     return (
       <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
-        <span style={{backgroundColor: 'white', position: 'absolute', top: 0, left: 0, zIndex: 10}}>Window Size {`${this.state.width} px`} </span>
         <div className={styles.container}>
           <header className={styles.hero}>
             <div className={styles.heroLeft}>
