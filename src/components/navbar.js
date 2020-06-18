@@ -2,9 +2,11 @@ import React from 'react'
 import styles from './navbar.module.scss'
 import Logo from './logo'
 
+//Todo: Add hamburger menu
+
 const Navbar = (props) => (
   <nav className={styles.navbar}>
-    <Logo />
+    <Logo header />
     <ul className={styles.navigation}>
       {props.links.map((item, index) => (
         <li className={styles.item} key={`header nav item ${index}`}>

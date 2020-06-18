@@ -4,8 +4,7 @@ import React from "react"
 import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
-import Button from "../components/button"
-import Shadow from "../components/shadow"
+import Button from "../common/button/index"
 import MainPageSection from "../components/MainPageSection"
 import MainPagePic from '../components/mainPagePic'
 import SnapshotItem from '../components/snapshotItem'
@@ -25,7 +24,7 @@ import registerToVote from './../../static/images/registerToVote.png'
 
 
 export default class MainPage extends React.PureComponent {
-  state = { windowIsGreaterThan760px: true }
+  state = { windowIsGreaterThan760px: true, width: 0 }
   updateWindowDimensions = this.updateWindowDimensions.bind(this)
 
   componentDidMount() {
@@ -39,6 +38,7 @@ export default class MainPage extends React.PureComponent {
 
   updateWindowDimensions() {
     this.setState({
+      width: window.innerWidth,
       windowIsGreaterThan760px: window.innerWidth >= 760,
     })
   }
@@ -142,6 +142,7 @@ export default class MainPage extends React.PureComponent {
   render() {
     return (
       <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
+        <span style={{backgroundColor: 'white', position: 'absolute', top: 0, left: 0, zIndex: 10}}>Window Size {`${this.state.width} px`} </span>
         <div className={styles.container}>
           <header className={styles.hero}>
             <div className={styles.heroLeft}>
@@ -154,7 +155,7 @@ export default class MainPage extends React.PureComponent {
                 in local San José elections.
               </h2>
               <div className={styles.heroButtonContainer}>
-                <Button secondary text="View measures" containerStyle={{marginRight: '1.6rem'}}/>
+                <Button secondary text="View measures" containerStyle={this.state.windowIsGreaterThan760px ? {marginRight: '1.6rem'} : {marginBottom: '1.6rem'}}/>
                 <Button text="Explore candidates" />
               </div>
             </div>
@@ -167,7 +168,7 @@ export default class MainPage extends React.PureComponent {
           <MainPageSection offWhite {...this.candidates}></MainPageSection>
           <MainPageSection {...this.behindTheScenes}></MainPageSection>
           <MainPagePic {...this.about} />
-          <MainPagePic {...this.vote} reversed />
+          <MainPagePic {...this.vote} reversed={this.state.windowIsGreaterThan760px} />
 
         </div>
       </Layout>

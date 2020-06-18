@@ -1,5 +1,6 @@
 $primaryBlack: #1B1B1B;
 $primaryGreen: #008254;
+$hoverGreen: #025B3C;
 
 .footer {
   background-color: #fafafa;
@@ -47,7 +48,7 @@ $primaryGreen: #008254;
 .footerRight {
   justify-content: center;
 
-  h2 {
+  h5 {
     font-family: "DM Sans";
     font-size: 2.4rem;
   }
@@ -60,7 +61,6 @@ $primaryGreen: #008254;
     border-radius: 4px;
 
     input {
-      display: flex;
       font-size: 1.8rem;
     }
   }
@@ -97,6 +97,8 @@ $primaryGreen: #008254;
 
 .submitForm:hover {
   cursor: pointer;
+  border-color: $hoverGreen;
+  background-color: $hoverGreen;
 }
 
 .footerBottom {
@@ -112,13 +114,13 @@ $primaryGreen: #008254;
 }
 
 @media screen and (max-width: 760px) {
-  .headerNavItem {
-    margin-right: 1rem;
+  .footer {
+    padding: 3.2rem 2.6rem;
   }
 
   .footerTop {
-    align-items: center;
     flex-direction: column;
+    padding: 0;
   }
 
   .footerLeft {
@@ -127,27 +129,57 @@ $primaryGreen: #008254;
     text-align: left;
   }
 
+  .footerNav {
+    margin: 3rem 0;
+    padding: 0;
+
+    ul{
+      margin-right: 6rem;
+    }
+  }
+
+  .footerNavItem {
+    margin-bottom: 1.6rem;
+  
+    a {
+      font-size: 1.2rem;
+    }
+  }
+
   .footerRight {
     align-items: normal;
     padding-bottom: 3rem;
     padding-top: 0;
 
     h5 {
-      font-size: 1.75rem;
+      font-size: 1.4rem;
     }
 
-    form {
-      border-color: transparent;
-      flex-direction: column;
+    form input {
+      font-size: 1.2rem;  
+      display: block;
     }
+
   }
 
   .emailInput {
     margin: 0.5rem 0;
+    padding: 0.9rem;
   }
 
   .submitForm {
-    align-self: center;
-    max-width: 50%;
+    border-radius: 4px;
+    font-weight: bold;
+    margin: 1px;
+    padding: 0 1rem;
+  }
+
+  .footerBottom {
+    padding-bottom: 0;
+
+    p {
+      font-size: 1rem;
+      color: #787878;
+    }
   }
 }

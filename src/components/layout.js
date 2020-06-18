@@ -91,7 +91,7 @@ export default class Layout extends React.PureComponent {
                 </nav>
               </div>
               <div className={styles.footerRight}>
-              <h2>Updates delivered to your inbox</h2>
+              <h5>Updates delivered to your inbox</h5>
               <form onSubmit={this.handleSubmit}>
                 <input
                   className={styles.emailInput}

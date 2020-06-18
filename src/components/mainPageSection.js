@@ -1,6 +1,8 @@
 import React from "react"
 import styles from "./mainPageSection.module.scss"
 
+//Todo: Add carousel for candidate cards
+
 const MainPageSection = props => (
   <section
     className={`${styles.outerContainer} ${props.secondary &&

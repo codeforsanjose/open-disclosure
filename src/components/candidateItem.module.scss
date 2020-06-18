@@ -1,24 +1,26 @@
 $primaryGreen: #008254; 
 $primaryWhite: #fff;
+$secondaryGreen: #e3f9f1;
 $secondaryBlue: #deeffe;
 
-.item {
+.container {
   background-color: transparent;
   margin-top: 4rem;
 
-  img{
+  img {
+    align-self: center;
     background-color: #fff;
     border: 8px solid $secondaryBlue;
     border-radius: 50%;
-    margin: auto;
     max-height: 18rem;
     max-width: 18rem;
     object-fit: contain;
     z-index: 2;
   }
 
-  div {
+  .candidateInfo {
     background-color: $primaryWhite;
+    border-radius: 4px;
     margin-top: -9rem;
     padding: 10rem 10rem 4rem;
     text-align: center;
@@ -38,19 +40,52 @@ $secondaryBlue: #deeffe;
       line-height: 5.2rem;
       margin-top: 2.5rem;
     }
+
+    p {
+      color: #555555;
+      font-size: 1.4rem;
+      line-height: 1.82rem;
+    }
+
+    .amountRaised {
+      color: $primaryGreen;
+    }
   }
 
-  div:hover {
+  .candidateInfo:hover {
     box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.7);
   }
+}
 
-  p {
-    color: #555555;
-    font-size: 1.4rem;
-    line-height: 1.82rem;
-  }
+@media screen and (max-width: 760px) {
+  .container {
 
-  .amountRaised {
-    color: $primaryGreen;
+    img {
+      border: 5.3px solid $secondaryGreen;
+      max-width: 12rem;
+      height: auto;
+    }
+    
+    .candidateInfo {
+      margin-top: -6.3rem;
+      padding: 7.3rem 7rem 2.5rem;
+
+      h4 {
+        font-size: 1.3rem;
+        line-height: 1.7rem;
+      }
+
+      h3 {
+        font-size: 2.6rem;
+        line-height: 3.4rem;
+        margin-top: 1.3rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        line-height: 1.2rem;
+      }
+    }
+
   }
 }

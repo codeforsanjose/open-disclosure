@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './behindTheScenesItem.module.scss'
-import Button from './button'
+import Button from '../common/button'
 
 const BehindTheScenesItem = item => (
-  <div className={styles.item}>
+  <div className={styles.container}>
     <img height='315px' src={item.image} />
     <h3>{item.title}</h3>
     <p>{item.description1}</p>

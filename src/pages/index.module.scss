@@ -30,4 +30,37 @@ $underline: #00825466;
     flex-direction: row;
     margin-top: 6.2rem;
   }
+
+  @media screen and (max-width: 760px) {
+    .hero {
+      flex-direction: column;
+      padding: 4rem 0;
+    }
+
+    .heroLeft {
+      padding-left: 2.5rem;
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        line-height: 2.1rem;
+      }
+    }
+
+    .heroRight {
+      padding: 0 .5rem;
+    }
+
+    .heroButtonContainer {
+      flex-direction: column;
+      margin: 3.2rem 0;
+    }
+    .heroButtonContainer:first-child {
+      margin-bottom: 2rem;
+    }
+  }
+
 }

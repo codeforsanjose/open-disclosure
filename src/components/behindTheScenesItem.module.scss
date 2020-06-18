@@ -1,6 +1,6 @@
 $primaryBlack: #1b1b1b;
 
-.item {
+.container {
   align-items: center;
   margin-top: 4rem;
   
@@ -16,4 +16,26 @@ $primaryBlack: #1b1b1b;
   .footer {
     margin-top: 4rem;
   }
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    margin-bottom: 8rem;
+
+    img {
+      margin-bottom: 2.9rem;
+      max-width: 50%;
+      height: auto;
+
+    }
+
+    h3 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1.6rem;
+      line-height: 2.1rem;
+    }
+  } 
 }

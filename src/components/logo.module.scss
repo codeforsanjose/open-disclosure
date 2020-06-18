@@ -5,3 +5,13 @@ $hoverGreen: #025B3C;
   color: $hoverGreen;
   font-size: 2.8rem; 
 }
+
+@media screen and (max-width: 760px) {
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .header {
+    font-size: 1.6rem;
+  }
+}
