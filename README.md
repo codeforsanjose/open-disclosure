@@ -75,6 +75,28 @@ $ gatsby develop
 ```
 6. Open webpage in http://localhost:8000.
 
+## How to Launch the Scraper
+
+### MacOS:
+
+```
+% cd data_pipeline/scraper 
+% virtualenv env
+% source env/bin/activate
+
+(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium
+
+(env) % python ./scraper.py
+```
+### Windows:
+
+TBD
+
+The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
+of other python applications you may use.
+
+Executed on Mac OS 10.15.4 with Python 2.7.16 and Python 3.7.3 installed.
+
 ## How to Contribute
 0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
 - Communicate with the team on Slack (channel: #open-disclosure). 
