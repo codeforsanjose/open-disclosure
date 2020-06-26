@@ -1,6 +1,6 @@
-$primaryBlack: #1B1B1B;
+$primaryBlack: #1b1b1b;
 $primaryGreen: #008254;
-$hoverGreen: #025B3C;
+$hoverGreen: #025b3c;
 
 .footer {
   background-color: #fafafa;
@@ -28,15 +28,14 @@ $hoverGreen: #025B3C;
   padding-top: 6rem;
   padding-left: 1rem;
 
-   ul {
-     margin-right: 12.5rem;
-   }
+  ul {
+    margin-right: 12.5rem;
+  }
 }
 
 .footerNavItem {
-  list-style-type: none;
   margin-bottom: 3rem;
-  
+
   a {
     display: block;
     text-shadow: none;
@@ -74,12 +73,11 @@ $hoverGreen: #025B3C;
   padding: 1.3rem 2rem;
 }
 
-.emailInput::placeholder, 
-.emailInput::-webkit-input-placeholder, 
+.emailInput::placeholder,
+.emailInput::-webkit-input-placeholder,
 .emailInput:-ms-input-placeholder,
 .emailInput::-moz-placeholder,
-.emailInput:-moz-placeholder
- {
+.emailInput:-moz-placeholder {
   color: #555555;
   opacity: 1;
 }
@@ -133,14 +131,14 @@ $hoverGreen: #025B3C;
     margin: 3rem 0;
     padding: 0;
 
-    ul{
+    ul {
       margin-right: 6rem;
     }
   }
 
   .footerNavItem {
     margin-bottom: 1.6rem;
-  
+
     a {
       font-size: 1.2rem;
     }
@@ -156,10 +154,9 @@ $hoverGreen: #025B3C;
     }
 
     form input {
-      font-size: 1.2rem;  
+      font-size: 1.2rem;
       display: block;
     }
-
   }
 
   .emailInput {

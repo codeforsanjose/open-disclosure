@@ -3,8 +3,8 @@ import React from "react"
 // Styles
 import styles from "./layout.module.scss"
 // Components
-import Navbar from './navbar'
-import Logo from './logo'
+import Navbar from "./navbar"
+import Logo from "./logo"
 
 export default class Layout extends React.PureComponent {
   state = {
@@ -15,6 +15,20 @@ export default class Layout extends React.PureComponent {
     {
       name: "Candidates",
       endpoint: "/",
+      links: [
+        {
+          position: "Mayor",
+          endpoint: "/",
+        },
+        {
+          position: "City Auditor",
+          endpoint: "/",
+        },
+        {
+          position: "City Council",
+          endpoint: "/",
+        },
+      ],
     },
     {
       name: "Measures",
@@ -63,11 +77,7 @@ export default class Layout extends React.PureComponent {
           key={`footer nav item ${item.name}`}
           className={styles.footerNavItem}
         >
-          <a
-            href={item.endpoint}
-          >
-            {item.name}
-          </a>
+          <a href={item.endpoint}>{item.name}</a>
         </li>
       ))}
     </ul>
@@ -76,48 +86,46 @@ export default class Layout extends React.PureComponent {
   render() {
     return (
       <div className={styles.container}>
-        <Navbar links={this.links} />
+        <Navbar links={this.links} windowIsLarge={this.props.windowIsLarge} />
 
         {this.props.children}
-        
+
         <footer className={styles.footer}>
           <div className={styles.footerInner}>
             <div className={styles.footerTop}>
               <div className={styles.footerLeft}>
                 <Logo />
                 <nav className={styles.footerNav}>
-                {this.renderNavItems(this.links)}
-                {this.renderNavItems(this.footerLinks)}
+                  {this.renderNavItems(this.links)}
+                  {this.renderNavItems(this.footerLinks)}
                 </nav>
               </div>
               <div className={styles.footerRight}>
-              <h5>Updates delivered to your inbox</h5>
-              <form onSubmit={this.handleSubmit}>
-                <input
-                  className={styles.emailInput}
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
-                <input
-                  className={styles.submitForm}
-                  type="submit"
-                  value="Subscribe"
-                />
-              </form>
+                <h5>Updates delivered to your inbox</h5>
+                <form onSubmit={this.handleSubmit}>
+                  <input
+                    className={styles.emailInput}
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                  <input
+                    className={styles.submitForm}
+                    type="submit"
+                    value="Subscribe"
+                  />
+                </form>
               </div>
             </div>
             <div className={styles.footerBottom}>
               <p>Brought to you by Code for San José</p>
               <p>
-                Campaign finance data provided by the City of San
-                José Public Ethics Commission Public Portal for
-                Campaign Finance and Lobbyist Disclosure.
-                Candidate and ballot measure information gathered
-                from information provided to the Santa Clara
-                County Registrar of Voters by the City of San
-                José.
+                Campaign finance data provided by the City of San José Public
+                Ethics Commission Public Portal for Campaign Finance and
+                Lobbyist Disclosure. Candidate and ballot measure information
+                gathered from information provided to the Santa Clara County
+                Registrar of Voters by the City of San José.
               </p>
             </div>
           </div>

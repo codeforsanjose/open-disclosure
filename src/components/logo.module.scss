@@ -1,9 +1,10 @@
-
-$hoverGreen: #025B3C;
+$hoverGreen: #025b3c;
 
 .logo {
   color: $hoverGreen;
-  font-size: 2.8rem; 
+  display: block;
+  font-size: 2.8rem;
+  width: max-content;
 }
 
 @media screen and (max-width: 760px) {

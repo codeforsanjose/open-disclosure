@@ -6,22 +6,21 @@ import styles from "./index.module.scss"
 import Layout from "../components/layout"
 import Button from "../common/button/index"
 import MainPageSection from "../components/MainPageSection"
-import MainPagePic from '../components/mainPagePic'
-import SnapshotItem from '../components/snapshotItem'
-import CandidateItem from '../components/candidateItem'
-import BehindTheScenesItem from '../components/behindTheScenesItem'
+import MainPagePic from "../components/mainPagePic"
+import SnapshotItem from "../components/snapshotItem"
+import CandidateItem from "../components/candidateItem"
+import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
 import title from "./../../static/images/title.png"
 import headerBlob from "./../../static/images/headerBlob.png"
-import tertiary from './../../static/images/Tertiary.png'
-import blue from './../../static/images/blue.png'
-import orange from './../../static/images/orange.png'
-import green from './../../static/images/green.png'
-import aboutBlob from './../../static/images/aboutBlob.png'
-import learnMore from './../../static/images/learnMore.png'
-import voteBlob from './../../static/images/voteBlob.png'
-import registerToVote from './../../static/images/registerToVote.png'
-
+import tertiary from "./../../static/images/Tertiary.png"
+import blue from "./../../static/images/blue.png"
+import orange from "./../../static/images/orange.png"
+import green from "./../../static/images/green.png"
+import aboutBlob from "./../../static/images/aboutBlob.png"
+import learnMore from "./../../static/images/learnMore.png"
+import voteBlob from "./../../static/images/voteBlob.png"
+import registerToVote from "./../../static/images/registerToVote.png"
 
 export default class MainPage extends React.PureComponent {
   state = { windowIsGreaterThan760px: true, width: 0 }
@@ -45,7 +44,8 @@ export default class MainPage extends React.PureComponent {
 
   snapshot = {
     title: "San José live election snapshot",
-    description: "See which San José candidates are raising and spending the most in local elections.",
+    description:
+      "See which San José candidates are raising and spending the most in local elections.",
     items: [
       {
         number: "31%",
@@ -68,7 +68,8 @@ export default class MainPage extends React.PureComponent {
 
   candidates = {
     title: "Get the facts before you vote",
-    description: "Find out which San José candidates are raising and spending the most in local elections.",
+    description:
+      "Find out which San José candidates are raising and spending the most in local elections.",
     items: [
       {
         name: "Sam Liccardo",
@@ -88,9 +89,9 @@ export default class MainPage extends React.PureComponent {
         amount: "$52,100",
         image: "https://picsum.photos/180",
       },
-      ],
+    ],
     renderItems: CandidateItem,
-    footer: () => (<img height='37px' width='285px' src={tertiary} />)
+    footer: () => <img height="37px" width="285px" src={tertiary} />,
   }
 
   behindTheScenes = {
@@ -118,26 +119,27 @@ export default class MainPage extends React.PureComponent {
         buttonText: "Visit FAQs",
         image: green,
       },
-      ],
-    renderItems: BehindTheScenesItem
+    ],
+    renderItems: BehindTheScenesItem,
   }
 
   about = {
-    title: 'Power to the people',
-    description: 'Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections',
-    linkTo: '/',
+    title: "Power to the people",
+    description:
+      "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections",
+    linkTo: "/",
     linkImg: learnMore,
     image: aboutBlob,
   }
 
   vote = {
-    title: 'Your voice matters',
-    description: 'Register to vote or see if you\'re already registered in less than two minutes',
-    linkTo: '/',
+    title: "Your voice matters",
+    description:
+      "Register to vote or see if you're already registered in less than two minutes",
+    linkTo: "/",
     linkImg: registerToVote,
     image: voteBlob,
   }
-
 
   render() {
     return (
@@ -145,16 +147,26 @@ export default class MainPage extends React.PureComponent {
         <div className={styles.container}>
           <header className={styles.hero}>
             <div className={styles.heroLeft}>
-              <h1>More money,
+              <h1>
+                More money,
                 <br />
                 more transparency.
               </h1>
-              <h2>Keep tabs on the influence of money
+              <h2>
+                Keep tabs on the influence of money
                 <br />
                 in local San José elections.
               </h2>
               <div className={styles.heroButtonContainer}>
-                <Button secondary text="View measures" containerStyle={this.state.windowIsGreaterThan760px ? {marginRight: '1.6rem'} : {marginBottom: '1.6rem'}}/>
+                <Button
+                  secondary
+                  text="View measures"
+                  containerStyle={
+                    this.state.windowIsGreaterThan760px
+                      ? { marginRight: "1.6rem" }
+                      : { marginBottom: "1.6rem" }
+                  }
+                />
                 <Button text="Explore candidates" />
               </div>
             </div>
@@ -167,8 +179,10 @@ export default class MainPage extends React.PureComponent {
           <MainPageSection offWhite {...this.candidates}></MainPageSection>
           <MainPageSection {...this.behindTheScenes}></MainPageSection>
           <MainPagePic {...this.about} />
-          <MainPagePic {...this.vote} reversed={this.state.windowIsGreaterThan760px} />
-
+          <MainPagePic
+            {...this.vote}
+            reversed={this.state.windowIsGreaterThan760px}
+          />
         </div>
       </Layout>
     )
