@@ -3,6 +3,7 @@ import styles from "./navbar.module.scss"
 import Logo from "./logo"
 import NavbarItem from "./navbarItem"
 import Menu from "./menu"
+import HamburgerIcon from "../common/hamburgerIcon"
 
 class Navbar extends Component {
   state = { menuIsOpen: false }
@@ -22,16 +23,10 @@ class Navbar extends Component {
     return (
       <nav className={styles.navbar}>
         <Logo header containerStyle={styles.logo} />
-        <div className={styles.hamburgerShell} onClick={this.handleClick}>
-          <div
-            className={`${styles.top} ${this.state.menuIsOpen &&
-              styles.rotate}`}
-          />
-          <div
-            className={`${styles.bottom} ${this.state.menuIsOpen &&
-              styles.rotateBack}`}
-          />
-        </div>
+        <HamburgerIcon
+          handleClick={this.handleClick}
+          menuIsOpen={this.state.menuIsOpen}
+        />
         <Menu menuIsOpen={this.state.menuIsOpen}>
           {this.links.map((item, index) => (
             <NavbarItem
