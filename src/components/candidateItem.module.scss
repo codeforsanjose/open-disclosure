@@ -1,11 +1,11 @@
-$primaryGreen: #008254; 
+$primaryGreen: #008254;
 $primaryWhite: #fff;
 $secondaryGreen: #e3f9f1;
 $secondaryBlue: #deeffe;
 
 .container {
   background-color: transparent;
-  margin-top: 4rem;
+  margin: 4rem 1.5rem 0;
 
   img {
     align-self: center;
@@ -26,7 +26,9 @@ $secondaryBlue: #deeffe;
     text-align: center;
     z-index: 1;
 
-    h3, h4, p {
+    h3,
+    h4,
+    p {
       font-family: "Lato";
     }
 
@@ -59,13 +61,12 @@ $secondaryBlue: #deeffe;
 
 @media screen and (max-width: 760px) {
   .container {
-
     img {
       border: 5.3px solid $secondaryGreen;
       max-width: 12rem;
       height: auto;
     }
-    
+
     .candidateInfo {
       margin-top: -6.3rem;
       padding: 7.3rem 7rem 2.5rem;
@@ -86,6 +87,5 @@ $secondaryBlue: #deeffe;
         line-height: 1.2rem;
       }
     }
-
   }
 }

@@ -63,7 +63,7 @@ export default class MainPage extends React.PureComponent {
         description2: "running",
       },
     ],
-    renderItems: SnapshotItem,
+    renderItem: SnapshotItem,
   }
 
   candidates = {
@@ -90,7 +90,7 @@ export default class MainPage extends React.PureComponent {
         image: "https://picsum.photos/180",
       },
     ],
-    renderItems: CandidateItem,
+    renderItem: CandidateItem,
     footer: () => <img height="37px" width="285px" src={tertiary} />,
   }
 
@@ -120,7 +120,7 @@ export default class MainPage extends React.PureComponent {
         image: green,
       },
     ],
-    renderItems: BehindTheScenesItem,
+    renderItem: BehindTheScenesItem,
   }
 
   about = {
@@ -176,7 +176,12 @@ export default class MainPage extends React.PureComponent {
           </header>
 
           <MainPageSection secondary {...this.snapshot}></MainPageSection>
-          <MainPageSection offWhite {...this.candidates}></MainPageSection>
+          <MainPageSection
+            offWhite
+            carousel
+            windowIsLarge={this.state.windowIsGreaterThan760px}
+            {...this.candidates}
+          ></MainPageSection>
           <MainPageSection {...this.behindTheScenes}></MainPageSection>
           <MainPagePic {...this.about} />
           <MainPagePic

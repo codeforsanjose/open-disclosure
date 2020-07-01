@@ -13,9 +13,15 @@ const MainPageSection = props => (
         <h2>{props.title}</h2>
         <p>{props.description}</p>
       </div>
-      <div className={styles.sectionBody}>{props.items.map(item => props.renderItems(item))}</div>
-      {props.footer ? (<div className={styles.sectionFooter}><a href='/'>{props.footer()}</a></div>) : null}
+      <div className={styles.sectionBody}>
+        {props.items.map(item => props.renderItem(item))}
       </div>
+      {props.footer ? (
+        <div className={styles.sectionFooter}>
+          <a href="/">{props.footer()}</a>
+        </div>
+      ) : null}
+    </div>
   </section>
 )
 
