@@ -3,7 +3,6 @@ import styles from "./menu.module.scss"
 
 export default class Menu extends Component {
   render() {
-    console.log(this.props)
     return (
       <ul
         className={`${styles.navigation} ${styles.closed} ${this.props

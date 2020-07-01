@@ -66,7 +66,6 @@ export default class Layout extends React.PureComponent {
   handleSubmit() {}
 
   handleChange = ({ target: { value } }) => {
-    console.log(value)
     this.setState({ value })
   }
 
