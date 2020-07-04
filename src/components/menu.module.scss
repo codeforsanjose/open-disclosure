@@ -1,0 +1,32 @@
+.navigation {
+  flex-direction: row;
+}
+
+.submenu {
+  width: 0;
+}
+
+@media screen and (max-width: 760px) {
+  .navigation {
+    width: 100%;
+    flex-direction: column;
+    transition: all 350ms ease-in-out;
+    margin-left: 0;
+  }
+
+  .closed {
+    height: 0vh;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .open {
+    height: 100vh;
+    transform: scaleY(1);
+  }
+
+  .openSubmenu {
+    height: 13rem;
+    transform: scaleY(1);
+  }
+}

@@ -1,0 +1,47 @@
+$primaryGreen: #008254;
+$secondaryGreen: #025B3C;
+
+// Resizes Figma values to a 6:5 ratio and converts to rem
+@function resize($size) {
+  @return (5 * ($size / 10)) / 6 + rem;
+}
+
+.container {
+  width: max-content;
+  padding: 1.7rem 3rem;
+  background-color: $primaryGreen;
+  border: 2px solid $primaryGreen;
+  border-radius: 4px;
+
+  .buttonText {
+    font-family: "DM Sans";
+    font-weight: bold;
+    font-size: resize(20);
+    color: #fff;
+  }
+}
+
+.secondary {
+  background-color: #fff;
+
+  .buttonText {
+    color: $primaryGreen;
+  }
+}
+
+.container:hover {
+  background-color: $secondaryGreen;
+  border-color: $secondaryGreen;
+}
+
+.secondary:hover {
+  background-color: $primaryGreen;
+  border-color: $primaryGreen;
+
+  .buttonText {
+    color: #fff;
+  }
+}
+
+.container:active {
+}

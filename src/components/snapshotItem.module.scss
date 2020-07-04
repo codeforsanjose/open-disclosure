@@ -1,0 +1,45 @@
+$primaryOffWhite: #fafafa;
+
+.container {
+  text-align: center;
+
+  h2,
+  p {
+    color: $primaryOffWhite;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 10rem;
+    line-height: 13rem;
+  }
+
+  p {
+    font-family: "DM Sans";
+    font-size: 2rem;
+    line-height: 2.6rem;
+  }
+}
+
+@media screen and (max-width: 760px) {
+.container {
+  padding-bottom: 4rem;
+
+ h2 {
+   font-size: 4.5rem;
+   line-height: 5.9rem;
+ }
+
+ p {
+   font-size: 1.6rem;
+   line-height: 2.1rem;
+ }
+}
+
+.container:last-child {
+  padding-bottom: 0;
+}
+
+
+
+}

@@ -1,104 +1,66 @@
+$primaryBlack: #1b1b1b;
+$primaryGreen: #008254;
+$secondaryGreen: #eafff7;
+$underline: #00825466;
+
 .container {
-  section {
-    display: flex;
-    flex: 1;
-    padding: 10rem;
-    flex-direction: column;
-  }
-
-  h1,
-  h2 {
-    font-family: "Bitter";
-  }
-
-  h1 {
-    color: #0073b5;
-  }
-
-  .header {
-    background-color: lightblue;
-  }
-
-  .headerText {
-    color: white;
-    font-size: 4rem;
-  }
-
-  .headerSubtext {
-    color: white;
-    font-weight: normal;
-    font-size: 2.3rem;
-    margin: 3rem 0;
-  }
-
-  .explore {
-    padding-top: 7rem;
-    text-align: center;
-  }
-
-  .exploreHeader {
-    font-size: 4rem;
-  }
-
-  .exploreSubheader {
-    padding: 2rem 0;
-    font-size: 2.4rem;
-  }
-
-  .sectionItemContainer {
-    flex: 1;
+  .hero {
     flex-direction: row;
-    justify-content: space-between;
+    padding: 2.2rem 3rem 6.2rem 4.6rem;
   }
 
-  .sectionItem {
-    align-items: baseline;
-    text-align: start;
-    max-width: 337px;
-  }
-
-  .sectionItemHeader {
-    font-family: "Bitter";
-    font-size: 2.4rem;
-    margin: 2rem 0 1rem;
-  }
-
-  .sectionItemSubheader {
-    font-size: 2rem;
-    padding: 2rem 0;
-  }
-
-  .about {
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .aboutText {
+  .heroLeft {
+    flex: 1;
     justify-content: center;
-    flex: 1;
 
     h1 {
-      font-size: 4rem;
+      font-size: 4.8rem;
       margin-bottom: 2rem;
     }
-    h3 {
-      color: #ea3c47;
-      margin: 2rem 0;
-      text-decoration: underline;
-      text-underline-offset: 1rem;
-      text-decoration-thickness: 0.3rem;
+
+    h2 {
+      font-family: "Lato";
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 3.4rem;
     }
   }
 
-  .aboutImage {
-    flex: 1;
-    align-items: flex-end;
+  .heroButtonContainer {
+    flex-direction: row;
+    margin-top: 6.2rem;
   }
 
-  .reverse {
-    flex-direction: row-reverse;
-    .aboutImage {
-      align-items: flex-start;
+  @media screen and (max-width: 760px) {
+    .hero {
+      flex-direction: column;
+      padding: 4rem 0;
+    }
+
+    .heroLeft {
+      padding-left: 2.5rem;
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        line-height: 2.1rem;
+      }
+    }
+
+    .heroRight {
+      padding: 0 .5rem;
+    }
+
+    .heroButtonContainer {
+      flex-direction: column;
+      margin: 3.2rem 0;
+    }
+    .heroButtonContainer:first-child {
+      margin-bottom: 2rem;
     }
   }
+
 }

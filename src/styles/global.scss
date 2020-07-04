@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+$primaryBlack: #1b1b1b;
+$primaryGreen: #008254;
+$secondaryGreen: #eafff7;
+$underline: #00825466;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 10px;
+  line-height: 1.15;
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  color: $primaryBlack;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "DM Sans";
+}
+
+p {
+  font-family: "Lato";
+}
+
+div,
+section,
+header,
+nav,
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+.responsive {
+  max-height: auto;
+  max-width: 100%;
+  min-width: 50%;
+}
