@@ -103,6 +103,7 @@ export default class Layout extends React.PureComponent {
                 <h5>Updates delivered to your inbox</h5>
                 <form onSubmit={this.handleSubmit}>
                   <input
+                    aria-label="email"
                     className={styles.emailInput}
                     type="email"
                     placeholder="Enter your email address"
@@ -110,6 +111,7 @@ export default class Layout extends React.PureComponent {
                     onChange={this.handleChange}
                   />
                   <input
+                    aria-label="subscribe"
                     className={styles.submitForm}
                     type="submit"
                     value="Subscribe"

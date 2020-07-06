@@ -37,20 +37,25 @@ class NavbarItem extends Component {
     )
   }
 
+  toggleMenu = () => {
+    this.state.hasLinks && this.setState(prevState => ({
+      ...prevState,
+      menuItemIsOpen: !prevState.menuItemIsOpen,
+    }));
+  }
+
   render() {
     const { menuItemIsOpen, hasLinks } = this.state
 
     return (
       <li
-        onClick={() => {
-          if (hasLinks) {
-            this.setState({ menuItemIsOpen: !menuItemIsOpen })
-          }
-        }}
         className={`${styles.item} ${this.props.hidden && styles.hidden} ${this
           .props.menuIsOpen && styles.open} ${this.props.submenu &&
           styles.submenu}`}
         key={`link item ${this.props.name}`}
+        onClick={this.toggleMenu}
+        onKeyUp={this.toggleMenu}
+        role="presentation"
       >
         <this.Anchor>
           <div className={`${styles.linkInner}`}>
@@ -59,6 +64,7 @@ class NavbarItem extends Component {
           </div>
           {hasLinks || this.props.arrow ? (
             <img
+              alt="link-arrow"
               src={linkArrow}
               height="9.2px"
               width="15.5px"

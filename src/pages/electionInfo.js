@@ -3,7 +3,6 @@ import Layout from "../components/layout"
 import electionInfoStyles from "./electionInfo.module.css"
 import SideNav from "../components/sideNav"
 import BallotInfo from "../components/ballotInfo"
-import CandidateInfo from "../components/candidateInfo"
 import MeasureInfo from "../components/measureInfo"
 
 export default class electionInfo extends PureComponent {
