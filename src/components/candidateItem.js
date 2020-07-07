@@ -1,8 +1,9 @@
-import React from 'react'
-import styles from './candidateItem.module.scss'
+import React from 'react';
+
+import styles from './candidateItem.module.scss';
 
 const CandidateItem = item => (
-  <div className={styles.container}>
+  <div className={styles.container} key={item.name}>
     <img alt="candidate" height='180px' width='180px' src={item.image} />
     <div className={styles.candidateInfo}>
       <h4>{item.name}</h4>
@@ -13,6 +14,6 @@ const CandidateItem = item => (
       </p>
     </div>
   </div>
-)
+);
 
-  export default CandidateItem
+export default CandidateItem;

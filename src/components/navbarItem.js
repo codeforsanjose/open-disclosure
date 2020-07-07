@@ -75,8 +75,8 @@ class NavbarItem extends Component {
         </this.Anchor>
         {hasLinks ? (
           <Menu menuIsOpen={this.state.menuItemIsOpen} submenu>
-            {this.props.links.map(({ position, endpoint }) => {
-              return <NavbarItem name={position} endpoint={endpoint} submenu />
+            {this.props.links.map(({ position, endpoint }, index) => {
+              return <NavbarItem name={position} endpoint={endpoint} key={index} submenu />
             })}
           </Menu>
         ) : null}

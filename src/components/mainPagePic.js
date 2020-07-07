@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-import styles from './mainPagePic.module.scss'
+import styles from './mainPagePic.module.scss';
 
 const MainPagePic = (props) => {
-  const { reversed, title, description, linkTo, linkImg, image } = props
+  const { reversed, title, description, linkTo, linkImg, image } = props;
 
   return (
     <section className={`${styles.container} ${reversed && styles.reversed}`}>
@@ -16,7 +16,7 @@ const MainPagePic = (props) => {
         </a>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default MainPagePic
