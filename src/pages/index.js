@@ -11,7 +11,6 @@ import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
 import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
-import title from "./../../static/images/title.png"
 import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from "./../../static/images/Tertiary.png"
 import blue from "./../../static/images/blue.png"
@@ -91,7 +90,7 @@ export default class MainPage extends React.PureComponent {
       },
     ],
     renderItem: CandidateItem,
-    footer: () => <img height="37px" width="285px" src={tertiary} />,
+    footer: () => <img alt="candidates" height="37px" width="285px" src={tertiary} />,
   }
 
   behindTheScenes = {
@@ -171,7 +170,7 @@ export default class MainPage extends React.PureComponent {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <img className="responsive" width="724px" src={headerBlob} />
+              <img alt="header" className="responsive" width="724px" src={headerBlob} />
             </div>
           </header>
 

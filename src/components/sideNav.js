@@ -2,6 +2,10 @@ import React, { PureComponent } from "react"
 import sideNavStyles from "./sideNav.module.css"
 
 export default class sideNav extends PureComponent {
+  onSelectItem = (sectionItem) => {
+    this.props.selectItem(sectionItem)
+  }
+
   render() {
     return (
       <nav style={this.props.smallWindowStyle}>
@@ -16,13 +20,16 @@ export default class sideNav extends PureComponent {
                 <div
                   key={`sectionItem ${sectionItemIndex}`}
                   className={`${sideNavStyles.sectionItem} ${sideNavStyles.measureItem}`}
-                  onClick={() => this.props.selectItem(sectionItem)}
+                  onClick={this.onSelectItem}
+                  onKeyUp={this.onSelectItem}
+                  role="button"
                   style={
                     this.props.selectedCategory.measureName ===
                     sectionItem.measureName
                       ? { backgroundColor: "#ffdd1f" }
                       : {}
                   }
+                  tabIndex={0}
                 >
                   {sectionItem.measureName}
                   <span className={sideNavStyles.measureDescription}>
@@ -33,12 +40,15 @@ export default class sideNav extends PureComponent {
                 <div
                   key={`sectionItem ${sectionItemIndex}`}
                   className={sideNavStyles.sectionItem}
-                  onClick={() => this.props.selectItem(sectionItem)}
+                  onClick={this.onSelectItem}
+                  onKeyUp={this.onSelectItem}
+                  role="button"
                   style={
                     this.props.selectedCategory === sectionItem
                       ? { backgroundColor: "#ffdd1f" }
                       : {}
                   }
+                  tabIndex={0}
                 >
                   {sectionItem}
                 </div>

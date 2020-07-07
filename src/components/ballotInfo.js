@@ -40,8 +40,9 @@ export default class BallotInfo extends PureComponent {
               <div className={ballotInfoStyles.imageContainer}>
                 <Link className={ballotInfoStyles.link} to={"/"}>
                   <img
-                    src={candidate.imgSrc}
+                    alt="candidate"
                     className={ballotInfoStyles.image}
+                    src={candidate.imgSrc}
                   />
                 </Link>
               </div>

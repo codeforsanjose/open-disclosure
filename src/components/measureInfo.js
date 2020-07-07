@@ -1,12 +1,6 @@
 import React, { PureComponent } from "react"
-import {
-  FaDesktop,
-  FaTwitter,
-  FaExternalLinkAlt,
-  FaRegQuestionCircle,
-} from "react-icons/fa"
+
 import measureInfoStyles from "./measureInfo.module.css"
-import BalanceDetails from "./balanceDetails"
 
 export default class measureInfo extends PureComponent {
   render() {
