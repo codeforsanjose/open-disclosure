@@ -27,7 +27,7 @@ class Navbar extends Component {
           handleClick={this.handleClick}
           menuIsOpen={this.state.menuIsOpen}
         />
-        <Menu menuIsOpen={this.state.menuIsOpen}>
+        <Menu menuIsOpen={this.state.menuIsOpen} windowIsLarge={this.props.windowIsLarge}>
           {this.links.map((item, index) => (
             <NavbarItem
               key={index}
