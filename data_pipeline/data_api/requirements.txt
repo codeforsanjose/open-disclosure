@@ -1,0 +1,11 @@
+pre-commit
+lxml
+beautifulsoup4~=4.9.1
+scrapy~=2.2.0
+requests~=2.24.0
+Flask~=1.1.2
+python-dotenv~=0.14.0
+itemadapter~=0.1.0
+flask_sqlalchemy
+PyMySQL
+Flask-MySQL
