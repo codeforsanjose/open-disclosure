@@ -14,7 +14,7 @@ Getting started:
 Running the API
 -
 1. Make sure your environment variables are set properly 
-    - `export FLASK_APP=data_api`
+    - `export FLASK_APP=api`
     - `export SQLALCHEMY_DATABASE_URI='sqlite://'`
         - (we can connect it to a mySQL database later)
     - You can also source these variables in your `.bashrc` profile
