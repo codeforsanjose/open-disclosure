@@ -50,8 +50,8 @@ class NavbarItem extends Component {
     return (
       <li
         className={`${styles.item} ${this.props.hidden && styles.hidden} ${this
-          .props.menuIsOpen && styles.open} ${this.props.submenu &&
-          styles.submenu}`}
+          .props.menuIsOpen && styles.open} ${this.props.submenu && styles.submenu}`
+        }
         key={`link item ${this.props.name}`}
         onClick={this.toggleMenu}
         onKeyUp={this.toggleMenu}
@@ -74,10 +74,20 @@ class NavbarItem extends Component {
           ) : null}
         </this.Anchor>
         {hasLinks ? (
-          <Menu menuIsOpen={this.state.menuItemIsOpen} submenu>
-            {this.props.links.map(({ position, endpoint }, index) => {
-              return <NavbarItem name={position} endpoint={endpoint} key={index} submenu />
-            })}
+          <Menu
+            menuIsOpen={this.state.menuItemIsOpen}
+            submenu
+            windowIsLarge={this.props.windowIsLarge}
+          >
+            {this.props.links.map(({ position, endpoint }, index) => (
+              <NavbarItem
+                endpoint={endpoint}
+                key={index}
+                name={position}
+                submenu
+                windowIsLarge={this.props.windowIsLarge}
+              />
+            ))}
           </Menu>
         ) : null}
       </li>
