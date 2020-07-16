@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, request
 
 from api.models import Candidate, db
-
-# from data_pipeline.scraper import scraper
+from data_pipeline.data_api.api.errors import error_response
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
 
@@ -14,8 +13,9 @@ def home():
 
 @data_bp.route("/scrape", methods=["GET"])
 def init_scraper():
-    return "<h1>scraping</p>"
-    # exec(open("../../scraper/scraper").read())
+    from data_pipeline.scraper import scraper
+
+    return jsonify("scraper process finished")
 
 
 @data_bp.route("/total-contributions", methods=["GET"])
@@ -33,10 +33,7 @@ def get_candidates():
 def create_candidate():
     data = request.get_json()
     if "name" not in data:
-        err = {"error": 400, "message": "Name not in data"}
-        response = jsonify(err)
-        response.status_code = 400
-        return response
+        return error_response(400, "Name not found")
     candidate_name = data["name"]
     candidate = Candidate.query.filter_by(name=candidate_name).first()
     status_code = 200
@@ -52,8 +49,5 @@ def create_candidate():
 def get_by_candidate(candidate_name):
     candidate = Candidate.query.filter_by(name=candidate_name).first()
     if not candidate:
-        err = {"error": 404, "message": "Candidate not found"}
-        response = jsonify(err)
-        response.status_code = 404
-        return response
+        return error_response(404, "Candidate not found")
     return jsonify(candidate.serialize()), 200
