@@ -1,23 +1,29 @@
-import xlrd
 import csv
 import glob
 
-# Custom python module
-from dircreator import DirCreator
+import xlrd
 
-class PreProcessing():
+# Custom python module
+from data_pipeline.scraper.dircreator import DirCreator
+
+
+class PreProcessing:
     def __init__(self, scraper_input):
-        download_file_dir_wildcard = '{}{}*.xls'.format(scraper_input.new_dir.folder, scraper_input.new_dir.folder_delimiter)
+        download_file_dir_wildcard = "{}{}*.xls".format(
+            scraper_input.new_dir.folder, scraper_input.new_dir.folder_delimiter
+        )
         self.filenames = glob.glob(download_file_dir_wildcard)
 
-        self.BALLOT_TYPE = scraper_input.BALLOT_TYPE.replace(' ', '_')
-        aggregateFolder = DirCreator(['aggregated_data'])
+        self.BALLOT_TYPE = scraper_input.BALLOT_TYPE.replace(" ", "_")
+        aggregateFolder = DirCreator(["aggregated_data"])
         aggregateFolder.createFolder()
 
-        self.new_csv_file = '{}{}_aggregated.csv'.format(aggregateFolder.getDirectory(), self.BALLOT_TYPE)
+        self.new_csv_file = "{}{}_aggregated.csv".format(
+            aggregateFolder.getDirectory(), self.BALLOT_TYPE
+        )
 
     def aggregateData(self):
-        with open(self.new_csv_file, 'w') as new_aggregate_csv:
+        with open(self.new_csv_file, "w") as new_aggregate_csv:
             new_worksheet = csv.writer(new_aggregate_csv, quoting=csv.QUOTE_ALL)
 
             # Loop through all workbooks (EXCEL)
