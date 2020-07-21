@@ -15,8 +15,19 @@ Running the API
 -
 1. Make sure your environment variables are set properly 
     - `export FLASK_APP=api`
-    - `export SQLALCHEMY_DATABASE_URI='sqlite://'`
-        - (we can connect it to a mySQL database later)
+    - `export SQLALCHEMY_DATABASE_URI='sqlite://'` (will eventually change to mySQL)
+    - `export PYTHONPATH=$PYTHONPATH/path/to/open-disclosure` (this is needed to ensure modules outside of data_api can be imported properly)
     - You can also source these variables in your `.bashrc` profile
-2. Call `flask run`
+2. Call `flask run` in the data_api directory
 3. The API should be running on `localhost:5000`
+
+Making calls to the API
+-
+You can send requests to the proper endpoints by using `curl`. All endpoints are currently located in `routes.py`
+
+Example calls:
+
+```
+$ curl -i -H "Content-Type: application/json" -X POST -d '{"name":"candidate 1"}' http://localhost:5000/open-disclosure/api/v1.0/candidates
+$ curl -i http://localhost:5000/open-disclosure/api/v1.0/scrape 
+```
