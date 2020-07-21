@@ -4,7 +4,7 @@ import flask
 from flask import Blueprint, current_app
 
 import pytest
-from data_pipeline.data_api.api import routes
+from api import routes
 
 # def mock_contributions():
 #     return jsonify

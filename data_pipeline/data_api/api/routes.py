@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 
+from api.errors import error_response
 from api.models import Candidate, db
-from data_pipeline.data_api.api.errors import error_response
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
 
