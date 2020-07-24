@@ -10,9 +10,11 @@ def create_app():
     app.config.from_object("config.Config")
 
     db.init_app(app)
+    from api.routes import data_bp
 
+    app.register_blueprint(data_bp)
     with app.app_context():
-        import api.candidate_api  # Import routes
+        import api.routes  # Import routes
 
         db.create_all()  # Create sql tables for our data models
 
