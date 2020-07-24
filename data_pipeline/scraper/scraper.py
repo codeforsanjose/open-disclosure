@@ -83,6 +83,7 @@ class SjcWebsite:
             self.FORM_TABLE_ROW_XPATH_CONTAINS
         )
         downloadExcelRows = []
+        count = 0
         for i in range(len(numFormTableRows)):
             formTable_FormType = driver.find_elements_by_xpath(
                 '//*[@id="{}{}"]/td[1]'.format(self.FORM_TABLE_ROW_ID, i)
@@ -106,6 +107,9 @@ class SjcWebsite:
                     continue
                 else:
                     downloadLinkElement.click()
+                    count += 1
+        print('NUM DOWNLOADS {}'.format(count))
+        self.preprocessing.insertCandidates(count, self.CANDIDATENAME)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -191,18 +195,26 @@ class SjcWebsite:
                 numTableRowEntries.append(i)
         return numTableRowEntries
 
+    def getCandidatesData(self, driver, entry_index):
+        tableData_CandNameL = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        tableData_CandNameF = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[5]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+
+        self.FILERNAME = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[3]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        self.CANDIDATENAME = '{} {}'.format(tableData_CandNameF, tableData_CandNameL)
+        print('CANIDATE NAME ->{}<-'.format(self.CANDIDATENAME))
 
 class Scraper:
-    def __init__(self, BALLOT_TYPE):
-        self.BALLOT_TYPE = BALLOT_TYPE
+    def __init__(self):
         self.DEFAULT_SLEEP_TIME = 5
         self.SEARCH_FORM_ADDRESS = "https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx"
 
         # create data folder in current directory to store files
         self.website = SjcWebsite()
-        self.new_dir = DirCreator(["data", self.BALLOT_TYPE])
+        self.new_dir = DirCreator(["data"])
         self.new_dir.createFolder()
         self.download_dir = self.new_dir.getDirectory()
+
+        self.website.preprocessing = PreProcessing(self.download_dir)
 
         options = webdriver.ChromeOptions()
 
@@ -237,15 +249,17 @@ class Scraper:
         self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver) + 1):
+            print('PAGE {}'.format(search_page_num))
             # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
             self.website.navigateToPage(self.driver, search_page_num)
 
             for entry_index in self.website.numTableEntries(
+                print('INDEX {}'.format(entry_index))
                 self.driver, search_page_num, self.BALLOT_TYPE
             ):
                 # will result in the website bringing us back to page 1.
                 self.website.navigateToPage(self.driver, search_page_num)
-
+                self.website.getCandidatesData(self.driver, entry_index)
                 self.website.clickEntryIndex(self.driver, entry_index % 10)
 
                 sleep(self.DEFAULT_SLEEP_TIME)
@@ -270,17 +284,8 @@ class Scraper:
 
 
 start_time = time.time()
-# Select Ballot type with array index
-BALLOT_TYPES = ["Ballot Measure", "Office Sought"]
-s = Scraper(BALLOT_TYPES[0])
+s = Scraper()
 s.scrape()
-# Loop through both Ballot Types, uncomment below and comment above
-# for BALLOT_TYPE in BALLOT_TYPES:
-#     print("Scraping: {}".format(BALLOT_TYPE))
-#     s = Scraper(BALLOT_TYPE)
-#     s.scrape()
-#     print("--- Finished ---\n---    In    ---\n--- {} ---".format(time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))))
-
 print(
     "--- Finished ---\n---    In    ---\n--- {} ---".format(
         time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))
