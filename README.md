@@ -103,5 +103,5 @@ Executed on Mac OS 10.15.4 with Python 2.7.16 and Python 3.7.3 installed.
 - [Join our Slack](https://slackin-c4sj.herokuapp.com/) or [Log onto our Slack](https://codeforsanjose.slack.com/)
 - Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
 
-Inspired by [Open Oakland's Open Disclosure](https://www.opendisclosure.io/)
+Inspired by [Open Oakland's Open Disclosure](https://www.opendisclosure.io/)  
 Made with <3 by Code for San José
