@@ -10,7 +10,7 @@
     padding: 2.2rem 3rem 6.2rem 4.6rem;
 
     h1 {
-      font-size: 4.8rem;
+      font-size: 5.4rem;
       margin-bottom: 2rem;
     }
 
@@ -25,6 +25,42 @@
   .heroRight {
     flex: 1;
     align-items: flex-end;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 4.5rem 2.1rem;
+
+    .card {
+      flex: 1;
+      max-width: 52rem;
+      min-height: 60rem;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 4rem 1.5rem;
+      padding: 6.8rem 6.1rem;
+
+      h2 {
+        font-size: 4.5rem;
+        line-height: 5.8rem;
+      }
+
+      p {
+        font-size: 2.4rem;
+        line-height: 3.1rem;
+      }
+    }
+  }
+
+  .green {
+    background-color: #e3f9f1;
+  }
+
+  .blue {
+    background: #deeffe;
   }
 
   @media screen and (max-width: 760px) {

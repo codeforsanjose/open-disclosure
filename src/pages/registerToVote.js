@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import styles from "./registerToVote.module.scss"
 import { useEffect, useState } from "react"
 import orangeHeaderBlob from "./../../static/images/orangeHeaderBlob.png"
+import Button from "../common/button/index"
 
 export default function RegisterToVote() {
   const [windowIsLarge, setWindowIsLarge] = useState(true)
@@ -32,6 +33,24 @@ export default function RegisterToVote() {
             />
           </div>
         </header>
+        <div className={styles.body}>
+          <div className={`${styles.card} ${styles.green}`}>
+            <h2>Am I registered to vote?</h2>
+            <p>
+              Not sure if you're registered to vote? It takes 30 seconds to
+              confirm!
+            </p>
+            <Button text="Check now" />
+          </div>
+          <div className={`${styles.card} ${styles.blue}`}>
+            <h2>Register to vote!</h2>
+            <p>
+              Ready to make your voice heard in this upcoming election? Register
+              to vote in less than two minutes.
+            </p>
+            <Button text="Register to vote" />
+          </div>
+        </div>
       </div>
     </Layout>
   )
