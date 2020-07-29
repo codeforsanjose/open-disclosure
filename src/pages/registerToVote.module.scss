@@ -1,12 +1,13 @@
 .container {
   .hero {
+    background-color: #fafafa;
     flex-direction: row;
-    padding: 2.2rem 3rem 6.2rem 4.6rem;
   }
 
   .heroLeft {
     flex: 1;
     justify-content: center;
+    padding: 2.2rem 3rem 6.2rem 4.6rem;
 
     h1 {
       font-size: 4.8rem;
@@ -19,6 +20,11 @@
       font-weight: normal;
       line-height: 3.4rem;
     }
+  }
+
+  .heroRight {
+    flex: 1;
+    align-items: flex-end;
   }
 
   @media screen and (max-width: 760px) {
@@ -38,10 +44,6 @@
         font-size: 1.6rem;
         line-height: 2.1rem;
       }
-    }
-
-    .heroRight {
-      padding: 0 0.5rem;
     }
   }
 }
