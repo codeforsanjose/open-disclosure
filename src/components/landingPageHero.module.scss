@@ -1,0 +1,43 @@
+$primaryOffWhite: #fafafa;
+
+.hero {
+  background: url("../../static/images/orangeHeaderBlob.png") right/auto 100%
+    no-repeat $primaryOffWhite;
+  padding: 9.5rem 8.5rem;
+
+  .heroLeft {
+    flex: 1;
+    justify-content: center;
+
+    h1 {
+      font-size: 5.4rem;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: "Lato";
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 3.4rem;
+    }
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .hero {
+    padding: 4rem 0;
+  }
+
+  .heroLeft {
+    padding-left: 2.5rem;
+
+    h1 {
+      font-size: 2.8rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      line-height: 2.1rem;
+    }
+  }
+}
