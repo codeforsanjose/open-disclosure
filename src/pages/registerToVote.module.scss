@@ -2,7 +2,7 @@
   .body {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    align-self: center;
     flex-wrap: wrap;
     padding: 4.5rem 2.1rem;
   }
