@@ -1,10 +1,11 @@
-import React from "react"
-import Layout from "../components/layout"
-import styles from "./registerToVote.module.scss"
 import { useEffect, useState } from "react"
+
 import Button from "../common/button/index"
 import LandingPageHero from "../components/landingPageHero"
+import Layout from "../components/layout"
+import React from "react"
 import RegisterToVoteCard from "../components/registerToVoteCard"
+import styles from "./registerToVote.module.scss"
 
 export default function RegisterToVote() {
   const [windowIsLarge, setWindowIsLarge] = useState(true)

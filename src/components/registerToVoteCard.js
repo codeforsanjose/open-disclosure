@@ -1,6 +1,6 @@
+import Button from "../common/button/index"
 import React from "react"
 import styles from "./registerToVoteCard.module.scss"
-import Button from "../common/button/index"
 
 export default function RegisterToVoteCard(props) {
   return (
