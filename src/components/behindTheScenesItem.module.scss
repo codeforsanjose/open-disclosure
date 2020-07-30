@@ -1,9 +1,10 @@
 $primaryBlack: #1b1b1b;
 
 .container {
+  flex: 1;
   align-items: center;
   margin-top: 4rem;
-  
+
   h3 {
     font-size: 2.8rem;
     padding: 0.9rem;
@@ -11,6 +12,11 @@ $primaryBlack: #1b1b1b;
 
   p {
     font-size: 2rem;
+  }
+
+  .description {
+    text-align: center;
+    max-width: 60%;
   }
 
   .footer {
@@ -26,7 +32,6 @@ $primaryBlack: #1b1b1b;
       margin-bottom: 2.9rem;
       max-width: 50%;
       height: auto;
-
     }
 
     h3 {
@@ -37,5 +42,5 @@ $primaryBlack: #1b1b1b;
       font-size: 1.6rem;
       line-height: 2.1rem;
     }
-  } 
+  }
 }
