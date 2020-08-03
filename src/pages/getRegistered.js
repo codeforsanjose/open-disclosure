@@ -7,7 +7,7 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function GetRegistered() {
   return (
-    <Layout windowIsLarge={useWindowIsLarge(760)}>
+    <Layout windowIsLarge={useWindowIsLarge()}>
       <LandingPageHero
         title="Get registered"
         subtitle="Get registered to vote in less than two minutes"

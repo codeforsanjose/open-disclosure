@@ -7,7 +7,7 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function RegisterToVote() {
   return (
-    <Layout windowIsLarge={useWindowIsLarge(760)}>
+    <Layout windowIsLarge={useWindowIsLarge()}>
       <div className={styles.container}>
         <header className={styles.hero}>
           <LandingPageHero

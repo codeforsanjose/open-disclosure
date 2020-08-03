@@ -7,7 +7,7 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function CheckRegistration() {
   return (
-    <Layout windowIsLarge={useWindowIsLarge(760)}>
+    <Layout windowIsLarge={useWindowIsLarge()}>
       <LandingPageHero
         title="Check if you’re registered"
         subtitle="It only takes 30 seconds to make sure you’re registered to vote."

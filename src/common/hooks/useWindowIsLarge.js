@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
-export default function useWindowIsLarge(size) {
+const LARGE_WINDOW_SIZE = 760
+
+export default function useWindowIsLarge() {
   const [windowIsLarge, setWindowIsLarge] = useState(true)
-  const updateWindowDimensions = () => {
-    setWindowIsLarge(window.innerWidth >= size)
-  }
+  const updateWindowDimensions = useCallback(() => {
+    setWindowIsLarge(window.innerWidth >= LARGE_WINDOW_SIZE)
+  }, [])
   useEffect(() => {
     window.addEventListener("resize", updateWindowDimensions)
     return () => {
       window.removeEventListener("resize", updateWindowDimensions)
     }
-  }, [])
+  }, [updateWindowDimensions])
   return windowIsLarge
 }
