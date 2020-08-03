@@ -21,6 +21,7 @@ export default function RegisterToVote() {
             title="Am I registered to vote?"
             body="Not sure if you're registered to vote? It takes 30 seconds to confirm!"
             cta="Check now"
+            href="/checkRegistration"
           />
           <RegisterToVoteCard
             color="blue"
@@ -28,6 +29,7 @@ export default function RegisterToVote() {
             body="Ready to make your voice heard in this upcoming election? Register
               to vote in less than two minutes."
             cta="Register to vote"
+            href="/getRegistered"
           />
         </div>
       </div>

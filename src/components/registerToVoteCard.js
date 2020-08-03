@@ -11,7 +11,7 @@ export default function RegisterToVoteCard(props) {
     >
       <h2>{props.title}</h2>
       <p>{props.body}</p>
-      <Button text={props.cta} />
+      <Button text={props.cta} href={props.href} />
     </div>
   )
 }
