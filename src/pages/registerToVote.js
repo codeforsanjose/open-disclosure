@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react"
-
-import Button from "../common/button/index"
 import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import React from "react"
 import RegisterToVoteCard from "../components/registerToVoteCard"
 import styles from "./registerToVote.module.scss"
+import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function RegisterToVote() {
-  const [windowIsLarge, setWindowIsLarge] = useState(true)
-  const updateWindowDimensions = () => {
-    setWindowIsLarge(window.innerWidth >= 760)
-  }
-  useEffect(() => {
-    window.addEventListener("resize", updateWindowDimensions)
-    return () => {
-      window.removeEventListener("resize", updateWindowDimensions)
-    }
-  }, [])
   return (
-    <Layout windowIsLarge={windowIsLarge}>
+    <Layout windowIsLarge={useWindowIsLarge(760)}>
       <div className={styles.container}>
         <header className={styles.hero}>
           <LandingPageHero
