@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import styles from "./navbarItem.module.scss"
 import linkArrow from "../../static/images/linkArrow.png"
 import Menu from "./menu.js"
+import { Link } from "gatsby"
 
 class NavbarItem extends Component {
   state = { menuItemIsOpen: false, hasLinks: false }
@@ -27,13 +28,13 @@ class NavbarItem extends Component {
     }
 
     return (
-      <a
+      <Link
         className={`${styles.link} ${styles.fullWidth} ${hasLinks &&
           styles.disabled} ${hasLinks && menuItemIsOpen && styles.bold}`}
-        href={this.props.endpoint}
+        to={this.props.endpoint}
       >
         {props.children}
-      </a>
+      </Link>
     )
   }
 

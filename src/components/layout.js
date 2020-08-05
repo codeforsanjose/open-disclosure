@@ -1,4 +1,5 @@
 // Libraries
+import { Link } from "gatsby"
 import React from "react"
 // Styles
 import styles from "./layout.module.scss"
@@ -76,7 +77,7 @@ export default class Layout extends React.PureComponent {
           key={`footer nav item ${item.name}`}
           className={styles.footerNavItem}
         >
-          <a href={item.endpoint}>{item.name}</a>
+          <Link to={item.endpoint}>{item.name}</Link>
         </li>
       ))}
     </ul>
