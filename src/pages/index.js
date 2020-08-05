@@ -131,7 +131,7 @@ export default class MainPage extends React.PureComponent {
     title: "Your voice matters",
     description:
       "Register to vote or see if you're already registered in less than two minutes.",
-    linkTo: "/",
+    linkTo: "/registerToVote",
     linkImg: registerToVote,
     image: voteBlob,
   }

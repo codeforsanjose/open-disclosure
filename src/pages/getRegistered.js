@@ -2,7 +2,7 @@ import IframeResizer from "iframe-resizer-react"
 import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import React from "react"
-import styles from "./getRegistered.module.css"
+import styles from "./getRegistered.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function GetRegistered() {
