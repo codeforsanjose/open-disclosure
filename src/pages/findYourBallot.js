@@ -8,6 +8,7 @@ export default function FindYourBallot() {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <LandingPageHero
+        background="blue"
         title="Find your ballot"
         subtitle="Get the facts before you vote"
       />
