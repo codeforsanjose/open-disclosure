@@ -3,6 +3,7 @@ import styles from "./faq.module.scss"
 import Layout from "../components/layout"
 import FAQItem from "../components/faqitem"
 import faqHeaderBlob from "./../../static/images/faqHeaderBlob.png"
+import LandingPageHero from "../components/landingPageHero"
 
 class FAQ extends Component {
   faq = [
@@ -64,16 +65,13 @@ class FAQ extends Component {
   render() {
     return (
       <Layout>
-        <header className={styles.faqHeader}>
-          <div className={styles.faqHeaderLeft}>
-            <h1>Frequently asked questions</h1>
-            <p>Learn more about campaign finance.</p>
-          </div>
-          <div className={styles.faqHeaderRight}>
-            <img src={faqHeaderBlob} />
-          </div>
+        <header>
+          <LandingPageHero
+            title="Frequently Asked Questions"
+            subtitle="Learn more about campaign finance."
+          />
         </header>
-        <div className={styles.faqBody}>
+        <div className={styles.body}>
           {this.faq.map(faqSection => (
             <section className={styles.faqSection}>
               <h2>{faqSection.sectionName}</h2>

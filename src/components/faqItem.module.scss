@@ -61,3 +61,27 @@ $secondaryGray: #f2f2f2;
 .open {
   max-height: 1000px;
 }
+
+@media screen and (max-width: 760px) {
+  .container {
+    padding: 2rem;
+    h3,
+    p {
+      font-size: 1.4rem;
+    }
+  }
+
+  .horizontalBar {
+    width: 3.75px;
+    height: 15px;
+    top: 1.25px;
+    left: 6.875px;
+  }
+
+  .verticalBar {
+    width: 15px;
+    height: 3.75px;
+    top: 6.875px;
+    left: 1.25px;
+  }
+}
