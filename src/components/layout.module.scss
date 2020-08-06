@@ -100,14 +100,20 @@ $hoverGreen: #025b3c;
 }
 
 .footerBottom {
-  padding-bottom: 6rem;
+  padding-bottom: 4rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 4rem;
+    a {
+      color: $primaryGreen;
+    }
+  }
 
   p {
     font-size: 1.6rem;
-  }
-
-  p:first-child {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -173,6 +179,11 @@ $hoverGreen: #025b3c;
 
   .footerBottom {
     padding-bottom: 0;
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+    }
 
     p {
       font-size: 1rem;

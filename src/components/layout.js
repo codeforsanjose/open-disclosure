@@ -1,4 +1,5 @@
 // Libraries
+import { Link } from "gatsby"
 import React from "react"
 // Styles
 import styles from "./layout.module.scss"
@@ -76,7 +77,7 @@ export default class Layout extends React.PureComponent {
           key={`footer nav item ${item.name}`}
           className={styles.footerNavItem}
         >
-          <a href={item.endpoint}>{item.name}</a>
+          <Link to={item.endpoint}>{item.name}</Link>
         </li>
       ))}
     </ul>
@@ -120,7 +121,17 @@ export default class Layout extends React.PureComponent {
               </div>
             </div>
             <div className={styles.footerBottom}>
-              <p>Brought to you by Code for San José</p>
+              <h1>
+                Special thanks to{" "}
+                <a href="https://www.opendisclosure.io/">
+                  Open Oakland's Open Disclosure
+                </a>{" "}
+                for the inspiration.
+              </h1>
+              <p>
+                Brought to you by Open San José and San José's Public Ethics
+                Commission
+              </p>
               <p>
                 Campaign finance data provided by the City of San José Public
                 Ethics Commission Public Portal for Campaign Finance and

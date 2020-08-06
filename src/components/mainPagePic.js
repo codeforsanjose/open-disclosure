@@ -1,3 +1,4 @@
+import { Link } from 'gatsby';
 import React from 'react';
 
 import styles from './mainPagePic.module.scss';
@@ -11,9 +12,9 @@ const MainPagePic = (props) => {
       <div className={styles.content}>
         <h2>{title}</h2>
         <p>{description}</p>
-        <a href={linkTo}>
+        <Link to={linkTo}>
           <img alt="link" src={linkImg} />
-        </a>
+        </Link>
       </div>
     </section>
   );
