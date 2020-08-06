@@ -52,7 +52,7 @@ export default class Layout extends React.PureComponent {
     },
     {
       name: "Find your ballot",
-      endpoint: "/",
+      endpoint: "/findYourBallot",
     },
     {
       name: "Open source",

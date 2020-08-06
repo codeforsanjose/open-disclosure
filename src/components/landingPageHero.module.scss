@@ -1,8 +1,6 @@
 $primaryOffWhite: #fafafa;
 
 .hero {
-  background: url("../../static/images/orangeHeaderBlob.png") right/auto 100%
-    no-repeat $primaryOffWhite;
   padding: 9.5rem 8.5rem;
 
   .text {
@@ -21,6 +19,16 @@ $primaryOffWhite: #fafafa;
       line-height: 3.4rem;
     }
   }
+}
+
+.orange {
+  background: url("../../static/images/orangeHeaderBlob.png") right/auto 100%
+    no-repeat $primaryOffWhite;
+}
+
+.blue {
+  background: url("../../static/images/blueHeaderBlob.png") right/auto 100%
+    no-repeat $primaryOffWhite;
 }
 
 @media screen and (max-width: 760px) {
