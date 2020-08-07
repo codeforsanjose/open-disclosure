@@ -42,15 +42,18 @@ class PreProcessing():
                         new_worksheet.writerow(sheet.row_values(rownum))
                     header = True
 
-    def insertCandidates(self, numDownloads, CandidateName):
+    def insertCandidates(self, numDownloads, CandidateName, ElectionDate, BallotItem):
         print('Processing {} for {}'.format(numDownloads, CandidateName))
 
-        insertCandidateFolder = DirManager(['insertCandidateControlled'])
+        insertCandidateFolder = DirManager(['insertedData'])
         insertCandidateFolder.createFolder()
         new_folder = insertCandidateFolder.getDirectory()
         
         filenames = sorted([self.download_dir + "/" + f for f in listdir(self.download_dir)], key=path.getmtime)
         candidateHeader = "CandidateControlledName"
+        electionDateHeader = "Election Date"
+        ballotItemHeader = "Ballot Item"
+
 
         for fullfilepathname in filenames[-numDownloads:]:
             filename = path.basename(fullfilepathname)
@@ -64,5 +67,8 @@ class PreProcessing():
                 data.insert(0, candidateHeader, "Independent")
             else:
                 data.insert(0, candidateHeader, CandidateName)
+            
+            data.insert(0, electionDateHeader, ElectionDate)
+            data.insert(0, ballotItemHeader, BallotItem)
 
             data.to_excel('{}/{}'.format(new_folder, filename), index=False)

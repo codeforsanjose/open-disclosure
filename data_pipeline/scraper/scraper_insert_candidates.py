@@ -11,8 +11,10 @@ import xlrd
 from openpyxl.workbook import Workbook
 
 cwd = os.getcwd()
-data_dir = cwd + '/Office_Sought_Backup'
+data_dir = cwd + '/data'
 filename = max([data_dir + "/" + f for f in os.listdir(data_dir)],key=os.path.getctime)
+
+# filename = 
 
 print(filename)
 candidate_name = {'Cand_Nam L': 'TEST LAST', 'Cand_Nam F': 'TEST FIRST'}
