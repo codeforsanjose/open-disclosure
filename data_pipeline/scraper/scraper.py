@@ -16,8 +16,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Custom python module
-from data_pipeline.scraper.dircreator import DirCreator
-from data_pipeline.scraper.preproccessing import PreProcessing
+# from data_pipeline.scraper.dircreator import DirCreator
+# from data_pipeline.scraper.preproccessing import PreProcessing
+from dirmanager import DirManager
+from preproccessing import PreProcessing
 
 
 class SjcWebsite:
@@ -109,7 +111,7 @@ class SjcWebsite:
                     downloadLinkElement.click()
                     count += 1
         print('NUM DOWNLOADS {}'.format(count))
-        self.preprocessing.insertCandidates(count, self.CANDIDATENAME)
+        self.preprocessing.insertCandidates(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -174,7 +176,7 @@ class SjcWebsite:
             '//*[@id="ctl00_GridContent_gridFilers_DXCBtn{}"]'.format(index)
         ).click()
 
-    def numTableEntries(self, driver, search_page_num, BALLOT_TYPE):
+    def numTableEntries(self, driver, search_page_num):
         # Loop through all all items in the search table and retrieve the data
         numTableRows = driver.find_elements_by_xpath(
             self.SEARCH_TABLE_ROW_XPATH_CONTAINS
@@ -182,26 +184,19 @@ class SjcWebsite:
         followTableRowNums = (search_page_num - 1) * 10
         numTableRowEntries = []
         for i in range(0 + followTableRowNums, len(numTableRows) + followTableRowNums):
-            tableData_BallotType = driver.find_elements_by_xpath(
-                '//*[@id="{}{}"]/td[9]'.format(self.SEARCH_TABLE_ROW_ID, i)
-            )[0].text
-            tableData_SupportOrOppose = driver.find_elements_by_xpath(
-                '//*[@id="{}{}"]/td[8]'.format(self.SEARCH_TABLE_ROW_ID, i)
-            )[0].text
-            if (
-                tableData_BallotType == BALLOT_TYPE
-                and tableData_SupportOrOppose != "Oppose"
-            ):
-                numTableRowEntries.append(i)
+            numTableRowEntries.append(i)
         return numTableRowEntries
 
-    def getCandidatesData(self, driver, entry_index):
+    def extractTableData(self, driver, entry_index):
         tableData_CandNameL = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[4]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
         tableData_CandNameF = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[5]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
 
         self.FILERNAME = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[3]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
         self.CANDIDATENAME = '{} {}'.format(tableData_CandNameF, tableData_CandNameL)
         print('CANIDATE NAME ->{}<-'.format(self.CANDIDATENAME))
+
+        self.ELECTIONDATE = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[2]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        self.BALLOTITEM = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[7]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
 
 class Scraper:
     def __init__(self):
@@ -210,7 +205,7 @@ class Scraper:
 
         # create data folder in current directory to store files
         self.website = SjcWebsite()
-        self.new_dir = DirCreator(["data"])
+        self.new_dir = DirManager(["data"])
         self.new_dir.createFolder()
         self.download_dir = self.new_dir.getDirectory()
 
@@ -254,12 +249,12 @@ class Scraper:
             self.website.navigateToPage(self.driver, search_page_num)
 
             for entry_index in self.website.numTableEntries(
-                print('INDEX {}'.format(entry_index))
-                self.driver, search_page_num, self.BALLOT_TYPE
+                self.driver, search_page_num
             ):
+                print('INDEX {}'.format(entry_index))
                 # will result in the website bringing us back to page 1.
                 self.website.navigateToPage(self.driver, search_page_num)
-                self.website.getCandidatesData(self.driver, entry_index)
+                self.website.extractTableData(self.driver, entry_index)
                 self.website.clickEntryIndex(self.driver, entry_index % 10)
 
                 sleep(self.DEFAULT_SLEEP_TIME)

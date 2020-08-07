@@ -48,18 +48,15 @@ export default class MainPage extends React.PureComponent {
     items: [
       {
         number: "31%",
-        description1: "Of donations",
-        description2: "from the city of San José",
+        description: "Of donations from the city of San José",
       },
       {
         number: "$335,992",
-        description1: "Amount raised",
-        description2: "to date",
+        description: "Amount raised to date",
       },
       {
         number: "34",
-        description1: "Candidates",
-        description2: "running",
+        description: "Candidates running",
       },
     ],
     renderItem: SnapshotItem,
@@ -90,7 +87,9 @@ export default class MainPage extends React.PureComponent {
       },
     ],
     renderItem: CandidateItem,
-    footer: () => <img alt="candidates" height="37px" width="285px" src={tertiary} />,
+    footer: () => (
+      <img alt="candidates" height="37px" width="285px" src={tertiary} />
+    ),
   }
 
   behindTheScenes = {
@@ -99,22 +98,19 @@ export default class MainPage extends React.PureComponent {
     items: [
       {
         title: "Take action on measures",
-        description1: "Track who opposes or supports",
-        description2: "upcoming ballot measures.",
+        description: "Track who opposes or supports upcoming ballot measures.",
         buttonText: "View ballot measures",
         image: blue,
       },
       {
         title: "Compare local candidates",
-        description1: "See who’s spending and raising",
-        description2: "the most.",
+        description: "See who’s spending and raising the most.",
         buttonText: "Browse candidates",
         image: orange,
       },
       {
         title: "Get the finance facts",
-        description1: "Learn more about campaign",
-        description2: "finance data.",
+        description: "Learn more about campaign finance data.",
         buttonText: "Visit FAQs",
         image: green,
       },
@@ -125,7 +121,7 @@ export default class MainPage extends React.PureComponent {
   about = {
     title: "Power to the people",
     description:
-      "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections",
+      "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
     linkTo: "/",
     linkImg: learnMore,
     image: aboutBlob,
@@ -134,8 +130,8 @@ export default class MainPage extends React.PureComponent {
   vote = {
     title: "Your voice matters",
     description:
-      "Register to vote or see if you're already registered in less than two minutes",
-    linkTo: "/",
+      "Register to vote or see if you're already registered in less than two minutes.",
+    linkTo: "/registerToVote",
     linkImg: registerToVote,
     image: voteBlob,
   }
@@ -170,7 +166,12 @@ export default class MainPage extends React.PureComponent {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <img alt="header" className="responsive" width="724px" src={headerBlob} />
+              <img
+                alt="header"
+                className="responsive"
+                width="724px"
+                src={headerBlob}
+              />
             </div>
           </header>
 

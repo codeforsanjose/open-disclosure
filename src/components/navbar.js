@@ -15,7 +15,7 @@ class Navbar extends Component {
   links = [
     { name: "Home", endpoint: "/", hidden: true },
     ...this.props.links,
-    { name: "Register to vote", endpoint: "/", hidden: true, arrow: true },
+    { name: "Register to vote", endpoint: "/registerToVote", hidden: true, arrow: true },
     { name: "Find your ballot", endpoint: "/", hidden: true },
   ]
 

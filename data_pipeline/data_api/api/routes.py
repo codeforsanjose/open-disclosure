@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 
+import api.tests.fake_data as fake_data
 from api.errors import error_response
 from api.models import Candidate, db
 
@@ -26,7 +27,28 @@ def get_total_contributions():
 @data_bp.route("/candidates", methods=["GET"])
 def get_candidates():
     candidates = Candidate.query.all()
-    return jsonify(candidate_list=[i.serialize() for i in candidates])
+    # return jsonify(candidate_list=[i.serialize() for i in candidates])
+    return jsonify(fake_data.get_candidates_shape())
+
+
+@data_bp.route("/committees", methods=["GET"])
+def get_committees():
+    return jsonify(fake_data.get_committees_shape())
+
+
+@data_bp.route("/elections", methods=["GET"])
+def get_elections():
+    return jsonify(fake_data.get_elections_shape())
+
+
+@data_bp.route("/referendums", methods=["GET"])
+def get_referendums():
+    return jsonify(fake_data.get_referendums_shape())
+
+
+@data_bp.route("/metadata", methods=["GET"])
+def get_metadata():
+    return jsonify(fake_data.get_metadata_shape())
 
 
 @data_bp.route("/candidates", methods=["POST"])

@@ -26,6 +26,11 @@ $underline: #00825466;
     }
   }
 
+  .heroRight {
+    justify-content: center;
+    align-content: center;
+  }
+
   .heroButtonContainer {
     flex-direction: row;
     margin-top: 6.2rem;
@@ -51,7 +56,7 @@ $underline: #00825466;
     }
 
     .heroRight {
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
     }
 
     .heroButtonContainer {
@@ -62,5 +67,4 @@ $underline: #00825466;
       margin-bottom: 2rem;
     }
   }
-
 }

@@ -1,0 +1,4 @@
+chromedriver_binary
+webdriver-manager
+selenium
+pip-tools
