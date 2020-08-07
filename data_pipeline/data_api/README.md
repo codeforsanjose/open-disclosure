@@ -11,6 +11,10 @@ Getting started:
     - This ensures proper formatting across your files (right now it just works for python, but feel free to add linters for other types of files)
     - If you do need to bypass pre-commit (you might have to with the way `__init__` is set up currently) then just run `git commit -n`
 
+Running your local Redis server
+-
+TODO
+
 Running the API
 -
 1. Make sure your environment variables are set properly 
