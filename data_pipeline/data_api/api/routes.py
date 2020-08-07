@@ -9,7 +9,7 @@ data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
 
 @data_bp.route("/", methods=["GET"])
 def home():
-    return "<h1>hello</p>"
+    return "<h1>Welcome to the Open Disclosure API</p>"
 
 
 @data_bp.route("/scrape", methods=["GET"])

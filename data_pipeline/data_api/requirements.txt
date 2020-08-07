@@ -9,3 +9,4 @@ itemadapter~=0.1.0
 flask_sqlalchemy
 PyMySQL
 Flask-MySQL
+redis~=3.5.3
