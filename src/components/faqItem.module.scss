@@ -1,0 +1,87 @@
+$secondaryGray: #f2f2f2;
+
+.container {
+  background-color: $secondaryGray;
+  border-radius: 6px;
+  box-shadow: 0 4px 30px 0 rgba(203, 201, 201, 0.25);
+  padding: 4rem 3.2rem;
+  margin-bottom: 4rem;
+
+  h3 {
+    font-size: 3.2rem;
+  }
+  p {
+    font-size: 2rem;
+    margin-top: 4rem;
+  }
+}
+
+.itemTop {
+  position: relative;
+  padding-right: 40px;
+}
+
+.icon {
+  position: absolute;
+  overflow: hidden;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  right: 0;
+  top: 0rem;
+}
+
+.horizontalBar,
+.verticalBar {
+  position: absolute;
+  background-color: #000;
+  transition: transform 250ms ease-in-out;
+}
+
+.horizontalBar {
+  width: 7.5px;
+  height: 30px;
+  top: 2.5px;
+  left: 13.75px;
+}
+
+.verticalBar {
+  width: 30px;
+  height: 7.5px;
+  top: 13.75px;
+  left: 2.5px;
+}
+
+.itemBottom {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 250ms ease-in-out;
+}
+
+.open {
+  max-height: 1000px;
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    padding: 2rem;
+    h3,
+    p {
+      font-size: 1.4rem;
+    }
+  }
+
+  .horizontalBar {
+    width: 3.75px;
+    height: 15px;
+    top: 1.25px;
+    left: 6.875px;
+  }
+
+  .verticalBar {
+    width: 15px;
+    height: 3.75px;
+    top: 6.875px;
+    left: 1.25px;
+  }
+}
