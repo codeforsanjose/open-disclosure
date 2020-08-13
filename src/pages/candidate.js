@@ -28,28 +28,45 @@ const breakdowns = [
   { label: "Within San José", value: 301242 },
 ]
 
+function ChartSection({ title, type, total, data, ...passProps }) {
+  return (
+    <section>
+      <SectionHeader title={title} />
+      <TotalAmountItem type={type} total={total} />
+      <BarChart type={type} total={total} rows={data} {...passProps} />
+    </section>
+  )
+}
+
 // TODO (#56) Create actual layout for this page
 export default function Candidate() {
   return (
     <div className={styles.container}>
-      <SectionHeader title="Fundraising totals" />
-      <div className={styles.totals}>
-        <TotalAmountPanelItem type="contributions" total={654876} />
-        <TotalAmountPanelItem type="expenditures" total={383254} />
-        <TotalAmountPanelItem type="balance" total={271622} />
-      </div>
-      <SectionHeader title="Where the money is coming from" />
-      <TotalAmountItem type="contributions" total={654876} />
-      <BarChart type="contributions" total={654876} rows={contributions} />
-      <SectionHeader title="How the money is being spent" />
-      <TotalAmountItem type="expenditures" total={383254} />
-      <BarChart type="expenditures" total={383254} rows={expenditures} />
-      <SectionHeader title="Breakdown by region" />
-      <TotalAmountItem type="contributions" total={654876} />
-      <BarChart
+      <section>
+        <SectionHeader title="Fundraising totals" />
+        <div className={styles.totals}>
+          <TotalAmountPanelItem type="contributions" total={654876} />
+          <TotalAmountPanelItem type="expenditures" total={383254} />
+          <TotalAmountPanelItem type="balance" total={271622} />
+        </div>
+      </section>
+      <ChartSection
+        title="Where the money is coming from"
         type="contributions"
         total={654876}
-        rows={breakdowns}
+        data={contributions}
+      />
+      <ChartSection
+        title="How the money is being spent"
+        type="expenditures"
+        total={383254}
+        data={expenditures}
+      />
+      <ChartSection
+        title="Breakdown by region"
+        type="contributions"
+        total={654876}
+        data={breakdowns}
         showPercentages
       />
     </div>
