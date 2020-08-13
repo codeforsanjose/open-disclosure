@@ -1,3 +1,7 @@
+import TotalAmountItem, {
+  TotalAmountPanelItem,
+} from "../components/totalAmountItem"
+
 import BarChart from "../components/barChart"
 import React from "react"
 import styles from "./candidate.module.scss"
@@ -27,8 +31,16 @@ const breakdowns = [
 export default function Candidate() {
   return (
     <div className={styles.container}>
+      <div className={styles.totals}>
+        <TotalAmountPanelItem type="contributions" total={654876} />
+        <TotalAmountPanelItem type="expenditures" total={383254} />
+        <TotalAmountPanelItem type="balance" total={271622} />
+      </div>
+      <TotalAmountItem type="contributions" total={654876} />
       <BarChart type="contributions" total={654876} rows={contributions} />
+      <TotalAmountItem type="expenditures" total={383254} />
       <BarChart type="expenditures" total={383254} rows={expenditures} />
+      <TotalAmountItem type="contributions" total={654876} />
       <BarChart
         type="contributions"
         total={654876}
