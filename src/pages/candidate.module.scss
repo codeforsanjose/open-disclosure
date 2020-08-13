@@ -4,7 +4,13 @@
 
 .totals {
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 4.7rem;
   margin-bottom: 7.8rem;
+}
+
+@media screen and (max-width: 760px) {
+  .totals {
+    flex-direction: column;
+  }
 }
