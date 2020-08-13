@@ -4,6 +4,7 @@ import TotalAmountItem, {
 
 import BarChart from "../components/barChart"
 import React from "react"
+import SectionHeader from "../components/sectionHeader"
 import styles from "./candidate.module.scss"
 
 // TODO Hook up charts to real data
@@ -31,15 +32,19 @@ const breakdowns = [
 export default function Candidate() {
   return (
     <div className={styles.container}>
+      <SectionHeader title="Fundraising totals" />
       <div className={styles.totals}>
         <TotalAmountPanelItem type="contributions" total={654876} />
         <TotalAmountPanelItem type="expenditures" total={383254} />
         <TotalAmountPanelItem type="balance" total={271622} />
       </div>
+      <SectionHeader title="Where the money is coming from" />
       <TotalAmountItem type="contributions" total={654876} />
       <BarChart type="contributions" total={654876} rows={contributions} />
+      <SectionHeader title="How the money is being spent" />
       <TotalAmountItem type="expenditures" total={383254} />
       <BarChart type="expenditures" total={383254} rows={expenditures} />
+      <SectionHeader title="Breakdown by region" />
       <TotalAmountItem type="contributions" total={654876} />
       <BarChart
         type="contributions"
