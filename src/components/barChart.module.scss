@@ -2,10 +2,6 @@ $gray: #e7e7e7;
 $blue: #5fb2fb;
 $spendRed: #fb7b5f;
 
-p {
-  font-size: 2rem;
-}
-
 .bar {
   border-radius: 0.8rem;
   height: 100%;
@@ -26,6 +22,10 @@ p {
 
 .chart {
   margin: 2.9rem 0;
+
+  p {
+    font-size: 2rem;
+  }
 }
 
 .contributions {
