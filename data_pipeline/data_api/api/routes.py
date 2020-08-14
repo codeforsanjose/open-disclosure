@@ -1,10 +1,13 @@
 from flask import Blueprint, jsonify, request
 
 import api.tests.fake_data as fake_data
+import redis
 from api.errors import error_response
 from api.models import Candidate, db
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
+r = redis.Redis()
+r.mset({"total_contributions": 10000})
 
 
 @data_bp.route("/", methods=["GET"])
@@ -21,7 +24,7 @@ def init_scraper():
 
 @data_bp.route("/total-contributions", methods=["GET"])
 def get_total_contributions():
-    return jsonify(100000)
+    return jsonify(r.get("total_contributions").decode("utf-8"))
 
 
 @data_bp.route("/candidates", methods=["GET"])

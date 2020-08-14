@@ -13,7 +13,10 @@ Getting started:
 
 Running your local Redis server
 -
-TODO
+1. Follow the Quickstart directions listed here: https://realpython.com/python-redis/
+2. Make sure the server is running with `redis-server --daemonize yes`
+
+    - You can stop the server with `pkill redis-server` 
 
 Running the API
 -
