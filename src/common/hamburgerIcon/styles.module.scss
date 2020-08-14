@@ -1,3 +1,5 @@
+@import "../../styles/colors";
+
 .hamburgerShell {
   display: none;
 }
@@ -22,7 +24,7 @@
     position: absolute;
     width: 2rem;
     height: 0.3rem;
-    background-color: black;
+    background-color: $primaryBlack;
     transition: all 350ms ease-in-out;
     top: 1.8rem;
   }

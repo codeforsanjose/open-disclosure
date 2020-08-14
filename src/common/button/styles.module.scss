@@ -16,12 +16,12 @@
     font-family: "DM Sans";
     font-weight: bold;
     font-size: resize(20);
-    color: #fff;
+    color: $primaryWhite;
   }
 }
 
 .secondary {
-  background-color: #fff;
+  background-color: $primaryWhite;
 
   .buttonText {
     color: $primaryGreen;
@@ -38,7 +38,7 @@
   border-color: $primaryGreen;
 
   .buttonText {
-    color: #fff;
+    color: $primaryWhite;
   }
 }
 

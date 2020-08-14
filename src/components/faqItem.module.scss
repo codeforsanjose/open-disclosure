@@ -34,7 +34,7 @@
 .horizontalBar,
 .verticalBar {
   position: absolute;
-  background-color: #000;
+  background-color: $primaryBlack;
   transition: transform 250ms ease-in-out;
 }
 

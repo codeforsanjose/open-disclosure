@@ -1,7 +1,7 @@
 @import "../styles/colors";
 
 .footer {
-  background-color: #fafafa;
+  background-color: $primaryOffWhite;
   padding: 0 6rem;
 }
 
@@ -66,7 +66,7 @@
 .emailInput {
   background-color: transparent;
   border: none;
-  color: #555555;
+  color: $darkGray;
   flex: 2;
   padding: 1.3rem 2rem;
 }
@@ -76,7 +76,7 @@
 .emailInput:-ms-input-placeholder,
 .emailInput::-moz-placeholder,
 .emailInput:-moz-placeholder {
-  color: #555555;
+  color: $darkGray;
   opacity: 1;
 }
 
@@ -84,7 +84,7 @@
   background-color: $primaryGreen;
   border: solid 2px $primaryGreen;
   border-radius: 0 4px 4px 0;
-  color: #fafafa;
+  color: $primaryOffWhite;
   flex: 1;
   font-family: "DM Sans";
   font-weight: bold;
