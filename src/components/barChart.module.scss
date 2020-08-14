@@ -1,6 +1,4 @@
-$gray: #e7e7e7;
-$blue: #5fb2fb;
-$spendRed: #fb7b5f;
+@import "../styles/colors";
 
 .bar {
   border-radius: 0.8rem;
@@ -8,7 +6,7 @@ $spendRed: #fb7b5f;
 }
 
 .barBackground {
-  background-color: $gray;
+  background-color: $backgroundGray;
   border-radius: 0.8rem;
   height: 1.6rem;
   overflow: hidden;
@@ -29,11 +27,11 @@ $spendRed: #fb7b5f;
 }
 
 .contributions {
-  background-color: $blue;
+  background-color: $supportBlue;
 }
 
 .expenditures {
-  background-color: $spendRed;
+  background-color: $opposeRed;
 }
 
 .label {
