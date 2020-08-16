@@ -215,7 +215,9 @@ class Scraper:
 
         # Uncomment block BELOW for headless data-retrieval
         # --> Currently not working 100%, only downloads first link on form table
-        # options.add_argument("--headless")
+        isHeadless = os.environ.get('HEADLESS', False)
+        if isHeadless:
+            options.add_argument("--headless")
         # options.add_argument("--disable-gpu")
         # options.add_argument("--window-size=1280,800")
         # Uncomment block ABOVE for headless data-retrieval
