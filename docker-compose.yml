@@ -1,5 +1,30 @@
 version: '3'
 services:
+  api:
+    build:
+      context: ./data_pipeline
+      dockerfile: data_api/Dockerfile
+      args:
+        - UID=${UID}
+        - USER=${USER}
+        - GID=${GID}
+        - GROUP=${GROUP}
+    container_name: api
+    user: $USER
+    environment:
+      - FLASK_APP=api
+#      - SQLALCHEMY_DATABASE_URI='sqlite://'
+      - PYTHONPATH=.
+    ports:
+      - "5000:5000"
+#    command: python -m flask run
+#    command: sh -c "ls"
+    command: python /app/data_pipeline/data_api/redis_to_be_deleted/app_to_be_deteled.py
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
   data_pipeline:
     build:
       context: ./data_pipeline
