@@ -1,4 +1,4 @@
-$secondaryGray: #f2f2f2;
+@import "../styles/colors";
 
 .container {
   background-color: $secondaryGray;
@@ -34,7 +34,7 @@ $secondaryGray: #f2f2f2;
 .horizontalBar,
 .verticalBar {
   position: absolute;
-  background-color: #000;
+  background-color: $primaryBlack;
   transition: transform 250ms ease-in-out;
 }
 

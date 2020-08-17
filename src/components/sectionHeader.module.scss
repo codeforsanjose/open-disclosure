@@ -1,4 +1,4 @@
-$gray: #e7e7e7;
+@import "../styles/colors";
 
 h3 {
   font-size: 3.2rem;
@@ -7,6 +7,6 @@ h3 {
 
 .divider {
   width: 100%;
-  border: 0.2rem solid $gray;
+  border: 0.2rem solid $backgroundGray;
   margin: 2.4rem 0;
 }

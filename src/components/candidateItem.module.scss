@@ -1,7 +1,4 @@
-$primaryGreen: #008254;
-$primaryWhite: #fff;
-$secondaryGreen: #e3f9f1;
-$secondaryBlue: #deeffe;
+@import "../styles/colors";
 
 .container {
   background-color: transparent;
@@ -9,7 +6,7 @@ $secondaryBlue: #deeffe;
 
   img {
     align-self: center;
-    background-color: #fff;
+    background-color: $primaryWhite;
     border: 8px solid $secondaryBlue;
     border-radius: 50%;
     max-height: 18rem;
@@ -44,7 +41,7 @@ $secondaryBlue: #deeffe;
     }
 
     p {
-      color: #555555;
+      color: $darkGray;
       font-size: 1.4rem;
       line-height: 1.82rem;
     }
