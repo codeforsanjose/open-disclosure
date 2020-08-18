@@ -11,12 +11,20 @@ Getting started:
     - This ensures proper formatting across your files (right now it just works for python, but feel free to add linters for other types of files)
     - If you do need to bypass pre-commit (you might have to with the way `__init__` is set up currently) then just run `git commit -n`
 
+Running your local Redis server
+-
+1. Follow the Quickstart directions listed here: https://realpython.com/python-redis/
+2. Make sure the server is running with `redis-server --daemonize yes`
+
+    - You can stop the server with `pkill redis-server` 
+
 Running the API
 -
 1. Make sure your environment variables are set properly 
     - `export FLASK_APP=api`
     - `export SQLALCHEMY_DATABASE_URI='sqlite://'` (will eventually change to mySQL)
     - `export PYTHONPATH=$PYTHONPATH/path/to/open-disclosure` (this is needed to ensure modules outside of data_api can be imported properly)
+    - `export PYTHONPATH=$PYTHONPATH/path/to/scraper` (scraper needs to be recognized as its own module)
     - You can also source these variables in your `.bashrc` profile
 2. Call `flask run` in the data_api directory
 3. The API should be running on `localhost:5000`
