@@ -1,0 +1,36 @@
+@import "../styles/colors";
+
+.body {
+  padding: 10rem 20rem 13rem;
+
+  h1 {
+    font-size: 3.2rem;
+    margin-bottom: 6rem;
+  }
+
+  p {
+    font-size: 2rem;
+  }
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: $primaryGreen;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 760px) {
+  .body {
+    padding: 2rem;
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+    }
+    p {
+      font-size: 1.6rem;
+    }
+  }
+}
