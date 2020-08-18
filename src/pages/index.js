@@ -5,7 +5,7 @@ import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
 import Button from "../common/button/index"
-import MainPageSection from "../components/MainPageSection"
+import MainPageSection from "../components/mainPageSection"
 import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"

@@ -111,7 +111,7 @@ class SjcWebsite:
                     downloadLinkElement.click()
                     count += 1
         print('NUM DOWNLOADS {}'.format(count))
-        self.preprocessing.insertCandidates(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM)
+        self.preprocessing.insertColumns(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -215,7 +215,9 @@ class Scraper:
 
         # Uncomment block BELOW for headless data-retrieval
         # --> Currently not working 100%, only downloads first link on form table
-        # options.add_argument("--headless")
+        isHeadless = os.environ.get('HEADLESS', False)
+        if isHeadless:
+            options.add_argument("--headless")
         # options.add_argument("--disable-gpu")
         # options.add_argument("--window-size=1280,800")
         # Uncomment block ABOVE for headless data-retrieval
@@ -270,13 +272,11 @@ class Scraper:
                     self.website.clickBackButton(self.driver)
                     self.website.verifySearchTableLoadComplete(self.driver)
 
-        # Custom module to aggregate data into single CSV
-        preproccessing = PreProcessing(self)
-        preproccessing.aggregateData()
-
         # Close browser once scrape is complete
         self.driver.quit()
 
+        # Custom module to aggregate data into single CSV
+        self.website.preprocessing.aggregateData()
 
 start_time = time.time()
 s = Scraper()

@@ -1,0 +1,6 @@
+chromedriver_binary
+webdriver-manager 
+selenium 
+xlrd 
+pandas
+xlwt

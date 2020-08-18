@@ -1,0 +1,61 @@
+@import "../styles/colors";
+
+.bar {
+  border-radius: 0.8rem;
+  height: 100%;
+}
+
+.barBackground {
+  background-color: $backgroundGray;
+  border-radius: 0.8rem;
+  height: 1.6rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.barContainer {
+  align-self: center;
+  flex: 2;
+}
+
+.chart {
+  margin: 2.9rem 0;
+
+  p {
+    font-size: 2rem;
+  }
+}
+
+.contributions {
+  background-color: $supportBlue;
+}
+
+.expenditures {
+  background-color: $opposeRed;
+}
+
+.label {
+  align-self: center;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2.9rem;
+}
+
+.value {
+  align-self: center;
+  flex: 1;
+  font-weight: bold;
+  margin-right: 1rem;
+  text-align: right;
+}
+
+@media screen and (max-width: 760px) {
+  .barContainer {
+    flex: 0 0 50%;
+  }
+}

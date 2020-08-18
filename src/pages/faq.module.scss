@@ -1,0 +1,23 @@
+.body {
+  padding: 10rem 20rem 13rem;
+}
+
+.faqSection {
+  h2 {
+    font-size: 4.5rem;
+    margin-bottom: 5rem;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .body {
+    padding: 2rem;
+  }
+
+  .faqSection {
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
