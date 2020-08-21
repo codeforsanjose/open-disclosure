@@ -5,7 +5,7 @@ from time import sleep
 from selenium import webdriver
 
 # Currently un-used
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -52,11 +52,18 @@ class SjcWebsite:
         )
         self.PAGE_ENTRY_XPATH = '//a[@class="dxbButton_Glass dxgvCommandColumnItem_Glass dxgv__cci dxbButtonSys"]'
 
-    def navigateToSearchPage(self, driver, SEARCH_FORM_ADDRESS):
+    def navigateToSearchPage(self, driver, SEARCH_FORM_ADDRESS, election_cycle=None):
         driver.get(SEARCH_FORM_ADDRESS)
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, self.SEARCH_BUTTON_ID))
         )
+
+        if election_cycle:
+            el = driver.find_element_by_id("ctl00_DefaultContent_ASPxRoundPanel1_ASPxDDL_ElectionDate_I");
+            el.click()
+            election_el = driver.find_element_by_xpath("//*[contains(text(), '{}')]".format(election_cycle))
+            election_el.click()
+            sleep(3)
 
         # Search, which will load up the content on the page.
         # Search terms are left blank, indicating "all content".
@@ -125,7 +132,13 @@ class SjcWebsite:
 
     # Navigates to the Nth page of the search results.
     def navigateToPage(self, driver, target_page):
+        try:
+            driver.find_element_by_class_name("dxp-current")
+        except NoSuchElementException:
+            assert target_page == 1, "Page nums will not load if there is only and exactly one page."
+            return
         while (
+            driver.find_element_by_class_name("dxp-current") and
             not "[{}]".format(target_page)
             == driver.find_element_by_class_name("dxp-current").text
         ):
@@ -165,6 +178,8 @@ class SjcWebsite:
                 page_nums.append(int(el.text))
             except ValueError:
                 pass
+        if not page_nums:
+            return 1
         return max(page_nums)
 
     # Determines the number of
@@ -240,9 +255,9 @@ class Scraper:
         options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-    def scrape(self):
+    def scrape(self, election_cycle=None):
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
-        self.website.navigateToSearchPage(self.driver, self.SEARCH_FORM_ADDRESS)
+        self.website.navigateToSearchPage(self.driver, self.SEARCH_FORM_ADDRESS, election_cycle=election_cycle)
         self.website.verifySearchTableLoadComplete(self.driver)
 
         for search_page_num in range(1, self.website.numPages(self.driver) + 1):
@@ -280,7 +295,10 @@ class Scraper:
 
 start_time = time.time()
 s = Scraper()
-s.scrape()
+
+# Can use election_cycle='11/3/2020' to load only the latest elections data.
+# Can use election_cycle=None to load all election data.
+s.scrape(election_cycle=None)
 print(
     "--- Finished ---\n---    In    ---\n--- {} ---".format(
         time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))
