@@ -1,18 +1,18 @@
 from flask import Blueprint, jsonify, request
 
 import api.tests.fake_data as fake_data
-import redis
 from api.errors import error_response
 from api.models import Candidate, db
+from redis import Redis
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
-r = redis.Redis()
-r.mset({"total_contributions": 10000})
+r = Redis(host="localhost", port=6379)
 
 
 @data_bp.route("/", methods=["GET"])
 def home():
-    return "<h1>Welcome to the Open Disclosure API</p>"
+    r.mset({"Croatia": "Zagreb", "Bahamas": "Nassau"})
+    return f"<h1>Welcome to the Open Disclosure API {r.get('Bahamas')}</p>"
 
 
 @data_bp.route("/scrape", methods=["GET"])
@@ -30,8 +30,8 @@ def get_total_contributions():
 @data_bp.route("/candidates", methods=["GET"])
 def get_candidates():
     candidates = Candidate.query.all()
-    # return jsonify(candidate_list=[i.serialize() for i in candidates])
-    return jsonify(fake_data.get_candidates_shape())
+    r.set("Candidates", str(fake_data.get_candidates_shape()))
+    return jsonify(r.get("Candidates").decode("utf-8"))
 
 
 @data_bp.route("/committees", methods=["GET"])
