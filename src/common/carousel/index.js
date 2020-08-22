@@ -9,15 +9,13 @@ const Carousel = props => {
   })
 
   return (
-    <div className={styles.container}>
-      <EmblaCarouselReact>
-        <div className={styles.embla}>
-          {props.items.map(item => (
-            <div className={styles.emblaSlide}>{props.renderItem(item)}</div>
-          ))}
-        </div>
-      </EmblaCarouselReact>
-    </div>
+    <EmblaCarouselReact>
+      <div className={styles.embla}>
+        {props.items.map(item => (
+          <div className={styles.emblaSlide}>{props.renderItem(item)}</div>
+        ))}
+      </div>
+    </EmblaCarouselReact>
   )
 }
 
