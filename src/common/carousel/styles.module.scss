@@ -1,0 +1,38 @@
+.embla {
+  flex-direction: row;
+  position: relative;
+  padding: 0px;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emblaViewport {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.emblaContainer {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: -10px;
+}
+
+.emblaSlide {
+  position: relative;
+  padding-left: 0px;
+  padding-right: 40px;
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 760px) {
+  .embla {
+    padding: 0 20px;
+  }
+}

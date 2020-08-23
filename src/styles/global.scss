@@ -57,3 +57,12 @@ li {
   max-width: 100%;
   min-width: 50%;
 }
+
+.is-draggable {
+  cursor: move;
+  cursor: grab;
+}
+
+.is-dragging {
+  cursor: grabbing;
+}

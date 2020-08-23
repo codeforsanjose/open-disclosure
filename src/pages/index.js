@@ -6,6 +6,7 @@ import styles from "./index.module.scss"
 import Layout from "../components/layout"
 import Button from "../common/button/index"
 import MainPageSection from "../components/mainPageSection"
+import CandidateSection from "../components/CandidateSection"
 import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
@@ -174,15 +175,12 @@ export default class MainPage extends React.PureComponent {
               />
             </div>
           </header>
-
-          <MainPageSection secondary {...this.snapshot}></MainPageSection>
-          <MainPageSection
-            offWhite
-            carousel
+          <MainPageSection secondary {...this.snapshot} />
+          <CandidateSection
+            candidates={this.candidates}
             windowIsLarge={this.state.windowIsGreaterThan760px}
-            {...this.candidates}
-          ></MainPageSection>
-          <MainPageSection {...this.behindTheScenes}></MainPageSection>
+          />
+          <MainPageSection {...this.behindTheScenes} />
           <MainPagePic {...this.about} />
           <MainPagePic
             {...this.vote}
