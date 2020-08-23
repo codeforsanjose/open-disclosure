@@ -11,34 +11,9 @@ We are inspired by Open Oakland's Open Disclosure: https://www.opendisclosure.io
 
 Initially this project will cover City of San Jose elections and later will broaden to cover elections more widely.
 
-## Draft Stories
-
-Minimal Viable Product (MVP) / Version 1:
-The aim is to have a prototype website with simple visualizations up and running by December 31, 2019.  
-
-1. A user can see a list of election categories:
-- Mayoral candidates of City of San Jose
-- Council member candidates of City of San Jose
-2. The user can select one category
-3. The user can select one candidate
-4. The user will see a list of donors, from highest donation to lowest donation. Include information 
-about the donor like donation amount and location. Also include information about expenditures, 
-broken down into categories, recipients and amounts.
-5. The user can see a list of where the donors are from: San Jose, Santa Clara County, California, Other States
-
-As a first pass this will cover data from the 2018 elections as this is readily available.
-
-Version 2:
-
-The aim is to prettify the website and visualizations from January - February 2020, ideally by February 3, 2020, 
-one month before the Primary Election on March 3, 2020. 
-
-1. General improvements to UX/UI of website
-2. Incorporate data from 2020 elections as it becomes available.
-
 ## California Election Information:
 
-San Jose voters will vote on Tuesday, March 3, 2020 for 5 Councilmembers in Districts 2, 4, 6, 8 and 10. 
+San Jose voters will vote on November 3, 2020 for 5 Councilmembers in Districts 2, 4, 6, 8 and 10.
 [More information can be found here.]
 (https://www.sanjoseca.gov/your-government/appointees/city-clerk/elections/2020-elections)
 This project aims to cover the finances for these candidates in Version 2, from January 2020.
@@ -84,18 +59,23 @@ $ gatsby develop
 % virtualenv env
 % source env/bin/activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium
+(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy
 
 (env) % python ./scraper.py
 ```
 ### Windows:
 
-TBD
+```
+% cd data_pipeline/scraper
+% virtualenv --system-site-packages -p python3 ./venv
+% .\venv\Scripts\activate
+
+(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy
+(env) % python3 scraper.py
+```
 
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
-
-Executed on Mac OS 10.15.4 with Python 2.7.16 and Python 3.7.3 installed.
 
 ## How to Contribute
 0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
