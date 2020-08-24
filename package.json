@@ -16,6 +16,7 @@
     "embla-carousel": "^3.0.27",
     "gatsby": "^2.15.28",
     "gatsby-plugin-sass": "^2.2.3",
+    "gatsby-source-apiserver": "^2.1.7",
     "iframe-resizer-react": "^1.0.4",
     "node-sass": "^4.13.1",
     "react": "^16.10.1",
