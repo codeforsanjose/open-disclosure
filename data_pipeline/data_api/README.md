@@ -18,6 +18,15 @@ Running your local Redis server
 
     - You can stop the server with `pkill redis-server` 
 
+Installing RedisJSON and redis-py
+-
+1. `git clone https://github.com/RedisJSON/RedisJSON.git`
+    2. Install cargo `source $HOME/.cargo/env` or `export PATH="$HOME/.cargo/bin:$PATH"` in .profile
+    3. Install cmake `PATH="/Applications/CMake.app/Contents/bin":"$PATH"`
+    4. Run `make`
+2. `redis-server --loadmodule ./target/release/librejson.dylib`
+3. `pip install redis`
+
 Running the API
 -
 1. Make sure your environment variables are set properly 

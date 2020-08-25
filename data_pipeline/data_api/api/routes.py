@@ -1,18 +1,22 @@
 from flask import Blueprint, jsonify, request
-
+import json
 import api.tests.fake_data as fake_data
 from api.errors import error_response
 from api.models import Candidate, db
-from redis import Redis
+from redis import Redis, StrictRedis
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
-r = Redis(host="localhost", port=6379)
+r = StrictRedis(host="localhost", port=6379)
 
 
 @data_bp.route("/", methods=["GET"])
 def home():
-    r.mset({"Croatia": "Zagreb", "Bahamas": "Nassau"})
-    return f"<h1>Welcome to the Open Disclosure API {r.get('Bahamas')}</p>"
+    data = {
+        'foo': 'bar',
+        'boof' : 'woof'
+    }
+    r.execute_command('JSON.SET', 'doc', '.', json.dumps(data))
+    return f"<h1>Welcome to the Open Disclosure API {json.loads(r.execute_command('JSON.GET', 'doc'))['boof']}</p>"
 
 
 @data_bp.route("/scrape", methods=["GET"])
