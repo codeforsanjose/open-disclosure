@@ -12,6 +12,8 @@ RUN mkdir -p /app/data_pipeline
 RUN addgroup --gid $GID $GROUP
 RUN adduser --uid $UID --ingroup $GROUP --gecos GECOS --disabled-password $USER
 #RUN usermod -aG sudo $USER #TODO: Remove prompt and add sudo
+ADD redis-cron /etc/cron.daily
+RUN touch /var/log/cron.log
 ADD . /app/data_pipeline
 RUN chown -R ${USER}:${GROUP} /app
 USER $USER
