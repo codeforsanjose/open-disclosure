@@ -13,7 +13,7 @@ module.exports = {
         url: `http://localhost:5000/open-disclosure/api/v1.0/candidates`,
         method: "get",
         data: {},
-        name: `candidates`,
+        name: `candidate`,
         entityLevel: `Candidates`,
         schemaType: {
           Name: "String",
@@ -26,6 +26,14 @@ module.exports = {
           ],
         },
         enableDevRefresh: true,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-slug-field",
+      options: {
+        filter: { internal: { type: "candidate" } },
+        source: "Name",
+        fieldName: "slug",
       },
     },
   ],
