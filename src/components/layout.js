@@ -15,7 +15,7 @@ export default class Layout extends React.PureComponent {
   links = [
     {
       name: "Candidates",
-      endpoint: "/",
+      endpoint: "/candidates",
       links: [
         {
           position: "Mayor",
