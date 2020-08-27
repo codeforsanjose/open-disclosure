@@ -12,6 +12,10 @@ exports.createPages = async ({ graphql, actions }) => {
             fields {
               slug
             }
+            Elections {
+              ElectionCycle
+              ElectionTitle
+            }
           }
         }
       }
@@ -22,7 +26,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: "/candidate/" + node.fields.slug,
       component: path.resolve("src/templates/candidate.js"),
       context: {
-        name: node.Name,
+        slug: node.fields.slug,
       },
     })
   })
