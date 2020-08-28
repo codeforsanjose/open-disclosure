@@ -1,0 +1,55 @@
+.container {
+  .body {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    flex-wrap: wrap;
+    padding: 4.5rem 2.1rem;
+  }
+}
+
+.wrapper {
+	width: 100%;
+	max-width: 1061px;
+	margin-left: 194px;
+	margin-right: 185px;
+	margin-top: 105px;
+	flex-wrap: wrap;
+	padding: 4.5rem 2.1rem;
+	
+}
+
+.body {
+	font-family: "Lato";
+	font-style: normal;
+	font-size: 20px; 
+	line-height: 130%;
+}
+
+h1 {
+	font-family: "DM Sans";
+	font-style: normal;
+	font-weight: bold;
+	font-size: 32px;
+	line-height: 130%;
+}
+
+h2 {
+	font-family: DM Sans;
+	font-style: normal;
+	font-weight:500;
+	font-size:24px;
+	line-height:130%;
+	margin-bottom:117px;
+}	
+
+h3 {
+	font-family: "Lato";
+	font-style: normal;
+	font-weight:normal;
+	font-size:20px; 
+	line-height: 130%;
+	margin-top: 21px;
+	margin-bottom:50px;
+}
+
