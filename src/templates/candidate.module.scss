@@ -1,5 +1,21 @@
 .container {
   padding: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.sideNav {
+  flex: 1;
+}
+
+.mainSection {
+  flex: 2;
+  padding: 4.7rem;
+}
+
+.aboutSection {
+  font-size: 2rem;
+  margin-bottom: 7.8rem;
 }
 
 .totals {
