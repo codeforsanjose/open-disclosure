@@ -37,7 +37,7 @@ export default class Layout extends React.PureComponent {
     },
     {
       name: "About",
-      endpoint: "/",
+      endpoint: "/aboutUs",
     },
     {
       name: "FAQ",
