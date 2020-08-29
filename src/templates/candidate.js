@@ -97,7 +97,6 @@ export const query = graphql`
     candidate(fields: { slug: { eq: $slug } }) {
       Name
       Elections {
-        ElectionCycle
         ElectionTitle
       }
     }

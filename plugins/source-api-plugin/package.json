@@ -1,0 +1,5 @@
+{
+  "name": "source-api-plugin",
+  "version": "1.0.0",
+  "description": "Source plugin for fetching data from the api"
+}
