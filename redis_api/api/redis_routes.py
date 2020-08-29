@@ -3,15 +3,13 @@ import json
 from flask import Blueprint, jsonify
 from redis import StrictRedis
 
-redis_bp = Blueprint(
-    "redis_bp", "redis_api", url_prefix="/open-disclosure/redis-api/v1.0"
-)
+redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
 r = StrictRedis(host="localhost", port=6379)
 
 
 @redis_bp.route("/", methods=["GET"])
 def home():
-    return f"<h1>Welcome to the Open Disclosure API {json.loads(r.execute_command('JSON.GET', 'doc'))['boof']}</p>"
+    return f"<h1>Welcome to the Open Disclosure API</p>"
 
 
 @redis_bp.route("/total-contributions", methods=["GET"])
@@ -29,7 +27,9 @@ def get_candidates():
     Get all the candidates from the current election period
     :return: list or set of JSON objects containing individual candidate information
     """
-    return jsonify(r.get("Candidates").decode("utf-8"))
+    return jsonify(
+        {"Candidates": json.loads(r.execute_command("JSON.GET", "Candidates"))}
+    )
 
 
 @redis_bp.route("/committees", methods=["GET"])
@@ -73,6 +73,6 @@ def get_by_candidate(candidate_name):
     """
     Get information associated with a particular candidate
     :param candidate_name: string representing a candidate's name
-    :return: JSON object containing a candidate's election info
+    :return: JSON object containing a candidate's election info or error message
     """
     return jsonify(r.get("Candidates")[candidate_name].decode("utf-8")), 200
