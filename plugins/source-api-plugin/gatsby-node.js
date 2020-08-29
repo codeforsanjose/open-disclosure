@@ -33,6 +33,14 @@ exports.sourceNodes = async ({
     )
     data = await response.json()
   } catch (networkError) {
+    console.warn(
+      "Unable to reach the API server at " +
+        HOSTNAME +
+        ", falling back to mock data"
+    )
+    console.info(
+      "Use the environment variable GATSBY_API_HOST to use a different hostname for the API server"
+    )
     // Use dummy data as a fallback in case the API isn't available.
     // TODO This is only for development purposes - get rid of this
     data = DUMMY_DATA
