@@ -3,7 +3,6 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
-const hostname = process.env.GATSBY_API_SERVER ?? "localhost:5000"
 
 module.exports = {
   plugins: [
