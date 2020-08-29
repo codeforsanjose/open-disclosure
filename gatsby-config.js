@@ -3,6 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
+const hostname = process.env.GATSBY_API_SERVER ?? "localhost:5000"
 
 module.exports = {
   plugins: [
@@ -10,7 +11,7 @@ module.exports = {
     {
       resolve: "gatsby-source-apiserver",
       options: {
-        url: `http://localhost:5000/open-disclosure/api/v1.0/candidates`,
+        url: `http://${hostname}/open-disclosure/api/v1.0/candidates`,
         method: "get",
         data: {},
         name: `candidate`,
