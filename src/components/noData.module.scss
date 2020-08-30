@@ -1,0 +1,46 @@
+@import "../styles/colors";
+
+.container {
+  align-items: center;
+  padding: 5rem 0 3rem;
+
+  h1,
+  p {
+    line-height: 130%;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+    margin-bottom: 2rem;
+  }
+
+  p {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  a {
+    color: $primaryGreen;
+    cursor: pointer;
+  }
+}
+
+.noDataImg {
+  margin-top: 5rem;
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    h1 {
+      font-size: 1.8rem;
+    }
+    p {
+      font-size: 1.4rem;
+    }
+  }
+
+  .noDataImg {
+    height: 11rem;
+    width: auto;
+  }
+}
