@@ -12,10 +12,6 @@ exports.createPages = async ({ graphql, actions }) => {
             fields {
               slug
             }
-            Elections {
-              ElectionCycle
-              ElectionTitle
-            }
           }
         }
       }
