@@ -38,8 +38,8 @@ Running the API
     - `export PYTHONPATH=$PYTHONPATH/path/to/open-disclosure` (this is needed to ensure modules outside of data_api can be imported properly)
     - `export PYTHONPATH=$PYTHONPATH/path/to/scraper` (scraper needs to be recognized as its own module)
     - You can also source these variables in your `.bashrc` profile
-2. Call `flask run -h localhost -p 5001` in the redis_api directory
-3. The API should be running on `localhost:5001`
+2. Call `flask run -h localhost` in the redis_api directory
+3. The API should be running on `localhost:5000`
 
 Making calls to the API
 -
