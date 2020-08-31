@@ -1,5 +1,6 @@
 // Libraries
 import React from "react"
+import { graphql } from "gatsby"
 // Styles
 import styles from "./index.module.scss"
 // Components
@@ -191,3 +192,37 @@ export default class MainPage extends React.PureComponent {
     )
   }
 }
+
+export const query = graphql`
+  query {
+    allCandidate {
+      edges {
+        node {
+          Name
+          Elections {
+            ElectionCycle
+            ElectionTitle
+            Committees {
+              Name
+              TotalFunding
+            }
+          }
+        }
+      }
+    }
+    allElection {
+      edges {
+        node {
+          Title
+          TotalContributions
+          OfficeElections {
+            Candidates
+            Title
+            TotalContributions
+          }
+          Date
+        }
+      }
+    }
+  }
+`
