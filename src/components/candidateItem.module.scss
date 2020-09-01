@@ -2,7 +2,7 @@
 
 .container {
   background-color: transparent;
-  margin: 4rem 1.5rem 0;
+  margin: 4rem 1.5rem 4rem;
 
   img {
     align-self: center;
@@ -52,12 +52,15 @@
   }
 
   .candidateInfo:hover {
-    box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.7);
   }
 }
 
 @media screen and (max-width: 760px) {
   .container {
+    margin: 0 auto;
+    width: max-content;
+
     img {
       border: 5.3px solid $secondaryGreen;
       max-width: 12rem;
@@ -65,8 +68,8 @@
     }
 
     .candidateInfo {
-      margin-top: -6.3rem;
-      padding: 7.3rem 7rem 2.5rem;
+      margin: -6.3rem 0 3rem;
+      padding: 7.3rem 6rem 2.5rem;
 
       h4 {
         font-size: 1.3rem;

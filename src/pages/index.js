@@ -1,11 +1,13 @@
 // Libraries
 import React from "react"
+import { graphql } from "gatsby"
 // Styles
 import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
 import Button from "../common/button/index"
 import MainPageSection from "../components/mainPageSection"
+import CandidateSection from "../components/candidateSection"
 import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
@@ -174,15 +176,12 @@ export default class MainPage extends React.PureComponent {
               />
             </div>
           </header>
-
-          <MainPageSection secondary {...this.snapshot}></MainPageSection>
-          <MainPageSection
-            offWhite
-            carousel
+          <MainPageSection secondary {...this.snapshot} />
+          <CandidateSection
+            candidates={this.candidates}
             windowIsLarge={this.state.windowIsGreaterThan760px}
-            {...this.candidates}
-          ></MainPageSection>
-          <MainPageSection {...this.behindTheScenes}></MainPageSection>
+          />
+          <MainPageSection {...this.behindTheScenes} />
           <MainPagePic {...this.about} />
           <MainPagePic
             {...this.vote}
@@ -193,3 +192,37 @@ export default class MainPage extends React.PureComponent {
     )
   }
 }
+
+export const query = graphql`
+  query {
+    allCandidate {
+      edges {
+        node {
+          Name
+          Elections {
+            ElectionCycle
+            ElectionTitle
+            Committees {
+              Name
+              TotalFunding
+            }
+          }
+        }
+      }
+    }
+    allElection {
+      edges {
+        node {
+          Title
+          TotalContributions
+          OfficeElections {
+            Candidates
+            Title
+            TotalContributions
+          }
+          Date
+        }
+      }
+    }
+  }
+`

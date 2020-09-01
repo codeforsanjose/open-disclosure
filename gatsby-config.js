@@ -5,5 +5,16 @@
  */
 
 module.exports = {
-  plugins: [`gatsby-plugin-sass`],
+  plugins: [
+    `gatsby-plugin-sass`,
+    `source-api-plugin`,
+    {
+      resolve: "gatsby-plugin-slug-field",
+      options: {
+        filter: { internal: { type: "candidate" } },
+        source: "Name",
+        fieldName: "slug",
+      },
+    },
+  ],
 }

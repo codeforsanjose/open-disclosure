@@ -4,3 +4,5 @@ selenium
 xlrd 
 pandas
 xlwt
+redis
+rejson

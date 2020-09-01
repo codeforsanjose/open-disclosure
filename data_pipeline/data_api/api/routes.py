@@ -5,10 +5,17 @@ from flask import Blueprint, jsonify, request
 import api.tests.fake_data as fake_data
 from api.errors import error_response
 from api.models import Candidate, db
-from redis import StrictRedis
+
+import os
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 data_bp = Blueprint("data_bp", "api", url_prefix="/open-disclosure/api/v1.0")
-r = StrictRedis(host="localhost", port=6379)
+r = redis.Redis(host=os.environ.get("REDIS_HOST", "localhost"))
+r.mset({"total_contributions": 10000})
+
 
 
 @data_bp.route("/", methods=["GET"])
@@ -78,3 +85,4 @@ def get_by_candidate(candidate_name):
     if not candidate:
         return error_response(404, "Candidate not found")
     return jsonify(candidate.serialize()), 200
+

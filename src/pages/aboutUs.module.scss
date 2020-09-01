@@ -1,0 +1,28 @@
+.container {
+  max-width: 1061px;
+  margin-left: 194px;
+  margin-right: 185px;
+  margin-top: 105px;
+  flex-wrap: wrap;
+  padding: 4.5rem 2.1rem;
+
+  h1,
+  h2,
+  p {
+    line-height: 130%;
+  }
+
+  h1 {
+    font-size: 32px;
+    margin-bottom: 3.5rem;
+  }
+
+  h2 {
+    font-weight: 500;
+    font-size: 24px;
+  }
+  p {
+    font-size: 2rem;
+    margin: 1.5rem 0 7rem;
+  }
+}

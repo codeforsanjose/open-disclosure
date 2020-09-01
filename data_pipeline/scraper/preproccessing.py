@@ -1,7 +1,8 @@
 import xlrd
 import csv
 import glob
-from os import path, pardir, listdir, devnull
+
+from os import path, pardir, listdir, devnull, name
 from sys import getsizeof
 import json
 import pandas as pd
@@ -10,6 +11,8 @@ from time import sleep
 
 # Custom python module
 from dirmanager import DirManager
+
+FILE_DIVIDER = '\\' if name == 'nt' else '/'
 
 class PreProcessing():
     def __init__(self, scraper_download_dir):
@@ -58,6 +61,7 @@ class PreProcessing():
         new_folder = self.insertCandidateFolder.getDirectory()
         filenames = self.insertColumnsHelper()
 
+
         candidateHeader = "CandidateControlledName"
         electionDateHeader = "Election Date"
         ballotItemHeader = "Ballot Item"
@@ -83,15 +87,15 @@ class PreProcessing():
     
     def insertColumnsHelper(self):
         partial_download = True
-        filenames = sorted([self.download_dir + "/" + f for f in listdir(self.download_dir)], key=path.getmtime)
+        filenames = sorted([self.download_dir + FILE_DIVIDER + f for f in listdir(self.download_dir)], key=path.getmtime)
 
         while partial_download:
             filename = path.basename(filenames[-1])
             print(filename)
-            if "transactionExportGrid" in filename:
+            if "transactionExportGrid" in filename and "crdownload" not in filename:
                 partial_download = False
             else:
                 sleep(3)
-                filenames = sorted([self.download_dir + "/" + f for f in listdir(self.download_dir)], key=path.getmtime)
+                filenames = sorted([self.download_dir + FILE_DIVIDER + f for f in listdir(self.download_dir)], key=path.getmtime)
 
         return filenames
