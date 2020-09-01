@@ -2,8 +2,8 @@ const fetch = require("node-fetch")
 
 // TODO Add dev/prod variations
 const HOSTNAME = process.env.GATSBY_API_HOST || "localhost:5000"
-const CANDIDATE_NODE_TYPE = `candidate`
-const ELECTION_NODE_TYPE = `election`
+const CANDIDATE_NODE_TYPE = `Candidate`
+const ELECTION_NODE_TYPE = `Election`
 
 const DUMMY_DATA = {
   candidates: {
@@ -104,4 +104,39 @@ exports.sourceNodes = async ({
     })
   })
   return
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type Candidate implements Node {
+      id: ID!
+      Name: String
+      Elections: [CandidateElection]
+    }
+
+    type CandidateElection {
+      ElectionCycle: String
+      ElectionTitle: String
+      Committees: [Committee]
+    }
+
+    type Committee {
+      Name: String
+      TotalFunding: String
+    }
+
+    type Election implements Node {
+      Title: String!
+      Date: String 
+      TotalContributions: String 
+      OfficeElections: [OfficeElection]
+    }
+
+    type OfficeElection {
+      Candidates: [Candidate] @link(by: "Name")
+      Title: String
+      TotalContributions: String
+    }
+  `)
 }

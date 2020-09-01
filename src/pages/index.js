@@ -216,7 +216,9 @@ export const query = graphql`
           Title
           TotalContributions
           OfficeElections {
-            Candidates
+            Candidates {
+              Name
+            }
             Title
             TotalContributions
           }
