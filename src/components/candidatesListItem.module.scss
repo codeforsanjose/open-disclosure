@@ -43,3 +43,30 @@
 .visualization {
   flex-direction: row;
 }
+
+@media screen and (max-width: 760px) {
+  .container {
+    img {
+      height: 65px;
+      width: auto;
+    }
+  }
+
+  .headerText {
+    font-size: 1.2rem;
+  }
+
+  .label {
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+
+  .totalRaised {
+    margin: 0;
+    flex-direction: column-reverse;
+  }
+
+  .visualization > div {
+    flex: 1;
+  }
+}

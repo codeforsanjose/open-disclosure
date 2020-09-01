@@ -9,10 +9,10 @@ function formatPercent(value) {
 }
 
 export default ({ Name }) => {
-  const percent = formatPercent(123455 / 123456)
+  const percent = formatPercent(83455 / 123456)
   return (
     <div className={styles.container}>
-      <img src="https://picsum.photos/125" />
+      <img width="125px" src="https://picsum.photos/125" />
       <div className={styles.candidate}>
         <div className={styles.textInfo}>
           <div className={styles.candidateInfo}>
