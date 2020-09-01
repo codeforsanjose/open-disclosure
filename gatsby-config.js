@@ -11,7 +11,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "candidate" } },
+        filter: { internal: { type: "Candidate" } },
         source: "Name",
         fieldName: "slug",
       },
