@@ -199,21 +199,6 @@ export default class MainPage extends React.PureComponent {
 
 export const query = graphql`
   query {
-    allCandidate {
-      edges {
-        node {
-          Name
-          Elections {
-            ElectionCycle
-            ElectionTitle
-            Committees {
-              Name
-              TotalFunding
-            }
-          }
-        }
-      }
-    }
     allElection {
       edges {
         node {

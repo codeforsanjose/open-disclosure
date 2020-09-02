@@ -2,10 +2,12 @@
 
 .outerContainer {
   background-color: $primaryWhite;
+  align-items: center;
 }
 
 .innerContainer {
   max-width: 1440px;
+  width: 100%;
   padding: 5rem 10rem;
 }
 
