@@ -7,7 +7,7 @@ const CandidateItem = item => (
     <div className={styles.candidateInfo}>
       <h4>{item.name}</h4>
       <p>{item.position}</p>
-      <h3>{item.amount}</h3>
+      <h3>${item.amount.toLocaleString("en-US")}</h3>
       <p className={styles.amountRaised}>Amount raised</p>
     </div>
   </div>

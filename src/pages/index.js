@@ -43,57 +43,6 @@ export default class MainPage extends React.PureComponent {
     })
   }
 
-  snapshot = {
-    title: "San José live election snapshot",
-    description:
-      "See which San José candidates are raising and spending the most in local elections.",
-    items: [
-      {
-        number: "31%",
-        description: "Of donations from the city of San José",
-      },
-      {
-        number: "$335,992",
-        description: "Amount raised to date",
-      },
-      {
-        number: "34",
-        description: "Candidates running",
-      },
-    ],
-    renderItem: SnapshotItem,
-  }
-
-  candidates = {
-    title: "Get the facts before you vote",
-    description:
-      "Find out which San José candidates are raising and spending the most in local elections.",
-    items: [
-      {
-        name: "Sam Liccardo",
-        position: "Mayor Incumbent",
-        amount: "$654,876",
-        image: "https://picsum.photos/180",
-      },
-      {
-        name: "Steve Brown",
-        position: "Mayoral candidate",
-        amount: "$600,000",
-        image: "https://picsum.photos/180",
-      },
-      {
-        name: "Tyrone Wade",
-        position: "Mayoral candidate",
-        amount: "$52,100",
-        image: "https://picsum.photos/180",
-      },
-    ],
-    renderItem: CandidateItem,
-    footer: () => (
-      <img alt="candidates" height="37px" width="285px" src={tertiary} />
-    ),
-  }
-
   behindTheScenes = {
     title: "Go behind the scenes",
     description: "Over $6,404,634 flowing into 2020 San Jose elections.",
@@ -139,6 +88,61 @@ export default class MainPage extends React.PureComponent {
   }
 
   render() {
+    const currentElection = this.props.data.allElection.edges[0].node
+    let candidatesRunning = 0
+    const candidateList = []
+    currentElection.OfficeElections.forEach(election => {
+      candidatesRunning += election.Candidates.length
+      election.Candidates.forEach(candidate => {
+        if (candidate) {
+          let funding = 0
+          candidate.Elections[0].Committees.forEach(committee => {
+            funding += parseInt(committee.TotalFunding)
+          })
+          console.log(candidate)
+          candidateList.push({
+            name: candidate.Name,
+            position: election.Title,
+            amount: funding,
+            image: "https://picsum.photos/180",
+          })
+        }
+      })
+    })
+
+    const snapshot = {
+      title: "San José live election snapshot",
+      description:
+        "See which San José candidates are raising and spending the most in local elections.",
+      items: [
+        {
+          number: "XXX",
+          description: "Of donations from the city of San José",
+        },
+        {
+          number: currentElection.TotalContributions,
+          description: "Amount raised to date",
+        },
+        {
+          number: candidatesRunning,
+          description: "Candidates running",
+        },
+      ],
+      renderItem: SnapshotItem,
+    }
+
+    const candidates = {
+      title: "Get the facts before you vote",
+      description:
+        "Find out which San José candidates are raising and spending the most in local elections.",
+      items: candidateList,
+      renderItem: CandidateItem,
+      footer: () => (
+        <img alt="candidates" height="37px" width="285px" src={tertiary} />
+      ),
+    }
+
+    console.log(this.props.data)
     return (
       <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
         <div className={styles.container}>
@@ -176,9 +180,9 @@ export default class MainPage extends React.PureComponent {
               />
             </div>
           </header>
-          <MainPageSection secondary {...this.snapshot} />
+          <MainPageSection secondary {...snapshot} />
           <CandidateSection
-            candidates={this.candidates}
+            candidates={candidates}
             windowIsLarge={this.state.windowIsGreaterThan760px}
           />
           <MainPageSection {...this.behindTheScenes} />
@@ -213,16 +217,25 @@ export const query = graphql`
     allElection {
       edges {
         node {
-          Title
           TotalContributions
           OfficeElections {
-            Candidates {
-              Name
-            }
             Title
             TotalContributions
+            Candidates {
+              Name
+              Elections {
+                ElectionCycle
+                ElectionTitle
+                Committees {
+                  Name
+                  TotalFunding
+                }
+              }
+              fields {
+                slug
+              }
+            }
           }
-          Date
         }
       }
     }
