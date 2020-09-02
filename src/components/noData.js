@@ -26,6 +26,7 @@ export default function NoData({ page }) {
         height={163}
         width={159}
         src={noDataImg}
+        alt="Receipt with a dollar sign on it"
       />
     </div>
   )
