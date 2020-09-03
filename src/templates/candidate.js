@@ -139,6 +139,12 @@ export default function Candidate({ data }) {
             data={breakdowns}
             showPercentages
           />
+          <section>
+            <SectionHeader title="Other committees controlled by candidate" />
+            {elections[0].Committees.map(({ Name }) => (
+              <Link className={styles.committeeLink}>{Name}</Link>
+            ))}
+          </section>
         </div>
       </div>
     </Layout>
@@ -151,6 +157,9 @@ export const query = graphql`
       Name
       Elections {
         ElectionTitle
+        Committees {
+          Name
+        }
       }
     }
   }
