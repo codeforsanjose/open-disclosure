@@ -80,26 +80,26 @@ export default function Candidate({ data }) {
                   committee.
                 </p>
                 <div className={styles.aboutLinks}>
-                  <Link to="/" className={styles.aboutLink}>
+                  <a href="/" className={styles.aboutLink}>
                     <img alt="Web icon" src={WebIcon} className={styles.icon} />
                     www.lindsaylohan2020.com
-                  </Link>
-                  <Link to="/" className={styles.aboutLink}>
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
                     <img
                       alt="External link icon"
                       src={VotersEdgeIcon}
                       className={styles.icon}
                     />
                     Voter's Edge Profile
-                  </Link>
-                  <Link to="/" className={styles.aboutLink}>
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
                     <img
                       alt="Twitter icon"
                       src={TwitterIcon}
                       className={styles.icon}
                     />
                     @lindsaylohan2020
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
