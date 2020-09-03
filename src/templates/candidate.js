@@ -13,6 +13,7 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import WebIcon from "../../static/images/web.png"
 import VotersEdgeIcon from "../../static/images/votersedge.png"
 import TwitterIcon from "../../static/images/twitter.png"
+import ArrowIcon from "../../static/images/arrow.png"
 
 // TODO Hook up charts to real data
 const contributions = [
@@ -37,7 +38,7 @@ const breakdowns = [
 
 function ChartSection({ title, type, total, data, ...passProps }) {
   return (
-    <section>
+    <section className={styles.section}>
       <SectionHeader title={title} />
       <TotalAmountItem type={type} total={total} />
       <BarChart type={type} total={total} rows={data} {...passProps} />
@@ -56,47 +57,50 @@ export default function Candidate({ data }) {
       <div className={styles.container}>
         <div className={styles.sideNav}></div>
         <div className={styles.mainSection}>
-          <SectionHeader title={name} />
-          <section className={styles.aboutSection}>
-            <img
-              alt="Candidate profile photo"
-              className={styles.profilePhoto}
-              src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
-            />
-            <div className={styles.aboutSectionRight}>
-              <p className={styles.aboutTitle}>
-                <span className={styles.currentPosition}>
-                  Incumbent, District 9 Representative
-                </span>
-                {" - elected"}
-              </p>
-              <p style={styles.aboutText}>
-                This candidate has agreed to voluntary spending limits. The
-                maximum contribution this candidate can accept is $800 from any
-                individual, business entity, committee or other organization and
-                $1,600 from a qualified broad-based committee.
-              </p>
-              <div className={styles.aboutLinks}>
-                <Link to="/" className={styles.link}>
-                  <img alt="Web icon" src={WebIcon} className={styles.icon} />
-                  www.lindsaylohan2020.com
-                </Link>
-                <Link to="/" className={styles.link}>
-                  <img
-                    alt="External link icon"
-                    src={VotersEdgeIcon}
-                    className={styles.icon}
-                  />
-                  Voter's Edge Profile
-                </Link>
-                <Link to="/" className={styles.link}>
-                  <img
-                    alt="Twitter icon"
-                    src={TwitterIcon}
-                    className={styles.icon}
-                  />
-                  @lindsaylohan2020
-                </Link>
+          <section>
+            <SectionHeader title={name} />
+            <div className={styles.aboutSection}>
+              <img
+                alt="Candidate profile photo"
+                className={styles.profilePhoto}
+                src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
+              />
+              <div>
+                <p className={styles.aboutTitle}>
+                  <span className={styles.currentPosition}>
+                    Incumbent, District 9 Representative
+                  </span>
+                  {" - elected"}
+                </p>
+                <p className={styles.aboutText}>
+                  This candidate has agreed to voluntary spending limits. The
+                  maximum contribution this candidate can accept is $800 from
+                  any individual, business entity, committee or other
+                  organization and $1,600 from a qualified broad-based
+                  committee.
+                </p>
+                <div className={styles.aboutLinks}>
+                  <Link to="/" className={styles.aboutLink}>
+                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
+                    www.lindsaylohan2020.com
+                  </Link>
+                  <Link to="/" className={styles.aboutLink}>
+                    <img
+                      alt="External link icon"
+                      src={VotersEdgeIcon}
+                      className={styles.icon}
+                    />
+                    Voter's Edge Profile
+                  </Link>
+                  <Link to="/" className={styles.aboutLink}>
+                    <img
+                      alt="Twitter icon"
+                      src={TwitterIcon}
+                      className={styles.icon}
+                    />
+                    @lindsaylohan2020
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
@@ -114,6 +118,14 @@ export default function Candidate({ data }) {
             total={654876}
             data={contributions}
           />
+          <Link className={styles.seeAllLink} to="/">
+            See all contributions
+            <img
+              alt="Right arrow icon"
+              className={`${styles.icon} ${styles.seeAllIcon}`}
+              src={ArrowIcon}
+            />
+          </Link>
           <ChartSection
             title="How the money is being spent"
             type="expenditures"

@@ -4,22 +4,42 @@
   padding: 2rem;
   display: flex;
   flex-direction: row;
+
+  a {
+    color: $primaryGreen;
+  }
+
+  section {
+    margin-top: 2.9rem;
+  }
 }
 
-.sideNav {
-  flex: 1;
+.aboutLink {
+  align-items: center;
+  display: flex;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
 }
 
-.mainSection {
-  flex: 2;
-  padding: 4.7rem;
+.aboutLinks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .aboutSection {
   display: flex;
   flex-direction: row;
-  margin-bottom: 7.8rem;
+  margin-bottom: 4.9rem;
   margin-top: 3.9rem;
+}
+
+.aboutText {
+  font-size: 2rem;
+  line-height: 2.6rem;
+  margin-bottom: 3rem;
 }
 
 .aboutTitle {
@@ -33,28 +53,14 @@
   font-weight: bold;
 }
 
-.aboutSectionRight {
-  p {
-    font-size: 2rem;
-    line-height: 2.6rem;
-    margin-bottom: 3rem;
-  }
+.icon {
+  margin: 0 0.8rem;
+  width: 2.4rem;
 }
 
-.aboutLinks {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.link {
-  align-items: center;
-  color: $primaryGreen;
-  display: flex;
-  font-size: 1.8rem;
-  line-height: 2.2rem;
-  margin-bottom: 0.8rem;
+.mainSection {
+  flex: 2;
+  padding: 4.7rem;
 }
 
 .profilePhoto {
@@ -65,16 +71,27 @@
   width: 12.5rem;
 }
 
-.icon {
-  margin-right: 0.8rem;
-  width: 2.4rem;
+.seeAllIcon {
+  height: 1.7rem;
+  vertical-align: middle;
+}
+
+.seeAllLink {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 2.6rem;
+  margin-bottom: 2.9rem;
+}
+
+.sideNav {
+  flex: 1;
 }
 
 .totals {
   flex-direction: row;
   justify-content: space-around;
   margin-top: 4.7rem;
-  margin-bottom: 7.8rem;
+  margin-bottom: 4.9rem;
 }
 
 @media screen and (max-width: 760px) {
