@@ -1,0 +1,74 @@
+@import "../styles/colors";
+
+.container {
+  flex-direction: row;
+  margin: 4.5rem 0;
+
+  img {
+    height: 12.5rem;
+    width: 12.5rem;
+    border-radius: 50%;
+    margin-right: 2rem;
+  }
+}
+
+.candidate {
+  flex-direction: column;
+  width: 100%;
+}
+
+.textInfo {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerText {
+  font-family: "Lato";
+  font-size: 2.8rem;
+  line-height: 130%;
+}
+
+.label {
+  font-size: 2rem;
+  line-height: 130%;
+  color: $darkGray;
+}
+
+.totalRaised {
+  margin: 1.6rem 3.5rem;
+
+  .headerText {
+    font-weight: 900;
+  }
+}
+
+.visualization {
+  flex-direction: row;
+}
+
+@media screen and (max-width: 760px) {
+  .container {
+    img {
+      height: 65px;
+      width: auto;
+    }
+  }
+
+  .headerText {
+    font-size: 1.2rem;
+  }
+
+  .label {
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+
+  .totalRaised {
+    margin: 0;
+    flex-direction: column-reverse;
+  }
+
+  .visualization > div {
+    flex: 1;
+  }
+}

@@ -1,5 +1,6 @@
 import React from "react"
 import styles from "./barChart.module.scss"
+import Bar from "./bar"
 
 const percentFormatter = Intl.NumberFormat("en-US", { style: "percent" })
 const thousandsFormatter = Intl.NumberFormat("en-US", {
@@ -16,19 +17,6 @@ function formatDollarsInThousands(value) {
   return thousandsFormatter.format(value)
 }
 
-function Bar({ percent, type }) {
-  const colorStyle =
-    type === "expenditures" ? styles.expenditures : styles.contributions
-  return (
-    <div className={styles.barBackground}>
-      <div
-        className={`${styles.bar} ${colorStyle}`}
-        style={{ width: percent }}
-      />
-    </div>
-  )
-}
-
 function Row({ label, value, total, type, showPercentages }) {
   const percent = formatPercent(value / total)
   return (
@@ -37,9 +25,7 @@ function Row({ label, value, total, type, showPercentages }) {
       <p className={styles.value}>
         {showPercentages ? percent : formatDollarsInThousands(value)}
       </p>
-      <div className={styles.barContainer}>
-        <Bar percent={percent} type={type} />
-      </div>
+      <Bar percent={percent} type={type} />
     </div>
   )
 }

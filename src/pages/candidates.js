@@ -1,22 +1,26 @@
 import { Link, graphql } from "gatsby"
+import Layout from "../components/layout"
+import CandidatesListItem from "../components/candidatesListItem"
 
 import React from "react"
 
 export default function Candidates({ data }) {
-  // We're only interested in data for the upcoming election.
   const election = data.allElection.edges[0]
   return (
-    <ul>
-      {election.node.OfficeElections.map(({ Candidates }) =>
-        Candidates.filter(Boolean).map(candidate => (
-          <li key={candidate.id}>
-            <Link to={"/candidate/" + candidate.fields.slug}>
-              {candidate.Name}
-            </Link>
-          </li>
-        ))
-      )}
-    </ul>
+    <Layout>
+      <ul>
+        {election.node.OfficeElections.map(({ Candidates }) =>
+          Candidates.filter(Boolean).map(candidate => (
+            <li key={candidate.id}>
+              {/* Should link to candidate/${node.Date}/${candidateName}} */}
+              <Link to={"/candidate/" + candidate.fields.slug}>
+                <CandidatesListItem {...candidate} />
+              </Link>
+            </li>
+          ))
+        )}
+      </ul>
+    </Layout>
   )
 }
 
@@ -29,6 +33,14 @@ export const query = graphql`
             Title
             Candidates {
               Name
+              Elections {
+                ElectionCycle
+                ElectionTitle
+                Committees {
+                  Name
+                  TotalFunding
+                }
+              }
               fields {
                 slug
               }
