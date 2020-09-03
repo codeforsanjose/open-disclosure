@@ -1,3 +1,5 @@
+@import "../styles/colors";
+
 .container {
   padding: 2rem;
   display: flex;
@@ -14,8 +16,58 @@
 }
 
 .aboutSection {
-  font-size: 2rem;
+  display: flex;
+  flex-direction: row;
   margin-bottom: 7.8rem;
+  margin-top: 3.9rem;
+}
+
+.aboutTitle {
+  font-size: 2.4rem;
+  font-weight: normal;
+  margin-bottom: 1.6rem;
+}
+
+.currentPosition {
+  font-size: 2.8rem;
+  font-weight: bold;
+}
+
+.aboutSectionRight {
+  p {
+    font-size: 2rem;
+    line-height: 2.6rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.aboutLinks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.link {
+  align-items: center;
+  color: $primaryGreen;
+  display: flex;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.profilePhoto {
+  border-radius: 6.25rem;
+  height: 12.5rem;
+  margin-right: 3.3rem;
+  object-fit: contain; // TODO We'll probably want to change this
+  width: 12.5rem;
+}
+
+.icon {
+  margin-right: 0.8rem;
+  width: 2.4rem;
 }
 
 .totals {
