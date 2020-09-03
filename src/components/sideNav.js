@@ -6,7 +6,7 @@ export default class sideNav extends PureComponent {
   render() {
     return (
       <nav className={sideNavStyles.navBar}>
-        {props.children}
+        {this.props.children}
         {this.props.menuItems.map((menuItem, menuIndex) => (
           <div key={`menuItem ${menuIndex}`} className={sideNavStyles.listItem}>
             <h4 className={sideNavStyles.sectionTitle}>
