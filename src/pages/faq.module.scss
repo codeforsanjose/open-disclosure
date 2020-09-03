@@ -9,6 +9,10 @@
   }
 }
 
+.faqSection:first-of-type {
+  margin-bottom: 10rem;
+}
+
 @media screen and (max-width: 760px) {
   .body {
     padding: 2rem;
@@ -19,5 +23,9 @@
       font-size: 2.2rem;
       margin-bottom: 2rem;
     }
+  }
+
+  .faqSection:first-of-type {
+    margin: 2rem 0 0;
   }
 }

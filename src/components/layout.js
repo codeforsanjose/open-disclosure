@@ -7,12 +7,22 @@ import styles from "./layout.module.scss"
 import Navbar from "./navbar"
 import Logo from "./logo"
 
-export default class Layout extends React.PureComponent {
-  state = {
-    value: "",
-  }
+const renderNavItems = items => (
+  <ul>
+    {items.map(({ name, endpoint, anchor = false }, index) => (
+      <li key={`footer nav item ${name}`} className={styles.footerNavItem}>
+        {anchor ? (
+          <a href={endpoint}>{name}</a>
+        ) : (
+          <Link to={endpoint}>{name}</Link>
+        )}
+      </li>
+    ))}
+  </ul>
+)
 
-  links = [
+export default function Layout(props) {
+  const links = [
     {
       name: "Candidates",
       endpoint: "/candidates",
@@ -33,7 +43,7 @@ export default class Layout extends React.PureComponent {
     },
     {
       name: "Measures",
-      endpoint: "/",
+      endpoint: "/measures",
     },
     {
       name: "About",
@@ -45,10 +55,11 @@ export default class Layout extends React.PureComponent {
     },
   ]
 
-  footerLinks = [
+  const footerLinks = [
     {
       name: "Join Us",
-      endpoint: "/",
+      anchor: true,
+      endpoint: "https://www.codeforsanjose.com/",
     },
     {
       name: "Find your ballot",
@@ -56,60 +67,41 @@ export default class Layout extends React.PureComponent {
     },
     {
       name: "Open source",
-      endpoint: "/",
+      anchor: true,
+      endpoint: "https://github.com/codeforsanjose/open-disclosure",
     },
     {
-      name: "Press",
-      endpoint: "/",
+      name: "Register to vote",
+      endpoint: "/registerToVote",
     },
   ]
 
-  handleSubmit() {}
+  return (
+    <div className={styles.container}>
+      <Navbar links={links} windowIsLarge={props.windowIsLarge} />
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value })
-  }
+      {props.children}
 
-  renderNavItems = items => (
-    <ul>
-      {items.map((item, index) => (
-        <li
-          key={`footer nav item ${item.name}`}
-          className={styles.footerNavItem}
-        >
-          <Link to={item.endpoint}>{item.name}</Link>
-        </li>
-      ))}
-    </ul>
-  )
-
-  render() {
-    return (
-      <div className={styles.container}>
-        <Navbar links={this.links} windowIsLarge={this.props.windowIsLarge} />
-
-        {this.props.children}
-
-        <footer className={styles.footer}>
-          <div className={styles.footerInner}>
-            <div className={styles.footerTop}>
-              <div className={styles.footerLeft}>
-                <Logo />
-                <nav className={styles.footerNav}>
-                  {this.renderNavItems(this.links)}
-                  {this.renderNavItems(this.footerLinks)}
-                </nav>
-              </div>
-              <div className={styles.footerRight}>
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+          <div className={styles.footerTop}>
+            <div className={styles.footerLeft}>
+              <Logo />
+              <nav className={styles.footerNav}>
+                {renderNavItems(links)}
+                {renderNavItems(footerLinks)}
+              </nav>
+            </div>
+            {/* <div className={styles.footerRight}>
                 <h5>Updates delivered to your inbox</h5>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <input
                     aria-label="email"
                     className={styles.emailInput}
                     type="email"
                     placeholder="Enter your email address"
-                    value={this.state.value}
-                    onChange={this.handleChange}
+                    value={state.value}
+                    onChange={handleChange}
                   />
                   <input
                     aria-label="subscribe"
@@ -118,31 +110,30 @@ export default class Layout extends React.PureComponent {
                     value="Subscribe"
                   />
                 </form>
-              </div>
-            </div>
-            <div className={styles.footerBottom}>
-              <h1>
-                Special thanks to{" "}
-                <a href="https://www.opendisclosure.io/">
-                  Open Oakland's Open Disclosure
-                </a>{" "}
-                for the inspiration.
-              </h1>
-              <p>
-                Brought to you by Open San José and San José's Public Ethics
-                Commission
-              </p>
-              <p>
-                Campaign finance data provided by the City of San José Public
-                Ethics Commission Public Portal for Campaign Finance and
-                Lobbyist Disclosure. Candidate and ballot measure information
-                gathered from information provided to the Santa Clara County
-                Registrar of Voters by the City of San José.
-              </p>
-            </div>
+              </div> */}
           </div>
-        </footer>
-      </div>
-    )
-  }
+          <div className={styles.footerBottom}>
+            <h1>
+              Special thanks to{" "}
+              <a href="https://www.opendisclosure.io/">
+                Open Oakland's Open Disclosure
+              </a>{" "}
+              for the inspiration.
+            </h1>
+            <p>
+              Brought to you by Open San José and San José's Public Ethics
+              Commission
+            </p>
+            <p>
+              Campaign finance data provided by the City of San José Public
+              Ethics Commission Public Portal for Campaign Finance and Lobbyist
+              Disclosure. Candidate and ballot measure information gathered from
+              information provided to the Santa Clara County Registrar of Voters
+              by the City of San José.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
 }

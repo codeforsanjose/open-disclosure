@@ -13,7 +13,6 @@
     margin-top: 2.9rem;
   }
 }
-
 .aboutLink {
   align-items: center;
   display: flex;
@@ -24,7 +23,6 @@
 
 .aboutLinks {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -49,6 +47,7 @@
 }
 
 .committeeLink {
+  font-family: "Lato";
   font-size: 2.4rem;
   line-height: 3.1rem;
   margin-bottom: 2.9rem;
@@ -60,7 +59,7 @@
 }
 
 .icon {
-  margin: 0 0.8rem;
+  margin-right: 0.8rem;
   width: 2.4rem;
 }
 
@@ -83,6 +82,7 @@
 }
 
 .seeAllLink {
+  font-family: "DM Sans";
   font-size: 2rem;
   font-weight: bold;
   line-height: 2.6rem;
@@ -101,7 +101,66 @@
 }
 
 @media screen and (max-width: 760px) {
+  .sideNav {
+    display: none;
+  }
+
+  .mainSection {
+    padding: 0;
+  }
+
+  .aboutSection {
+    margin: 2rem 0;
+  }
+
+  .aboutTitle,
+  .aboutText,
+  .currentPosition {
+    font-size: 1.4rem;
+    line-height: 130%;
+  }
+
+  .profilePhoto {
+    height: 5rem;
+  }
+
   .totals {
+    margin: 2.2rem 0 0;
+  }
+
+  .aboutLinks {
     flex-direction: column;
+  }
+
+  .aboutLink {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    line-height: 130%;
+  }
+
+  .aboutLink:first-of-type {
+    margin-top: 0;
+  }
+
+  .icon {
+    margin: 0 1.2rem 0 0;
+    height: 14;
+    width: auto;
+  }
+
+  .seeAllLink {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .seeAllIcon {
+    height: 0.7rem;
+    width: auto;
+    margin-left: 0.7rem;
+  }
+
+  .committeeLink {
+    font-size: 1.4rem;
+    line-height: 130%;
   }
 }

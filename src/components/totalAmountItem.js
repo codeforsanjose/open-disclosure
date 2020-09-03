@@ -36,22 +36,22 @@ function detail(type) {
 
 export default function TotalAmountItem({ total, type = "contributions" }) {
   return (
-    <>
+    <div className={styles.totalAmount}>
       <p className={styles.header}>
         <span className={styles.title}>{title(type)}</span>
         {detail(type)}
       </p>
       <p className={styles.value}>{formatDollars(total)}</p>
-    </>
+    </div>
   )
 }
 
 export function TotalAmountPanelItem({ total, type = "contributions" }) {
   return (
-    <div className={styles.panel}>
+    <a href={`#${type}`} className={styles.panel}>
       <p className={styles.title}>{title(type)}</p>
       <p className={styles.header}>{detail(type)}</p>
       <p className={styles.value}>{formatDollars(total)}</p>
-    </div>
+    </a>
   )
 }

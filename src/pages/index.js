@@ -21,201 +21,180 @@ import aboutBlob from "./../../static/images/aboutBlob.png"
 import learnMore from "./../../static/images/learnMore.png"
 import voteBlob from "./../../static/images/voteBlob.png"
 import registerToVote from "./../../static/images/registerToVote.png"
+import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
-export default class MainPage extends React.PureComponent {
-  state = { windowIsGreaterThan760px: true, width: 0 }
-  updateWindowDimensions = this.updateWindowDimensions.bind(this)
+const formatDate = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "short",
+})
 
-  componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener("resize", this.updateWindowDimensions)
-  }
+const behindTheScenes = {
+  title: "Go behind the scenes",
+  description:
+    "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
+  items: [
+    {
+      title: "Take action on measures",
+      description: "Track who opposes or supports upcoming ballot measures.",
+      buttonText: "View ballot measures",
+      image: blue,
+      href: "/measures",
+    },
+    {
+      title: "Compare local candidates",
+      description: "See who’s spending and raising the most.",
+      buttonText: "Browse candidates",
+      image: orange,
+      href: "/candidates",
+    },
+    {
+      title: "Get the finance facts",
+      description: "Learn more about campaign finance data.",
+      buttonText: "Visit FAQs",
+      image: green,
+      href: "/faqs",
+    },
+  ],
+  renderItem: BehindTheScenesItem,
+}
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions)
-  }
+const about = {
+  title: "Power to the people",
+  description:
+    "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
+  href: "/aboutUs",
+  linkImg: learnMore,
+  image: aboutBlob,
+}
 
-  updateWindowDimensions() {
-    this.setState({
-      width: window.innerWidth,
-      windowIsGreaterThan760px: window.innerWidth >= 760,
+const vote = {
+  title: "Your voice matters",
+  description:
+    "Register to vote or see if you're already registered in less than two minutes.",
+  href: "/registerToVote",
+  linkImg: registerToVote,
+  image: voteBlob,
+}
+
+export default function MainPage(props) {
+  const windowIsLarge = useWindowIsLarge()
+
+  const currentElection = props.data.allElection.edges[0].node
+  const lastScrape = new Date(
+    props.data.allMetadata.edges[0].node.DateProcessed
+  )
+  let candidatesRunning = 0
+  const candidateList = []
+  currentElection.OfficeElections.forEach(election => {
+    candidatesRunning += election.Candidates.length
+    election.Candidates.forEach(candidate => {
+      if (candidate) {
+        let funding = 0
+        candidate.Elections[0].Committees.forEach(committee => {
+          funding += parseInt(committee.TotalFunding)
+        })
+        console.log(candidate)
+        candidateList.push({
+          name: candidate.Name,
+          position: election.Title,
+          amount: funding,
+          image: "https://picsum.photos/180",
+        })
+      }
     })
-  }
-
-  formatDate = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "short",
   })
 
-  behindTheScenes = {
-    title: "Go behind the scenes",
-    description:
-      "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
+  const snapshot = {
+    title: "San José live election snapshot",
+    description: `Source: ${formatDate.format(
+      lastScrape
+    )} City of San José Campaign Finance Report`,
     items: [
       {
-        title: "Take action on measures",
-        description: "Track who opposes or supports upcoming ballot measures.",
-        buttonText: "View ballot measures",
-        image: blue,
-        href: "/measures",
+        number: "XXX",
+        description: "Of donations from the city of San José",
       },
       {
-        title: "Compare local candidates",
-        description: "See who’s spending and raising the most.",
-        buttonText: "Browse candidates",
-        image: orange,
-        href: "/candidates",
+        number: parseInt(currentElection.TotalContributions).toLocaleString(
+          "en-US",
+          {
+            style: "currency",
+            currency: "USD",
+            maximumSignificantDigits: 3,
+          }
+        ),
+        description: "Amount raised to date",
       },
       {
-        title: "Get the finance facts",
-        description: "Learn more about campaign finance data.",
-        buttonText: "Visit FAQs",
-        image: green,
-        href: "/faqs",
+        number: candidatesRunning,
+        description: "Candidates running",
       },
     ],
-    renderItem: BehindTheScenesItem,
+    renderItem: SnapshotItem,
   }
 
-  about = {
-    title: "Power to the people",
+  const candidates = {
+    title: "Get the facts before you vote",
     description:
-      "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
-    href: "/aboutUs",
-    linkImg: learnMore,
-    image: aboutBlob,
+      "Money makes a difference in determining who wins elections.  Find out who's backing local candidates and influencing local government.",
+    items: candidateList,
+    renderItem: CandidateItem,
+    footer: () => (
+      <Link to="/candidates">
+        <img alt="candidates" height="37px" width="285px" src={tertiary} />
+      </Link>
+    ),
   }
 
-  vote = {
-    title: "Your voice matters",
-    description:
-      "Register to vote or see if you're already registered in less than two minutes.",
-    href: "/registerToVote",
-    linkImg: registerToVote,
-    image: voteBlob,
-  }
-
-  render() {
-    const currentElection = this.props.data.allElection.edges[0].node
-    const lastScrape = new Date(
-      this.props.data.allMetadata.edges[0].node.DateProcessed
-    )
-    let candidatesRunning = 0
-    const candidateList = []
-    currentElection.OfficeElections.forEach(election => {
-      candidatesRunning += election.Candidates.length
-      election.Candidates.forEach(candidate => {
-        if (candidate) {
-          let funding = 0
-          candidate.Elections[0].Committees.forEach(committee => {
-            funding += parseInt(committee.TotalFunding)
-          })
-          console.log(candidate)
-          candidateList.push({
-            name: candidate.Name,
-            position: election.Title,
-            amount: funding,
-            image: "https://picsum.photos/180",
-          })
-        }
-      })
-    })
-
-    const snapshot = {
-      title: "San José live election snapshot",
-      description: `Source: ${this.formatDate.format(
-        lastScrape
-      )} City of San José Campaign Finance Report`,
-      items: [
-        {
-          number: "XXX",
-          description: "Of donations from the city of San José",
-        },
-        {
-          number: parseInt(currentElection.TotalContributions).toLocaleString(
-            "en-US",
-            {
-              style: "currency",
-              currency: "USD",
-              maximumSignificantDigits: 3,
-            }
-          ),
-          description: "Amount raised to date",
-        },
-        {
-          number: candidatesRunning,
-          description: "Candidates running",
-        },
-      ],
-      renderItem: SnapshotItem,
-    }
-
-    const candidates = {
-      title: "Get the facts before you vote",
-      description:
-        "Money makes a difference in determining who wins elections.  Find out who's backing local candidates and influencing local government.",
-      items: candidateList,
-      renderItem: CandidateItem,
-      footer: () => (
-        <Link to="/candidates">
-          <img alt="candidates" height="37px" width="285px" src={tertiary} />
-        </Link>
-      ),
-    }
-
-    return (
-      <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
-        <div className={styles.container}>
-          <header className={styles.hero}>
-            <div className={styles.heroLeft}>
-              <h1>
-                More money,
-                <br />
-                more transparency.
-              </h1>
-              <h2>
-                Keep tabs on the influence of money
-                <br />
-                in local San José elections.
-              </h2>
-              <div className={styles.heroButtonContainer}>
-                <Button text="Explore candidates" href="/candidates" />
-                <Button
-                  secondary
-                  text="View measures"
-                  href="/measures"
-                  containerStyle={
-                    this.state.windowIsGreaterThan760px
-                      ? { marginLeft: "1.6rem" }
-                      : { marginTop: "1.6rem" }
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.heroRight}>
-              <img
-                alt="header"
-                className="responsive"
-                width="724px"
-                src={headerBlob}
+  return (
+    <Layout windowIsLarge={windowIsLarge}>
+      <div className={styles.container}>
+        <header className={styles.hero}>
+          <div className={styles.heroLeft}>
+            <h1>
+              More money,
+              <br />
+              more transparency.
+            </h1>
+            <h2>
+              Keep tabs on the influence of money
+              <br />
+              in local San José elections.
+            </h2>
+            <div className={styles.heroButtonContainer}>
+              <Button text="Explore candidates" href="/candidates" />
+              <Button
+                secondary
+                text="View measures"
+                href="/measures"
+                containerStyle={
+                  windowIsLarge
+                    ? { marginLeft: "1.6rem" }
+                    : { marginTop: "1.6rem" }
+                }
               />
             </div>
-          </header>
-          <MainPageSection secondary {...snapshot} />
-          <MainPageSection
-            {...candidates}
-            offWhite
-            windowIsLarge={this.state.windowIsGreaterThan760px}
-          />
-          <MainPageSection {...this.behindTheScenes} />
-          <MainPagePic {...this.about} />
-          <MainPagePic
-            {...this.vote}
-            reversed={this.state.windowIsGreaterThan760px}
-          />
-        </div>
-      </Layout>
-    )
-  }
+          </div>
+          <div className={styles.heroRight}>
+            <img
+              alt="header"
+              className="responsive"
+              width="724px"
+              src={headerBlob}
+            />
+          </div>
+        </header>
+        <MainPageSection secondary {...snapshot} />
+        <MainPageSection
+          {...candidates}
+          offWhite
+          windowIsLarge={windowIsLarge}
+        />
+        <MainPageSection {...behindTheScenes} />
+        <MainPagePic {...about} />
+        <MainPagePic {...vote} reversed={windowIsLarge} />
+      </div>
+    </Layout>
+  )
 }
 
 export const query = graphql`

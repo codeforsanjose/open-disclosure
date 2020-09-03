@@ -1,6 +1,7 @@
 @import "../styles/colors";
 
 .barContainer {
+  flex-direction: row;
   align-self: center;
   flex: 2;
 }
@@ -27,7 +28,7 @@
 }
 
 @media screen and (max-width: 760px) {
-  .barContainer {
-    flex: 0 0 50%;
-  }
+  // .barContainer {
+  //   flex: 0 0 50%;
+  // }
 }

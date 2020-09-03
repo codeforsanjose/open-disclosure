@@ -8,7 +8,7 @@
 .innerContainer {
   max-width: 1440px;
   width: 100%;
-  padding: 5rem 10rem;
+  padding: 5rem 0;
 }
 
 .sectionHeader {
@@ -55,11 +55,6 @@
     padding: 4.5rem 2.1rem;
   }
 
-  .removeHorizontalPadding {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .sectionHeader {
     * {
       text-align: start;
@@ -86,9 +81,5 @@
 
   .sectionFooter {
     padding: 0;
-  }
-
-  .addHeaderPadding {
-    padding: 0 2.1rem 0;
   }
 }

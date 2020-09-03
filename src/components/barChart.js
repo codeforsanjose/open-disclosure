@@ -21,11 +21,15 @@ function Row({ label, value, total, type, showPercentages }) {
   const percent = formatPercent(value / total)
   return (
     <div className={styles.row}>
-      <p className={styles.label}>{label}</p>
-      <p className={styles.value}>
-        {showPercentages ? percent : formatDollarsInThousands(value)}
-      </p>
-      <Bar percent={percent} type={type} />
+      <div className={styles.rowTop}>
+        <p className={styles.label}>{label}</p>
+        <p className={styles.value}>
+          {showPercentages ? percent : formatDollarsInThousands(value)}
+        </p>
+      </div>
+      <div className={styles.rowBottom}>
+        <Bar percent={percent} type={type} />
+      </div>
     </div>
   )
 }
