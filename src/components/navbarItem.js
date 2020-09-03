@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import styles from "./navbarItem.module.scss"
-import linkArrow from "../../static/images/linkArrow.png"
+import linkArrow from "../static/images/linkArrow.png"
 import Menu from "./menu.js"
 import { Link } from "gatsby"
 
