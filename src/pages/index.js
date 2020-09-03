@@ -1,13 +1,12 @@
 // Libraries
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 // Styles
 import styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
 import Button from "../common/button/index"
 import MainPageSection from "../components/mainPageSection"
-import CandidateSection from "../components/candidateSection"
 import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
@@ -43,27 +42,35 @@ export default class MainPage extends React.PureComponent {
     })
   }
 
+  formatDate = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "short",
+  })
+
   behindTheScenes = {
     title: "Go behind the scenes",
-    description: "Over $6,404,634 flowing into 2020 San Jose elections.",
+    description:
+      "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
     items: [
       {
         title: "Take action on measures",
         description: "Track who opposes or supports upcoming ballot measures.",
         buttonText: "View ballot measures",
         image: blue,
+        href: "/measures",
       },
       {
         title: "Compare local candidates",
         description: "See who’s spending and raising the most.",
         buttonText: "Browse candidates",
         image: orange,
+        href: "/candidates",
       },
       {
         title: "Get the finance facts",
         description: "Learn more about campaign finance data.",
         buttonText: "Visit FAQs",
         image: green,
+        href: "/faqs",
       },
     ],
     renderItem: BehindTheScenesItem,
@@ -73,7 +80,7 @@ export default class MainPage extends React.PureComponent {
     title: "Power to the people",
     description:
       "Open Disclosure was created to empower San José voters with timely, accurate, and useful information about the role of money in local elections.",
-    linkTo: "/",
+    href: "/aboutUs",
     linkImg: learnMore,
     image: aboutBlob,
   }
@@ -82,13 +89,16 @@ export default class MainPage extends React.PureComponent {
     title: "Your voice matters",
     description:
       "Register to vote or see if you're already registered in less than two minutes.",
-    linkTo: "/registerToVote",
+    href: "/registerToVote",
     linkImg: registerToVote,
     image: voteBlob,
   }
 
   render() {
     const currentElection = this.props.data.allElection.edges[0].node
+    const lastScrape = new Date(
+      this.props.data.allMetadata.edges[0].node.DateProcessed
+    )
     let candidatesRunning = 0
     const candidateList = []
     currentElection.OfficeElections.forEach(election => {
@@ -112,15 +122,23 @@ export default class MainPage extends React.PureComponent {
 
     const snapshot = {
       title: "San José live election snapshot",
-      description:
-        "See which San José candidates are raising and spending the most in local elections.",
+      description: `Source: ${this.formatDate.format(
+        lastScrape
+      )} City of San José Campaign Finance Report`,
       items: [
         {
           number: "XXX",
           description: "Of donations from the city of San José",
         },
         {
-          number: currentElection.TotalContributions,
+          number: parseInt(currentElection.TotalContributions).toLocaleString(
+            "en-US",
+            {
+              style: "currency",
+              currency: "USD",
+              maximumSignificantDigits: 3,
+            }
+          ),
           description: "Amount raised to date",
         },
         {
@@ -134,15 +152,16 @@ export default class MainPage extends React.PureComponent {
     const candidates = {
       title: "Get the facts before you vote",
       description:
-        "Find out which San José candidates are raising and spending the most in local elections.",
+        "Money makes a difference in determining who wins elections.  Find out who's backing local candidates and influencing local government.",
       items: candidateList,
       renderItem: CandidateItem,
       footer: () => (
-        <img alt="candidates" height="37px" width="285px" src={tertiary} />
+        <Link to="/candidates">
+          <img alt="candidates" height="37px" width="285px" src={tertiary} />
+        </Link>
       ),
     }
 
-    console.log(this.props.data)
     return (
       <Layout windowIsLarge={this.state.windowIsGreaterThan760px}>
         <div className={styles.container}>
@@ -159,16 +178,17 @@ export default class MainPage extends React.PureComponent {
                 in local San José elections.
               </h2>
               <div className={styles.heroButtonContainer}>
+                <Button text="Explore candidates" href="/candidates" />
                 <Button
                   secondary
                   text="View measures"
+                  href="/measures"
                   containerStyle={
                     this.state.windowIsGreaterThan760px
-                      ? { marginRight: "1.6rem" }
-                      : { marginBottom: "1.6rem" }
+                      ? { marginLeft: "1.6rem" }
+                      : { marginTop: "1.6rem" }
                   }
                 />
-                <Button text="Explore candidates" />
               </div>
             </div>
             <div className={styles.heroRight}>
@@ -181,8 +201,9 @@ export default class MainPage extends React.PureComponent {
             </div>
           </header>
           <MainPageSection secondary {...snapshot} />
-          <CandidateSection
-            candidates={candidates}
+          <MainPageSection
+            {...candidates}
+            offWhite
             windowIsLarge={this.state.windowIsGreaterThan760px}
           />
           <MainPageSection {...this.behindTheScenes} />
@@ -221,6 +242,13 @@ export const query = graphql`
               }
             }
           }
+        }
+      }
+    }
+    allMetadata {
+      edges {
+        node {
+          DateProcessed
         }
       }
     }
