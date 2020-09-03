@@ -7,9 +7,13 @@ import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import React from "react"
 import SectionHeader from "../components/sectionHeader"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import styles from "./candidate.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
+import WebIcon from "../../static/images/web.png"
+import VotersEdgeIcon from "../../static/images/votersedge.png"
+import TwitterIcon from "../../static/images/twitter.png"
+import ArrowIcon from "../../static/images/arrow.png"
 
 // TODO Hook up charts to real data
 const contributions = [
@@ -34,7 +38,7 @@ const breakdowns = [
 
 function ChartSection({ title, type, total, data, ...passProps }) {
   return (
-    <section>
+    <section className={styles.section}>
       <SectionHeader title={title} />
       <TotalAmountItem type={type} total={total} />
       <BarChart type={type} total={total} rows={data} {...passProps} />
@@ -56,7 +60,48 @@ export default function Candidate({ data }) {
           <section>
             <SectionHeader title={name} />
             <div className={styles.aboutSection}>
-              <p>TODO - candidate about section</p>
+              <img
+                alt="Candidate profile photo"
+                className={styles.profilePhoto}
+                src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
+              />
+              <div>
+                <p className={styles.aboutTitle}>
+                  <span className={styles.currentPosition}>
+                    Incumbent, District 9 Representative
+                  </span>
+                  {" - elected"}
+                </p>
+                <p className={styles.aboutText}>
+                  This candidate has agreed to voluntary spending limits. The
+                  maximum contribution this candidate can accept is $800 from
+                  any individual, business entity, committee or other
+                  organization and $1,600 from a qualified broad-based
+                  committee.
+                </p>
+                <div className={styles.aboutLinks}>
+                  <a href="/" className={styles.aboutLink}>
+                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
+                    www.lindsaylohan2020.com
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
+                    <img
+                      alt="External link icon"
+                      src={VotersEdgeIcon}
+                      className={styles.icon}
+                    />
+                    Voter's Edge Profile
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
+                    <img
+                      alt="Twitter icon"
+                      src={TwitterIcon}
+                      className={styles.icon}
+                    />
+                    @lindsaylohan2020
+                  </a>
+                </div>
+              </div>
             </div>
           </section>
           <section>
@@ -73,6 +118,14 @@ export default function Candidate({ data }) {
             total={654876}
             data={contributions}
           />
+          <Link className={styles.seeAllLink} to="/">
+            See all contributions
+            <img
+              alt="Right arrow icon"
+              className={`${styles.icon} ${styles.seeAllIcon}`}
+              src={ArrowIcon}
+            />
+          </Link>
           <ChartSection
             title="How the money is being spent"
             type="expenditures"
@@ -86,6 +139,12 @@ export default function Candidate({ data }) {
             data={breakdowns}
             showPercentages
           />
+          <section>
+            <SectionHeader title="Other committees controlled by candidate" />
+            {elections[0].Committees.map(({ Name }) => (
+              <Link className={styles.committeeLink}>{Name}</Link>
+            ))}
+          </section>
         </div>
       </div>
     </Layout>
@@ -98,6 +157,9 @@ export const query = graphql`
       Name
       Elections {
         ElectionTitle
+        Committees {
+          Name
+        }
       }
     }
   }

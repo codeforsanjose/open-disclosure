@@ -1,0 +1,33 @@
+@import "../styles/colors";
+
+.barContainer {
+  align-self: center;
+  flex: 2;
+}
+
+.barBackground {
+  background-color: $backgroundGray;
+  border-radius: 0.8rem;
+  height: 1.6rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.bar {
+  border-radius: 0.8rem;
+  height: 100%;
+}
+
+.contributions {
+  background-color: $supportBlue;
+}
+
+.expenditures {
+  background-color: $opposeRed;
+}
+
+@media screen and (max-width: 760px) {
+  .barContainer {
+    flex: 0 0 50%;
+  }
+}
