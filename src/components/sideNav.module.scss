@@ -31,5 +31,16 @@
 
 .navBar {
   display: flex;
-  flex-direction: column;
+  flex: 1;
+  flex-direction: row;
+  padding-left: 10rem;
+}
+
+.body {
+  flex: 3;
+  padding: 0 10rem;
+}
+
+.container {
+  flex-direction: row;
 }

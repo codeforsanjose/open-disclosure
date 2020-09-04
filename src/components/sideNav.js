@@ -1,29 +1,44 @@
-import React, { PureComponent } from "react"
-import sideNavStyles from "./sideNav.module.css"
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+import styles from "./sideNav.module.scss"
 
-export default class sideNav extends PureComponent {
-  
-  render() {
-    return (
-      <nav className={sideNavStyles.navBar}>
-        {this.props.children}
-        {this.props.menuItems.map((menuItem, menuIndex) => (
-          <div key={`menuItem ${menuIndex}`} className={sideNavStyles.listItem}>
-            <h4 className={sideNavStyles.sectionTitle}>
-              {menuItem.sectionName}
-            </h4>
-            
-            {menuItem.sectionItems.map((sectionItem, sectionItemIndex) =>
-              <div
-                key={`sectionItem ${sectionItemIndex}`}
-                  className={sideNavStyles.sectionItem}
-                 >
-                   {sectionItem}
-                 </div>
-       
-            )}
+export default function sideNav(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          allElection {
+            edges {
+              node {
+                OfficeElections {
+                  Title
+                  TotalContributions
+                }
+              }
+            }
+          }
+        }
+      `}
+      render={data => {
+        console.log(data)
+        return (
+          <div className={styles.container}>
+            <nav className={styles.navBar}>
+              {data.allElection.edges[0].node.OfficeElections.map(
+                (menuItem, index) => (
+                  <div
+                    key={`${menuItem.title}-${index}`}
+                    className={styles.listItem}
+                  >
+                    <h4 className={styles.sectionTitle}>{menuItem.Title}</h4>
+                  </div>
+                )
+              )}
+            </nav>
+            <div className={styles.body}>{props.children}</div>
           </div>
-      ))}
-    </nav>
-  )}
+        )
+      }}
+    />
+  )
 }

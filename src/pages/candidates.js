@@ -1,25 +1,26 @@
+import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
+import SideNav from "../components/sideNav"
 import CandidatesListItem from "../components/candidatesListItem"
-
-import React from "react"
+import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function Candidates({ data }) {
-  const election = data.allElection.edges[0]
+  const election = data.allElection.edges[0].node
+
+  // Should link to candidate/${node.Date}/${candidateName}}
+
   return (
-    <Layout>
-      <ul>
-        {election.node.OfficeElections.map(({ Candidates }) =>
+    <Layout windowIsLarge={useWindowIsLarge()}>
+      <SideNav>
+        {election.OfficeElections.map(({ Candidates }) =>
           Candidates.filter(Boolean).map(candidate => (
-            <li key={candidate.id}>
-              {/* Should link to candidate/${node.Date}/${candidateName}} */}
-              <Link to={"/candidate/" + candidate.fields.slug}>
-                <CandidatesListItem {...candidate} />
-              </Link>
-            </li>
+            <Link key={candidate.id} to={"/candidate/" + candidate.fields.slug}>
+              <CandidatesListItem {...candidate} />
+            </Link>
           ))
         )}
-      </ul>
+      </SideNav>
     </Layout>
   )
 }
