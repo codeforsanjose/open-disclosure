@@ -77,6 +77,9 @@ $ gatsby develop
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
 
+## How to Launch the API
+Instructions [here](https://github.com/codeforsanjose/open-disclosure/tree/master/redis_api)
+
 ## How to Contribute
 0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
 - Communicate with the team on Slack (channel: #open-disclosure). 
