@@ -1,5 +1,6 @@
 import os
 import time
+from os import path
 from time import sleep
 
 from selenium import webdriver
@@ -20,6 +21,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 # from data_pipeline.scraper.preproccessing import PreProcessing
 from dirmanager import DirManager
 from preproccessing import PreProcessing
+
+from util import renameDownloadedFile
 
 
 class SjcWebsite:
@@ -282,6 +285,9 @@ class Scraper:
                 else:
                     # If there are forms, then we will be brought to the "forms" page.
                     self.website.verifyDownloadFormTableLoadComplete(self.driver)
+                    # Rename existing transactionExportGrid.xls to avoid overwrite
+                    if path.exists(path.join(self.download_dir, 'transactionExportGrid.xls')):
+                        renameDownloadedFile(path.join(self.download_dir, 'transactionExportGrid.xls'))
                     self.website.downloadExcel(self.driver)
 
                     self.website.clickBackButton(self.driver)
