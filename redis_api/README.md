@@ -43,7 +43,7 @@ Running the API
 
 Making calls to the API
 -
-You can send requests to the proper endpoints by using `curl`. All endpoints are currently located in `routes.py`
+You can send requests to the proper endpoints by using `curl`. All endpoints are currently located in `routes.py`. Since the API's main purpose is to serve data from Redis, it only supports `GET` requests.
 
 Example calls:
 
