@@ -4,6 +4,7 @@ const fetch = require("node-fetch")
 const HOSTNAME = process.env.GATSBY_API_HOST || "localhost:5000"
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
+const METADATA_NODE_TYPE = `Metadata`
 
 const DUMMY_DATA = {
   candidates: {
@@ -73,9 +74,10 @@ exports.sourceNodes = async ({
 }) => {
   const { createNode } = actions
 
-  const [candidateData, electionData] = await Promise.all([
+  const [candidateData, electionData, metadata] = await Promise.all([
     fetchEndpoint("candidates"),
     fetchEndpoint("elections"),
+    fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
     createNode({
@@ -102,6 +104,17 @@ exports.sourceNodes = async ({
         contentDigest: createContentDigest(election),
       },
     })
+  })
+  createNode({
+    ...metadata,
+    id: createNodeId(`${METADATA_NODE_TYPE}`),
+    parent: null,
+    children: [],
+    internal: {
+      type: METADATA_NODE_TYPE,
+      content: JSON.stringify(metadata),
+      contentDigest: createContentDigest(metadata),
+    },
   })
   return
 }
@@ -137,6 +150,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       Candidates: [Candidate] @link(by: "Name")
       Title: String
       TotalContributions: String
+    }
+
+    type Metadata implements Node{
+      DateProcessed: String!
     }
   `)
 }

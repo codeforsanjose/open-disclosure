@@ -10,6 +10,8 @@ html {
   font-size: 10px;
   line-height: 1.15;
   font-family: "Roboto", sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 10.72rem;
 }
 
 h1,
@@ -65,4 +67,10 @@ li {
 
 .is-dragging {
   cursor: grabbing;
+}
+
+@media screen and (max-width: 760px) {
+  html {
+    scroll-padding-top: 8.52rem;
+  }
 }

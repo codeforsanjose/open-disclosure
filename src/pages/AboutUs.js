@@ -1,26 +1,15 @@
 // Libraries
 import React from "react"
-import { useEffect, useState } from "react"
 // Styles
 import styles from "./aboutUs.module.scss"
 import Layout from "../components/layout"
 // Components
 import LandingPageHero from "../components/landingPageHero"
+import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
-export default function About_Us() {
-  const [windowIsLarge, setWindowIsLarge] = useState(true)
-  const updateWindowDimensions = () => {
-    setWindowIsLarge(window.innerWidth >= 760)
-  }
-  useEffect(() => {
-    window.addEventListener("resize", updateWindowDimensions)
-    return () => {
-      window.removeEventListener("resize", updateWindowDimensions)
-    }
-  }, [])
-
+export default () => {
   return (
-    <Layout windowIsLarge={windowIsLarge}>
+    <Layout windowIsLarge={useWindowIsLarge()}>
       <header>
         <LandingPageHero
           background="green"
@@ -50,7 +39,13 @@ export default function About_Us() {
         <h2>Current team:</h2>
         <h2>Alumni:</h2>
         <h2>Special thanks</h2>
-        <p>Special thank you to our fellow Code for America brigade teams</p>
+        <p>
+          Special thanks to{" "}
+          <a href="https://www.opendisclosure.io/">
+            Open Oakland's Open Disclosure
+          </a>{" "}
+          for the inspiration behind our project.
+        </p>
       </div>
     </Layout>
   )

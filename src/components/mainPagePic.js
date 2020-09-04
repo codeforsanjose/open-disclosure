@@ -1,10 +1,10 @@
-import { Link } from 'gatsby';
-import React from 'react';
+import { Link } from "gatsby"
+import React from "react"
 
-import styles from './mainPagePic.module.scss';
+import styles from "./mainPagePic.module.scss"
 
-const MainPagePic = (props) => {
-  const { reversed, title, description, linkTo, linkImg, image } = props;
+const MainPagePic = props => {
+  const { reversed, title, description, href, linkImg, image } = props
 
   return (
     <section className={`${styles.container} ${reversed && styles.reversed}`}>
@@ -12,12 +12,12 @@ const MainPagePic = (props) => {
       <div className={styles.content}>
         <h2>{title}</h2>
         <p>{description}</p>
-        <Link to={linkTo}>
+        <Link to={href}>
           <img alt="link" src={linkImg} />
         </Link>
       </div>
     </section>
-  );
-};
+  )
+}
 
 export default MainPagePic

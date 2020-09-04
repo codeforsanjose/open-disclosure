@@ -6,28 +6,17 @@ const MainPageSection = props => (
     className={`${styles.outerContainer} ${props.secondary &&
       styles.secondary} ${props.offWhite && styles.offWhite}`}
   >
-    <div
-      className={`${styles.innerContainer} ${props.carousel &&
-        styles.removeHorizontalPadding}`}
-    >
-      <div
-        className={`${styles.sectionHeader} ${props.carousel &&
-          styles.addHeaderPadding}`}
-      >
+    <div className={styles.innerContainer}>
+      <div className={styles.sectionHeader}>
         <h2>{props.title}</h2>
         <p>{props.description}</p>
       </div>
-      <div
-        className={`${styles.sectionBody} ${props.carousel &&
-          styles.hideOverflow}`}
-      >
-        {props.children || props.items.map(item => props.renderItem(item))}
+      <div className={styles.sectionBody}>
+        {props.items.map(item => props.renderItem(item))}
       </div>
-      {props.footer ? (
-        <div className={styles.sectionFooter}>
-          <a href="/">{props.footer()}</a>
-        </div>
-      ) : null}
+      {props.footer && (
+        <div className={styles.sectionFooter}>{props.footer()}</div>
+      )}
     </div>
   </section>
 )

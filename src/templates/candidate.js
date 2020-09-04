@@ -36,9 +36,9 @@ const breakdowns = [
   { label: "Within San José", value: 301242 },
 ]
 
-function ChartSection({ title, type, total, data, ...passProps }) {
+function ChartSection({ id, title, type, total, data, ...passProps }) {
   return (
-    <section className={styles.section}>
+    <section id={id} className={styles.section}>
       <SectionHeader title={title} />
       <TotalAmountItem type={type} total={total} />
       <BarChart type={type} total={total} rows={data} {...passProps} />
@@ -115,6 +115,7 @@ export default function Candidate({ data }) {
           <ChartSection
             title="Where the money is coming from"
             type="contributions"
+            id="contributions"
             total={654876}
             data={contributions}
           />
@@ -129,12 +130,14 @@ export default function Candidate({ data }) {
           <ChartSection
             title="How the money is being spent"
             type="expenditures"
+            id="expenditures"
             total={383254}
             data={expenditures}
           />
           <ChartSection
             title="Breakdown by region"
             type="contributions"
+            id="balance"
             total={654876}
             data={breakdowns}
             showPercentages

@@ -20,10 +20,39 @@
   margin-bottom: 2.9rem;
 }
 
+.rowTop {
+  flex-direction: row;
+  flex: 1;
+}
+
+.rowBottom {
+  flex-direction: row;
+  flex: 2;
+}
+
 .value {
   align-self: center;
   flex: 1;
   font-weight: bold;
   margin-right: 1rem;
   text-align: right;
+}
+
+@media screen and (max-width: 760px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .rowTop,
+  .rowBottom {
+    flex-direction: row;
+  }
+  .rowTop {
+    margin-bottom: 0.6rem;
+  }
+
+  .chart p {
+    font-size: 1.4rem;
+    line-height: 130%;
+  }
 }

@@ -31,6 +31,7 @@ export const query = graphql`
         node {
           OfficeElections {
             Title
+            TotalContributions
             Candidates {
               Name
               Elections {

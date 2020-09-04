@@ -35,7 +35,7 @@
 .verticalBar {
   position: absolute;
   background-color: $primaryBlack;
-  transition: transform 250ms ease-in-out;
+  transition: transform 150ms ease-in-out;
 }
 
 .horizontalBar {
@@ -55,7 +55,7 @@
 .itemBottom {
   max-height: 0px;
   overflow: hidden;
-  transition: max-height 250ms ease-in-out;
+  transition: max-height 150ms ease-in-out;
 }
 
 .open {
