@@ -11,7 +11,7 @@ import { graphql, Link } from "gatsby"
 import styles from "./candidate.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import WebIcon from "../../static/images/web.png"
-import VotersEdgeIcon from "../../static/images/votersedge.png"
+import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import ArrowIcon from "../../static/images/arrow.png"
 
