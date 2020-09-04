@@ -92,8 +92,8 @@ export default function Layout(props) {
                 {renderNavItems(footerLinks)}
               </nav>
             </div>
-            {/* <div className={styles.footerRight}>
-                <h5>Updates delivered to your inbox</h5>
+            <div className={styles.footerRight}>
+              {/* <h5>Updates delivered to your inbox</h5>
                 <form onSubmit={handleSubmit}>
                   <input
                     aria-label="email"
@@ -109,8 +109,8 @@ export default function Layout(props) {
                     type="submit"
                     value="Subscribe"
                   />
-                </form>
-              </div> */}
+                </form> */}
+            </div>
           </div>
           <div className={styles.footerBottom}>
             <h1>

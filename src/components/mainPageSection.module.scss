@@ -2,12 +2,12 @@
 
 .outerContainer {
   background-color: $primaryWhite;
-  align-items: center;
 }
 
 .innerContainer {
-  max-width: 1440px;
+  align-self: center;
   width: 100%;
+  max-width: 1440px;
   padding: 5rem 0;
 }
 
@@ -52,12 +52,19 @@
 
 @media screen and (max-width: 760px) {
   .innerContainer {
+    max-width: 760px;
+    width: auto;
     padding: 4.5rem 2.1rem;
   }
 
   .sectionHeader {
     * {
       text-align: start;
+    }
+
+    h2,
+    p {
+      align-items: center;
     }
 
     h2 {

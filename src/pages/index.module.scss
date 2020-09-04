@@ -1,7 +1,7 @@
 .container {
   .hero {
     flex-direction: row;
-    padding: 2.2rem 3rem 6.2rem 4.6rem;
+    padding: 5rem 3rem 6.2rem 4.6rem;
   }
 
   .heroLeft {
@@ -29,6 +29,10 @@
   .heroButtonContainer {
     flex-direction: row;
     margin-top: 6.2rem;
+  }
+
+  .primaryCTA {
+    margin-right: 1.6rem;
   }
 
   @media screen and (max-width: 760px) {
@@ -60,6 +64,11 @@
     }
     .heroButtonContainer:first-child {
       margin-bottom: 2rem;
+    }
+
+    .primaryCTA {
+      margin-left: 0rem;
+      margin-bottom: 1.6rem;
     }
   }
 }

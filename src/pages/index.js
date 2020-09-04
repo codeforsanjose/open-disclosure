@@ -161,17 +161,10 @@ export default function MainPage(props) {
               in local San José elections.
             </h2>
             <div className={styles.heroButtonContainer}>
-              <Button text="Explore candidates" href="/candidates" />
-              <Button
-                secondary
-                text="View measures"
-                href="/measures"
-                containerStyle={
-                  windowIsLarge
-                    ? { marginLeft: "1.6rem" }
-                    : { marginTop: "1.6rem" }
-                }
-              />
+              <div className={styles.primaryCTA}>
+                <Button text="Explore candidates" href="/candidates" />
+              </div>
+              <Button secondary text="View measures" href="/measures" />
             </div>
           </div>
           <div className={styles.heroRight}>
