@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import styles from "./candidates.module.scss"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import CandidatesListItem from "../components/candidatesListItem"
@@ -12,15 +13,20 @@ export default function Candidates({ data }) {
 
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
-      <SideNav>
-        {election.OfficeElections.map(({ Candidates }) =>
-          Candidates.filter(Boolean).map(candidate => (
-            <Link key={candidate.id} to={"/candidate/" + candidate.fields.slug}>
-              <CandidatesListItem {...candidate} />
-            </Link>
-          ))
-        )}
-      </SideNav>
+      <div className={styles.container}>
+        <SideNav>
+          {election.OfficeElections.map(({ Candidates }) =>
+            Candidates.filter(Boolean).map(candidate => (
+              <Link
+                key={candidate.id}
+                to={"/candidate/" + candidate.fields.slug}
+              >
+                <CandidatesListItem {...candidate} />
+              </Link>
+            ))
+          )}
+        </SideNav>
+      </div>
     </Layout>
   )
 }

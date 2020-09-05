@@ -1,46 +1,45 @@
-.sectionTitle {
-  font-weight: bold;
-  color: #113537;
-  line-height: 1.3;
-  font-family: "Roboto", sans-serif;
-  font-size: 1.9rem;
-}
-
-.listItem {
-  color: #006ea3;
-  padding: 0.9rem;
-  width: 100px;
-  position: relative;
-  left: 5%;
-  right: 75%;
-}
-
-.sectionItem {
-  color: #113537;
-  padding: 0.9rem;
-  font-size: 14px;
-  width: 100px;
-  position: relative;
-  left: 5%;
-  right: 75%;
-}
-
-.sectionItem:hover {
-  background-color: lightblue;
-}
-
-.navBar {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  padding-left: 10rem;
-}
+@import "../styles/colors";
 
 .body {
-  flex: 3;
-  padding: 0 10rem;
+  flex: 5;
 }
 
 .container {
   flex-direction: row;
+}
+
+.navbar {
+  flex: 2;
+  margin-right: 10rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.text {
+  margin: 0.9rem 0;
+  font-size: 2.4rem;
+  line-height: 130%;
+}
+
+.selected {
+  border-bottom: 10px solid $secondaryGreen;
+  opacity: 0;
+  margin-top: -2.2rem;
+  z-index: 2;
+}
+
+.election {
+  cursor: pointer;
+  max-width: fit-content;
+}
+
+.election:hover {
+  .text {
+    color: $hoverGreen;
+  }
+  .selected {
+    opacity: 1;
+  }
 }
