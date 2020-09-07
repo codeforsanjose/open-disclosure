@@ -1,5 +1,5 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Link } from "gatsby"
 import styles from "./sideNav.module.scss"
 
 const offices = [
@@ -12,7 +12,6 @@ const offices = [
 
 function formatMenu(input) {
   const menu = {}
-
   offices.forEach(({ type, filter }) => {
     ;[
       { Title: "Mayor" },
@@ -22,13 +21,13 @@ function formatMenu(input) {
       { Title: "SJUSD District 2" },
       { Title: "SJUSD District 4" },
       { Title: "SJUSD District 8" },
-    ].forEach(election => {
-      const title = election.Title.toLowerCase()
+    ].forEach(race => {
+      const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
         if (menu[type]) {
-          menu[type].push(election)
+          menu[type].push(race)
         } else {
-          menu[type] = [election]
+          menu[type] = [race]
         }
       }
     })
@@ -45,6 +44,7 @@ export default function sideNav(props) {
           allElection {
             edges {
               node {
+                Date
                 OfficeElections {
                   Title
                   TotalContributions
@@ -55,7 +55,8 @@ export default function sideNav(props) {
         }
       `}
       render={data => {
-        const menu = formatMenu(data.allElection.edges[0].node.OfficeElections)
+        const { Date, OfficeElections } = data.allElection.edges[0].node
+        const menu = formatMenu(OfficeElections)
         const sections = Object.keys(menu)
         return (
           <div className={styles.container}>
@@ -67,7 +68,13 @@ export default function sideNav(props) {
                     <ul>
                       {menu[section].map(race => (
                         <li className={styles.election}>
-                          <p className={styles.text}>{race.Title}</p>
+                          <Link
+                            to={`/candidates/${Date}/${race.Title.toLowerCase()
+                              .split(" ")
+                              .join("-")}`}
+                          >
+                            <p className={styles.text}>{race.Title}</p>
+                          </Link>
                           <div className={styles.selected} />
                         </li>
                       ))}

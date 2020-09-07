@@ -43,3 +43,27 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 760px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .navbar {
+    position: absolute;
+  }
+
+  .section {
+    margin-bottom: 3.4rem;
+
+    h4 {
+      margin: 0;
+    }
+  }
+
+  .text {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    margin: 1.2rem 0;
+  }
+}
