@@ -28,7 +28,7 @@ Installing RedisJSON and redis-py
     - You might have to install `cargo` and `cmake` to complete setup. Instructions for installing are listed below.
         - [Install cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) then run `source $HOME/.cargo/env` or `export PATH="$HOME/.cargo/bin:$PATH"` in .profile
             - If you've exported your `PATH`, don't forget to run `make` in a new terminal session
-        - [Install cmake](https://cmake.org/install/) then run `PATH="/Applications/CMake.app/Contents/bin":"$PATH"`
+        - Install cmake using homebrew `brew install cmake`
 4. Run `make`
 2. Load RedisJSON and run the redis server: `redis-server --loadmodule ./target/release/librejson.dylib`
 3. Run `pip install redis` to install `redis-py`
