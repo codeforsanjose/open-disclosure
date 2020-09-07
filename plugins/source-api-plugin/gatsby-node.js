@@ -97,11 +97,6 @@ exports.sourceNodes = async ({
     })
   })
   electionData.ElectionCycles.forEach(election => {
-    const officeElections = election.OfficeElections.map(
-      officeElection => officeElection.Title
-    )
-    console.log(election.OfficeElections)
-    console.log(officeElections)
     election.OfficeElections.forEach(officeElection => {
       createNode({
         ...officeElection,
@@ -117,7 +112,11 @@ exports.sourceNodes = async ({
     })
     createNode({
       ...election,
-      OfficeElections: officeElections,
+      OfficeElections: election.OfficeElections.map(
+        // This is the field we're linking by.
+        // TODO Could we just do this all inline somehow?
+        officeElection => officeElection.Title
+      ),
       id: createNodeId(`${ELECTION_NODE_TYPE}-${election.id}`),
       parent: null,
       children: [],
