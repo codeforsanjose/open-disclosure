@@ -1,6 +1,6 @@
 Redis API
 =
-The purpose of this API is to serve the election data stored in Redis to the frontend.
+The purpose of this API is to serve the election data stored in Redis to the frontend. The instructions below are for local setup.
 
 
 Getting started
@@ -24,15 +24,18 @@ Running your local Redis server
 
 Installing RedisJSON and redis-py
 -
-1. `git clone https://github.com/RedisJSON/RedisJSON.git`
-    2. Install cargo `source $HOME/.cargo/env` or `export PATH="$HOME/.cargo/bin:$PATH"` in .profile
-    3. Install cmake `PATH="/Applications/CMake.app/Contents/bin":"$PATH"`
-    4. Run `make`
-2. `redis-server --loadmodule ./target/release/librejson.dylib`
-3. `pip install redis`
+1. Clone the RedisJSON module `git clone https://github.com/RedisJSON/RedisJSON.git`
+    - You might have to install `cargo` and `cmake` to complete setup. Instructions for installing are listed below.
+        - [Install cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) then run `source $HOME/.cargo/env` or `export PATH="$HOME/.cargo/bin:$PATH"` in .profile
+            - If you've exported your `PATH`, don't forget to run `make` in a new terminal session
+        - [Install cmake](https://cmake.org/install/) then run `PATH="/Applications/CMake.app/Contents/bin":"$PATH"`
+4. Run `make`
+2. Load RedisJSON and run the redis server: `redis-server --loadmodule ./target/release/librejson.dylib`
+3. Run `pip install redis` to install `redis-py`
 
 Running the API
 -
+**If you made a virtualenv, don't forget to activate it before running the API**
 1. Make sure your environment variables are set properly 
     - `export FLASK_APP=api`
     - `export PYTHONPATH=$PYTHONPATH/path/to/open-disclosure` (this is needed to ensure modules outside of data_api can be imported properly)
