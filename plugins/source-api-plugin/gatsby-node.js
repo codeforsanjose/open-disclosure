@@ -5,6 +5,7 @@ const HOSTNAME = process.env.GATSBY_API_HOST || "localhost:5000"
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
+const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 
 const DUMMY_DATA = {
   candidates: {
@@ -43,6 +44,9 @@ const DUMMY_DATA = {
         ],
       },
     ],
+  },
+  metadata: {
+    DateProcessed: "2020-09-07",
   },
 }
 
@@ -93,8 +97,26 @@ exports.sourceNodes = async ({
     })
   })
   electionData.ElectionCycles.forEach(election => {
+    election.OfficeElections.forEach(officeElection => {
+      createNode({
+        ...officeElection,
+        id: createNodeId(`${OFFICE_ELECTION_NODE_TYPE}-${election.id}`),
+        parent: null,
+        children: [],
+        internal: {
+          type: OFFICE_ELECTION_NODE_TYPE,
+          content: JSON.stringify(election),
+          contentDigest: createContentDigest(election),
+        },
+      })
+    })
     createNode({
       ...election,
+      OfficeElections: election.OfficeElections.map(
+        // This is the field we're linking by.
+        // TODO Could we just do this all inline somehow?
+        officeElection => officeElection.Title
+      ),
       id: createNodeId(`${ELECTION_NODE_TYPE}-${election.id}`),
       parent: null,
       children: [],
@@ -143,10 +165,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       Title: String!
       Date: String 
       TotalContributions: String 
-      OfficeElections: [OfficeElection]
+      OfficeElections: [OfficeElection] @link(by: "Title")
     }
 
-    type OfficeElection {
+    type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "Name")
       Title: String
       TotalContributions: String
