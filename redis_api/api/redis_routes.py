@@ -1,7 +1,8 @@
 import json
 
-from api.errors import error_response
 from flask import Blueprint, jsonify
+
+from api.errors import error_response
 from redis import StrictRedis
 
 redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
@@ -21,7 +22,7 @@ def get_total_contributions():
     """
     response = r.execute_command("JSON.GET", "TotalContributions")
     if not response:
-        return error_response(404, "Resource does not exist!")
+        return dict()
     return jsonify({"TotalContributions": json.loads(response)})
 
 
@@ -33,7 +34,7 @@ def get_candidates():
     """
     response = r.execute_command("JSON.GET", "Candidates")
     if not response:
-        return error_response(404, "Resource does not exist!")
+        return dict()
     return jsonify({"Candidates": json.loads(response)})
 
 
@@ -45,7 +46,7 @@ def get_committees():
     """
     response = r.execute_command("JSON.GET", "Committees")
     if not response:
-        return error_response(404, "Resource does not exist!")
+        return dict()
     return jsonify({"Committees": json.loads(response)})
 
 
@@ -57,7 +58,7 @@ def get_elections():
     """
     response = r.execute_command("JSON.GET", "Elections")
     if not response:
-        return error_response(404, "Resource does not exist!")
+        return dict()
     return jsonify({"Elections": json.loads(response)})
 
 
