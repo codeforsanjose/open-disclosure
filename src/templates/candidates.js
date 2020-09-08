@@ -40,18 +40,14 @@ export const query = graphql`
             Title
             TotalContributions
             Candidates {
+              id
               Name
-              Elections {
-                ElectionCycle
-                ElectionTitle
-                Committees {
-                  Name
-                  TotalFunding
-                }
-              }
               fields {
                 slug
               }
+            }
+            fields {
+              slug
             }
           }
         }
@@ -59,3 +55,32 @@ export const query = graphql`
     }
   }
 `
+
+// export const query = graphql`
+//   query {
+//     allElection {
+//       edges {
+//         node {
+//           OfficeElections {
+//             Title
+//             TotalContributions
+//             Candidates {
+//               Name
+//               Elections {
+//                 ElectionCycle
+//                 ElectionTitle
+//                 Committees {
+//                   Name
+//                   TotalFunding
+//                 }
+//               }
+//               fields {
+//                 slug
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `

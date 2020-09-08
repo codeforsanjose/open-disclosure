@@ -92,7 +92,6 @@ export default function MainPage(props) {
         candidate.Elections[0].Committees.forEach(committee => {
           funding += parseInt(committee.TotalFunding)
         })
-        console.log(candidate)
         candidateList.push({
           name: candidate.Name,
           position: election.Title,
@@ -195,10 +194,15 @@ export const query = graphql`
     allElection {
       edges {
         node {
+          Title
+          Date
           TotalContributions
           OfficeElections {
             Title
             TotalContributions
+            fields {
+              slug
+            }
             Candidates {
               Name
               Elections {
