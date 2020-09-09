@@ -14,7 +14,17 @@ export default function FAQItem({ question, answer }) {
     <div className={styles.container}>
       <div className={styles.itemTop}>
         <h3>{question}</h3>
-        <div className={styles.icon} onClick={handleClick}>
+        <div
+          className={styles.icon}
+          onClick={handleClick}
+          onKeyDown={event => {
+            if (event.keyCode === 13) {
+              handleClick()
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
           <div
             className={`${styles.horizontalBar}`}
             style={{
