@@ -69,7 +69,7 @@ export default function sideNav(props) {
                       {menu[section].map(race => (
                         <li className={styles.election}>
                           <Link
-                            to={`/candidates/${Date}/${race.Title.toLowerCase()
+                            to={`/${Date}/candidates/${race.Title.toLowerCase()
                               .split(" ")
                               .join("-")}`}
                           >
