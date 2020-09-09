@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "open-disclosure-sj",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A website for keeping tabs on the influence of money in San José elections",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -17,7 +17,6 @@
     "gatsby": "^2.15.28",
     "gatsby-plugin-sass": "^2.2.3",
     "gatsby-plugin-slug-field": "^0.2.0",
-    "gatsby-source-apiserver": "^2.1.7",
     "iframe-resizer-react": "^1.0.4",
     "node-sass": "^4.13.1",
     "react": "^16.10.1",
@@ -31,9 +30,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/codeforsanjose/open-disclosure"
   }
 }
