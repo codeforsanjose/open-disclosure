@@ -22,7 +22,7 @@
   }
 
   .logo {
-    width: fill-available;
+    width: stretch;
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
     box-shadow: 0px 2px 6px rgba(201, 201, 201, 0.7);
