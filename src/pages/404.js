@@ -27,16 +27,30 @@ const links = [
   },
 ]
 
+const handleClick = () => window.history.back()
+
 export default () => {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <div className={styles.container}>
-        <img height={"286.93px"} width={"271px"} src={pageNotFound} />
+        <img
+          height={"286.93px"}
+          width={"271px"}
+          src={pageNotFound}
+          alt="A smiling person shrugging"
+        />
         <div className={styles.text}>
           <h1>Sorry, we can't find that page...</h1>
           <p>
-            <span onClick={() => window.history.back()}>Head back</span> to the
-            previous page or try one of these helpful links:
+            <span
+              onClick={handleClick()}
+              onKeyDown={handleClick()}
+              role="link"
+              tabIndex={0}
+            >
+              Head back
+            </span>{" "}
+            to the previous page or try one of these helpful links:
           </p>
           <ul>
             {links.map(link => (

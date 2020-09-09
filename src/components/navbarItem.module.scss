@@ -62,7 +62,7 @@
 
 @media screen and (max-width: 760px) {
   .fullWidth {
-    width: fill-available;
+    width: stretch;
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
   }
