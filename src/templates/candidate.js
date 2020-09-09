@@ -66,9 +66,9 @@ export default function Candidate({ data }) {
             <SectionHeader title={name} />
             <div className={styles.aboutSection}>
               <img
-                alt="Candidate profile"
                 className={styles.profilePhoto}
-                src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
+                src="https://picsum.photos/125"
+                alt={`Headshot of candidate ${name}`}
               />
               <div>
                 <p className={styles.aboutTitle}>
