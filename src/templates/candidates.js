@@ -9,7 +9,7 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 export default function Candidates({ data }) {
   const election = data.allElection.edges[0].node
 
-  // Should link to candidate/${node.Date}/${candidateName}}
+  // Should link to /{node.Date}/candidate/${candidateName}}
 
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
@@ -55,32 +55,3 @@ export const query = graphql`
     }
   }
 `
-
-// export const query = graphql`
-//   query {
-//     allElection {
-//       edges {
-//         node {
-//           OfficeElections {
-//             Title
-//             TotalContributions
-//             Candidates {
-//               Name
-//               Elections {
-//                 ElectionCycle
-//                 ElectionTitle
-//                 Committees {
-//                   Name
-//                   TotalFunding
-//                 }
-//               }
-//               fields {
-//                 slug
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `

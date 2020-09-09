@@ -13,15 +13,7 @@ const offices = [
 function formatMenu(input) {
   const menu = {}
   offices.forEach(({ type, filter }) => {
-    ;[
-      { Title: "Mayor" },
-      { Title: "City Auditor" },
-      { Title: "District 3 Representative" },
-      ...input,
-      { Title: "SJUSD District 2" },
-      { Title: "SJUSD District 4" },
-      { Title: "SJUSD District 8" },
-    ].forEach(race => {
+    input.forEach(race => {
       const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
         if (menu[type]) {

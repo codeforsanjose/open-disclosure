@@ -44,7 +44,6 @@ exports.createPages = async ({ graphql, actions }) => {
   })
   result.data.allElection.edges.forEach(({ node }) => {
     node.OfficeElections.forEach(election => {
-      console.log(node.Date, election.fields.slug)
       createPage({
         path: "/" + node.Date + "/candidates/" + election.fields.slug,
         component: path.resolve("src/templates/candidates.js"),
