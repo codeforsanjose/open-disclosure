@@ -1,10 +1,13 @@
 .container {
   .hero {
+    display: flex;
     flex-direction: row;
     padding: 5rem 3rem 6.2rem 4.6rem;
   }
 
   .heroLeft {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     justify-content: center;
 
@@ -27,6 +30,7 @@
   }
 
   .heroButtonContainer {
+    display: flex;
     flex-direction: row;
     margin-top: 6.2rem;
   }

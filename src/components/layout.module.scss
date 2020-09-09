@@ -10,6 +10,7 @@
 }
 
 .footerTop {
+  display: flex;
   flex-direction: row;
   padding: 3rem 0;
 }
@@ -21,6 +22,7 @@
 }
 
 .footerNav {
+  display: flex;
   flex-direction: row;
   padding-top: 6rem;
   padding-left: 1rem;

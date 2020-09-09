@@ -1,6 +1,9 @@
 @import "../styles/colors";
 
 .panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   text-align: center;
 
   .value {

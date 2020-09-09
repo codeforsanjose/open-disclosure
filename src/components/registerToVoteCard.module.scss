@@ -1,6 +1,7 @@
 @import "../styles/colors";
 
 .card {
+  display: flex;
   flex: 1;
   max-width: 40rem;
   min-height: 35rem;

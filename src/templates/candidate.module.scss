@@ -23,7 +23,7 @@
 
 .aboutLinks {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -94,6 +94,7 @@
 }
 
 .totals {
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin-top: 4.7rem;

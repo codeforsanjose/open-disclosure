@@ -1,6 +1,7 @@
 @import "../../styles/colors";
 
 .container {
+  display: flex;
   width: max-content;
   padding: 1.7rem 3rem;
   background-color: $primaryGreen;
