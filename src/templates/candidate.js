@@ -5,6 +5,7 @@ import TotalAmountItem, {
 import BarChart from "../components/barChart"
 import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
+import SideNav from "../components/sideNav"
 import React from "react"
 import SectionHeader from "../components/sectionHeader"
 import { graphql, Link } from "gatsby"
@@ -55,100 +56,105 @@ export default function Candidate({ data }) {
     <Layout windowIsLarge={useWindowIsLarge()}>
       <LandingPageHero background="blue" title={name} subtitle={title} />
       <div className={styles.container}>
-        <div className={styles.sideNav}></div>
-        <div className={styles.mainSection}>
-          <section>
-            <SectionHeader title={name} />
-            <div className={styles.aboutSection}>
-              <img
-                alt="Candidate profile"
-                className={styles.profilePhoto}
-                src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
-              />
-              <div>
-                <p className={styles.aboutTitle}>
-                  <span className={styles.currentPosition}>
-                    Incumbent, District 9 Representative
-                  </span>
-                  {" - elected"}
-                </p>
-                <p className={styles.aboutText}>
-                  This candidate has agreed to voluntary spending limits. The
-                  maximum contribution this candidate can accept is $800 from
-                  any individual, business entity, committee or other
-                  organization and $1,600 from a qualified broad-based
-                  committee.
-                </p>
-                <div className={styles.aboutLinks}>
-                  <a href="/" className={styles.aboutLink}>
-                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
-                    www.lindsaylohan2020.com
-                  </a>
-                  <a href="/" className={styles.aboutLink}>
-                    <img
-                      alt="External link icon"
-                      src={VotersEdgeIcon}
-                      className={styles.icon}
-                    />
-                    Voter's Edge Profile
-                  </a>
-                  <a href="/" className={styles.aboutLink}>
-                    <img
-                      alt="Twitter icon"
-                      src={TwitterIcon}
-                      className={styles.icon}
-                    />
-                    @lindsaylohan2020
-                  </a>
+        <SideNav>
+          <div className={styles.mainSection}>
+            <section>
+              <SectionHeader title={name} />
+              <div className={styles.aboutSection}>
+                <img
+                  alt="Candidate headshot"
+                  className={styles.profilePhoto}
+                  src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
+                />
+                <div>
+                  <p className={styles.aboutTitle}>
+                    <span className={styles.currentPosition}>
+                      Incumbent, District 9 Representative
+                    </span>
+                    {" - elected"}
+                  </p>
+                  <p className={styles.aboutText}>
+                    This candidate has agreed to voluntary spending limits. The
+                    maximum contribution this candidate can accept is $800 from
+                    any individual, business entity, committee or other
+                    organization and $1,600 from a qualified broad-based
+                    committee.
+                  </p>
+                  <div className={styles.aboutLinks}>
+                    <a href="/" className={styles.aboutLink}>
+                      <img
+                        alt="Web icon"
+                        src={WebIcon}
+                        className={styles.icon}
+                      />
+                      www.lindsaylohan2020.com
+                    </a>
+                    <a href="/" className={styles.aboutLink}>
+                      <img
+                        alt="External link icon"
+                        src={VotersEdgeIcon}
+                        className={styles.icon}
+                      />
+                      Voter's Edge Profile
+                    </a>
+                    <a href="/" className={styles.aboutLink}>
+                      <img
+                        alt="Twitter icon"
+                        src={TwitterIcon}
+                        className={styles.icon}
+                      />
+                      @lindsaylohan2020
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-          <section>
-            <SectionHeader title="Fundraising totals" />
-            <div className={styles.totals}>
-              <TotalAmountPanelItem type="contributions" total={654876} />
-              <TotalAmountPanelItem type="expenditures" total={383254} />
-              <TotalAmountPanelItem type="balance" total={271622} />
-            </div>
-          </section>
-          <ChartSection
-            title="Where the money is coming from"
-            type="contributions"
-            id="contributions"
-            total={654876}
-            data={contributions}
-          />
-          <Link className={styles.seeAllLink} to="/">
-            See all contributions
-            <img
-              alt="Right arrow icon"
-              className={`${styles.icon} ${styles.seeAllIcon}`}
-              src={ArrowIcon}
+            </section>
+            <section>
+              <SectionHeader title="Fundraising totals" />
+              <div className={styles.totals}>
+                <TotalAmountPanelItem type="contributions" total={654876} />
+                <TotalAmountPanelItem type="expenditures" total={383254} />
+                <TotalAmountPanelItem type="balance" total={271622} />
+              </div>
+            </section>
+            <ChartSection
+              title="Where the money is coming from"
+              type="contributions"
+              id="contributions"
+              total={654876}
+              data={contributions}
             />
-          </Link>
-          <ChartSection
-            title="How the money is being spent"
-            type="expenditures"
-            id="expenditures"
-            total={383254}
-            data={expenditures}
-          />
-          <ChartSection
-            title="Breakdown by region"
-            type="contributions"
-            id="balance"
-            total={654876}
-            data={breakdowns}
-            showPercentages
-          />
-          <section>
-            <SectionHeader title="Other committees controlled by candidate" />
-            {elections[0].Committees.map(({ Name }) => (
-              <Link className={styles.committeeLink}>{Name}</Link>
-            ))}
-          </section>
-        </div>
+            <Link className={styles.seeAllLink} to="/">
+              See all contributions
+              <img
+                alt="Right arrow icon"
+                className={`${styles.icon} ${styles.seeAllIcon}`}
+                src={ArrowIcon}
+              />
+            </Link>
+            <ChartSection
+              title="How the money is being spent"
+              type="expenditures"
+              id="expenditures"
+              total={383254}
+              data={expenditures}
+            />
+            <ChartSection
+              title="Breakdown by region"
+              type="contributions"
+              id="balance"
+              total={654876}
+              data={breakdowns}
+              showPercentages
+            />
+            <section>
+              <SectionHeader title="Other committees controlled by candidate" />
+              {elections[0].Committees.map(({ Name }) => (
+                <Link className={styles.committeeLink}>{Name}</Link>
+              ))}
+            </section>
+          </div>
+        </SideNav>
       </div>
     </Layout>
   )

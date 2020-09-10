@@ -27,36 +27,6 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
 })
 
-const behindTheScenes = {
-  title: "Go behind the scenes",
-  description:
-    "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
-  items: [
-    {
-      title: "Take action on measures",
-      description: "Track who opposes or supports upcoming ballot measures.",
-      buttonText: "View ballot measures",
-      image: blue,
-      href: "/measures",
-    },
-    {
-      title: "Compare local candidates",
-      description: "See who’s spending and raising the most.",
-      buttonText: "Browse candidates",
-      image: orange,
-      href: "/candidates",
-    },
-    {
-      title: "Get the finance facts",
-      description: "Learn more about campaign finance data.",
-      buttonText: "Visit FAQs",
-      image: green,
-      href: "/faqs",
-    },
-  ],
-  renderItem: BehindTheScenesItem,
-}
-
 const about = {
   title: "Power to the people",
   description:
@@ -92,7 +62,6 @@ export default function MainPage(props) {
         candidate.Elections[0].Committees.forEach(committee => {
           funding += parseInt(committee.TotalFunding)
         })
-        console.log(candidate)
         candidateList.push({
           name: candidate.Name,
           position: election.Title,
@@ -102,6 +71,8 @@ export default function MainPage(props) {
       }
     })
   })
+
+  const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
 
   const snapshot = {
     title: "San José live election snapshot",
@@ -139,10 +110,40 @@ export default function MainPage(props) {
     items: candidateList,
     renderItem: CandidateItem,
     footer: () => (
-      <Link to="/candidates">
+      <Link to={candidatesPageLink}>
         <img alt="candidates" height="37px" width="285px" src={tertiary} />
       </Link>
     ),
+  }
+
+  const behindTheScenes = {
+    title: "Go behind the scenes",
+    description:
+      "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
+    items: [
+      {
+        title: "Take action on measures",
+        description: "Track who opposes or supports upcoming ballot measures.",
+        buttonText: "View ballot measures",
+        image: blue,
+        href: "/measures",
+      },
+      {
+        title: "Compare local candidates",
+        description: "See who’s spending and raising the most.",
+        buttonText: "Browse candidates",
+        image: orange,
+        href: candidatesPageLink,
+      },
+      {
+        title: "Get the finance facts",
+        description: "Learn more about campaign finance data.",
+        buttonText: "Visit FAQs",
+        image: green,
+        href: "/faqs",
+      },
+    ],
+    renderItem: BehindTheScenesItem,
   }
 
   return (
@@ -161,17 +162,10 @@ export default function MainPage(props) {
               in local San José elections.
             </h2>
             <div className={styles.heroButtonContainer}>
-              <Button text="Explore candidates" href="/candidates" />
-              <Button
-                secondary
-                text="View measures"
-                href="/measures"
-                containerStyle={
-                  windowIsLarge
-                    ? { marginLeft: "1.6rem" }
-                    : { marginTop: "1.6rem" }
-                }
-              />
+              <div className={styles.primaryCTA}>
+                <Button text="Explore candidates" href={candidatesPageLink} />
+              </div>
+              <Button secondary text="View measures" href="/measures" />
             </div>
           </div>
           <div className={styles.heroRight}>
@@ -202,10 +196,15 @@ export const query = graphql`
     allElection {
       edges {
         node {
+          Title
+          Date
           TotalContributions
           OfficeElections {
             Title
             TotalContributions
+            fields {
+              slug
+            }
             Candidates {
               Name
               Elections {

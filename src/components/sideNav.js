@@ -1,62 +1,84 @@
-import React, { PureComponent } from "react"
-import sideNavStyles from "./sideNav.module.css"
+import React from "react"
+import { StaticQuery, graphql, Link } from "gatsby"
+import styles from "./sideNav.module.scss"
 
-export default class sideNav extends PureComponent {
-  onSelectItem = (sectionItem) => {
-    this.props.selectItem(sectionItem)
-  }
+const offices = [
+  { type: "City Wide Office", filter: "mayor" },
+  { type: "City Wide Office", filter: "auditor" },
+  { type: "City Council", filter: "representative" },
+  { type: "City Council", filter: "council" },
+  { type: "San José Unified School District", filter: "sjusd" },
+]
 
-  render() {
-    return (
-      <nav style={this.props.smallWindowStyle}>
-        {this.props.menuItems.map((menuItem, menuIndex) => (
-          <div key={`menuItem ${menuIndex}`} className={sideNavStyles.section}>
-            <div className={sideNavStyles.border} />
-            <h4 className={sideNavStyles.sectionTitle}>
-              {menuItem.sectionName}
-            </h4>
-            {menuItem.sectionItems.map((sectionItem, sectionItemIndex) =>
-              sectionItem.measureName ? (
-                <div
-                  key={`sectionItem ${sectionItemIndex}`}
-                  className={`${sideNavStyles.sectionItem} ${sideNavStyles.measureItem}`}
-                  onClick={this.onSelectItem}
-                  onKeyUp={this.onSelectItem}
-                  role="button"
-                  style={
-                    this.props.selectedCategory.measureName ===
-                    sectionItem.measureName
-                      ? { backgroundColor: "#ffdd1f" }
-                      : {}
-                  }
-                  tabIndex={0}
-                >
-                  {sectionItem.measureName}
-                  <span className={sideNavStyles.measureDescription}>
-                    {sectionItem.description}
-                  </span>
-                </div>
-              ) : (
-                <div
-                  key={`sectionItem ${sectionItemIndex}`}
-                  className={sideNavStyles.sectionItem}
-                  onClick={this.onSelectItem}
-                  onKeyUp={this.onSelectItem}
-                  role="button"
-                  style={
-                    this.props.selectedCategory === sectionItem
-                      ? { backgroundColor: "#ffdd1f" }
-                      : {}
-                  }
-                  tabIndex={0}
-                >
-                  {sectionItem}
-                </div>
-              )
-            )}
+function formatMenu(input) {
+  const menu = {}
+  offices.forEach(({ type, filter }) => {
+    input.forEach(race => {
+      const title = race.Title.toLowerCase()
+      if (title.includes(filter)) {
+        if (menu[type]) {
+          menu[type].push(race)
+        } else {
+          menu[type] = [race]
+        }
+      }
+    })
+  })
+
+  return menu
+}
+
+export default function sideNav(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          allElection {
+            edges {
+              node {
+                Date
+                OfficeElections {
+                  Title
+                  TotalContributions
+                }
+              }
+            }
+          }
+        }
+      `}
+      render={data => {
+        const { Date, OfficeElections } = data.allElection.edges[0].node
+        const menu = formatMenu(OfficeElections)
+        const sections = Object.keys(menu)
+        return (
+          <div className={styles.container}>
+            <nav className={styles.navbar}>
+              <ul>
+                {sections.map((section, index) => (
+                  <li key={`${section}-${index}`} className={styles.section}>
+                    <h4 className={styles.text}>{section}</h4>
+                    <ul>
+                      {menu[section].map(race => (
+                        <li className={styles.election}>
+                          <Link
+                            to={`/${Date}/candidates/${race.Title.toLowerCase()
+                              .split(" ")
+                              .join("-")}`}
+                          >
+                            <p className={styles.text}>{race.Title}</p>
+                          </Link>
+                          <div className={styles.selected} />
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className={styles.body}>{props.children}</div>
           </div>
-        ))}
-      </nav>
-    )
-  }
+        )
+      }}
+    />
+  )
 }

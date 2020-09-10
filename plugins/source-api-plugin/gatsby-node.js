@@ -31,7 +31,7 @@ const DUMMY_DATA = {
         OfficeElections: [
           {
             Title: "District 9 Representative",
-            Candidates: ["Jake John", "Lindsay Lohan"],
+            Candidates: ["Lindsay Lohan"],
             TotalContributions: 300,
           },
         ],

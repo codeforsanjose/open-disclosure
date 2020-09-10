@@ -62,7 +62,7 @@
 
 @media screen and (max-width: 760px) {
   .fullWidth {
-    width: fill-available;
+    width: stretch;
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
   }
@@ -72,9 +72,7 @@
     font-size: 1.6rem;
     font-weight: normal;
     line-height: 1.3;
-    // opacity: 0;
     transition: visibility 0s 0.26s, opacity 0.26s linear;
-    // visibility: hidden;
   }
 
   .hidden {

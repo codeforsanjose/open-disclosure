@@ -1,10 +1,5 @@
 @import "../../styles/colors";
 
-// Resizes Figma values to a 6:5 ratio and converts to rem
-@function resize($size) {
-  @return (5 * ($size / 10)) / 6 + rem;
-}
-
 .container {
   width: max-content;
   padding: 1.7rem 3rem;
@@ -15,7 +10,7 @@
   .buttonText {
     font-family: "DM Sans";
     font-weight: bold;
-    font-size: resize(20);
+    font-size: 2rem;
     color: $primaryWhite;
   }
 }
