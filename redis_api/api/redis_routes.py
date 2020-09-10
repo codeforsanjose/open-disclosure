@@ -87,4 +87,8 @@ def get_by_candidate(candidate_name):
     :param candidate_name: string representing a candidate's name
     :return: JSON object containing a candidate's election info or error message
     """
-    return jsonify(r.get("Candidates")[candidate_name].decode("utf-8")), 200
+    candidate_name = candidate_name.replace(" ", "-")
+    response = r.execute_command("JSON.GET", "Candidates", f".{candidate_name}")
+    if not response:
+        return jsonify(candidate_name)
+    return jsonify(json.loads(response)), 200
