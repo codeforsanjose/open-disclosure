@@ -1,5 +1,11 @@
 @import "../styles/colors";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .footer {
   background-color: $primaryOffWhite;
   padding: 0 6rem;

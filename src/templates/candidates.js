@@ -12,17 +12,19 @@ export default function Candidates({ data }) {
   // Should link to /{node.Date}/candidate/${candidateName}}
 
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
-      <div className={styles.container}>
-        <SideNav>
-          {election.OfficeElections.map(({ Candidates }) =>
-            Candidates.filter(Boolean).map(candidate => (
-              <CandidatesListItem {...candidate} />
-            ))
-          )}
-        </SideNav>
-      </div>
-    </Layout>
+    <div className={styles.outerContainer}>
+      <Layout windowIsLarge={useWindowIsLarge()}>
+        <div className={styles.innerContainer}>
+          <SideNav>
+            {election.OfficeElections.map(({ Candidates }) =>
+              Candidates.filter(Boolean).map(candidate => (
+                <CandidatesListItem {...candidate} />
+              ))
+            )}
+          </SideNav>
+        </div>
+      </Layout>
+    </div>
   )
 }
 
