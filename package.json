@@ -18,7 +18,7 @@
     "gatsby-plugin-sass": "^2.2.3",
     "gatsby-plugin-slug-field": "^0.2.0",
     "gatsby-source-apiserver": "^2.1.7",
-    "gatsby-source-filesystem": "^2.3.28",
+    "gatsby-source-filesystem": "^2.3.29",
     "gatsby-transformer-json": "^2.4.11",
     "iframe-resizer-react": "^1.0.4",
     "node-sass": "^4.13.1",

@@ -62,6 +62,8 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: election.fields.slug,
         },
       })
+    })
+  })
   result.data.allCandidatesJson.edges.forEach(({ node }) => {
     createPage({
       path: "/candidate/" + node.fields.slug,
