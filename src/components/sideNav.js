@@ -1,6 +1,7 @@
 import React from "react"
-import { StaticQuery, graphql, Link } from "gatsby"
+import { StaticQuery, graphql, Link, navigate } from "gatsby"
 import styles from "./sideNav.module.scss"
+import Select from "react-select"
 
 const offices = [
   { type: "City Wide Office", filter: "mayor" },
@@ -12,7 +13,9 @@ const offices = [
 
 function formatMenu(input) {
   const menu = {}
+  const options = []
   offices.forEach(({ type, filter }) => {
+    const option = { label: type, options: [] }
     input.forEach(race => {
       const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
@@ -21,11 +24,21 @@ function formatMenu(input) {
         } else {
           menu[type] = [race]
         }
+        option.options.push({ label: race.Title, value: race.fields.slug })
       }
     })
+    if (option.options.length) {
+      options.push(option)
+    }
   })
 
-  return menu
+  return [menu, options]
+}
+
+function onSelect({ value }, { action }, date) {
+  if (action === "select-option") {
+    navigate(`/${date}/candidates/${value}`)
+  }
 }
 
 export default function sideNav(props) {
@@ -40,6 +53,9 @@ export default function sideNav(props) {
                 OfficeElections {
                   Title
                   TotalContributions
+                  fields {
+                    slug
+                  }
                 }
               }
             }
@@ -48,24 +64,27 @@ export default function sideNav(props) {
       `}
       render={data => {
         const { Date, OfficeElections } = data.allElection.edges[0].node
-        const menu = formatMenu(OfficeElections)
+        const [menu, options] = formatMenu(OfficeElections)
         const sections = Object.keys(menu)
+
         return (
           <div className={styles.container}>
             <nav className={styles.navbar}>
-              <ul>
+              <div className={styles.select}>
+                <Select
+                  options={options}
+                  onChange={(val, act) => onSelect(val, act, Date)}
+                />
+              </div>
+              <ul className={styles.sidebar}>
                 {sections.map((section, index) => (
                   <li key={`${section}-${index}`} className={styles.section}>
                     <h4 className={styles.text}>{section}</h4>
                     <ul>
-                      {menu[section].map(race => (
+                      {menu[section].map(({ Title, fields: { slug } }) => (
                         <li className={styles.election}>
-                          <Link
-                            to={`/${Date}/candidates/${race.Title.toLowerCase()
-                              .split(" ")
-                              .join("-")}`}
-                          >
-                            <p className={styles.text}>{race.Title}</p>
+                          <Link to={`/${Date}/candidates/${slug}`}>
+                            <p className={styles.text}>{Title}</p>
                           </Link>
                           <div className={styles.selected} />
                         </li>

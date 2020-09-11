@@ -46,13 +46,18 @@
   flex: 5;
 }
 
+.select {
+  width: 100%;
+  display: none;
+}
+
 @media screen and (max-width: 760px) {
   .container {
     flex-direction: column;
   }
 
   .navbar {
-    position: absolute;
+    margin-right: 0;
   }
 
   .section {
@@ -67,5 +72,13 @@
     font-size: 1.4rem;
     line-height: 1.7rem;
     margin: 1.2rem 0;
+  }
+
+  .select {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
   }
 }
