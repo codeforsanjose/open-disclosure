@@ -66,23 +66,32 @@ export default function sideNav(props) {
         const { Date, OfficeElections } = data.allElection.edges[0].node
         const [menu, options] = formatMenu(OfficeElections)
         const sections = Object.keys(menu)
+        let url = window.location.href.split("/")
+        url = url[url.length - 1]
+          .split("-")
+          .map(word => word[0].toUpperCase() + word.slice(1))
+          .join(" ")
 
         return (
           <div className={styles.container}>
             <nav className={styles.navbar}>
               <div className={styles.select}>
                 <Select
+                  defaultInputValue={url}
                   options={options}
                   onChange={(val, act) => onSelect(val, act, Date)}
                 />
               </div>
               <ul className={styles.sidebar}>
                 {sections.map((section, index) => (
-                  <li key={`${section}-${index}`} className={styles.section}>
+                  <li key={section} className={styles.section}>
                     <h4 className={styles.text}>{section}</h4>
                     <ul>
                       {menu[section].map(({ Title, fields: { slug } }) => (
-                        <li className={styles.election}>
+                        <li
+                          key={`${section}-${slug}`}
+                          className={styles.election}
+                        >
                           <Link to={`/${Date}/candidates/${slug}`}>
                             <p className={styles.text}>{Title}</p>
                           </Link>
