@@ -47,13 +47,13 @@
 }
 
 .select {
-  width: 100%;
   display: none;
 }
 
 @media screen and (max-width: 760px) {
   .container {
     flex-direction: column;
+    padding: 1rem;
   }
 
   .navbar {
@@ -76,6 +76,8 @@
 
   .select {
     display: block;
+    border: 1px solid $backgroundGray;
+    border-radius: 6px;
   }
 
   .sidebar {

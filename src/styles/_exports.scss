@@ -1,0 +1,25 @@
+@import "colors";
+
+:export {
+  // Primary palette
+  primaryGreen: #008254;
+  primaryBlack: #1b1b1b;
+  primaryOffWhite: #fafafa;
+  primaryWhite: #ffffff;
+
+  // Secondary palette
+  secondaryGreen: #e3f9f1;
+  secondaryYellow: #feefd0;
+  secondaryBlue: #deeffe;
+  secondaryGray: #f2f2f2;
+  darkGray: #555555;
+  secondaryWhite: #e5e5e5;
+
+  // Special-purpose colors
+  underline: #00825466;
+  hoverGreen: #025b3c;
+  supportBlue: #5fb2fb;
+  opposeRed: #fb7b5f;
+  backgroundGray: #e7e7e7;
+  tertiaryGray: #828282;
+}

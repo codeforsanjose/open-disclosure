@@ -1,7 +1,74 @@
 import React from "react"
 import { StaticQuery, graphql, Link, navigate } from "gatsby"
 import styles from "./sideNav.module.scss"
+import { primaryBlack, primaryGreen } from "../styles/_exports.scss"
 import Select from "react-select"
+
+const textStyles = {
+  fontFamily: "Lato",
+  fontWeight: "bold",
+  fontSize: "1.4rem",
+  color: primaryBlack,
+}
+
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    border: "none",
+    boxShadow: "none",
+    ":hover": {
+      filter: state.menuIsOpen
+        ? "none"
+        : "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+    },
+  }),
+  valueContainer: provided => ({
+    ...provided,
+    padding: "1.3rem 8px",
+  }),
+  placeholder: () => textStyles,
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  dropdownIndicator: (provided, state) => ({
+    ...provided,
+    color: primaryBlack,
+    ":hover": {
+      color: primaryBlack,
+    },
+  }),
+  menu: provided => ({
+    ...provided,
+    boxShadow: "0px 4px 30px rgba(203, 201, 201, 0.25)",
+    transition: "all 150ms linear",
+  }),
+  group: provided => ({
+    ...provided,
+    marginBottom: "2rem",
+    ":last-child": {
+      marginBottom: "0",
+    },
+  }),
+  groupHeading: provided => ({
+    ...provided,
+    ...textStyles,
+    textTransform: "none",
+  }),
+  option: provided => ({
+    ...provided,
+    ...textStyles,
+    backgroundColor: "none",
+    fontWeight: "normal",
+    ":hover": {
+      color: primaryGreen,
+    },
+  }),
+  singleValue: provided => ({
+    ...provided,
+    ...textStyles,
+    color: primaryGreen,
+  }),
+}
 
 const offices = [
   { type: "City Wide Office", filter: "mayor" },
@@ -77,7 +144,8 @@ export default function sideNav(props) {
             <nav className={styles.navbar}>
               <div className={styles.select}>
                 <Select
-                  defaultInputValue={url}
+                  styles={customStyles}
+                  placeholder={url}
                   options={options}
                   onChange={(val, act) => onSelect(val, act, Date)}
                 />

@@ -1,3 +1,5 @@
+@import "../styles/colors";
+
 .outerContainer {
   display: flex;
   flex-direction: column;
@@ -10,10 +12,11 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  background-image: linear-gradient(#fdfdfd, $primaryWhite);
 }
 
 @media screen and (max-width: 760px) {
   .innerContainer {
-    padding: 1rem;
+    padding: 0rem;
   }
 }
