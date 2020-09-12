@@ -13,15 +13,20 @@ export default function Candidates({ data }) {
     <div className={styles.outerContainer}>
       <Layout windowIsLarge={useWindowIsLarge()}>
         <div className={styles.innerContainer}>
-          <SideNav>
-            {election.OfficeElections.map(({ Candidates }) =>
-              Candidates.filter(Boolean).map(candidate => (
-                <CandidatesListItem
-                  key={candidate.fields.slug}
-                  {...candidate}
-                />
-              ))
-            )}
+          <SideNav
+            pageTitle="Candidates"
+            pageSubtitle="City of San José Candidates"
+          >
+            <div className={styles.candidateList}>
+              {election.OfficeElections.map(({ Candidates }) =>
+                Candidates.filter(Boolean).map(candidate => (
+                  <CandidatesListItem
+                    key={candidate.fields.slug}
+                    {...candidate}
+                  />
+                ))
+              )}
+            </div>
           </SideNav>
         </div>
       </Layout>

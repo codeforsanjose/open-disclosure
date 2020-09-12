@@ -53,10 +53,16 @@
 
 @media screen and (max-width: 760px) {
   .container {
+    margin: 3rem 0;
+
     img {
       height: 65px;
       width: auto;
     }
+  }
+
+  .container:first-child {
+    margin-top: 2rem;
   }
 
   .headerText {

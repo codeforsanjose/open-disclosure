@@ -3,6 +3,8 @@ import { StaticQuery, graphql, Link, navigate } from "gatsby"
 import styles from "./sideNav.module.scss"
 import { primaryBlack, primaryGreen } from "../styles/_exports.scss"
 import Select from "react-select"
+import SectionHeader from "./sectionHeader"
+import LandingPageHero from "./landingPageHero"
 
 const textStyles = {
   fontFamily: "Lato",
@@ -108,7 +110,13 @@ function onSelect({ value }, { action }, date) {
   }
 }
 
-export default function sideNav(props) {
+export default function sideNav({
+  candidate,
+  children,
+  headerBackground,
+  pageSubtitle,
+  pageTitle,
+}) {
   return (
     <StaticQuery
       query={graphql`
@@ -140,38 +148,56 @@ export default function sideNav(props) {
           .join(" ")
 
         return (
-          <div className={styles.container}>
-            <nav className={styles.navbar}>
-              <div className={styles.select}>
-                <Select
-                  styles={customStyles}
-                  placeholder={url}
-                  options={options}
-                  onChange={(val, act) => onSelect(val, act, Date)}
-                />
+          <div className={styles.outerContainer}>
+            <LandingPageHero
+              background={headerBackground}
+              title={pageTitle}
+              subtitle={pageSubtitle}
+            />
+            <div className={styles.innerContainer}>
+              <nav className={styles.navbar}>
+                <div className={styles.select}>
+                  <Select
+                    styles={customStyles}
+                    placeholder={candidate ? pageSubtitle : url}
+                    options={options}
+                    onChange={(val, act) => onSelect(val, act, Date)}
+                  />
+                </div>
+                <ul className={styles.sidebar}>
+                  {sections.map((section, index) => (
+                    <li key={section} className={styles.section}>
+                      <h4 className={styles.text}>{section}</h4>
+                      <ul>
+                        {menu[section].map(({ Title, fields: { slug } }) => {
+                          const active =
+                            Title === url ||
+                            (candidate && Title === pageSubtitle)
+                          return (
+                            <li
+                              key={`${section}-${slug}`}
+                              className={`{${styles.election} ${active &&
+                                styles.active}`}
+                            >
+                              <div className={styles.linkContainer}>
+                                <Link to={`/${Date}/candidates/${slug}`}>
+                                  <p className={styles.text}>{Title}</p>
+                                </Link>
+                                <div className={styles.selected} />
+                              </div>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <div className={styles.body}>
+                <SectionHeader title={url} />
+                {children}
               </div>
-              <ul className={styles.sidebar}>
-                {sections.map((section, index) => (
-                  <li key={section} className={styles.section}>
-                    <h4 className={styles.text}>{section}</h4>
-                    <ul>
-                      {menu[section].map(({ Title, fields: { slug } }) => (
-                        <li
-                          key={`${section}-${slug}`}
-                          className={styles.election}
-                        >
-                          <Link to={`/${Date}/candidates/${slug}`}>
-                            <p className={styles.text}>{Title}</p>
-                          </Link>
-                          <div className={styles.selected} />
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <div className={styles.body}>{props.children}</div>
+            </div>
           </div>
         )
       }}
