@@ -80,15 +80,14 @@ def get_metadata():
     return jsonify(r.get("Metadata").decode("utf-8"))
 
 
-@redis_bp.route("/candidates/<string:candidate_name>", methods=["GET"])
+@redis_bp.route("/candidates/<string:candidate_id>", methods=["GET"])
 def get_by_candidate(candidate_name):
     """
     Get information associated with a particular candidate
-    :param candidate_name: string representing a candidate's name
-    :return: JSON object containing a candidate's election info or error message
+    :param candidate_id: unique identifier associated with each candidate {election-title;cand-name;election-date}
+    :return: JSON object containing a candidate's election info or empty dict
     """
-    candidate_name = candidate_name.replace(" ", "-")
     response = r.execute_command("JSON.GET", "Candidates", f".{candidate_name}")
     if not response:
         return jsonify(candidate_name)
-    return jsonify(json.loads(response)), 200
+    return jsonify(json.loads(response))
