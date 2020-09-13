@@ -145,16 +145,16 @@ export default class electionInfo extends PureComponent {
                 borderBottom: "2px #ffdd1f solid",
               })}
             >
-              {selectedCategory.measureName ? (
+              {/* {selectedCategory.measureName ? ( */}
                 <MeasureInfo selectedCategory={selectedCategory} />
-              ) : (
+              {/* ) : (
                 <BallotInfo
                   selectedCategory={selectedCategory}
                   smallWindowStyle={this.applySmallWindowStyle({
                     padding: "0.9rem 0 1.8rem",
                   })}
                 />
-              )}
+              )} */}
               {
                 // Clicking on candidate on ballot info should use/go to page with this component
                 // <CandidateInfo selectedCategory={selectedCategory} />
