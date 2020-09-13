@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
 import json
@@ -9,7 +9,7 @@ import json
 import pandas as pd
 import redis
 
-# In[6]:
+# In[2]:
 
 
 agg = pd.read_excel("2020 Election Data.xlsx")
@@ -63,7 +63,7 @@ agg.drop(
 agg.shape
 
 
-# In[36]:
+# In[3]:
 
 
 agg_group = (
@@ -83,7 +83,7 @@ agg_group = (
 agg_group
 
 
-# In[52]:
+# In[5]:
 
 
 candidates = dict()
@@ -100,20 +100,19 @@ for index, row in agg_group.iterrows():
     comm_key = comm_key.lower()
 
     if cand_key not in candidates:
-        candidates[cand_key] = {"Name": cand_name, "Committees": dict()}
-    candidates[cand_key]["Committees"][comm_key] = {
-        "Name": comm_name,
-        "TotalFunding": row["Amount"],
-    }
+        candidates[cand_key] = {"ID": cand_key, "Name": cand_name, "Committees": []}
+    candidates[cand_key]["Committees"].append(
+        {"ID": comm_key, "Name": comm_name, "TotalFunding": row["Amount"]}
+    )
 
-print(candidates)
+print(candidates.values())
 
 
-# In[53]:
+# In[7]:
 
 
 r = redis.StrictRedis(host="localhost", port=6379)
-r.execute_command("JSON.SET", "Candidates", ".", json.dumps(candidates))
+r.execute_command("JSON.SET", "Candidates", ".", json.dumps(list(candidates.values())))
 r.execute_command("SAVE")
 
 
