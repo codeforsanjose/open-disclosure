@@ -140,7 +140,7 @@ export default function MainPage(props) {
         description: "Learn more about campaign finance data.",
         buttonText: "Visit FAQs",
         image: green,
-        href: "/faqs",
+        href: "/faq",
       },
     ],
     renderItem: BehindTheScenesItem,

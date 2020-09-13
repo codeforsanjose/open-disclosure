@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "gatsby"
 import Bar from "./bar"
 import styles from "./candidatesListItem.module.scss"
 
@@ -8,11 +9,16 @@ function formatPercent(value) {
   return percentFormatter.format(value)
 }
 
-export default ({ Name }) => {
+export default ({ Name, fields: { slug } }) => {
   const percent = formatPercent(83455 / 123456)
   return (
-    <div className={styles.container}>
-      <img height="12.5rem" width="12.5rem" src="https://picsum.photos/125" alt={`Headshot of candidate ${Name}`} />
+    <Link className={styles.container} key={slug} to={"/candidate/" + slug}>
+      <img
+        height="12.5rem"
+        width="12.5rem"
+        src="https://picsum.photos/125"
+        alt={`Headshot of candidate ${Name}`}
+      />
       <div className={styles.candidate}>
         <div className={styles.textInfo}>
           <div className={styles.candidateInfo}>
@@ -28,6 +34,6 @@ export default ({ Name }) => {
           <Bar type="contributions" percent={percent} />
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

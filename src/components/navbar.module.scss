@@ -1,11 +1,11 @@
 @import "../styles/colors";
 
 .navbar {
+  display: flex;
   align-items: center;
   background-color: $primaryWhite;
   box-shadow: 0px 2px 6px rgba(201, 201, 201, 0.7);
   font-family: "Lato";
-  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   padding: 3rem;

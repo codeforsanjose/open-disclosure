@@ -1,5 +1,11 @@
 @import "../styles/colors";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .footer {
   background-color: $primaryOffWhite;
   padding: 0 6rem;
@@ -10,6 +16,7 @@
 }
 
 .footerTop {
+  display: flex;
   flex-direction: row;
   padding: 3rem 0;
 }
@@ -21,6 +28,7 @@
 }
 
 .footerNav {
+  display: flex;
   flex-direction: row;
   padding-top: 6rem;
   padding-left: 1rem;

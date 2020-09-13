@@ -1,6 +1,8 @@
 @import "../styles/colors";
 
 .container {
+  display: flex;
+  flex-direction: column;
   background-color: transparent;
   margin: 4rem 1.5rem 4rem;
 

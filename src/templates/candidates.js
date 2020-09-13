@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import styles from "./candidates.module.scss"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
@@ -12,22 +12,19 @@ export default function Candidates({ data }) {
   // Should link to /{node.Date}/candidate/${candidateName}}
 
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
-      <div className={styles.container}>
-        <SideNav>
-          {election.OfficeElections.map(({ Candidates }) =>
-            Candidates.filter(Boolean).map(candidate => (
-              <Link
-                key={candidate.id}
-                to={"/candidate/" + candidate.fields.slug}
-              >
+    <div className={styles.outerContainer}>
+      <Layout windowIsLarge={useWindowIsLarge()}>
+        <div className={styles.innerContainer}>
+          <SideNav>
+            {election.OfficeElections.map(({ Candidates }) =>
+              Candidates.filter(Boolean).map(candidate => (
                 <CandidatesListItem {...candidate} />
-              </Link>
-            ))
-          )}
-        </SideNav>
-      </div>
-    </Layout>
+              ))
+            )}
+          </SideNav>
+        </div>
+      </Layout>
+    </div>
   )
 }
 

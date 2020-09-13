@@ -21,11 +21,13 @@
 }
 
 .rowTop {
+  display: flex;
   flex-direction: row;
   flex: 1;
 }
 
 .rowBottom {
+  display: flex;
   flex-direction: row;
   flex: 2;
 }
