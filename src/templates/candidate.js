@@ -1,8 +1,4 @@
-import TotalAmountItem, {
-  TotalAmountPanelItem,
-} from "../components/totalAmountItem"
-
-import BarChart from "../components/barChart"
+import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
@@ -15,6 +11,7 @@ import WebIcon from "../../static/images/web.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import ArrowIcon from "../../static/images/arrow.png"
+import ChartSection from "../components/ChartSection"
 
 // TODO Hook up charts to real data
 const contributions = [
@@ -36,16 +33,6 @@ const breakdowns = [
   { label: "Within California", value: 327438 },
   { label: "Within San José", value: 301242 },
 ]
-
-function ChartSection({ id, title, type, total, data, ...passProps }) {
-  return (
-    <section id={id} className={styles.section}>
-      <SectionHeader title={title} />
-      <TotalAmountItem type={type} total={total} />
-      <BarChart type={type} total={total} rows={data} {...passProps} />
-    </section>
-  )
-}
 
 export default function Candidate({ data }) {
   const { Name: name, Elections: elections } = data.candidate

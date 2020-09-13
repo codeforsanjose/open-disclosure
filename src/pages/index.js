@@ -11,7 +11,6 @@ import MainPagePic from "../components/mainPagePic"
 import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
 import BehindTheScenesItem from "../components/behindTheScenesItem"
-import MeasureDetails from "../components/measuresDetails";
 // Images
 import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from "./../../static/images/Tertiary.png"
@@ -228,19 +227,6 @@ export const query = graphql`
       edges {
         node {
           DateProcessed
-          Title
-          TotalContributions
-          OfficeElections {
-            Candidates
-            Title
-            TotalContributions
-          }
-          Date
-          Referendums {
-            Title
-            Description
-            Total_Contributions
-          }
         }
       }
     }

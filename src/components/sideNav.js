@@ -10,7 +10,7 @@ const offices = [
   { type: "San José Unified School District", filter: "sjusd" },
 ]
 
-function formatMenu(input) {
+function formatMenuForCandidates(input) {
   const menu = {}
   offices.forEach(({ type, filter }) => {
     input.forEach(race => {
@@ -28,6 +28,10 @@ function formatMenu(input) {
   return menu
 }
 
+function formatMenuForMeasures(data) {
+  return data.map(measure => ({ title: measure.Title }));
+}
+
 export default function sideNav(props) {
   return (
     <StaticQuery
@@ -41,40 +45,72 @@ export default function sideNav(props) {
                   Title
                   TotalContributions
                 }
+                Referendums {
+                  Title
+                  Description
+                  Total_Contributions
+                }
               }
             }
           }
         }
       `}
       render={data => {
-        const { Date, OfficeElections } = data.allElection.edges[0].node
-        const menu = formatMenu(OfficeElections)
-        const sections = Object.keys(menu)
+        let navLinks = null;
+        if (window.location.href.includes('referendum')) {
+          const { Referendums } = (data.allElection?.edges?.[0]?.node) ?? [];
+          const menu = formatMenuForMeasures(Referendums);
+
+          navLinks = (
+            <ul>
+              <li className={styles.section}>
+                <h4 className={styles.text}>Ballot Measures</h4>
+                <ul>
+                  {menu.map(measure => (
+                    <li className={styles.election} key={measure.title}>
+                      <Link to="#">
+                        <p className={styles.text}>{measure.title}</p>
+                      </Link>
+                      <div className={styles.selected} />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
+          )
+        } else if (window.location.href.includes('candidate')) {
+          const { Date, OfficeElections } = data.allElection.edges[0].node
+          const menu = formatMenuForCandidates(OfficeElections);
+          const sections = Object.keys(menu);
+
+          navLinks = (
+            <ul>
+              {sections.map((section, index) => (
+                <li key={`${section}-${index}`} className={styles.section}>
+                  <h4 className={styles.text}>{section}</h4>
+                  <ul>
+                    {menu[section].map(race => (
+                      <li className={styles.election}>
+                        <Link
+                          to={`/${Date}/candidates/${race.Title.toLowerCase()
+                            .split(" ")
+                            .join("-")}`}
+                        >
+                          <p className={styles.text}>{race.Title}</p>
+                        </Link>
+                        <div className={styles.selected} />
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+
         return (
           <div className={styles.container}>
-            <nav className={styles.navbar}>
-              <ul>
-                {sections.map((section, index) => (
-                  <li key={`${section}-${index}`} className={styles.section}>
-                    <h4 className={styles.text}>{section}</h4>
-                    <ul>
-                      {menu[section].map(race => (
-                        <li className={styles.election}>
-                          <Link
-                            to={`/${Date}/candidates/${race.Title.toLowerCase()
-                              .split(" ")
-                              .join("-")}`}
-                          >
-                            <p className={styles.text}>{race.Title}</p>
-                          </Link>
-                          <div className={styles.selected} />
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <nav className={styles.navbar}>{navLinks}</nav>
             <div className={styles.body}>{props.children}</div>
           </div>
         )

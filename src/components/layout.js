@@ -58,6 +58,11 @@ export default function Layout(props) {
                     slug
                   }
                 }
+                Referendums {
+                  Title
+                  Description
+                  Total_Contributions
+                }
               }
             }
           }
@@ -76,7 +81,7 @@ export default function Layout(props) {
           },
           {
             name: "Measures",
-            endpoint: "/measures",
+            endpoint: "/referendums",
           },
           {
             name: "About",

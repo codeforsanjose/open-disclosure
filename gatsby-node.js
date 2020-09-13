@@ -17,6 +17,11 @@ exports.createPages = async ({ graphql, actions }) => {
                 slug
               }
             }
+            Referendums {
+              Title
+              Description
+              Total_Contributions
+            }
           }
         }
       }
@@ -50,6 +55,14 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           slug: election.fields.slug,
         },
+      })
+    })
+  })
+  result.data.allElection.edges.forEach(({ node }) => {
+    node.OfficeElections.forEach(election=> {
+      createPage({
+        path: "/referendums",
+        component: path.resolve("src/components/measuresDetails.jsx"),
       })
     })
   })

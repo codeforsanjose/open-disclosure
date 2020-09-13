@@ -43,7 +43,7 @@ export default () => {
           },
           {
             pageName: "Measures",
-            href: "/measures",
+            href: "/referendums",
           },
           {
             pageName: "Find Your Ballot",
