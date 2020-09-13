@@ -2,7 +2,7 @@ import json
 
 from flask import Blueprint, jsonify
 
-from api.errors import error_response
+from api.errors import empty_response, error_response
 from redis import RedisError, StrictRedis
 
 redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
@@ -23,28 +23,40 @@ def get_total_contributions():
     try:
         response = r.execute_command("JSON.GET", "TotalContributions")
         if not response:
-            return dict()
+            return empty_response("TotalContributions")
         return jsonify({"TotalContributions": json.loads(response)})
-    except RedisError as rerror:
-        return error_response(f"{rerror}")
+    except Exception as error:
+        return error_response(f"{error}")
 
 
-@redis_bp.route("/candidates", methods=["GET"])
-def get_candidates():
+@redis_bp.route("/candidates/", defaults={"candidate_id": None}, methods=["GET"])
+@redis_bp.route("/candidates/<string:candidate_id>", methods=["GET"])
+def get_candidates(candidate_id):
     """
-    Get all the candidates from the current election period
-    :return: list of JSON objects containing individual candidate information
+    Get all the candidates from the current election period or
+    a specific candidate 
+    :param candidate_id: unique identifier associated with each candidate {election-title;cand-name;election-date} 
+    :type candidate_id: string
+    :return: data on all candidates or for one specific candidate
+    :rtype: JSON
     """
     try:
         response = r.execute_command("JSON.GET", "Candidates")
         if not response:
-            return []
-        return jsonify({"Candidates": json.loads(response)})
-    except RedisError as rerror:
-        return error_response(f"{rerror}")
+            return empty_response("Candidates")
+        cand_json = json.loads(response)
+        if candidate_id is None:
+            return jsonify({"Candidates": cand_json})
+        else:
+            for candidate in cand_json:
+                if candidate["ID"] == candidate_id:
+                    return candidate
+            return empty_response(candidate_id)
+    except Exception as error:
+        return error_response(f"{error}")
 
 
-@redis_bp.route("/committees", methods=["GET"])
+@redis_bp.route("/committees/", methods=["GET"])
 def get_committees():
     """
     Get all the committees from the current election period
@@ -53,13 +65,13 @@ def get_committees():
     try:
         response = r.execute_command("JSON.GET", "Committees")
         if not response:
-            return []
+            return empty_response("Committees")
         return jsonify({"Committees": json.loads(response)})
-    except RedisError as rerror:
-        return error_response(f"{rerror}")
+    except Exception as error:
+        return error_response(f"{error}")
 
 
-@redis_bp.route("/elections", methods=["GET"])
+@redis_bp.route("/elections/", methods=["GET"])
 def get_elections():
     """
     Get all the election cycles from 2019-2020
@@ -68,10 +80,10 @@ def get_elections():
     try:
         response = r.execute_command("JSON.GET", "Elections")
         if not response:
-            return []
+            return empty_response("Elections")
         return jsonify({"Elections": json.loads(response)})
-    except RedisError as rerror:
-        return error_response(f"{rerror}")
+    except Exception as error:
+        return error_response(f"{error}")
 
 
 @redis_bp.route("/referendums", methods=["GET"])
@@ -80,7 +92,7 @@ def get_referendums():
     WIP
     :return:
     """
-    return jsonify(r.get("Referendums").decode("utf-8"))
+    return empty_response("Referendums")
 
 
 @redis_bp.route("/metadata", methods=["GET"])
@@ -89,20 +101,4 @@ def get_metadata():
     WIP
     :return:
     """
-    return jsonify(r.get("Metadata").decode("utf-8"))
-
-
-@redis_bp.route("/candidates/<string:candidate_id>", methods=["GET"])
-def get_by_candidate(candidate_id):
-    """
-    Get information associated with a particular candidate
-    :param candidate_id: unique identifier associated with each candidate {election-title;cand-name;election-date}
-    :return: JSON object containing a candidate's election info or empty dict
-    """
-    try:
-        response = r.execute_command("JSON.GET", "Candidates", f".{candidate_id}")
-        if not response:
-            return []
-        return jsonify(json.loads(response))
-    except RedisError as rerror:
-        return error_response(f"{rerror}")
+    return empty_response("Metadata")
