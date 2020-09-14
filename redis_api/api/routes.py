@@ -40,6 +40,7 @@ def get_candidates(candidate_id):
     :return: data on all candidates or for one specific candidate
     :rtype: JSON
     """
+    # TODO: fix total contributions
     try:
         response = r.execute_command("JSON.GET", "Candidates")
         if not response:
