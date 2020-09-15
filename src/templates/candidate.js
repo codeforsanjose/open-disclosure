@@ -14,6 +14,7 @@ import WebIcon from "../../static/images/web.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import ArrowIcon from "../../static/images/arrow.png"
+import NoData from "../components/noData"
 
 // TODO Hook up charts to real data
 const contributions = [
@@ -47,32 +48,37 @@ function ChartSection({ id, title, type, total, data, ...passProps }) {
 }
 
 export default function Candidate({ data }) {
-  const { Name: name, Elections: elections } = data.candidate
-  // Let's assume that the first election in the list is the relevant (current) one
-  // TODO We need an error state if there are no elections
-  const { ElectionTitle: title } = elections[0]
+  const {
+    name,
+    seat,
+    ballotDesignation,
+    website,
+    twitter,
+  } = data.candidatesJson
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
         candidate
         headerBackground="blue"
         pageTitle={name}
-        pageSubtitle={title}
+        pageSubtitle={seat}
       >
         <div className={styles.mainSection}>
           <section>
+            <SectionHeader title={name} />
             <div className={styles.aboutSection}>
               <img
-                alt="Candidate headshot"
                 className={styles.profilePhoto}
-                src="https://ww1.prweb.com/prfiles/2018/03/13/15302451/gI_87395_LindsayHeadshot_cision.png"
+                src="https://picsum.photos/125"
+                alt={`Headshot of candidate ${name}`}
               />
               <div>
                 <p className={styles.aboutTitle}>
-                  <span className={styles.currentPosition}>
-                    Incumbent, District 9 Representative
+                  <span className={styles.ballotDesignation}>
+                    {ballotDesignation}
                   </span>
-                  {" - elected"}
+                  {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
+                  {/* {" - elected"} */}
                 </p>
                 <p className={styles.aboutText}>
                   This candidate has agreed to voluntary spending limits. The
@@ -82,9 +88,9 @@ export default function Candidate({ data }) {
                   committee.
                 </p>
                 <div className={styles.aboutLinks}>
-                  <a href="/" className={styles.aboutLink}>
+                  <a href={"http://" + website} className={styles.aboutLink}>
                     <img alt="Web icon" src={WebIcon} className={styles.icon} />
-                    www.lindsaylohan2020.com
+                    {website}
                   </a>
                   <a href="/" className={styles.aboutLink}>
                     <img
@@ -94,62 +100,71 @@ export default function Candidate({ data }) {
                     />
                     Voter's Edge Profile
                   </a>
-                  <a href="/" className={styles.aboutLink}>
+                  <a
+                    href={"http://twitter.com/" + twitter}
+                    className={styles.aboutLink}
+                  >
                     <img
                       alt="Twitter icon"
                       src={TwitterIcon}
                       className={styles.icon}
                     />
-                    @lindsaylohan2020
+                    {"@" + twitter}
                   </a>
                 </div>
               </div>
             </div>
           </section>
-          <section>
-            <SectionHeader title="Fundraising totals" />
-            <div className={styles.totals}>
-              <TotalAmountPanelItem type="contributions" total={654876} />
-              <TotalAmountPanelItem type="expenditures" total={383254} />
-              <TotalAmountPanelItem type="balance" total={271622} />
-            </div>
-          </section>
-          <ChartSection
-            title="Where the money is coming from"
-            type="contributions"
-            id="contributions"
-            total={654876}
-            data={contributions}
-          />
-          <Link className={styles.seeAllLink} to="/">
-            See all contributions
-            <img
-              alt="Right arrow icon"
-              className={`${styles.icon} ${styles.seeAllIcon}`}
-              src={ArrowIcon}
-            />
-          </Link>
-          <ChartSection
-            title="How the money is being spent"
-            type="expenditures"
-            id="expenditures"
-            total={383254}
-            data={expenditures}
-          />
-          <ChartSection
-            title="Breakdown by region"
-            type="contributions"
-            id="balance"
-            total={654876}
-            data={breakdowns}
-            showPercentages
-          />
-          <section>
-            <SectionHeader title="Other committees controlled by candidate" />
-            {elections[0].Committees.map(({ Name }) => (
-              <Link className={styles.committeeLink}>{Name}</Link>
-            ))}
-          </section>
+          {data.Candidate == null ? (
+            <NoData page="candidate" />
+          ) : (
+            <>
+              <section>
+                <SectionHeader title="Fundraising totals" />
+                <div className={styles.totals}>
+                  <TotalAmountPanelItem type="contributions" total={654876} />
+                  <TotalAmountPanelItem type="expenditures" total={383254} />
+                  <TotalAmountPanelItem type="balance" total={271622} />
+                </div>
+              </section>
+              <ChartSection
+                title="Where the money is coming from"
+                type="contributions"
+                id="contributions"
+                total={654876}
+                data={contributions}
+              />
+              <Link className={styles.seeAllLink} to="/">
+                See all contributions
+                <img
+                  alt="Right arrow icon"
+                  className={`${styles.icon} ${styles.seeAllIcon}`}
+                  src={ArrowIcon}
+                />
+              </Link>
+              <ChartSection
+                title="How the money is being spent"
+                type="expenditures"
+                id="expenditures"
+                total={383254}
+                data={expenditures}
+              />
+              <ChartSection
+                title="Breakdown by region"
+                type="contributions"
+                id="balance"
+                total={654876}
+                data={breakdowns}
+                showPercentages
+              />
+              <section>
+                <SectionHeader title="Other committees controlled by candidate" />
+                {data.Candidate.Elections[0].Committees.map(({ Name }) => (
+                  <Link className={styles.committeeLink}>{Name}</Link>
+                ))}
+              </section>
+            </>
+          )}
         </div>
       </SideNav>
     </Layout>
@@ -166,6 +181,13 @@ export const query = graphql`
           Name
         }
       }
+    }
+    candidatesJson(fields: { slug: { eq: $slug } }) {
+      name
+      seat
+      ballotDesignation
+      website
+      twitter
     }
   }
 `
