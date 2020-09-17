@@ -3,7 +3,6 @@ import TotalAmountItem, {
 } from "../components/totalAmountItem"
 
 import BarChart from "../components/barChart"
-import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import React from "react"
@@ -59,118 +58,116 @@ export default function Candidate({ data }) {
   } = data.candidatesJson
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
-      <LandingPageHero background="blue" title={name} subtitle={seat} />
-      <div className={styles.container}>
-        <SideNav>
-          <div className={styles.mainSection}>
-            <section>
-              <SectionHeader title={name} />
-              <div className={styles.aboutSection}>
-                <img
-                  className={styles.profilePhoto}
-                  src="https://picsum.photos/125"
-                  alt={`Headshot of candidate ${name}`}
-                />
-                <div>
-                  <p className={styles.aboutTitle}>
-                    <span className={styles.ballotDesignation}>
-                      {ballotDesignation}
-                    </span>
-                    {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
-                    {/* {" - elected"} */}
-                  </p>
-                  <p className={styles.aboutText}>
-                    This candidate has agreed to voluntary spending limits. The
-                    maximum contribution this candidate can accept is $800 from
-                    any individual, business entity, committee or other
-                    organization and $1,600 from a qualified broad-based
-                    committee.
-                  </p>
-                  <div className={styles.aboutLinks}>
-                    <a href={"http://" + website} className={styles.aboutLink}>
-                      <img
-                        alt="Web icon"
-                        src={WebIcon}
-                        className={styles.icon}
-                      />
-                      {website}
-                    </a>
-                    <a href="/" className={styles.aboutLink}>
-                      <img
-                        alt="External link icon"
-                        src={VotersEdgeIcon}
-                        className={styles.icon}
-                      />
-                      Voter's Edge Profile
-                    </a>
-                    <a
-                      href={"http://twitter.com/" + twitter}
-                      className={styles.aboutLink}
-                    >
-                      <img
-                        alt="Twitter icon"
-                        src={TwitterIcon}
-                        className={styles.icon}
-                      />
-                      {"@" + twitter}
-                    </a>
-                  </div>
+      <SideNav
+        candidate
+        headerBackground="blue"
+        pageTitle={name}
+        pageSubtitle={seat}
+      >
+        <div className={styles.mainSection}>
+          <section>
+            <SectionHeader title={name} />
+            <div className={styles.aboutSection}>
+              <img
+                className={styles.profilePhoto}
+                src="https://picsum.photos/125"
+                alt={`Headshot of candidate ${name}`}
+              />
+              <div>
+                <p className={styles.aboutTitle}>
+                  <span className={styles.ballotDesignation}>
+                    {ballotDesignation}
+                  </span>
+                  {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
+                  {/* {" - elected"} */}
+                </p>
+                <p className={styles.aboutText}>
+                  This candidate has agreed to voluntary spending limits. The
+                  maximum contribution this candidate can accept is $800 from
+                  any individual, business entity, committee or other
+                  organization and $1,600 from a qualified broad-based
+                  committee.
+                </p>
+                <div className={styles.aboutLinks}>
+                  <a href={"http://" + website} className={styles.aboutLink}>
+                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
+                    {website}
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
+                    <img
+                      alt="External link icon"
+                      src={VotersEdgeIcon}
+                      className={styles.icon}
+                    />
+                    Voter's Edge Profile
+                  </a>
+                  <a
+                    href={"http://twitter.com/" + twitter}
+                    className={styles.aboutLink}
+                  >
+                    <img
+                      alt="Twitter icon"
+                      src={TwitterIcon}
+                      className={styles.icon}
+                    />
+                    {"@" + twitter}
+                  </a>
                 </div>
               </div>
-            </section>
-            {apiData == null ? (
-              <NoData page="candidate" />
-            ) : (
-              <>
-                <section>
-                  <SectionHeader title="Fundraising totals" />
-                  <div className={styles.totals}>
-                    <TotalAmountPanelItem type="contributions" total={654876} />
-                    <TotalAmountPanelItem type="expenditures" total={383254} />
-                    <TotalAmountPanelItem type="balance" total={271622} />
-                  </div>
-                </section>
-                <ChartSection
-                  title="Where the money is coming from"
-                  type="contributions"
-                  id="contributions"
-                  total={654876}
-                  data={contributions}
+            </div>
+          </section>
+          {apiData == null ? (
+            <NoData page="candidate" />
+          ) : (
+            <>
+              <section>
+                <SectionHeader title="Fundraising totals" />
+                <div className={styles.totals}>
+                  <TotalAmountPanelItem type="contributions" total={654876} />
+                  <TotalAmountPanelItem type="expenditures" total={383254} />
+                  <TotalAmountPanelItem type="balance" total={271622} />
+                </div>
+              </section>
+              <ChartSection
+                title="Where the money is coming from"
+                type="contributions"
+                id="contributions"
+                total={654876}
+                data={contributions}
+              />
+              <Link className={styles.seeAllLink} to="/">
+                See all contributions
+                <img
+                  alt="Right arrow icon"
+                  className={`${styles.icon} ${styles.seeAllIcon}`}
+                  src={ArrowIcon}
                 />
-                <Link className={styles.seeAllLink} to="/">
-                  See all contributions
-                  <img
-                    alt="Right arrow icon"
-                    className={`${styles.icon} ${styles.seeAllIcon}`}
-                    src={ArrowIcon}
-                  />
-                </Link>
-                <ChartSection
-                  title="How the money is being spent"
-                  type="expenditures"
-                  id="expenditures"
-                  total={383254}
-                  data={expenditures}
-                />
-                <ChartSection
-                  title="Breakdown by region"
-                  type="contributions"
-                  id="balance"
-                  total={654876}
-                  data={breakdowns}
-                  showPercentages
-                />
-                <section>
-                  <SectionHeader title="Other committees controlled by candidate" />
-                  {apiData.Committees.map(({ Name }) => (
-                    <Link className={styles.committeeLink}>{Name}</Link>
-                  ))}
-                </section>
-              </>
-            )}
-          </div>
-        </SideNav>
-      </div>
+              </Link>
+              <ChartSection
+                title="How the money is being spent"
+                type="expenditures"
+                id="expenditures"
+                total={383254}
+                data={expenditures}
+              />
+              <ChartSection
+                title="Breakdown by region"
+                type="contributions"
+                id="balance"
+                total={654876}
+                data={breakdowns}
+                showPercentages
+              />
+              <section>
+                <SectionHeader title="Other committees controlled by candidate" />
+                {apiData.Committees.map(({ Name }) => (
+                  <Link className={styles.committeeLink}>{Name}</Link>
+                ))}
+              </section>
+            </>
+          )}
+        </div>
+      </SideNav>
     </Layout>
   )
 }

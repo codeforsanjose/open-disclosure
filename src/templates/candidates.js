@@ -8,19 +8,25 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function Candidates({ data }) {
   const election = data.allElection.edges[0].node
-
   // Should link to /{node.Date}/candidate/${candidateName}}
-
   return (
     <div className={styles.outerContainer}>
       <Layout windowIsLarge={useWindowIsLarge()}>
         <div className={styles.innerContainer}>
-          <SideNav>
-            {election.OfficeElections.map(({ Candidates }) =>
-              Candidates.filter(Boolean).map(candidate => (
-                <CandidatesListItem {...candidate} />
-              ))
-            )}
+          <SideNav
+            pageTitle="Candidates"
+            pageSubtitle="City of San José Candidates"
+          >
+            <div className={styles.candidateList}>
+              {election.OfficeElections.map(({ Candidates }) =>
+                Candidates.filter(Boolean).map(candidate => (
+                  <CandidatesListItem
+                    key={candidate.fields.slug}
+                    {...candidate}
+                  />
+                ))
+              )}
+            </div>
           </SideNav>
         </div>
       </Layout>
