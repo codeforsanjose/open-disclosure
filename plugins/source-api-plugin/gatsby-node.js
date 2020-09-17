@@ -11,12 +11,44 @@ const DUMMY_DATA = {
   candidates: {
     Candidates: [
       {
-        Name: "Lindsay Lohan",
-        Elections: [
+        ID: "councilmember-district-6;dev-davis;11-3-2020",
+        Name: "Dev Davis",
+        Committees: [
           {
-            ElectionCycle: "2020 Election Cycle",
-            ElectionTitle: "District 9 Representative",
-            Committees: [{ Name: "Lindsay Lohan 2020", TotalFunding: 300 }],
+            ID: "john-pisacane-&-teresa-newell;11-3-2020",
+            Name: "John Pisacane & Teresa Newell",
+            TotalFunding: 500.0,
+          },
+          {
+            ID: "mina-acharya;11-3-2020",
+            Name: "Mina Acharya",
+            TotalFunding: 600.0,
+          },
+          {
+            ID: "sanjeev-acharya;11-3-2020",
+            Name: "Sanjeev Acharya",
+            TotalFunding: 600.0,
+          },
+        ],
+      },
+      {
+        ID: 'councilmember-district-6;jacob-"jake"-tonkel;11-3-2020',
+        Name: 'Jacob "Jake" Tonkel',
+        Committees: [
+          {
+            ID: "gary-abreim;11-3-2020",
+            Name: "Gary Abreim",
+            TotalFunding: 25.0,
+          },
+          {
+            ID: "blake-adams;11-3-2020",
+            Name: "Blake Adams",
+            TotalFunding: 125.0,
+          },
+          {
+            ID: "vicki-adams;11-3-2020",
+            Name: "Vicki Adams",
+            TotalFunding: 31.46,
           },
         ],
       },
@@ -86,7 +118,7 @@ exports.sourceNodes = async ({
   candidateData.Candidates.forEach(candidate => {
     createNode({
       ...candidate,
-      id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.id}`),
+      id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
       internal: {
@@ -139,43 +171,4 @@ exports.sourceNodes = async ({
     },
   })
   return
-}
-
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  createTypes(`
-    type Candidate implements Node {
-      id: ID!
-      Name: String
-      Elections: [CandidateElection]
-    }
-
-    type CandidateElection {
-      ElectionCycle: String
-      ElectionTitle: String
-      Committees: [Committee]
-    }
-
-    type Committee {
-      Name: String
-      TotalFunding: String
-    }
-
-    type Election implements Node {
-      Title: String!
-      Date: String 
-      TotalContributions: String 
-      OfficeElections: [OfficeElection] @link(by: "Title")
-    }
-
-    type OfficeElection implements Node {
-      Candidates: [Candidate] @link(by: "Name")
-      Title: String
-      TotalContributions: String
-    }
-
-    type Metadata implements Node{
-      DateProcessed: String!
-    }
-  `)
 }

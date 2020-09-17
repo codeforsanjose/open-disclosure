@@ -74,3 +74,44 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type Committee {
+      Name: String
+      TotalFunding: String
+    }
+
+    type Candidate implements Node {
+      id: ID!
+      Name: String!
+      Committees: [Committee]
+    }
+
+    type CandidatesJson implements Node {
+      id: ID!
+      name: String!
+      twitter: String
+      seat: String
+      apiData: Candidate @link(by: "ID" from: "id")
+    }
+
+    type Election implements Node {
+      Title: String!
+      Date: String 
+      TotalContributions: String 
+      OfficeElections: [OfficeElection] @link(by: "Title")
+    }
+
+    type OfficeElection implements Node {
+      Candidates: [Candidate] @link(by: "Name")
+      Title: String
+      TotalContributions: String
+    }
+
+    type Metadata implements Node{
+      DateProcessed: String!
+    }
+  `)
+}

@@ -55,6 +55,7 @@ export default function Candidate({ data }) {
     ballotDesignation,
     website,
     twitter,
+    apiData,
   } = data.candidatesJson
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
@@ -117,7 +118,7 @@ export default function Candidate({ data }) {
                 </div>
               </div>
             </section>
-            {data.Candidate == null ? (
+            {apiData == null ? (
               <NoData page="candidate" />
             ) : (
               <>
@@ -161,7 +162,7 @@ export default function Candidate({ data }) {
                 />
                 <section>
                   <SectionHeader title="Other committees controlled by candidate" />
-                  {data.Candidate.Elections[0].Committees.map(({ Name }) => (
+                  {apiData.Committees.map(({ Name }) => (
                     <Link className={styles.committeeLink}>{Name}</Link>
                   ))}
                 </section>
@@ -176,21 +177,18 @@ export default function Candidate({ data }) {
 
 export const query = graphql`
   query($slug: String!) {
-    candidate(fields: { slug: { eq: $slug } }) {
-      Name
-      Elections {
-        ElectionTitle
-        Committees {
-          Name
-        }
-      }
-    }
     candidatesJson(fields: { slug: { eq: $slug } }) {
       name
       seat
       ballotDesignation
       website
       twitter
+      apiData {
+        Committees {
+          Name
+          TotalFunding
+        }
+      }
     }
   }
 `
