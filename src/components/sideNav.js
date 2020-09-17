@@ -82,9 +82,9 @@ const offices = [
 
 function formatMenu(input) {
   const menu = {}
-  const options = []
+  const menuOptions = []
   offices.forEach(({ type, filter }) => {
-    const option = { label: type, options: [] }
+    const menuGroup = { label: type, options: [] }
     input.forEach(race => {
       const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
@@ -93,15 +93,15 @@ function formatMenu(input) {
         } else {
           menu[type] = [race]
         }
-        option.options.push({ label: race.Title, value: race.fields.slug })
+        menuGroup.options.push({ label: race.Title, value: race.fields.slug })
       }
     })
-    if (option.options.length) {
-      options.push(option)
+    if (menuGroup.options.length) {
+      menuOptions.push(menuGroup)
     }
   })
 
-  return [menu, options]
+  return [menu, menuOptions]
 }
 
 function onSelect({ value }, { action }, date) {
@@ -139,10 +139,10 @@ export default function sideNav({
       `}
       render={data => {
         const { Date, OfficeElections } = data.allElection.edges[0].node
-        const [menu, options] = formatMenu(OfficeElections)
+        const [menu, menuOptions] = formatMenu(OfficeElections)
         const sections = Object.keys(menu)
-        let url = window.location.href.split("/")
-        url = url[url.length - 1]
+        let selectedTitle = window.location.href.split("/")
+        selectedTitle = selectedTitle[selectedTitle.length - 1]
           .split("-")
           .map(word => word[0].toUpperCase() + word.slice(1))
           .join(" ")
@@ -159,8 +159,8 @@ export default function sideNav({
                 <div className={styles.select}>
                   <Select
                     styles={customStyles}
-                    placeholder={candidate ? pageSubtitle : url}
-                    options={options}
+                    placeholder={candidate ? pageSubtitle : selectedTitle}
+                    options={menuOptions}
                     onChange={(val, act) => onSelect(val, act, Date)}
                   />
                 </div>
@@ -171,7 +171,7 @@ export default function sideNav({
                       <ul>
                         {menu[section].map(({ Title, fields: { slug } }) => {
                           const active =
-                            Title === url ||
+                            Title === selectedTitle ||
                             (candidate && Title === pageSubtitle)
                           return (
                             <li
@@ -194,7 +194,7 @@ export default function sideNav({
                 </ul>
               </nav>
               <div className={styles.body}>
-                <SectionHeader title={url} />
+                <SectionHeader title={selectedTitle} />
                 {children}
               </div>
             </div>

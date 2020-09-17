@@ -2,24 +2,24 @@
 
 :export {
   // Primary palette
-  primaryGreen: #008254;
-  primaryBlack: #1b1b1b;
-  primaryOffWhite: #fafafa;
-  primaryWhite: #ffffff;
+  primaryGreen: $primaryGreen;
+  primaryBlack: $primaryBlack;
+  primaryOffWhite: $primaryOffWhite;
+  primaryWhite: $primaryWhite;
 
   // Secondary palette
-  secondaryGreen: #e3f9f1;
-  secondaryYellow: #feefd0;
-  secondaryBlue: #deeffe;
-  secondaryGray: #f2f2f2;
-  darkGray: #555555;
-  secondaryWhite: #e5e5e5;
+  secondaryGreen: $secondaryGreen;
+  secondaryYellow: $secondaryYellow;
+  secondaryBlue: $secondaryBlue;
+  secondaryGray: $secondaryGray;
+  darkGray: $darkGray;
+  secondaryWhite: $secondaryWhite;
 
   // Special-purpose colors
-  underline: #00825466;
-  hoverGreen: #025b3c;
-  supportBlue: #5fb2fb;
-  opposeRed: #fb7b5f;
-  backgroundGray: #e7e7e7;
-  tertiaryGray: #828282;
+  underline: $underline;
+  hoverGreen: $hoverGreen;
+  supportBlue: $supportBlue;
+  opposeRed: $opposeRed;
+  backgroundGray: $backgroundGray;
+  tertiaryGray: $tertiaryGray;
 }
