@@ -1,11 +1,9 @@
 @import "../styles/colors";
 
-.body {
-  flex: 5;
-}
-
-.container {
+.innerContainer {
+  display: flex;
   flex-direction: row;
+  padding: 10rem;
 }
 
 .navbar {
@@ -30,9 +28,26 @@
   z-index: 2;
 }
 
+.linkContainer {
+  max-width: fit-content;
+}
+
 .election {
   cursor: pointer;
-  max-width: fit-content;
+  .text {
+    border: 1px solid red;
+  }
+}
+
+.active {
+  margin-left: -1rem;
+  .text {
+    padding: 0 1rem;
+    color: $primaryGreen;
+  }
+  .selected {
+    opacity: 1;
+  }
 }
 
 .election:hover {
@@ -44,13 +59,28 @@
   }
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 5;
+}
+
+.select {
+  display: none;
+}
+
+.sidebar {
+  padding-top: 8.8rem;
+}
+
 @media screen and (max-width: 760px) {
-  .container {
+  .innerContainer {
     flex-direction: column;
+    padding: 1rem;
   }
 
   .navbar {
-    position: absolute;
+    margin-right: 0;
   }
 
   .section {
@@ -65,5 +95,17 @@
     font-size: 1.4rem;
     line-height: 1.7rem;
     margin: 1.2rem 0;
+  }
+
+  .select {
+    display: block;
+    border: 1px solid $backgroundGray;
+    border-radius: 6px;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .sidebar {
+    display: none;
   }
 }

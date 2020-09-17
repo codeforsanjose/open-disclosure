@@ -59,7 +59,7 @@ export default function MainPage(props) {
     election.Candidates.forEach(candidate => {
       if (candidate) {
         let funding = 0
-        candidate.Elections[0].Committees.forEach(committee => {
+        candidate.Committees.forEach(committee => {
           funding += parseInt(committee.TotalFunding)
         })
         candidateList.push({
@@ -140,7 +140,7 @@ export default function MainPage(props) {
         description: "Learn more about campaign finance data.",
         buttonText: "Visit FAQs",
         image: green,
-        href: "/faqs",
+        href: "/faq",
       },
     ],
     renderItem: BehindTheScenesItem,
@@ -207,13 +207,9 @@ export const query = graphql`
             }
             Candidates {
               Name
-              Elections {
-                ElectionCycle
-                ElectionTitle
-                Committees {
-                  Name
-                  TotalFunding
-                }
+              Committees {
+                Name
+                TotalFunding
               }
               fields {
                 slug

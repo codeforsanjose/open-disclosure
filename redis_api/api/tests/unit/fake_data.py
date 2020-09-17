@@ -63,8 +63,16 @@ def get_elections_shape():
                 "TotalContributions": 1000,
                 "OfficeElections": [
                     {
-                        "Title": "District 9 Representative",
-                        "Candidates": ["Jake John", "Lindsay Lohan"],
+                        "Title": "District 4 Representative",
+                        "CandidateIDs": ["councilmember-district-4;david-cohen;11-3-2020",
+                        "councilmember-district-4;lan-diep;11-3-2020"],
+                        "TotalContributions": 300,
+                    },
+                    {
+                        "Title": "District 6 Representative",
+                        "CandidateIDs": ["councilmember-district-6;dev-davis;11-3-2020",
+                        "councilmember-district-6;jacob-\"jake\"-tonkel;11-3-2020"
+                        ],
                         "TotalContributions": 300,
                     }
                 ],
@@ -81,7 +89,53 @@ def get_elections_shape():
 
 
 def get_referendums_shape():
-    return {"Referendums": []}
+    return {
+	"Referendums": [
+	{
+		"Name": "Ballot Measure X",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ # Any committees linked to that candidate and election.
+			"Name": "For Measure X",
+			"TotalFunding": 300
+		}, 
+        {
+			"Name": "Against Measure X",
+			"TotalFunding": 300
+		}]
+	},
+    {
+		"Name": "Ballot Measure Y",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ 
+			"Name": "For Measure Y",
+			"TotalFunding": 456
+		}, {
+			"Name": "Against Measure Y",
+			"TotalFunding": 799
+		}]
+	},
+    {
+		"Name": "Ballot Measure Z",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ 
+			"Name": "For Measure Z",
+			"TotalFunding": 78678
+		}, {
+			"Name": "Against Measure Z",
+			"TotalFunding": 22454
+		}]
+	}]
+}
+
 
 
 def get_metadata_shape():

@@ -1,0 +1,25 @@
+@import "colors";
+
+:export {
+  // Primary palette
+  primaryGreen: $primaryGreen;
+  primaryBlack: $primaryBlack;
+  primaryOffWhite: $primaryOffWhite;
+  primaryWhite: $primaryWhite;
+
+  // Secondary palette
+  secondaryGreen: $secondaryGreen;
+  secondaryYellow: $secondaryYellow;
+  secondaryBlue: $secondaryBlue;
+  secondaryGray: $secondaryGray;
+  darkGray: $darkGray;
+  secondaryWhite: $secondaryWhite;
+
+  // Special-purpose colors
+  underline: $underline;
+  hoverGreen: $hoverGreen;
+  supportBlue: $supportBlue;
+  opposeRed: $opposeRed;
+  backgroundGray: $backgroundGray;
+  tertiaryGray: $tertiaryGray;
+}

@@ -1,3 +1,21 @@
-.container {
-  padding: 10rem;
+@import "../styles/colors";
+
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-image: linear-gradient(#fdfdfd, $primaryWhite);
+}
+
+@media screen and (max-width: 760px) {
+  .innerContainer {
+    padding: 0rem;
+  }
 }
