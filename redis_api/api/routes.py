@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify
 
 from api.errors import empty_response, error_response
 from redis import RedisError, StrictRedis
+from api.tests.unit import fake_data
 
 redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
 r = StrictRedis(host="localhost", port=6379)
@@ -21,10 +22,11 @@ def get_total_contributions():
     :return: int representing the total for (either all time or current election)
     """
     try:
-        response = r.execute_command("JSON.GET", "TotalContributions")
-        if not response:
-            return empty_response("TotalContributions")
-        return jsonify({"TotalContributions": json.loads(response)})
+        # TODO re-add real data later
+        # response = r.execute_command("JSON.GET", "TotalContributions")
+        # if not response:
+        #     return empty_response("TotalContributions")
+        return jsonify({"TotalContributions": 100000})
     except Exception as error:
         return error_response(f"{error}")
 
@@ -63,10 +65,11 @@ def get_committees():
     :return: list or set of JSON objects containing individual candidate information
     """
     try:
-        response = r.execute_command("JSON.GET", "Committees")
-        if not response:
-            return empty_response("Committees")
-        return jsonify({"Committees": json.loads(response)})
+        # TODO re-add real data later
+        # response = r.execute_command("JSON.GET", "Committees")
+        # if not response:
+        #     return empty_response("Committees")
+        return jsonify({"Committees": fake_data.get_committees_shape()})
     except Exception as error:
         return error_response(f"{error}")
 
@@ -78,10 +81,11 @@ def get_elections():
     :return: list or set of JSON objects containing individual election cycle information
     """
     try:
-        response = r.execute_command("JSON.GET", "Elections")
-        if not response:
-            return empty_response("Elections")
-        return jsonify({"Elections": json.loads(response)})
+        # TODO re-add real data later
+        # response = r.execute_command("JSON.GET", "Elections")
+        # if not response:
+        #     return empty_response("Elections")
+        return jsonify({"Elections": fake_data.get_elections_shape()})
     except Exception as error:
         return error_response(f"{error}")
 
@@ -101,4 +105,4 @@ def get_metadata():
     WIP
     :return:
     """
-    return empty_response("Metadata")
+    return fake_data.get_metadata_shape()
