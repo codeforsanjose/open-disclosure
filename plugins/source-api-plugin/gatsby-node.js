@@ -58,12 +58,12 @@ const DUMMY_DATA = {
     ElectionCycles: [
       {
         Title: "2020 Election Cycle",
-        Date: "2020-11-15",
+        Date: "2020-11-03",
         TotalContributions: 1000,
         OfficeElections: [
           {
-            Title: "District 9 Representative",
-            Candidates: ["Lindsay Lohan"],
+            Title: "Councilmember District 6",
+            Candidates: ['Jacob "Jake" Tonkel', "Dev Davis"],
             TotalContributions: 300,
           },
         ],
