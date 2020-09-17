@@ -44,15 +44,6 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  result.data.allCandidate.edges.forEach(({ node }) => {
-    createPage({
-      path: "/candidate/" + node.fields.slug,
-      component: path.resolve("src/templates/candidate.js"),
-      context: {
-        slug: node.fields.slug,
-      },
-    })
-  })
   result.data.allElection.edges.forEach(({ node }) => {
     node.OfficeElections.forEach(election => {
       createPage({
@@ -70,6 +61,7 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve("src/templates/candidate.js"),
       context: {
         slug: node.fields.slug,
+        id: node.id,
       },
     })
   })

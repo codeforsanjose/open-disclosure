@@ -176,8 +176,8 @@ export default function Candidate({ data }) {
 }
 
 export const query = graphql`
-  query($slug: String!) {
-    candidatesJson(fields: { slug: { eq: $slug } }) {
+  query($id: String) {
+    candidatesJson(id: { eq: $id }) {
       name
       seat
       ballotDesignation
