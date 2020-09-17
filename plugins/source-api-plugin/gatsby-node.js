@@ -56,7 +56,8 @@ async function fetchEndpoint(endpoint) {
       `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
-      return await response.json()
+      return DUMMY_DATA[endpoint]
+      // return await response.json()
     }
   } catch (networkError) {
     console.warn(
