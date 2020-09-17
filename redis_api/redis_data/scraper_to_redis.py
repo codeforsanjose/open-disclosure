@@ -19,7 +19,6 @@ agg.drop(
     columns=[
         "Rec_Type",
         "Filer_ID",
-        "Filer_Nam L",
         "Rpt_Date",
         "From_Date",
         "Thru_Date",
@@ -72,8 +71,7 @@ agg_group = (
             "Election Date",
             "CandidateControlledName",
             "Ballot Item",
-            "Entity_Nam L",
-            "Entity_Nam F",
+            "Filer_Nam L",
         ]
     )["Amount"]
     .sum()
@@ -92,11 +90,8 @@ for index, row in agg_group.iterrows():
     election_date = row["Election Date"].replace("/", "-")
     cand_key = f"{row['Ballot Item'].replace(' ','-')};{row['CandidateControlledName'].replace(' ', '-')};{election_date}".lower()
     cand_name = row["CandidateControlledName"]
-    comm_key = f"{row['Entity_Nam L'].replace(' ','-')};{election_date}"
-    comm_name = f"{row['Entity_Nam L']}"
-    if not pd.isnull(row["Entity_Nam F"]):
-        comm_key = f"{row['Entity_Nam F'].replace(' ','-')}-{comm_key}"
-        comm_name = f"{row['Entity_Nam F']} {comm_name}"
+    comm_key = f"{row['Filer_Nam L'].replace(' ','-')};{election_date}"
+    comm_name = f"{row['Filer_Nam L']}"
     comm_key = comm_key.lower()
 
     if cand_key not in candidates:
@@ -105,7 +100,7 @@ for index, row in agg_group.iterrows():
         {"ID": comm_key, "Name": comm_name, "TotalFunding": row["Amount"]}
     )
 
-print(candidates.values())
+print(json.dumps(list(candidates.values())))
 
 
 # In[7]:
