@@ -8,6 +8,7 @@ from api.models import Candidate, db
 
 import os
 import logging
+import redis
 
 logger = logging.getLogger(__name__)
 
