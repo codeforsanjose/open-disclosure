@@ -8,7 +8,7 @@ Getting started
 On MacOSX:
 1. Run `pip install -r requirements.txt` 
     - You can install this in a virtual environment or your local one. To create a virtual environment, run `python3 -m venv {name of virtual environment}`
-    - Then activate your virtual env by running `source /path/to/virtualenv activate`
+    - Then activate your virtual env by running `source /path/to/virtualenv/activate`
     - Simply run `deactivate` to stop running it
 
 2. Run `pre-commit install` to install pre-commit
