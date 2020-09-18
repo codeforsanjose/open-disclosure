@@ -37,7 +37,7 @@ services:
     user: $USER
     environment:
       - FLASK_APP=api
-      - SQLALCHEMY_DATABASE_URI=sqlite://
+      # - SQLALCHEMY_DATABASE_URI=sqlite://
       - PYTHONPATH=.
       - REDIS_HOST=redis
     ports:
