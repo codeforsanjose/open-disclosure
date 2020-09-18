@@ -77,6 +77,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Candidate implements Node {
       id: ID!
+      ID: String!
       Name: String!
       Committees: [Committee]
     }
@@ -97,7 +98,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type OfficeElection implements Node {
-      Candidates: [Candidate] @link(by: "Name")
+      Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
       TotalContributions: String
     }
