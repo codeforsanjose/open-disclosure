@@ -194,28 +194,13 @@ exports.createPages = async ({ graphql, actions }) => {
               fields {
                 slug
               }
-            }
-          }
-        }
-      }
-      allCandidate {
-        edges {
-          node {
-            id
-            Name
-            fields {
-              slug
-            }
-          }
-        }
-      }
-      allCandidatesJson {
-        edges {
-          node {
-            id
-            name
-            fields {
-              slug
+              Candidates {
+                ID
+                Name
+                fields {
+                  slug
+                }
+              }
             }
           }
         }
@@ -237,22 +222,22 @@ exports.createPages = async ({ graphql, actions }) => {
   result.data.allElection.edges.forEach(({ node }) => {
     node.OfficeElections.forEach(election => {
       createPage({
-        path: "/" + node.Date + "/candidates/" + election.fields.slug,
+        path: `/${node.Date}/candidates/${election.fields.slug}`,
         component: path.resolve("src/templates/candidates.js"),
         context: {
           slug: election.fields.slug,
         },
       })
-    })
-  })
-  result.data.allCandidatesJson.edges.forEach(({ node }) => {
-    createPage({
-      path: "/candidate/" + node.fields.slug,
-      component: path.resolve("src/templates/candidate.js"),
-      context: {
-        slug: node.fields.slug,
-        id: node.id,
-      },
+      election.Candidates.forEach(candidate => {
+        createPage({
+          path: `/${node.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
+          component: path.resolve("src/templates/candidate.js"),
+          context: {
+            slug: candidate.fields.slug,
+            id: candidate.ID,
+          },
+        })
+      })
     })
   })
   result.data.allMeasuresJson.edges.forEach(({ node }) => {
@@ -280,6 +265,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       ID: String!
       Name: String!
       Committees: [Committee]
+      jsonNode: CandidatesJson @link(by: "id" from: "ID")
     }
 
     type CandidatesJson implements Node {
@@ -287,7 +273,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       name: String!
       twitter: String
       seat: String
-      apiData: Candidate @link(by: "ID" from: "id")
+      ballotDesignation: String
+      website: String
+      apiNode: Candidate @link(by: "ID" from: "id")
     }
 
     type MeasuresJson implements Node {
