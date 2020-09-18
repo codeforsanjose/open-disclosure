@@ -136,28 +136,25 @@ exports.sourceNodes = async ({
     })
   })
   electionData.Elections.ElectionCycles.forEach(election => {
-    election.OfficeElections.forEach(officeElection => {
-      createNode({
-        ...officeElection,
-        id: createNodeId(
-          `${OFFICE_ELECTION_NODE_TYPE}-${officeElection.Title}`
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          type: OFFICE_ELECTION_NODE_TYPE,
-          content: JSON.stringify(election),
-          contentDigest: createContentDigest(election),
-        },
-      })
-    })
     createNode({
       ...election,
-      OfficeElections: election.OfficeElections.map(
-        // This is the field we're linking by.
-        // TODO Could we just do this all inline somehow?
-        officeElection => officeElection.Title
-      ),
+      OfficeElections: election.OfficeElections.map(officeElection => {
+        const id = createNodeId(
+          `${OFFICE_ELECTION_NODE_TYPE}-${officeElection.Title}`
+        )
+        createNode({
+          ...officeElection,
+          id,
+          parent: null,
+          children: [],
+          internal: {
+            type: OFFICE_ELECTION_NODE_TYPE,
+            content: JSON.stringify(election),
+            contentDigest: createContentDigest(election),
+          },
+        })
+        return id
+      }),
       id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
       parent: null,
       children: [],
@@ -275,7 +272,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       Title: String!
       Date: String 
       TotalContributions: String 
-      OfficeElections: [OfficeElection] @link(by: "Title")
+      OfficeElections: [OfficeElection] @link
     }
 
     type OfficeElection implements Node {
