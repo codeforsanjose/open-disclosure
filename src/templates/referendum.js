@@ -28,7 +28,6 @@ const supportingCommittees = [
 function MeasureDetails(props) {
   const measure =
     props.data?.allElection?.edges?.[0]?.node?.Referendums?.[0] ?? {}
-  console.log(measure)
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
