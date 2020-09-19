@@ -38,13 +38,5 @@ module.exports = {
         fieldName: "slug",
       },
     },
-    {
-      resolve: "gatsby-plugin-slug-field",
-      options: {
-        filter: { internal: { type: "MeasuresJson" } },
-        source: "name",
-        fieldName: "slug",
-      },
-    },
   ],
 }
