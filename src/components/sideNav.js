@@ -104,6 +104,9 @@ function formatMenuForCandidates(input) {
   return [menu, menuOptions]
 }
 
+//Todo: Fix this
+const formatMenu = input => formatMenuForCandidates(input)
+
 function formatMenuForMeasures(data) {
   return data.map(measure => ({ title: measure.Title }))
 }
