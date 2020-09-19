@@ -1,8 +1,10 @@
 .container {
-  .hero {
+  .heroInnerContainer {
     display: flex;
     flex-direction: row;
-    padding: 5rem 3rem 6.2rem 4.6rem;
+    padding: 5rem 0 6.2rem 0;
+    max-width: 1440px;
+    margin: auto;
   }
 
   .heroLeft {
@@ -40,7 +42,7 @@
   }
 
   @media screen and (max-width: 760px) {
-    .hero {
+    .heroInnerContainer {
       flex-direction: column;
       padding: 4rem 0;
     }

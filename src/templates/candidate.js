@@ -47,60 +47,56 @@ export default function Candidate({ data }) {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
-        candidate
+        isCandidate
         headerBackground="blue"
         pageTitle={name}
         pageSubtitle={seat}
       >
         <div className={styles.mainSection}>
-          <section>
-            <SectionHeader title={name} />
-            <div className={styles.aboutSection}>
-              <img
-                className={styles.profilePhoto}
-                src="https://picsum.photos/125"
-                alt={`Headshot of candidate ${name}`}
-              />
-              <div>
-                <p className={styles.aboutTitle}>
-                  <span className={styles.ballotDesignation}>
-                    {ballotDesignation}
-                  </span>
-                  {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
-                  {/* {" - elected"} */}
-                </p>
-                <p className={styles.aboutText}>
-                  This candidate has agreed to voluntary spending limits. The
-                  maximum contribution this candidate can accept is $800 from
-                  any individual, business entity, committee or other
-                  organization and $1,600 from a qualified broad-based
-                  committee.
-                </p>
-                <div className={styles.aboutLinks}>
-                  <a href={"http://" + website} className={styles.aboutLink}>
-                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
-                    {website}
-                  </a>
-                  <a href="/" className={styles.aboutLink}>
-                    <img
-                      alt="External link icon"
-                      src={VotersEdgeIcon}
-                      className={styles.icon}
-                    />
-                    Voter's Edge Profile
-                  </a>
-                  <a
-                    href={"http://twitter.com/" + twitter}
-                    className={styles.aboutLink}
-                  >
-                    <img
-                      alt="Twitter icon"
-                      src={TwitterIcon}
-                      className={styles.icon}
-                    />
-                    {"@" + twitter}
-                  </a>
-                </div>
+          <section className={styles.aboutSection}>
+            <img
+              className={styles.profilePhoto}
+              src="https://picsum.photos/125"
+              alt={`Headshot of candidate ${name}`}
+            />
+            <div>
+              <p className={styles.aboutTitle}>
+                <span className={styles.ballotDesignation}>
+                  {ballotDesignation}
+                </span>
+                {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
+                {/* {" - elected"} */}
+              </p>
+              <p className={styles.aboutText}>
+                This candidate has agreed to voluntary spending limits. The
+                maximum contribution this candidate can accept is $800 from any
+                individual, business entity, committee or other organization and
+                $1,600 from a qualified broad-based committee.
+              </p>
+              <div className={styles.aboutLinks}>
+                <a href={"http://" + website} className={styles.aboutLink}>
+                  <img alt="Web icon" src={WebIcon} className={styles.icon} />
+                  {website}
+                </a>
+                <a href="/" className={styles.aboutLink}>
+                  <img
+                    alt="External link icon"
+                    src={VotersEdgeIcon}
+                    className={styles.icon}
+                  />
+                  Voter's Edge Profile
+                </a>
+                <a
+                  href={"http://twitter.com/" + twitter}
+                  className={styles.aboutLink}
+                >
+                  <img
+                    alt="Twitter icon"
+                    src={TwitterIcon}
+                    className={styles.icon}
+                  />
+                  {"@" + twitter}
+                </a>
               </div>
             </div>
           </section>

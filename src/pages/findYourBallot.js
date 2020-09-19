@@ -22,9 +22,9 @@ export default function FindYourBallot() {
           <IframeResizer
             log
             src="https://votersedge.org/en/ca/address-widget"
-            maxWidth="600px"
             minWidth="240px"
             height="239px"
+            width="100%"
             frameBorder="0"
           />
         </div>

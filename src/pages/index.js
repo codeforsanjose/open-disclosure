@@ -149,32 +149,34 @@ export default function MainPage(props) {
   return (
     <Layout windowIsLarge={windowIsLarge}>
       <div className={styles.container}>
-        <header className={styles.hero}>
-          <div className={styles.heroLeft}>
-            <h1>
-              More money,
-              <br />
-              more transparency.
-            </h1>
-            <h2>
-              Keep tabs on the influence of money
-              <br />
-              in local San José elections.
-            </h2>
-            <div className={styles.heroButtonContainer}>
-              <div className={styles.primaryCTA}>
-                <Button text="Explore candidates" href={candidatesPageLink} />
+        <header className={styles.heroOuterContainer}>
+          <div className={styles.heroInnerContainer}>
+            <div className={styles.heroLeft}>
+              <h1>
+                More money,
+                <br />
+                more transparency.
+              </h1>
+              <h2>
+                Keep tabs on the influence of money
+                <br />
+                in local San José elections.
+              </h2>
+              <div className={styles.heroButtonContainer}>
+                <div className={styles.primaryCTA}>
+                  <Button text="Explore candidates" href={candidatesPageLink} />
+                </div>
+                <Button secondary text="View measures" href="/measures" />
               </div>
-              <Button secondary text="View measures" href="/measures" />
             </div>
-          </div>
-          <div className={styles.heroRight}>
-            <img
-              alt="header"
-              className="responsive"
-              width="724px"
-              src={headerBlob}
-            />
+            <div className={styles.heroRight}>
+              <img
+                alt="header"
+                className="responsive"
+                width="724px"
+                src={headerBlob}
+              />
+            </div>
           </div>
         </header>
         <MainPageSection secondary {...snapshot} />

@@ -68,15 +68,6 @@ li {
   min-width: 50%;
 }
 
-.is-draggable {
-  cursor: move;
-  cursor: grab;
-}
-
-.is-dragging {
-  cursor: grabbing;
-}
-
 @media screen and (max-width: 760px) {
   html {
     scroll-padding-top: 8.52rem;

@@ -1,8 +1,10 @@
-.container {
+.innerContainer {
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding: 9rem 4.6rem;
+  padding: 9rem 0;
+  max-width: 1440px;
+  margin: auto;
 
   .content {
     padding: 10rem;
@@ -21,7 +23,7 @@
 }
 
 @media screen and (max-width: 760px) {
-  .container {
+  .innerContainer {
     flex-direction: column-reverse;
     padding: 4.5rem 0;
 

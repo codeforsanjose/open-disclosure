@@ -6,6 +6,8 @@
   .text {
     flex: 1;
     justify-content: center;
+    max-width: 1440px;
+    margin: auto;
 
     h1 {
       font-size: 5.4rem;
