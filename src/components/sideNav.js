@@ -118,11 +118,14 @@ function onSelect({ value }, { action }, date) {
 }
 
 export default function sideNav({
-  candidate,
   children,
   headerBackground,
+  isCandidate = false,
+  isReferendum = false,
   pageSubtitle,
   pageTitle,
+  refSubtitle,
+  refTitle,
 }) {
   return (
     <StaticQuery
@@ -202,12 +205,8 @@ export default function sideNav({
         //   );
         // }
 
-        // return (
-        //   <div className={styles.container}>
-        //     <nav className={styles.navbar}>{navLinks}</nav>
-        //     <div className={styles.body}>{props.children}</div>
         const { Date, OfficeElections } = data.allElection.edges[0].node
-        const [menu, menuOptions] = formatMenu(OfficeElections)
+        const [menu, menuOptions] = formatMenuForCandidates(OfficeElections)
         const sections = Object.keys(menu)
         let selectedTitle = window.location.href.split("/")
         selectedTitle = selectedTitle[selectedTitle.length - 1]
@@ -227,7 +226,7 @@ export default function sideNav({
                 <div className={styles.select}>
                   <Select
                     styles={customStyles}
-                    placeholder={candidate ? pageSubtitle : selectedTitle}
+                    placeholder={isCandidate ? pageSubtitle : selectedTitle}
                     options={menuOptions}
                     onChange={(val, act) => onSelect(val, act, Date)}
                   />
@@ -240,7 +239,7 @@ export default function sideNav({
                         {menu[section].map(({ Title, fields: { slug } }) => {
                           const active =
                             Title === selectedTitle ||
-                            (candidate && Title === pageSubtitle)
+                            (isCandidate && Title === pageSubtitle)
                           return (
                             <li
                               key={`${section}-${slug}`}
@@ -262,7 +261,9 @@ export default function sideNav({
                 </ul>
               </nav>
               <div className={styles.body}>
-                <SectionHeader title={selectedTitle} />
+                <SectionHeader
+                  title={isReferendum ? refTitle : selectedTitle}
+                />
                 {children}
               </div>
             </div>

@@ -64,7 +64,7 @@ exports.createPages = async ({ graphql, actions }) => {
     node.OfficeElections.forEach(election => {
       createPage({
         path: "/referendums",
-        component: path.resolve("src/components/measuresDetails.jsx"),
+        component: path.resolve("src/templates/referendum.js"),
       })
     })
   })
