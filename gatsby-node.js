@@ -149,8 +149,8 @@ exports.sourceNodes = async ({
           children: [],
           internal: {
             type: OFFICE_ELECTION_NODE_TYPE,
-            content: JSON.stringify(election),
-            contentDigest: createContentDigest(election),
+            content: JSON.stringify(officeElection),
+            contentDigest: createContentDigest(officeElection),
           },
         })
         return id
@@ -220,6 +220,18 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      allMeasuresJson {
+        edges {
+          node {
+            id
+            electionDate
+            name
+            fields {
+              slug
+            }
+          }
+        }
+      }
     }
   `)
   result.data.allElection.edges.forEach(({ node }) => {
@@ -240,6 +252,16 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         slug: node.fields.slug,
         id: node.id,
+      },
+    })
+  })
+  result.data.allMeasuresJson.edges.forEach(({ node }) => {
+    createPage({
+      path: `/${node.electionDate}/referendum/${node.fields.slug}`,
+      component: path.resolve("src/templates/measure.js"),
+      context: {
+        id: node.id,
+        slug: node.fields.slug,
       },
     })
   })
@@ -266,6 +288,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       twitter: String
       seat: String
       apiData: Candidate @link(by: "ID" from: "id")
+    }
+
+    type MeasuresJson implements Node {
+      electionDate: String!
+      title: String!
+      description: String!
+      ballotLanguage: String!
     }
 
     type Election implements Node {
