@@ -170,12 +170,7 @@ export default function MainPage(props) {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <img
-                alt="header"
-                className="responsive"
-                width="724px"
-                src={headerBlob}
-              />
+              <img alt="header" width="724px" src={headerBlob} />
             </div>
           </div>
         </header>

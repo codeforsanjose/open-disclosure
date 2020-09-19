@@ -62,12 +62,6 @@ li {
   list-style-type: none;
 }
 
-.responsive {
-  max-height: auto;
-  max-width: 100%;
-  min-width: 50%;
-}
-
 @media screen and (max-width: 760px) {
   html {
     scroll-padding-top: 8.52rem;
