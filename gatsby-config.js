@@ -7,6 +7,7 @@
 module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
+    `source-api-plugin`,
     `gatsby-transformer-json`,
     {
       resolve: "gatsby-source-filesystem",
