@@ -217,6 +217,18 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      allMeasuresJson {
+        edges {
+          node {
+            id
+            electionDate
+            name
+            fields {
+              slug
+            }
+          }
+        }
+      }
     }
   `)
   result.data.allElection.edges.forEach(({ node }) => {
@@ -238,6 +250,16 @@ exports.createPages = async ({ graphql, actions }) => {
           },
         })
       })
+    })
+  })
+  result.data.allMeasuresJson.edges.forEach(({ node }) => {
+    createPage({
+      path: `/${node.electionDate}/referendum/${node.fields.slug}`,
+      component: path.resolve("src/templates/measure.js"),
+      context: {
+        id: node.id,
+        slug: node.fields.slug,
+      },
     })
   })
   result.data.allMeasuresJson.edges.forEach(({ node }) => {
@@ -276,6 +298,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       ballotDesignation: String
       website: String
       apiNode: Candidate @link(by: "ID" from: "id")
+    }
+
+    type MeasuresJson implements Node {
+      electionDate: String!
+      title: String!
+      description: String!
+      ballotLanguage: String!
     }
 
     type MeasuresJson implements Node {
