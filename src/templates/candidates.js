@@ -5,10 +5,16 @@ import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import CandidatesListItem from "../components/candidatesListItem"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
+import SectionHeader from "../components/sectionHeader"
 
 export default function Candidates({ data }) {
   const election = data.allElection.edges[0].node
-  // Should link to /{node.Date}/candidate/${candidateName}}
+  let selectedElection = window.location.href.split("/")
+  selectedElection = selectedElection[selectedElection.length - 1]
+    .split("-")
+    .map(word => word[0].toUpperCase() + word.slice(1))
+    .join(" ")
+
   return (
     <div className={styles.outerContainer}>
       <Layout windowIsLarge={useWindowIsLarge()}>
@@ -18,8 +24,12 @@ export default function Candidates({ data }) {
             pageSubtitle="City of San José Candidates"
           >
             <div className={styles.candidateList}>
-              {election.OfficeElections.map(({ Candidates }) =>
-                Candidates.filter(Boolean).map(candidate => (
+              <SectionHeader title={selectedElection} />
+
+              {election.OfficeElections.filter(
+                election => election.Title === selectedElection
+              ).map(({ Candidates }) =>
+                Candidates.map(candidate => (
                   <CandidatesListItem
                     key={candidate.fields.slug}
                     {...candidate}

@@ -126,11 +126,8 @@ export default function sideNav({
   children,
   headerBackground,
   isCandidate = false,
-  isReferendum = false,
   pageSubtitle,
   pageTitle,
-  refSubtitle,
-  refTitle,
 }) {
   return (
     <StaticQuery
@@ -219,12 +216,7 @@ export default function sideNav({
                   ))}
                 </ul>
               </nav>
-              <div className={styles.body}>
-                <SectionHeader
-                  title={isReferendum ? refTitle : selectedTitle}
-                />
-                {children}
-              </div>
+              <div className={styles.body}>{children}</div>
             </div>
           </div>
         )

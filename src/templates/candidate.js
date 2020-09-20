@@ -47,14 +47,14 @@ export default function Candidate({ data }) {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
-        candidate
+        isCandidate
         headerBackground="blue"
         pageTitle={name}
         pageSubtitle={seat}
       >
         <div className={styles.mainSection}>
           <section>
-            <SectionHeader title={name} />
+            <SectionHeader isPageHeader title={name} />
             <div className={styles.aboutSection}>
               <img
                 className={styles.profilePhoto}

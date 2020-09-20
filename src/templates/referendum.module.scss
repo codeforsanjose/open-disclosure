@@ -3,3 +3,11 @@
 .aboutSection {
   flex-direction: column;
 }
+
+.measurePurpose {
+  @extend .ballotDesignation;
+}
+
+.aboutLink {
+  color: $primaryGreen;
+}

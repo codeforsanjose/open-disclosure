@@ -9,6 +9,8 @@ import styles from "./referendum.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import ChartSection from "../components/ChartSection"
+import BarChart from "../components/barChart"
+import CommitteeCharts from "../components/committeeCharts"
 
 const supportingCommittees = [
   {
@@ -35,26 +37,34 @@ function MeasureDetails(props) {
         headerBackground="green"
         pageTitle="Measures"
         pageSubtitle="City of San José Ballot Measures"
-        refTitle={measure.Title}
-        refSubtitle={measure.Description}
       >
         <div className={styles.mainSection}>
-          <section className={styles.aboutSection}>
-            <p className={styles.aboutTitle}>
-              <span className={styles.currentPosition}>
-                What would this measure do?
-              </span>
-            </p>
-            <p className={styles.aboutText}>{measure?.Description ?? ""}</p>
-            <div className={styles.aboutLinks}>
-              <a href="https://votersedge.org/ca" className={styles.aboutLink}>
-                <img
-                  alt="External link icon"
-                  src={VotersEdgeIcon}
-                  className={styles.icon}
-                />
-                More information on Voter's Edge
-              </a>
+          <SectionHeader
+            isPageHeader
+            title={measure.Title}
+            subtitle="***TO REMOVE: PLACEHOLDER ONE LINE DESC OF MEASURE***"
+          />
+          <section>
+            <div className={styles.aboutSection}>
+              <p className={styles.aboutTitle}>
+                <span className={styles.measurePurpose}>
+                  What would this measure do?
+                </span>
+              </p>
+              <p className={styles.aboutText}>{measure?.Description ?? ""}</p>
+              <div className={styles.aboutLinks}>
+                <a
+                  href="https://votersedge.org/ca"
+                  className={styles.aboutLink}
+                >
+                  <img
+                    alt="External link icon"
+                    src={VotersEdgeIcon}
+                    className={styles.icon}
+                  />
+                  More information on Voter's Edge
+                </a>
+              </div>
             </div>
           </section>
           <section>
@@ -64,17 +74,16 @@ function MeasureDetails(props) {
               <TotalAmountPanelItem type="measureOppose" total={383254} />
             </div>
           </section>
-          <section>
-            <SectionHeader title="Who supports this measure?" />
-            <ChartSection
-              isSubsection
-              title="Supporting Committee(s)"
-              type="contributions"
-              id="contributions"
-              total={654876}
-              data={supportingCommittees}
-            />
-          </section>
+          <CommitteeCharts
+            type="contributions"
+            total={654876}
+            data={supportingCommittees}
+          />
+          <CommitteeCharts
+            type="expenditures"
+            total={654876}
+            data={supportingCommittees}
+          />
         </div>
       </SideNav>
     </Layout>
