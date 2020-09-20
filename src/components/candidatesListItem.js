@@ -9,10 +9,10 @@ function formatPercent(value) {
   return percentFormatter.format(value)
 }
 
-export default ({ Name, fields: { slug } }) => {
+export default ({ Name, path }) => {
   const percent = formatPercent(83455 / 123456)
   return (
-    <Link className={styles.container} to={"/candidate/" + slug}>
+    <Link className={styles.container} to={path}>
       <img
         height="12.5rem"
         width="12.5rem"

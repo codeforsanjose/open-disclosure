@@ -8,7 +8,6 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function Candidates({ data }) {
   const election = data.allElection.edges[0].node
-  // Should link to /{node.Date}/candidate/${candidateName}}
   return (
     <div className={styles.outerContainer}>
       <Layout windowIsLarge={useWindowIsLarge()}>
@@ -18,13 +17,15 @@ export default function Candidates({ data }) {
             pageSubtitle="City of San José Candidates"
           >
             <div className={styles.candidateList}>
-              {election.OfficeElections.map(({ Candidates }) =>
-                Candidates.filter(Boolean).map(candidate => (
-                  <CandidatesListItem
-                    key={candidate.fields.slug}
-                    {...candidate}
-                  />
-                ))
+              {election.OfficeElections.map(
+                ({ Candidates, fields: { slug } }) =>
+                  Candidates.filter(Boolean).map(candidate => (
+                    <CandidatesListItem
+                      path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
+                      key={candidate.fields.slug}
+                      {...candidate}
+                    />
+                  ))
               )}
             </div>
           </SideNav>
@@ -39,6 +40,7 @@ export const query = graphql`
     allElection {
       edges {
         node {
+          Date
           OfficeElections {
             Title
             TotalContributions
