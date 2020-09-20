@@ -36,30 +36,24 @@ const breakdowns = [
 ]
 
 export default function Candidate({ data }) {
-  const {
-    name,
-    seat,
-    ballotDesignation,
-    website,
-    twitter,
-    apiData,
-  } = data.candidatesJson
+  const { Name, jsonNode } = data.candidate
+  const { seat, ballotDesignation, website, twitter } = jsonNode
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
         isCandidate
         headerBackground="blue"
-        pageTitle={name}
+        pageTitle={Name}
         pageSubtitle={seat}
       >
         <div className={styles.mainSection}>
           <section>
-            <SectionHeader isPageHeader title={name} />
+            <SectionHeader isPageHeader title={Name} />
             <div className={styles.aboutSection}>
               <img
                 className={styles.profilePhoto}
                 src="https://picsum.photos/125"
-                alt={`Headshot of candidate ${name}`}
+                alt={`Headshot of candidate ${Name}`}
               />
               <div>
                 <p className={styles.aboutTitle}>
@@ -104,7 +98,7 @@ export default function Candidate({ data }) {
               </div>
             </div>
           </section>
-          {apiData == null ? (
+          {data.candidate.Committees == null ? (
             <NoData page="candidate" />
           ) : (
             <>
@@ -148,7 +142,7 @@ export default function Candidate({ data }) {
               />
               <section>
                 <SectionHeader title="Other committees controlled by candidate" />
-                {apiData.Committees.map(({ Name }) => (
+                {data.candidate.Committees.map(({ Name }) => (
                   <Link className={styles.committeeLink}>{Name}</Link>
                 ))}
               </section>
@@ -162,17 +156,18 @@ export default function Candidate({ data }) {
 
 export const query = graphql`
   query($id: String) {
-    candidatesJson(id: { eq: $id }) {
-      name
-      seat
-      ballotDesignation
-      website
-      twitter
-      apiData {
-        Committees {
-          Name
-          TotalFunding
-        }
+    candidate(ID: { eq: $id }) {
+      Name
+      Committees {
+        Name
+        TotalFunding
+      }
+      jsonNode {
+        name
+        seat
+        ballotDesignation
+        website
+        twitter
       }
     }
   }
