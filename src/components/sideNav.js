@@ -6,6 +6,8 @@ import Select from "react-select"
 import SectionHeader from "./sectionHeader"
 import LandingPageHero from "./landingPageHero"
 
+const REFERENDUMS = "Ballot Measure"
+
 const textStyles = {
   fontFamily: "Lato",
   fontWeight: "bold",
@@ -80,44 +82,50 @@ const offices = [
   { type: "San José Unified School District", filter: "sjusd" },
 ]
 
-function formatMenuForCandidates(input) {
-  const menu = {}
-  const menuOptions = []
+function formatMenuForCandidates(candidateData) {
+  const menu = []
   offices.forEach(({ type, filter }) => {
     const menuGroup = { label: type, options: [] }
-    input.forEach(race => {
+    candidateData.forEach(race => {
       const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
-        if (menu[type]) {
-          menu[type].push(race)
-        } else {
-          menu[type] = [race]
-        }
         menuGroup.options.push({ label: race.Title, value: race.fields.slug })
       }
     })
     if (menuGroup.options.length) {
-      menuOptions.push(menuGroup)
+      menu.push(menuGroup)
     }
   })
 
-  return [menu, menuOptions]
+  return menu
 }
 
-function formatMenuForMeasures(data) {
-  return data.map(measure => ({ title: measure.Title }))
+function formatMenuForMeasures(measureData) {
+  const menu = { label: REFERENDUMS, options: [] }
+  measureData.forEach(measure => {
+    menu.options.push({
+      label: measure.Title,
+      value: measure.Title.toLowerCase()
+        .split(" ")
+        .join("-"),
+    })
+  })
+  return menu
 }
 
-function onSelect({ value }, { action }, date) {
+const formatLink = label =>
+  label.includes(REFERENDUMS) ? "referendums" : "candidates"
+
+function onSelect({ label, value }, { action }, date) {
   if (action === "select-option") {
-    navigate(`/${date}/candidates/${value}`)
+    navigate(`/${date}/${formatLink(label)}/${value}`)
   }
 }
 
 export default function sideNav({
-  candidate,
   children,
   headerBackground,
+  isCandidate = false,
   pageSubtitle,
   pageTitle,
 }) {
@@ -147,65 +155,11 @@ export default function sideNav({
         }
       `}
       render={data => {
-        // let navLinks = null;
-        // if (window.location.href.includes('referendum')) {
-        //   const { Referendums } = (data.allElection?.edges?.[0]?.node) ?? [];
-        //   const menu = formatMenuForMeasures(Referendums);
-
-        //   navLinks = (
-        //     <ul>
-        //       <li className={styles.section}>
-        //         <h4 className={styles.text}>Ballot Measures</h4>
-        //         <ul>
-        //           {menu.map(measure => (
-        //             <li className={styles.election} key={measure.title}>
-        //               <Link to="#">
-        //                 <p className={styles.text}>{measure.title}</p>
-        //               </Link>
-        //               <div className={styles.selected} />
-        //             </li>
-        //           ))}
-        //         </ul>
-        //       </li>
-        //     </ul>
-        //   )
-        // } else if (window.location.href.includes('candidate')) {
-        //   const { Date, OfficeElections } = data.allElection.edges[0].node
-        //   const menu = formatMenuForCandidates(OfficeElections);
-        //   const sections = Object.keys(menu);
-
-        //   navLinks = (
-        //     <ul>
-        //       {sections.map((section, index) => (
-        //         <li key={`${section}-${index}`} className={styles.section}>
-        //           <h4 className={styles.text}>{section}</h4>
-        //           <ul>
-        //             {menu[section].map(race => (
-        //               <li className={styles.election}>
-        //                 <Link
-        //                   to={`/${Date}/candidates/${race.Title.toLowerCase()
-        //                     .split(" ")
-        //                     .join("-")}`}
-        //                 >
-        //                   <p className={styles.text}>{race.Title}</p>
-        //                 </Link>
-        //                 <div className={styles.selected} />
-        //               </li>
-        //             ))}
-        //           </ul>
-        //         </li>
-        //       ))}
-        //     </ul>
-        //   );
-        // }
-
-        // return (
-        //   <div className={styles.container}>
-        //     <nav className={styles.navbar}>{navLinks}</nav>
-        //     <div className={styles.body}>{props.children}</div>
-        const { Date, OfficeElections } = data.allElection.edges[0].node
-        const [menu, menuOptions] = formatMenu(OfficeElections)
-        const sections = Object.keys(menu)
+        const { Date, OfficeElections, Referendums } =
+          data.allElection?.edges?.[0]?.node ?? []
+        const measureMenu = formatMenuForMeasures(Referendums)
+        const candidateMenu = formatMenuForCandidates(OfficeElections)
+        const menuOptions = [...candidateMenu, measureMenu]
         let selectedTitle = window.location.href.split("/")
         selectedTitle = selectedTitle[selectedTitle.length - 1]
           .split("-")
@@ -224,29 +178,33 @@ export default function sideNav({
                 <div className={styles.select}>
                   <Select
                     styles={customStyles}
-                    placeholder={candidate ? pageSubtitle : selectedTitle}
+                    placeholder={isCandidate ? pageSubtitle : selectedTitle}
                     options={menuOptions}
                     onChange={(val, act) => onSelect(val, act, Date)}
                   />
                 </div>
                 <ul className={styles.sidebar}>
-                  {sections.map((section, index) => (
-                    <li key={section} className={styles.section}>
-                      <h4 className={styles.text}>{section}</h4>
+                  {menuOptions.map((section, index) => (
+                    <li key={section.label} className={styles.section}>
+                      <h4 className={styles.text}>{section.label}</h4>
                       <ul>
-                        {menu[section].map(({ Title, fields: { slug } }) => {
+                        {section.options.map(race => {
                           const active =
-                            Title === selectedTitle ||
-                            (candidate && Title === pageSubtitle)
+                            race.label === selectedTitle ||
+                            (isCandidate && race.label === pageSubtitle)
                           return (
                             <li
-                              key={`${section}-${slug}`}
+                              key={`${section.label}-${race.value}`}
                               className={`{${styles.election} ${active &&
                                 styles.active}`}
                             >
                               <div className={styles.linkContainer}>
-                                <Link to={`/${Date}/candidates/${slug}`}>
-                                  <p className={styles.text}>{Title}</p>
+                                <Link
+                                  to={`/${Date}/${formatLink(section.label)}/${
+                                    race.value
+                                  }`}
+                                >
+                                  <p className={styles.text}>{race.label}</p>
                                 </Link>
                                 <div className={styles.selected} />
                               </div>
@@ -258,10 +216,7 @@ export default function sideNav({
                   ))}
                 </ul>
               </nav>
-              <div className={styles.body}>
-                <SectionHeader title={selectedTitle} />
-                {children}
-              </div>
+              <div className={styles.body}>{children}</div>
             </div>
           </div>
         )

@@ -36,71 +36,69 @@ const breakdowns = [
 ]
 
 export default function Candidate({ data }) {
-  const {
-    name,
-    seat,
-    ballotDesignation,
-    website,
-    twitter,
-    apiData,
-  } = data.candidatesJson
+  const { Name, jsonNode } = data.candidate
+  const { seat, ballotDesignation, website, twitter } = jsonNode
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
         isCandidate
         headerBackground="blue"
-        pageTitle={name}
+        pageTitle={Name}
         pageSubtitle={seat}
       >
         <div className={styles.mainSection}>
-          <section className={styles.aboutSection}>
-            <img
-              className={styles.profilePhoto}
-              src="https://picsum.photos/125"
-              alt={`Headshot of candidate ${name}`}
-            />
-            <div>
-              <p className={styles.aboutTitle}>
-                <span className={styles.ballotDesignation}>
-                  {ballotDesignation}
-                </span>
-                {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
-                {/* {" - elected"} */}
-              </p>
-              <p className={styles.aboutText}>
-                This candidate has agreed to voluntary spending limits. The
-                maximum contribution this candidate can accept is $800 from any
-                individual, business entity, committee or other organization and
-                $1,600 from a qualified broad-based committee.
-              </p>
-              <div className={styles.aboutLinks}>
-                <a href={"http://" + website} className={styles.aboutLink}>
-                  <img alt="Web icon" src={WebIcon} className={styles.icon} />
-                  {website}
-                </a>
-                <a href="/" className={styles.aboutLink}>
-                  <img
-                    alt="External link icon"
-                    src={VotersEdgeIcon}
-                    className={styles.icon}
-                  />
-                  Voter's Edge Profile
-                </a>
-                <a
-                  href={"http://twitter.com/" + twitter}
-                  className={styles.aboutLink}
-                >
-                  <img
-                    alt="Twitter icon"
-                    src={TwitterIcon}
-                    className={styles.icon}
-                  />
-                  {"@" + twitter}
-                </a>
+          <section>
+            <SectionHeader isPageHeader title={Name} />
+            <div className={styles.aboutSection}>
+              <img
+                className={styles.profilePhoto}
+                src="https://picsum.photos/125"
+                alt={`Headshot of candidate ${Name}`}
+              />
+              <div>
+                <p className={styles.aboutTitle}>
+                  <span className={styles.ballotDesignation}>
+                    {ballotDesignation}
+                  </span>
+                  {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
+                  {/* {" - elected"} */}
+                </p>
+                <p className={styles.aboutText}>
+                  This candidate has agreed to voluntary spending limits. The
+                  maximum contribution this candidate can accept is $800 from
+                  any individual, business entity, committee or other
+                  organization and $1,600 from a qualified broad-based
+                  committee.
+                </p>
+                <div className={styles.aboutLinks}>
+                  <a href={"http://" + website} className={styles.aboutLink}>
+                    <img alt="Web icon" src={WebIcon} className={styles.icon} />
+                    {website}
+                  </a>
+                  <a href="/" className={styles.aboutLink}>
+                    <img
+                      alt="External link icon"
+                      src={VotersEdgeIcon}
+                      className={styles.icon}
+                    />
+                    Voter's Edge Profile
+                  </a>
+                  <a
+                    href={"http://twitter.com/" + twitter}
+                    className={styles.aboutLink}
+                  >
+                    <img
+                      alt="Twitter icon"
+                      src={TwitterIcon}
+                      className={styles.icon}
+                    />
+                    {"@" + twitter}
+                  </a>
+                </div>
               </div>
             </div>
           </section>
-          {apiData == null ? (
+          {data.candidate.Committees == null ? (
             <NoData page="candidate" />
           ) : (
             <>
@@ -144,7 +142,7 @@ export default function Candidate({ data }) {
               />
               <section>
                 <SectionHeader title="Other committees controlled by candidate" />
-                {apiData.Committees.map(({ Name }) => (
+                {data.candidate.Committees.map(({ Name }) => (
                   <Link className={styles.committeeLink}>{Name}</Link>
                 ))}
               </section>
@@ -158,17 +156,18 @@ export default function Candidate({ data }) {
 
 export const query = graphql`
   query($id: String) {
-    candidatesJson(id: { eq: $id }) {
-      name
-      seat
-      ballotDesignation
-      website
-      twitter
-      apiData {
-        Committees {
-          Name
-          TotalFunding
-        }
+    candidate(ID: { eq: $id }) {
+      Name
+      Committees {
+        Name
+        TotalFunding
+      }
+      jsonNode {
+        name
+        seat
+        ballotDesignation
+        website
+        twitter
       }
     }
   }

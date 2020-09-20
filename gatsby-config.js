@@ -7,7 +7,6 @@
 module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
-    `source-api-plugin`,
     `gatsby-transformer-json`,
     {
       resolve: "gatsby-source-filesystem",
@@ -36,6 +35,14 @@ module.exports = {
       options: {
         filter: { internal: { type: "OfficeElection" } },
         source: "Title",
+        fieldName: "slug",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-slug-field",
+      options: {
+        filter: { internal: { type: "MeasuresJson" } },
+        source: "name",
         fieldName: "slug",
       },
     },

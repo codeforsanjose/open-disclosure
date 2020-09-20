@@ -1,6 +1,6 @@
 version: "3"
 services:
-  redis:
+  redis_dev:
     image: redislabs/rejson:latest
     container_name: redis
   process:
@@ -23,11 +23,11 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - redis
+      - redis_dev
   api:
     build:
-      context: ./data_pipeline
-      dockerfile: data_api/Dockerfile
+      context: ./redis_api
+      dockerfile: Dockerfile
       args:
         - UID=${UID}
         - USER=${USER}
@@ -37,7 +37,7 @@ services:
     user: $USER
     environment:
       - FLASK_APP=api
-      - SQLALCHEMY_DATABASE_URI=sqlite://
+      # - SQLALCHEMY_DATABASE_URI=sqlite://
       - PYTHONPATH=.
       - REDIS_HOST=redis
     ports:
@@ -46,8 +46,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - redis
-      - process
+      - redis_dev
   ui:
     build:
       context: .
