@@ -1,87 +1,190 @@
-"""
+'''
 Do not merge. For discussion only.
 Alternative way is to use awk and redis-cli
-"""
+'''
 import logging
+import mimetypes
 import os
 import sys
+from datetime import datetime
 
 import pandas as pd
 from rejson import Client, Path
 
 logger = logging.getLogger(__name__)
-    
+
 
 class Csv2Redis:
 
-    def __init__(self):
-        self.rj = Client(host=os.environ.get("REDIS_HOST", "localhost"), decode_responses=True)
+    def __init__(self, filename: str):
+        self.rj = Client(host=os.environ.get(
+            'REDIS_HOST', 'localhost'), decode_responses=True)
+        # Read the clean csv file from Google sheet. This file won't work on just aggregated csv from scrapper.
+        # Skip every other line. If the clean csv changes to every line, we need to update this as well.
+        if not os.path.exists(filename):
+            logger.warning(
+                '{} does not exist. Please double check the file path.'.format(filename))
+        if not os.path.isfile(filename):
+            logger.warning(
+                'Only process csv file. Please double check {} is a file.'.format(filename))
+        filetype, _ = mimetypes.guess_type(filename)
+        if 'csv' in filetype:
+            self.data = pd.read_csv(
+                filename, skiprows=lambda x: x % 2 == 1, sep=',', quotechar='"', )
+        elif 'spreadsheet' in filetype:
+            logger.info('Reading plain text csv is faster and is encouraged.')
+            self.data = pd.read_excel(
+                filename, skiprows=lambda x: x % 2 == 1, )
+        else:
+            logger.warning('Only read csv and spreadsheet file for now.')
+            return
+        if self.data.shape[0] < 100:
+            logger.info('{} only have {} row.'.format(
+                filename, self.data.shape[0]))
+        # Add candidate ID column. candidate ID is <Ballot Item>;<CandidateControlledName>;<Election Date>
+        self.data['ID'] = self.data['Ballot Item'].map(
+            str) + ';' + self.data['CandidateControlledName'].str.replace(' ', '-') + ';' + self.data['Election Date'].map(str)
+        # Round Amount to decimal 2
+        self.data['Amount'] = self.data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(
+            float).round(decimals=2)
+        self.metadata = str(datetime.fromtimestamp(os.path.getmtime(filename)))
 
-    def setElectionShapeInRedis(self, filename: str) -> list:
+    def setElectionShapeInRedis(self) -> list:
         '''
-        filename: str Input aggregated csv file. Csv seems to be read faster then Excel.
         Populate election shape into redis
         '''
+        data = self.data
+        electionShape = {'Elections': {}}
+        dataAmount = data[['Ballot Item', 'CandidateControlledName',
+                           'Election Date', 'Amount', 'Rec_Type', 'ID']]
+        try:
+            # There are 4 types RCPT, EXPN, LOAN, S497.
+            elections = {}
+            for ed in dataAmount['Election Date'].unique():
+                dataPerElectionDate = dataAmount[dataAmount['Election Date'] == ed]
+                totalContributions = dataPerElectionDate[dataPerElectionDate['Rec_Type'] == 'RCPT'][
+                    'Amount'].sum().round(decimals=2)
+                officeElections = []
+                referendums = []
+                for bi in dataPerElectionDate['Ballot Item'].unique():
+                    dataPerElectionDateAndBallotItem = dataPerElectionDate[
+                        dataPerElectionDate['Ballot Item'] == bi]
+                    totalContributionsPerBallotItem = \
+                        dataPerElectionDateAndBallotItem[dataPerElectionDateAndBallotItem['Rec_Type'] == 'RCPT'][
+                            'Amount'].sum().round(decimals=2)
+                    if not 'measure' in bi:
+                        officeElections.append(
+                            {'Title': bi, 'CandidateIDs': dataPerElectionDateAndBallotItem['ID'].unique().tolist(),
+                             'TotalContributions': totalContributionsPerBallotItem})
+                    else:
+                        referendums.append(
+                            {'Title': bi, 'Description': bi, 'TotalContributions': totalContributionsPerBallotItem})
+                elections = {'Title': '{} Election Cycle'.format(ed.split('/')[2]),
+                             'Date': ed,
+                             'TotalContributions': totalContributions,
+                             'OfficeElections': officeElections,
+                             'Referendums': referendums}
+                electionShape['Elections'][ed] = elections
+                electionShape['Metadata'] = self.metadata
+        except Exception as e:
+            logger.debug(e)
+            return False
         with self.rj.pipeline() as pipe:
-            # TODO: assure filename exists
-            # TODO: more error checking
-            # TODO: resolve incremental update
-            try:
-                # TODO: the row pass 1440 generates an error
-                # Get the csv file
-                data = pd.read_csv(filename, skiprows=lambda x: x % 2 == 1, sep=',', quotechar='"', )
-                # There are 4 types RCPT, EXPN, LOAN, S497.
-                # TODO: Get a better understanding of how Loan, Exp & S497 work. We could have simply use Rec_Type for raise or expens but leave it as is for now until we have better understanding of Rec_Type.
-                data['Raise_or_Expense'] = data.apply(lambda row: 'raise' if row['Rec_Type'] == 'RCPT' else (
-                    'expense' if row['Rec_Type'] == 'EXPN' else 'loanors497'), axis=1)
-                # Clean up the Amount that contains $ and ,
-                data['Amount'] = data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(float)
-                # Populate the Election Date and Ballot Item
-                electionShape = {}
-                for ed in data['Election Date'].unique():
-                    electionShape[ed] = {'Title': '{} Election Cycle'.format(ed.split('/')[2]),
-                                         'Date': ed,
-                                         'OfficeElections': {},
-                                         'Referendums': {}, }
-                    for bi in data[data['Election Date'] == ed]['Ballot Item']:
-                        if not "measure" in bi:
-                            electionShape[ed]['OfficeElections'][bi] = {
-                                'Title': '{} {} Representative'.format(*(reversed(bi.split('-'))))}
-                        else:
-                            electionShape[ed]['Referendums'][bi] = {'Title': '{}'.format()}
+            pipe.jsonset('elections', Path.rootPath(), electionShape)
+            pipe.execute()
+        logger.debug('The election shape in redis {}'.format(
+            self.rj.jsonget('elections')))
+        return True
 
-                # Populate each candidate's fund and expense by election date
-                candidatesDict = \
-                    data.groupby(by=['Election Date', 'Ballot Item', 'CandidateControlledName', 'Raise_or_Expense'])[
-                        'Amount'].sum().to_dict()
-                for (electionDate, ballot, candidate, recType), amount in candidatesDict.items():
-                    if electionDate in electionShape:
-                        if ballot in electionShape[electionDate]['OfficeElections']:
-                            if candidate in electionShape[electionDate]['OfficeElections'][ballot]:
-                                electionShape[electionDate]['OfficeElections'][ballot][candidate].update(
-                                    {recType: round(amount, 2)})
-                            else:
-                                electionShape[electionDate]['OfficeElections'][ballot].update({candidate: {
-                                    "name": candidate,
-                                    recType: round(amount, 2)}})
-                # Populate the grand total contribution
-                totalContributions = data[data['Raise_or_Expense'] == 'raise']['Amount'].sum()
-                electionShape.update({'TotalContributions': round(totalContributions, 2)})
-                totalContributionsPerElectionCycle = \
-                    data[data['Raise_or_Expense'] == 'raise'].groupby(['Election Date'])['Amount'].sum().to_dict()
-                # Populate the total contribution of each year
-                for yr, amount in totalContributionsPerElectionCycle.items():
-                    if yr in electionShape:
-                        electionShape[yr].update({"TotalContributions": round(amount, 2)})
-                pipe.jsonset('elections', Path.rootPath(), electionShape)
-                pipe.execute()
-                logger.debug('The election shape in redis {}'.format(self.rj.jsonget('elections')))
-            except Exception as e:
-                logger.warning(e)
+    def setCandidateShapeInRedis(self, electionDate='11/3/2020') -> bool:
+        '''
+        Populate candidate shape into redis
+        Redis data spec
+        Candidates: [{
+            ID: "councilmember-district-6;dev-davis;11-3-2020",
+            Name: "Dev Davis",
+            TotalRCPT: 300,
+            TotalLOAN: 100,
+            TotalEXPN: 100,
+            FundingByType: {
+                IND: 300,
+                COM: 100
+            },
+            FundingByGeo: {
+                CA: 300,
+                SJ: 100
+            }
+            ExpenditureByType: {
+        # TODO: We could have populated candidates for all election date but right now the spec only asks for the current year.
+        '''
+        # TODO: TotalFunding - understand how TotalFunding is calculated and perhaps add TotalFunding
+        data = self.data
+        candidateShape = {'Candidates': []}
+        try:
+            dataAmount = data[
+                ['Ballot Item', 'CandidateControlledName', 'Election Date', 'Amount', 'Rec_Type', 'Entity_Cd',
+                 'Entity_Nam L', 'Entity_Nam F', 'Entity_City', 'Entity_ST', 'Expn_Code', 'ID']]
+            candidateIDs = pd.unique(dataAmount['ID'])
+
+            for cid in candidateIDs:
+                candidate = {'ID': cid}
+                name = cid.split(';')[1]
+                candidate['Name'] = name
+                dataPerCandidate = dataAmount[
+                    (dataAmount['CandidateControlledName'] == name) & (dataAmount['Election Date'] == electionDate)]
+
+                # Get transaction by type
+                totalByRecType = dataPerCandidate.groupby(
+                    ['Rec_Type'])[['Amount']].sum().round(decimals=2).to_dict()
+                if 'RCPT' in totalByRecType['Amount']:
+                    candidate['TotalRCPT'] = totalByRecType['Amount']['RCPT']
+                if 'EXPN' in totalByRecType['Amount']:
+                    candidate['TotalEXPN'] = totalByRecType['Amount']['EXPN']
+                if 'LOAN' in totalByRecType['Amount']:
+                    candidate['TotalLOAN'] = totalByRecType['Amount']['LOAN']
+                if 'S497' in totalByRecType['Amount']:
+                    candidate['TotalS497'] = totalByRecType['Amount']['S497']
+
+                # Get funding by committee type
+                recpDataPerCandidate = dataPerCandidate[dataPerCandidate['Rec_Type'] == 'RCPT']
+                totalByComType = recpDataPerCandidate.groupby(['Entity_Cd'])[['Amount']].sum().round(
+                    decimals=2).to_dict()
+                candidate['FundingByType'] = totalByComType['Amount']
+
+                # Get funding by geo
+                totalByGeo = recpDataPerCandidate.groupby(
+                    ['Entity_ST'])[['Amount']].sum().round(decimals=2).to_dict()
+                candidate['FundingByGeo'] = totalByGeo['Amount']
+
+                # Get expenditure by type
+                expnDataPerCandidate = dataPerCandidate[dataPerCandidate['Rec_Type'] == 'EXPN']
+                totalByExpnType = expnDataPerCandidate.groupby(['Expn_Code'])[['Amount']].sum().round(
+                    decimals=2).to_dict()
+                candidate['ExpenditureByType'] = totalByExpnType['Amount']
+
+                # Get Committees
+                committees = recpDataPerCandidate[recpDataPerCandidate['Entity_Cd'] == 'COM'][
+                    'Entity_Nam L'].unique().tolist()
+                candidate['Committees'] = committees
+
+                candidateShape['Candidates'].append(candidate)
+                candidateShape['Metadata'] = self.metadata
+                logger.debug(candidateShape)
+        except Exception as e:
+            logger.debug(e)
+            return False
+        with self.rj.pipeline() as pipe:
+            pipe.jsonset('candidates', Path.rootPath(), candidateShape)
+            pipe.execute()
+        logger.debug('The candidate shape in redis {}'.format(
+            self.rj.jsonget('candidates')))
+        return True
 
 
 if __name__ == "__main__":
     # TODO: usage python aggregatedcsv2redis.py <filename> yet to be discussed
-    filename = sys.argv[1] if len(sys.argv) > 1 else "../scraper/aggregated_data/data.csv"
-    csv2Redis = Csv2Redis()
-    csv2Redis.setElectionShapeInRedis(filename=filename)
+    filename = sys.argv[1] if len(
+        sys.argv) > 1 else "../scraper/aggregated_data/2020 Election Data.csv"
+    csv2Redis = Csv2Redis(filename=filename)
+    csv2Redis.setElectionShapeInRedis()
+    csv2Redis.setCandidateShapeInRedis()
