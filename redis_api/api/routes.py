@@ -6,6 +6,8 @@ from api.errors import empty_response, error_response
 from redis import RedisError, StrictRedis
 from api.tests.unit import fake_data
 
+from api.services import RedisClient
+
 redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
 r = StrictRedis(host="localhost", port=6379)
 
@@ -43,23 +45,16 @@ def get_candidates(candidate_id, serve_fake=False):
     :return: data on all candidates or for one specific candidate
     :rtype: JSON
     """
-    if serve_fake:
-        return fake_data.get_candidates_shape()
     try:
-        response = r.execute_command("JSON.GET", "Candidates")
-        if not response:
-            return empty_response("Candidates")
-        cand_json = json.loads(response)
+        redis = RedisClient()
+        candidateShape = redis.getCandidateShape()
         if candidate_id is None:
-            return jsonify({"Candidates": cand_json})
+            # TODO: Sync up with Front-End for the spec
+            return jsonify(candidateShape)
         else:
-            for candidate in cand_json:
-                if candidate["ID"] == candidate_id:
-                    return candidate
-            return empty_response(candidate_id)
+            return jsonify(candidateShape)
     except Exception as error:
         return error_response(f"{error}")
-
 
 @redis_bp.route("/committees/", methods=["GET"])
 def get_committees(serve_fake=True):
@@ -79,18 +74,15 @@ def get_committees(serve_fake=True):
 
 
 @redis_bp.route("/elections/", methods=["GET"])
-def get_elections(serve_fake=True):
+def get_elections():
     """
     Get all the election cycles from 2019-2020
     :return: list or set of JSON objects containing individual election cycle information
     """
-    if serve_fake:
-        return jsonify({"Elections": fake_data.get_elections_shape()})
     try:
-        response = r.execute_command("JSON.GET", "Elections")
-        if not response:
-            return empty_response("Elections")
-        return jsonify({"Elections": json.loads(response)})
+        redis = RedisClient()
+        electionShape = redis.getElectionShape()
+        return jsonify(electionShape)
     except Exception as error:
         return error_response(f"{error}")
 
