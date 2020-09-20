@@ -58,30 +58,28 @@ const DUMMY_DATA = {
   },
   elections: {
     Elections: {
-      ElectionCycles: [
-        {
-          Title: "2020 Election Cycle",
-          Date: "2020-11-03",
-          TotalContributions: 1000,
-          OfficeElections: [
-            {
-              Title: "Councilmember District 6",
-              CandidateIDs: [
-                "councilmember-district-6;dev-davis;11-3-2020",
-                'councilmember-district-6;jacob-"jake"-tonkel;11-3-2020',
-              ],
-              TotalContributions: 300,
-            },
-          ],
-          Referendums: [
-            {
-              Title: "Ballot Measure C",
-              Description: "This ballot measure will allow people to have fun",
-              "Total Contributions": 700,
-            },
-          ],
-        },
-      ],
+      "11/3/2020": {
+        Title: "2020 Election Cycle",
+        Date: "2020-11-03",
+        TotalContributions: 1000,
+        OfficeElections: [
+          {
+            Title: "Councilmember District 6",
+            CandidateIDs: [
+              "councilmember-district-6;dev-davis;11-3-2020",
+              'councilmember-district-6;jacob-"jake"-tonkel;11-3-2020',
+            ],
+            TotalContributions: 300,
+          },
+        ],
+        Referendums: [
+          {
+            Title: "Ballot Measure C",
+            Description: "This ballot measure will allow people to have fun",
+            "Total Contributions": 700,
+          },
+        ],
+      },
     },
   },
   metadata: {
@@ -135,35 +133,34 @@ exports.sourceNodes = async ({
       },
     })
   })
-  electionData.Elections.ElectionCycles.forEach(election => {
-    createNode({
-      ...election,
-      OfficeElections: election.OfficeElections.map(officeElection => {
-        const id = createNodeId(
-          `${OFFICE_ELECTION_NODE_TYPE}-${officeElection.Title}`
-        )
-        createNode({
-          ...officeElection,
-          id,
-          parent: null,
-          children: [],
-          internal: {
-            type: OFFICE_ELECTION_NODE_TYPE,
-            content: JSON.stringify(officeElection),
-            contentDigest: createContentDigest(officeElection),
-          },
-        })
-        return id
-      }),
-      id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
-      parent: null,
-      children: [],
-      internal: {
-        type: ELECTION_NODE_TYPE,
-        content: JSON.stringify(election),
-        contentDigest: createContentDigest(election),
-      },
-    })
+  const election = electionData.Elections["11/3/2020"]
+  createNode({
+    ...election,
+    OfficeElections: election.OfficeElections.map(officeElection => {
+      const id = createNodeId(
+        `${OFFICE_ELECTION_NODE_TYPE}-${officeElection.Title}`
+      )
+      createNode({
+        ...officeElection,
+        id,
+        parent: null,
+        children: [],
+        internal: {
+          type: OFFICE_ELECTION_NODE_TYPE,
+          content: JSON.stringify(officeElection),
+          contentDigest: createContentDigest(officeElection),
+        },
+      })
+      return id
+    }),
+    id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
+    parent: null,
+    children: [],
+    internal: {
+      type: ELECTION_NODE_TYPE,
+      content: JSON.stringify(election),
+      contentDigest: createContentDigest(election),
+    },
   })
   createNode({
     ...metadata,
