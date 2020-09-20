@@ -3,6 +3,8 @@ services:
   redis_dev:
     image: redislabs/rejson:latest
     container_name: redis
+    ports:
+      - "6379:6379"
   process:
     build:
       context: ./data_pipeline
@@ -37,7 +39,6 @@ services:
     user: $USER
     environment:
       - FLASK_APP=api
-      # - SQLALCHEMY_DATABASE_URI=sqlite://
       - PYTHONPATH=.
       - REDIS_HOST=redis
     ports:
