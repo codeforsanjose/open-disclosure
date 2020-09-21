@@ -14,6 +14,4 @@ WORKDIR /app/redis_api
 RUN pip install rejson
 RUN pip install -r requirements.txt
 ENV PYTHONUNBUFFERED 1
-#ENV FLASK_APP app.py
-#ENV FLASK_RUN_HOST 0.0.0.0
 EXPOSE 5000
