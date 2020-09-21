@@ -17,24 +17,30 @@ logger = logging.getLogger(__name__)
 class Csv2Redis:
 
     def __init__(self, filename: str):
-        self.rj = Client(host=os.environ.get('REDIS_HOST', 'localhost'), decode_responses=True)
+        self.rj = Client(host=os.environ.get(
+            'REDIS_HOST', 'localhost'), decode_responses=True)
         # Read the clean csv file from Google sheet. This file won't work on just aggregated csv from scrapper.
         # Skip every other line. If the clean csv changes to every line, we need to update this as well.
         if not os.path.exists(filename):
-            logger.warning('{} does not exist. Please double check the file path.'.format(filename))
+            logger.warning(
+                '{} does not exist. Please double check the file path.'.format(filename))
         if not os.path.isfile(filename):
-            logger.warning('Only process csv file. Please double check {} is a file.'.format(filename))
+            logger.warning(
+                'Only process csv file. Please double check {} is a file.'.format(filename))
         filetype, _ = mimetypes.guess_type(filename)
         if 'csv' in filetype:
-            self.data = pd.read_csv(filename, skiprows=lambda x: x % 2 == 1, sep=',', quotechar='"', )
+            self.data = pd.read_csv(
+                filename, skiprows=lambda x: x % 2 == 1, sep=',', quotechar='"', )
         elif 'spreadsheet' in filetype:
             logger.info('Reading plain text csv is faster and is encouraged.')
-            self.data = pd.read_excel(filename, skiprows=lambda x: x % 2 == 1, )
+            self.data = pd.read_excel(
+                filename, skiprows=lambda x: x % 2 == 1, )
         else:
             logger.warning('Only read csv and spreadsheet file for now.')
             return
         if self.data.shape[0] < 100:
-            logger.info('{} only have {} row.'.format(filename, self.data.shape[0]))
+            logger.info('{} only have {} row.'.format(
+                filename, self.data.shape[0]))
         # Add candidate ID column. candidate ID is <Ballot Item>;<CandidateControlledName>;<Election Date>
         self.data['ID'] = self.data['Ballot Item'].map(str) + ';' + self.data['CandidateControlledName'].map(
             str) + ';' + self.data['Election Date'].map(str)
@@ -49,7 +55,8 @@ class Csv2Redis:
         '''
         data = self.data
         electionShape = {'Elections': {}}
-        dataAmount = data[['Ballot Item', 'CandidateControlledName', 'Election Date', 'Amount', 'Rec_Type', 'ID']]
+        dataAmount = data[['Ballot Item', 'CandidateControlledName',
+                           'Election Date', 'Amount', 'Rec_Type', 'ID']]
         try:
             # There are 4 types RCPT, EXPN, LOAN, S497.
             elections = {}
@@ -60,7 +67,8 @@ class Csv2Redis:
                 officeElections = []
                 referendums = []
                 for bi in dataPerElectionDate['Ballot Item'].unique():
-                    dataPerElectionDateAndBallotItem = dataPerElectionDate[dataPerElectionDate['Ballot Item'] == bi]
+                    dataPerElectionDateAndBallotItem = dataPerElectionDate[
+                        dataPerElectionDate['Ballot Item'] == bi]
                     totalContributionsPerBallotItem = \
                         dataPerElectionDateAndBallotItem[dataPerElectionDateAndBallotItem['Rec_Type'] == 'RCPT'][
                             'Amount'].sum().round(decimals=2)
@@ -84,8 +92,8 @@ class Csv2Redis:
         with self.rj.pipeline() as pipe:
             pipe.jsonset('elections', Path.rootPath(), electionShape)
             pipe.execute()
-        print('The election shape in redis {}'.format(self.rj.jsonget('elections')))
-        logger.debug('The election shape in redis {}'.format(self.rj.jsonget('elections')))
+        logger.debug('The election shape in redis {}'.format(
+            self.rj.jsonget('elections')))
         return True
 
     def setCandidateShapeInRedis(self, electionDate='11/3/2020') -> bool:
@@ -100,7 +108,7 @@ class Csv2Redis:
             TotalEXPN: 100,
             FundingByType: {
                 IND: 300,
-                COM: x
+                COM: 100
             },
             FundingByGeo: {
                 CA: 300,
@@ -125,7 +133,8 @@ class Csv2Redis:
                     (dataAmount['CandidateControlledName'] == name) & (dataAmount['Election Date'] == electionDate)]
 
                 # Get transaction by type
-                totalByRecType = dataPerCandidate.groupby(['Rec_Type'])[['Amount']].sum().round(decimals=2).to_dict()
+                totalByRecType = dataPerCandidate.groupby(
+                    ['Rec_Type'])[['Amount']].sum().round(decimals=2).to_dict()
                 if 'RCPT' in totalByRecType['Amount']:
                     candidate['TotalRCPT'] = totalByRecType['Amount']['RCPT']
                 if 'EXPN' in totalByRecType['Amount']:
@@ -142,7 +151,8 @@ class Csv2Redis:
                 candidate['FundingByType'] = totalByComType['Amount']
 
                 # Get funding by geo
-                totalByGeo = recpDataPerCandidate.groupby(['Entity_ST'])[['Amount']].sum().round(decimals=2).to_dict()
+                totalByGeo = recpDataPerCandidate.groupby(
+                    ['Entity_ST'])[['Amount']].sum().round(decimals=2).to_dict()
                 candidate['FundingByGeo'] = totalByGeo['Amount']
 
                 # Get expenditure by type
@@ -154,7 +164,6 @@ class Csv2Redis:
                 # Get Committees
                 committees = recpDataPerCandidate[recpDataPerCandidate['Entity_Cd'] == 'COM'][
                     'Entity_Nam L'].unique().tolist()
-                print(committees)
                 candidate['Committees'] = committees
 
                 candidateShape['Candidates'].append(candidate)
@@ -166,14 +175,15 @@ class Csv2Redis:
         with self.rj.pipeline() as pipe:
             pipe.jsonset('candidates', Path.rootPath(), candidateShape)
             pipe.execute()
-        print('The candidate shape in redis {}'.format(self.rj.jsonget('candidates')))
-        logger.debug('The candidate shape in redis {}'.format(self.rj.jsonget('candidates')))
+        logger.debug('The candidate shape in redis {}'.format(
+            self.rj.jsonget('candidates')))
         return True
 
 
 if __name__ == "__main__":
     # TODO: usage python aggregatedcsv2redis.py <filename> yet to be discussed
-    filename = sys.argv[1] if len(sys.argv) > 1 else "../scraper/aggregated_data/2020 Election Data.csv"
+    filename = sys.argv[1] if len(
+        sys.argv) > 1 else "../scraper/aggregated_data/2020 Election Data.csv"
     csv2Redis = Csv2Redis(filename=filename)
     csv2Redis.setElectionShapeInRedis()
     csv2Redis.setCandidateShapeInRedis()
