@@ -48,7 +48,7 @@ def get_candidates(candidate_id, serve_fake=False):
     """
     try:
         redis = RedisClient()
-        candidateShape = redis.getCandidateShape()
+        candidateShape = redis.getAnyShape('candidates')
         if candidateShape:
             if candidate_id is None:
                 return jsonify(candidateShape)
@@ -93,7 +93,7 @@ def get_elections():
     """
     try:
         redis = RedisClient()
-        electionShape = redis.getElectionShape()
+        electionShape = redis.getAnyShape('elections')
         if electionShape:
             return jsonify(electionShape)
         else:
