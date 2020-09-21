@@ -103,8 +103,8 @@ class Csv2Redis:
         Candidates: [{
             ID: "councilmember-district-6;dev-davis;11-3-2020",
             Name: "Dev Davis",
-            TotalRCT: 300,
-            TotalLoan: 100,
+            TotalRCPT: 300,
+            TotalLOAN: 100,
             TotalEXPN: 100,
             FundingByType: {
                 IND: 300,
@@ -117,6 +117,7 @@ class Csv2Redis:
             ExpenditureByType: {
         # TODO: We could have populated candidates for all election date but right now the spec only asks for the current year.
         '''
+        # TODO: TotalFunding - understand how TotalFunding is calculated and perhaps add TotalFunding
         data = self.data
         candidateShape = {'Candidates': []}
         try:
