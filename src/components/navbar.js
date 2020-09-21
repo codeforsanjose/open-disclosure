@@ -17,6 +17,8 @@ function enableScroll() {
 }
 
 const handleClick = (menuIsOpen, setMenuIsOpen) => {
+  //TODO: Make only menu scroll in landscape mode
+
   setMenuIsOpen(!menuIsOpen)
   if (menuIsOpen) {
     enableScroll()
