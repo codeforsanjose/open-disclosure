@@ -11,7 +11,7 @@ import WebIcon from "../../static/images/web.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import ArrowIcon from "../../static/images/arrow.png"
-import ChartSection from "../components/ChartSection"
+import ChartSection from "../components/chartSection"
 import NoData from "../components/noData"
 
 // TODO Hook up charts to real data
@@ -46,7 +46,7 @@ export default function Candidate({ data }) {
         pageTitle={Name}
         pageSubtitle={seat}
       >
-        <div className={styles.mainSection}>
+        <div className={styles.container}>
           <section>
             <SectionHeader isPageHeader title={Name} />
             <div className={styles.aboutSection}>
@@ -110,37 +110,43 @@ export default function Candidate({ data }) {
                   <TotalAmountPanelItem type="balance" total={271622} />
                 </div>
               </section>
-              <ChartSection
-                title="Where the money is coming from"
-                type="contributions"
-                id="contributions"
-                total={654876}
-                data={contributions}
-              />
-              <Link className={styles.seeAllLink} to="/">
-                See all contributions
-                <img
-                  alt="Right arrow icon"
-                  className={`${styles.icon} ${styles.seeAllIcon}`}
-                  src={ArrowIcon}
-                />
-              </Link>
-              <ChartSection
-                title="How the money is being spent"
-                type="expenditures"
-                id="expenditures"
-                total={383254}
-                data={expenditures}
-              />
-              <ChartSection
-                title="Breakdown by region"
-                type="contributions"
-                id="balance"
-                total={654876}
-                data={breakdowns}
-                showPercentages
-              />
               <section>
+                <ChartSection
+                  title="Where the money is coming from"
+                  type="contributions"
+                  id="contributions"
+                  total={654876}
+                  data={contributions}
+                />
+                <Link className={styles.seeAllLink} to="/">
+                  See all contributions
+                  <img
+                    alt="Right arrow icon"
+                    className={`${styles.icon} ${styles.seeAllIcon}`}
+                    src={ArrowIcon}
+                  />
+                </Link>
+              </section>
+              <section>
+                <ChartSection
+                  title="How the money is being spent"
+                  type="expenditures"
+                  id="expenditures"
+                  total={383254}
+                  data={expenditures}
+                />
+              </section>
+              <section>
+                <ChartSection
+                  title="Breakdown by region"
+                  type="contributions"
+                  id="balance"
+                  total={654876}
+                  data={breakdowns}
+                  showPercentages
+                />
+              </section>
+              <section className={styles.committees}>
                 <SectionHeader title="Other committees controlled by candidate" />
                 {data.candidate.Committees.map(({ Name }) => (
                   <Link className={styles.committeeLink}>{Name}</Link>

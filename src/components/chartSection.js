@@ -15,11 +15,11 @@ function ChartSection({
   ...passProps
 }) {
   return (
-    <section id={id} className={styles.section}>
+    <div id={id}>
       <SectionHeader title={title} isSubsection={isSubsection} />
       <TotalAmountItem type={type} total={total} />
       <BarChart type={type} total={total} rows={data} {...passProps} />
-    </section>
+    </div>
   )
 }
 

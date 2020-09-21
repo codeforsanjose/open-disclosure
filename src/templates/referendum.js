@@ -8,8 +8,6 @@ import SectionHeader from "../components/sectionHeader"
 import styles from "./referendum.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
-import ChartSection from "../components/ChartSection"
-import BarChart from "../components/barChart"
 import CommitteeCharts from "../components/committeeCharts"
 
 const supportingCommittees = [
