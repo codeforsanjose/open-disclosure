@@ -175,14 +175,16 @@ export default function sideNav({
             />
             <div className={styles.innerContainer}>
               <nav className={styles.navbar}>
-                <div className={styles.select}>
-                  <Select
-                    styles={customStyles}
-                    placeholder={isCandidate ? pageSubtitle : selectedTitle}
-                    options={menuOptions}
-                    onChange={(val, act) => onSelect(val, act, Date)}
-                  />
-                </div>
+                {!isCandidate && (
+                  <div className={styles.select}>
+                    <Select
+                      styles={customStyles}
+                      placeholder={isCandidate ? pageSubtitle : selectedTitle}
+                      options={menuOptions}
+                      onChange={(val, act) => onSelect(val, act, Date)}
+                    />
+                  </div>
+                )}
                 <ul className={styles.sidebar}>
                   {menuOptions.map((section, index) => (
                     <li key={section.label} className={styles.section}>
