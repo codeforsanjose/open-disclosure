@@ -49,6 +49,7 @@ export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
 
   const currentElection = props.data.allElection.edges[0].node
+  console.log(currentElection)
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )
@@ -73,6 +74,7 @@ export default function MainPage(props) {
   })
 
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
+  const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
 
   const snapshot = {
     title: "San José live election snapshot",
@@ -126,7 +128,7 @@ export default function MainPage(props) {
         description: "Track who opposes or supports upcoming ballot measures.",
         buttonText: "View ballot measures",
         image: blue,
-        href: "/measures",
+        href: referendumsPageLink,
       },
       {
         title: "Compare local candidates",
@@ -166,7 +168,11 @@ export default function MainPage(props) {
                 <div className={styles.primaryCTA}>
                   <Button text="Explore candidates" href={candidatesPageLink} />
                 </div>
-                <Button secondary text="View measures" href="/measures" />
+                <Button
+                  secondary
+                  text="View measures"
+                  href={referendumsPageLink}
+                />
               </div>
             </div>
             <div className={styles.heroRight}>
@@ -211,6 +217,13 @@ export const query = graphql`
               fields {
                 slug
               }
+            }
+          }
+          Referendums {
+            Title
+            Description
+            fields {
+              slug
             }
           }
         }

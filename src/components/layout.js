@@ -62,6 +62,9 @@ export default function Layout(props) {
                   Title
                   Description
                   Total_Contributions
+                  fields {
+                    slug
+                  }
                 }
               }
             }
@@ -81,7 +84,7 @@ export default function Layout(props) {
           },
           {
             name: "Measures",
-            endpoint: "/referendums",
+            endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
           },
           {
             name: "About",

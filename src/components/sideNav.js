@@ -105,9 +105,7 @@ function formatMenuForMeasures(measureData) {
   measureData.forEach(measure => {
     menu.options.push({
       label: measure.Title,
-      value: measure.Title.toLowerCase()
-        .split(" ")
-        .join("-"),
+      value: measure.fields.slug,
     })
   })
   return menu
@@ -148,6 +146,9 @@ export default function sideNav({
                   Title
                   Description
                   Total_Contributions
+                  fields {
+                    slug
+                  }
                 }
               }
             }

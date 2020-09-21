@@ -8,6 +8,7 @@ const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
 const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
+const REFERENDUM_NODE_TYPE = `Referendum`
 
 const DUMMY_DATA = {
   candidates: {
@@ -93,7 +94,9 @@ async function fetchEndpoint(endpoint) {
       `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
-      return await response.json()
+      return DUMMY_DATA[endpoint]
+
+      // return await response.json()
     }
   } catch (networkError) {
     console.warn(
@@ -134,6 +137,7 @@ exports.sourceNodes = async ({
     })
   })
   const election = electionData.Elections["11/3/2020"]
+  console.log(election.Referendums)
   createNode({
     ...election,
     OfficeElections: election.OfficeElections.map(officeElection => {
@@ -149,6 +153,22 @@ exports.sourceNodes = async ({
           type: OFFICE_ELECTION_NODE_TYPE,
           content: JSON.stringify(officeElection),
           contentDigest: createContentDigest(officeElection),
+        },
+      })
+      return id
+    }),
+    Referendums: election.Referendums.map(referendum => {
+      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
+
+      createNode({
+        ...referendum,
+        id,
+        parent: null,
+        children: [],
+        internal: {
+          type: REFERENDUM_NODE_TYPE,
+          content: JSON.stringify(referendum),
+          contentDigest: createContentDigest(referendum),
         },
       })
       return id
@@ -203,6 +223,9 @@ exports.createPages = async ({ graphql, actions }) => {
               Title
               Description
               Total_Contributions
+              fields {
+                slug
+              }
             }
           }
         }
@@ -275,12 +298,19 @@ exports.createSchemaCustomization = ({ actions }) => {
       Date: String 
       TotalContributions: String 
       OfficeElections: [OfficeElection] @link
+      Referendums: [Referendum] @link
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
       TotalContributions: String
+    }
+
+    type Referendum implements Node {
+      Title: String!
+      Description: String
+      Total_Contributions: String
     }
 
     type Metadata implements Node{

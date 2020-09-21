@@ -25,6 +25,13 @@ export default () => {
                     slug
                   }
                 }
+                Referendums {
+                  Title
+                  Description
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
@@ -32,6 +39,7 @@ export default () => {
       `}
       render={data => {
         const currentElection = data.allElection.edges[0].node
+        console.log(currentElection)
         const links = [
           {
             pageName: "Home",
@@ -43,7 +51,7 @@ export default () => {
           },
           {
             pageName: "Measures",
-            href: "/referendums",
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
           },
           {
             pageName: "Find Your Ballot",
