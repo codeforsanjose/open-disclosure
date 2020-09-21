@@ -49,7 +49,6 @@ export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
 
   const currentElection = props.data.allElection.edges[0].node
-  console.log(currentElection)
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )

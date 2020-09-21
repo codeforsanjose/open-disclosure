@@ -137,7 +137,6 @@ exports.sourceNodes = async ({
     })
   })
   const election = electionData.Elections["11/3/2020"]
-  console.log(election.Referendums)
   createNode({
     ...election,
     OfficeElections: election.OfficeElections.map(officeElection => {

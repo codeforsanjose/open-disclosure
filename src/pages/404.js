@@ -39,7 +39,6 @@ export default () => {
       `}
       render={data => {
         const currentElection = data.allElection.edges[0].node
-        console.log(currentElection)
         const links = [
           {
             pageName: "Home",
