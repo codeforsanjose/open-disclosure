@@ -40,8 +40,8 @@ def get_total_contributions(serve_fake=True):
 def get_candidates(candidate_id, serve_fake=False):
     """
     Get all the candidates from the current election period or
-    a specific candidate 
-    :param candidate_id: unique identifier associated with each candidate {election-title;cand-name;election-date} 
+    a specific candidate
+    :param candidate_id: unique identifier associated with each candidate {election-title;cand-name;election-date}
     :type candidate_id: string
     :return: data on all candidates or for one specific candidate
     :rtype: JSON
@@ -49,15 +49,21 @@ def get_candidates(candidate_id, serve_fake=False):
     try:
         redis = RedisClient()
         candidateShape = redis.getCandidateShape()
-        if candidate_id is None:
-            # TODO: Sync up with Front-End for the spec
-            if candidateShape:
+        if candidateShape:
+            if candidate_id is None:
+                return jsonify(candidateShape)
+            else:
+                # TODO: Sync up with Front-End for the spec. Currently the ID contains "/".
+                # candidateIDDict = [{x['ID']: x}
+                #                    for x in candidateShape['Candidates']]
+                # if candidate_id in candidateIDDict:
+                #     return jsonify({'Candidate': candidateIDDict[candidate_id]})
+                # else:
+                #     return jsonify({'Candidate': {}})
                 return jsonify(candidateShape)
         else:
-            if candidateShape:
-                return jsonify(candidateShape)
-        # TODO: discuss when index in redis is not found
-        return jsonify({"Candidates": []})
+            # TODO: discuss when index in redis is not found
+            return jsonify({"Candidates": []})
     except Exception as error:
         return error_response(f"{error}")
 
