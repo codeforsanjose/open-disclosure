@@ -49,8 +49,24 @@
   }
 }
 
-.active .linkContainer:hover {
+.active {
+  pointer-events: none;
+  .text {
+    font-weight: bold;
+  }
+}
+
+.active .linkContainer {
   margin-left: 0;
+  .selected {
+    display: none;
+  }
+  &:hover {
+    cursor: default;
+    .selected {
+      display: none;
+    }
+  }
 }
 
 .selected {
