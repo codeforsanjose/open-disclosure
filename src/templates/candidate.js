@@ -17,13 +17,6 @@ import ArrowIcon from "../../static/images/arrow.png"
 import NoData from "../components/noData"
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 
-// TODO Hook up charts to real data
-const breakdowns = [
-  { label: "Out of State", value: 65487 },
-  { label: "Within California", value: 327438 },
-  { label: "Within San José", value: 301242 },
-]
-
 function ChartSection({ id, title, type, total, data, ...passProps }) {
   return (
     <section id={id} className={styles.section}>
@@ -39,6 +32,7 @@ export default function Candidate({ data }) {
     Name,
     Committees,
     ExpenditureByType,
+    FundingByGeo,
     FundingByType,
     TotalLOAN,
     TotalRCPT,
@@ -50,6 +44,7 @@ export default function Candidate({ data }) {
   const hasData = !isNaN(TotalRCPT) && !isNaN(TotalEXPN)
   const totalFunding = TotalRCPT + TotalLOAN
   const balance = totalFunding - TotalEXPN
+  const outOfStateFunding = totalFunding - FundingByGeo.CA
 
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
@@ -166,7 +161,10 @@ export default function Candidate({ data }) {
                 type="contributions"
                 id="balance"
                 total={totalFunding}
-                data={breakdowns}
+                data={[
+                  { label: "Within California", value: FundingByGeo.CA },
+                  { label: "Out of state", value: outOfStateFunding },
+                ]}
                 showPercentages
               />
               {Committees && Committees.legnth > 0 ? (
@@ -197,6 +195,9 @@ export const query = graphql`
         IND
         PTY
         OTH
+      }
+      FundingByGeo {
+        CA
       }
       ExpenditureByType {
         SAL
