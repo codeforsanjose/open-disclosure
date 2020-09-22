@@ -1,20 +1,21 @@
+import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
+import { Link, graphql } from "gatsby"
 import TotalAmountItem, {
   TotalAmountPanelItem,
 } from "../components/totalAmountItem"
 
+import ArrowIcon from "../../static/images/arrow.png"
 import BarChart from "../components/barChart"
 import Layout from "../components/layout"
-import SideNav from "../components/sideNav"
+import NoData from "../components/noData"
 import React from "react"
 import SectionHeader from "../components/sectionHeader"
-import { graphql, Link } from "gatsby"
+import SideNav from "../components/sideNav"
+import TwitterIcon from "../../static/images/twitter.png"
+import VotersEdgeIcon from "../../static/images/votersEdge.png"
+import WebIcon from "../../static/images/web.png"
 import styles from "./candidate.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
-import WebIcon from "../../static/images/web.png"
-import VotersEdgeIcon from "../../static/images/votersEdge.png"
-import TwitterIcon from "../../static/images/twitter.png"
-import NoData from "../components/noData"
-import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 
 function ChartSection({ id, title, type, total, data, ...passProps }) {
   return (
