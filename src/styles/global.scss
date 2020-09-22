@@ -44,15 +44,6 @@ p {
   font-family: "Lato";
 }
 
-// div,
-// section,
-// header,
-// nav,
-// ul {
-//   display: flex;
-//   flex-direction: column;
-// }
-
 a,
 a:hover {
   text-decoration: none;
@@ -60,21 +51,6 @@ a:hover {
 
 li {
   list-style-type: none;
-}
-
-.responsive {
-  max-height: auto;
-  max-width: 100%;
-  min-width: 50%;
-}
-
-.is-draggable {
-  cursor: move;
-  cursor: grab;
-}
-
-.is-dragging {
-  cursor: grabbing;
 }
 
 @media screen and (max-width: 760px) {

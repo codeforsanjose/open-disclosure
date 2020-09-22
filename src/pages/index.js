@@ -73,6 +73,7 @@ export default function MainPage(props) {
   })
 
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
+  const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums["11/3/2020"].fields.slug}`
 
   const snapshot = {
     title: "San José live election snapshot",
@@ -126,7 +127,7 @@ export default function MainPage(props) {
         description: "Track who opposes or supports upcoming ballot measures.",
         buttonText: "View ballot measures",
         image: blue,
-        href: "/measures",
+        href: referendumsPageLink,
       },
       {
         title: "Compare local candidates",
@@ -149,32 +150,33 @@ export default function MainPage(props) {
   return (
     <Layout windowIsLarge={windowIsLarge}>
       <div className={styles.container}>
-        <header className={styles.hero}>
-          <div className={styles.heroLeft}>
-            <h1>
-              More money,
-              <br />
-              more transparency.
-            </h1>
-            <h2>
-              Keep tabs on the influence of money
-              <br />
-              in local San José elections.
-            </h2>
-            <div className={styles.heroButtonContainer}>
-              <div className={styles.primaryCTA}>
-                <Button text="Explore candidates" href={candidatesPageLink} />
+        <header className={styles.heroOuterContainer}>
+          <div className={styles.heroInnerContainer}>
+            <div className={styles.heroLeft}>
+              <h1>
+                More money,
+                <br />
+                more transparency.
+              </h1>
+              <h2>
+                Keep tabs on the influence of money
+                <br />
+                in local San José elections.
+              </h2>
+              <div className={styles.heroButtonContainer}>
+                <div className={styles.primaryCTA}>
+                  <Button text="Explore candidates" href={candidatesPageLink} />
+                </div>
+                <Button
+                  secondary
+                  text="View measures"
+                  href={referendumsPageLink}
+                />
               </div>
-              <Button secondary text="View measures" href="/measures" />
             </div>
-          </div>
-          <div className={styles.heroRight}>
-            <img
-              alt="header"
-              className="responsive"
-              width="724px"
-              src={headerBlob}
-            />
+            <div className={styles.heroRight}>
+              <img alt="header" width="724px" src={headerBlob} />
+            </div>
           </div>
         </header>
         <MainPageSection secondary {...snapshot} />
@@ -214,6 +216,13 @@ export const query = graphql`
               fields {
                 slug
               }
+            }
+          }
+          Referendums {
+            Title
+            Description
+            fields {
+              slug
             }
           }
         }

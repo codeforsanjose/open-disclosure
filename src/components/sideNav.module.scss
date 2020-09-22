@@ -3,12 +3,14 @@
 .innerContainer {
   display: flex;
   flex-direction: row;
-  padding: 10rem;
+  padding: 5rem;
+  max-width: 1440px;
+  margin: auto;
 }
 
 .navbar {
   flex: 2;
-  margin-right: 10rem;
+  margin-right: 5rem;
 }
 
 .section {
@@ -76,7 +78,7 @@
 @media screen and (max-width: 760px) {
   .innerContainer {
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .navbar {

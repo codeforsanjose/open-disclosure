@@ -58,6 +58,14 @@ export default function Layout(props) {
                     slug
                   }
                 }
+                Referendums {
+                  Title
+                  Description
+                  Total_Contributions
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
@@ -76,7 +84,7 @@ export default function Layout(props) {
           },
           {
             name: "Measures",
-            endpoint: "/measures",
+            endpoint: `/${election.Date}/referendums/${election.Referendums["11/3/2020"].fields.slug}`,
           },
           {
             name: "About",

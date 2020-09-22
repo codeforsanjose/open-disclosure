@@ -25,6 +25,13 @@ export default () => {
                     slug
                   }
                 }
+                Referendums {
+                  Title
+                  Description
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
@@ -43,7 +50,7 @@ export default () => {
           },
           {
             pageName: "Measures",
-            href: "/measures",
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums["11/3/2020"].fields.slug}`,
           },
           {
             pageName: "Find Your Ballot",

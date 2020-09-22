@@ -1,8 +1,12 @@
 @import "../styles/colors";
 
 .container {
-  padding: 10rem 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 10rem;
+  max-width: 1440px;
+  margin: auto;
 }
 
 .text {

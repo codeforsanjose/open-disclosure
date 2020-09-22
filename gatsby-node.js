@@ -8,6 +8,7 @@ const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
 const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
+const REFERENDUM_NODE_TYPE = `Referendum`
 
 const DUMMY_DATA = {
   candidates: {
@@ -93,6 +94,8 @@ async function fetchEndpoint(endpoint) {
       `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
+      // NOTE: If `gatsby develop` gives errors related to errors like `Cannot query field "fields" on type "OfficeElection"`, comment return DUMMY_DATA[endpoints] back in
+      // return DUMMY_DATA[endpoint]
       return await response.json()
     }
   } catch (networkError) {
@@ -153,6 +156,22 @@ exports.sourceNodes = async ({
       })
       return id
     }),
+    Referendums: election.Referendums.map(referendum => {
+      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
+
+      createNode({
+        ...referendum,
+        id,
+        parent: null,
+        children: [],
+        internal: {
+          type: REFERENDUM_NODE_TYPE,
+          content: JSON.stringify(referendum),
+          contentDigest: createContentDigest(referendum),
+        },
+      })
+      return id
+    }),
     id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
     parent: null,
     children: [],
@@ -199,17 +218,13 @@ exports.createPages = async ({ graphql, actions }) => {
                 }
               }
             }
-          }
-        }
-      }
-      allMeasuresJson {
-        edges {
-          node {
-            id
-            electionDate
-            name
-            fields {
-              slug
+            Referendums {
+              Title
+              Description
+              TotalContributions
+              fields {
+                slug
+              }
             }
           }
         }
@@ -236,15 +251,15 @@ exports.createPages = async ({ graphql, actions }) => {
         })
       })
     })
-  })
-  result.data.allMeasuresJson.edges.forEach(({ node }) => {
-    createPage({
-      path: `/${node.electionDate}/referendum/${node.fields.slug}`,
-      component: path.resolve("src/templates/measure.js"),
-      context: {
-        id: node.id,
-        slug: node.fields.slug,
-      },
+    node.Referendums.forEach(referendum => {
+      createPage({
+        path: `/${node.Date}/referendums/${referendum.fields.slug}`,
+        component: path.resolve("src/templates/referendum.js"),
+        context: {
+          slug: referendum.fields.slug,
+          id: referendum.ID,
+        },
+      })
     })
   })
 }
@@ -275,24 +290,31 @@ exports.createSchemaCustomization = ({ actions }) => {
       apiNode: Candidate @link(by: "ID" from: "id")
     }
 
-    type MeasuresJson implements Node {
-      electionDate: String!
-      title: String!
-      description: String!
-      ballotLanguage: String!
-    }
-
     type Election implements Node {
       Title: String!
       Date: String 
       TotalContributions: String 
       OfficeElections: [OfficeElection] @link
+      Referendums: [Referendum] @link
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
       TotalContributions: String
+    }
+
+    type Referendum implements Node {
+      Title: String!
+      Description: String
+      Total_Contributions: String
+    }
+
+    type MeasuresJson implements Node {
+      electionDate: String!
+      title: String!
+      description: String!
+      ballotLanguage: String!
     }
 
     type Metadata implements Node{
