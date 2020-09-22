@@ -342,6 +342,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       seat: String
       ballotDesignation: String
       website: String
+      votersEdge: String
       apiNode: Candidate @link(by: "ID" from: "id")
     }
 
