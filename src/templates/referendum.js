@@ -96,7 +96,7 @@ export const query = graphql`
           Referendums {
             Title
             Description
-            Total_Contributions
+            TotalContributions
           }
         }
       }

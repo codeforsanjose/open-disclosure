@@ -61,7 +61,7 @@ export default function Layout(props) {
                 Referendums {
                   Title
                   Description
-                  Total_Contributions
+                  TotalContributions
                   fields {
                     slug
                   }

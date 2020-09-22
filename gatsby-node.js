@@ -272,6 +272,10 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   createTypes(`
+    type NodeFields {
+      slug: String
+    }
+
     type Committee {
       Name: String
       TotalFunding: String
@@ -324,6 +328,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       FundingByType: FundingTypeBreakdown
       ExpenditureByType: ExpenditureTypeBreakdown
       jsonNode: CandidatesJson @link(by: "id" from: "ID")
+      fields: NodeFields
     }
 
     type CandidatesJson implements Node {
@@ -342,18 +347,21 @@ exports.createSchemaCustomization = ({ actions }) => {
       TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
       Referendums: [Referendum] @link
+      fields: NodeFields
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
       TotalContributions: Float
+      fields: NodeFields
     }
 
     type Referendum implements Node {
       Title: String!
       Description: String
-      Total_Contributions: String
+      TotalContributions: String
+      fields: NodeFields 
     }
 
     type MeasuresJson implements Node {

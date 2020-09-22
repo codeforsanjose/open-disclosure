@@ -145,7 +145,7 @@ export default function sideNav({
                 Referendums {
                   Title
                   Description
-                  Total_Contributions
+                  TotalContributions
                   fields {
                     slug
                   }
