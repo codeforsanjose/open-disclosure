@@ -121,8 +121,13 @@ exports.sourceNodes = async ({
     fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
+    const { TotalRCPT, TotalLOAN } = candidate
+    // We're currently using RCPT because all the aggregations only use RCPT.
+    // TODO Include LOAN in TotalContributions
+    const TotalContributions = TotalRCPT
     createNode({
       ...candidate,
+      TotalContributions,
       id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
@@ -257,11 +262,52 @@ exports.createSchemaCustomization = ({ actions }) => {
       TotalFunding: String
     }
 
+    type GeoBreakdown {
+      CA: Float
+    }
+
+    type FundingTypeBreakdown {
+      IND: Float
+      COM: Float
+      OTH: Float
+      PTY: Float
+      SCC: Float
+    }
+
+    type ExpenditureTypeBreakdown {
+      SAL: Float
+      CMP: Float
+      CNS: Float
+      CVC: Float
+      FIL: Float
+      FND: Float
+      LIT: Float
+      MBR: Float
+      MTG: Float
+      OFC: Float
+      POL: Float
+      POS: Float
+      PRO: Float
+      PRT: Float
+      RAD: Float
+      RFD: Float
+      TEL: Float
+      TRS: Float
+      WEB: Float
+    }
+
     type Candidate implements Node {
       id: ID!
       ID: String!
       Name: String!
       Committees: [Committee]
+      TotalContributions: Float 
+      TotalEXPN: Float
+      TotalLOAN: Float
+      TotalRCPT: Float
+      FundingByGeo: GeoBreakdown
+      FundingByType: FundingTypeBreakdown
+      ExpenditureByType: ExpenditureTypeBreakdown
       jsonNode: CandidatesJson @link(by: "id" from: "ID")
     }
 
@@ -285,14 +331,14 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Election implements Node {
       Title: String!
       Date: String 
-      TotalContributions: String 
+      TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
-      TotalContributions: String
+      TotalContributions: Float 
     }
 
     type Metadata implements Node{

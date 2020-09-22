@@ -13,7 +13,6 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import WebIcon from "../../static/images/web.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
-import ArrowIcon from "../../static/images/arrow.png"
 import NoData from "../components/noData"
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 
@@ -34,17 +33,14 @@ export default function Candidate({ data }) {
     ExpenditureByType,
     FundingByGeo,
     FundingByType,
-    TotalLOAN,
-    TotalRCPT,
+    TotalContributions,
     TotalEXPN,
     jsonNode,
   } = data.candidate
   const { seat, ballotDesignation, website, twitter } = jsonNode
 
-  const hasData = !isNaN(TotalRCPT) && !isNaN(TotalEXPN)
-  const totalFunding = TotalRCPT + TotalLOAN
-  const balance = totalFunding - TotalEXPN
-  const outOfStateFunding = totalFunding - FundingByGeo.CA
+  const balance = TotalContributions - TotalEXPN
+  const outOfStateFunding = TotalContributions - FundingByGeo.CA
 
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
@@ -105,7 +101,7 @@ export default function Candidate({ data }) {
               </div>
             </div>
           </section>
-          {!hasData ? (
+          {TotalContributions == null ? (
             <NoData page="candidate" />
           ) : (
             <>
@@ -114,7 +110,7 @@ export default function Candidate({ data }) {
                 <div className={styles.totals}>
                   <TotalAmountPanelItem
                     type="contributions"
-                    total={totalFunding}
+                    total={TotalContributions}
                   />
                   <TotalAmountPanelItem type="expenditures" total={TotalEXPN} />
                   <TotalAmountPanelItem type="balance" total={balance} />
@@ -124,7 +120,7 @@ export default function Candidate({ data }) {
                 title="Where the money is coming from"
                 type="contributions"
                 id="contributions"
-                total={totalFunding}
+                total={TotalContributions}
                 data={Object.keys(FundingByType)
                   .filter(key => FundingByType[key] != null)
                   .map(key => ({
@@ -151,7 +147,7 @@ export default function Candidate({ data }) {
                 title="Breakdown by region"
                 type="contributions"
                 id="balance"
-                total={totalFunding}
+                total={TotalContributions}
                 data={[
                   { label: "Within California", value: FundingByGeo.CA },
                   { label: "Out of state", value: outOfStateFunding },
@@ -178,9 +174,8 @@ export const query = graphql`
   query($id: String) {
     candidate(ID: { eq: $id }) {
       Name
+      TotalContributions
       TotalEXPN
-      TotalLOAN
-      TotalRCPT
       FundingByType {
         COM
         IND

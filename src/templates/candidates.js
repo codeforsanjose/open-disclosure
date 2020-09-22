@@ -18,11 +18,12 @@ export default function Candidates({ data }) {
           >
             <div className={styles.candidateList}>
               {election.OfficeElections.map(
-                ({ Candidates, fields: { slug } }) =>
+                ({ Candidates, TotalContributions, fields: { slug } }) =>
                   Candidates.filter(Boolean).map(candidate => (
                     <CandidatesListItem
                       path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
                       key={candidate.fields.slug}
+                      electionTotal={TotalContributions}
                       {...candidate}
                     />
                   ))
@@ -47,8 +48,12 @@ export const query = graphql`
             Candidates {
               id
               Name
+              TotalContributions
               fields {
                 slug
+              }
+              jsonNode {
+                ballotDesignation
               }
             }
             fields {
