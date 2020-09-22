@@ -56,7 +56,6 @@ export default function Candidate({ data }) {
       >
         <div className={styles.mainSection}>
           <section>
-            <SectionHeader title={Name} />
             <div className={styles.aboutSection}>
               <img
                 className={styles.profilePhoto}
@@ -134,14 +133,6 @@ export default function Candidate({ data }) {
                   }))
                   .sort((a, b) => b.value - a.value)}
               />
-              <Link className={styles.seeAllLink} to="/">
-                See all contributions
-                <img
-                  alt="Right arrow icon"
-                  className={`${styles.icon} ${styles.seeAllIcon}`}
-                  src={ArrowIcon}
-                />
-              </Link>
               <ChartSection
                 title="How the money is being spent"
                 type="expenditures"
