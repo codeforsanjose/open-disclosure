@@ -17,13 +17,6 @@ import ArrowIcon from "../../static/images/arrow.png"
 import NoData from "../components/noData"
 
 // TODO Hook up charts to real data
-const contributions = [
-  { label: "Individual", value: 500000 },
-  { label: "Committee", value: 400000 },
-  { label: "Self-funding", value: 14000 },
-  { label: "Other", value: 8000 },
-]
-
 const expenditures = [
   { label: "Fundraising", value: 25000 },
   { label: "Media", value: 18000 },
@@ -48,8 +41,20 @@ function ChartSection({ id, title, type, total, data, ...passProps }) {
 }
 
 export default function Candidate({ data }) {
-  const { Name, jsonNode } = data.candidate
+  const {
+    Name,
+    Committees,
+    FundingByType,
+    TotalRCPT,
+    TotalEXPN,
+    jsonNode,
+  } = data.candidate
   const { seat, ballotDesignation, website, twitter } = jsonNode
+
+  const hasData = !isNaN(TotalRCPT) && !isNaN(TotalEXPN)
+  const totalFunding = TotalRCPT // TODO Should this include TotalLOAN?
+  const balance = totalFunding - TotalEXPN
+
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
@@ -110,24 +115,32 @@ export default function Candidate({ data }) {
               </div>
             </div>
           </section>
-          {data.candidate.Committees == null ? (
+          {!hasData ? (
             <NoData page="candidate" />
           ) : (
             <>
               <section>
                 <SectionHeader title="Fundraising totals" />
                 <div className={styles.totals}>
-                  <TotalAmountPanelItem type="contributions" total={654876} />
-                  <TotalAmountPanelItem type="expenditures" total={383254} />
-                  <TotalAmountPanelItem type="balance" total={271622} />
+                  <TotalAmountPanelItem
+                    type="contributions"
+                    total={totalFunding}
+                  />
+                  <TotalAmountPanelItem type="expenditures" total={TotalEXPN} />
+                  <TotalAmountPanelItem type="balance" total={balance} />
                 </div>
               </section>
               <ChartSection
                 title="Where the money is coming from"
                 type="contributions"
                 id="contributions"
-                total={654876}
-                data={contributions}
+                total={totalFunding}
+                data={[
+                  { label: "Committee", value: FundingByType.COM },
+                  { label: "Individual", value: FundingByType.IND },
+                  { label: "Party?", value: FundingByType.PTY },
+                  { label: "Other", value: FundingByType.OTH },
+                ]}
               />
               <Link className={styles.seeAllLink} to="/">
                 See all contributions
@@ -141,23 +154,25 @@ export default function Candidate({ data }) {
                 title="How the money is being spent"
                 type="expenditures"
                 id="expenditures"
-                total={383254}
+                total={TotalEXPN}
                 data={expenditures}
               />
               <ChartSection
                 title="Breakdown by region"
                 type="contributions"
                 id="balance"
-                total={654876}
+                total={totalFunding}
                 data={breakdowns}
                 showPercentages
               />
-              <section>
-                <SectionHeader title="Other committees controlled by candidate" />
-                {data.candidate.Committees.map(({ Name }) => (
-                  <Link className={styles.committeeLink}>{Name}</Link>
-                ))}
-              </section>
+              {Committees && Committees.legnth > 0 ? (
+                <section>
+                  <SectionHeader title="Other committees controlled by candidate" />
+                  {data.candidate.Committees.map(({ Name }) => (
+                    <Link className={styles.committeeLink}>{Name}</Link>
+                  ))}
+                </section>
+              ) : null}
             </>
           )}
         </div>
@@ -170,6 +185,15 @@ export const query = graphql`
   query($id: String) {
     candidate(ID: { eq: $id }) {
       Name
+      TotalEXPN
+      TotalLOAN
+      TotalRCPT
+      FundingByType {
+        COM
+        IND
+        PTY
+        OTH
+      }
       Committees {
         Name
         TotalFunding
