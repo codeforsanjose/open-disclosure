@@ -40,6 +40,7 @@ export default function Candidate({ data }) {
     Committees,
     ExpenditureByType,
     FundingByType,
+    TotalLOAN,
     TotalRCPT,
     TotalEXPN,
     jsonNode,
@@ -47,7 +48,7 @@ export default function Candidate({ data }) {
   const { seat, ballotDesignation, website, twitter } = jsonNode
 
   const hasData = !isNaN(TotalRCPT) && !isNaN(TotalEXPN)
-  const totalFunding = TotalRCPT // TODO Should this include TotalLOAN?
+  const totalFunding = TotalRCPT + TotalLOAN
   const balance = totalFunding - TotalEXPN
 
   return (
