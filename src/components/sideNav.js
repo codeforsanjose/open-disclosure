@@ -198,8 +198,7 @@ export default function sideNav({
                           return (
                             <li
                               key={`${section.label}-${race.value}`}
-                              className={`{${styles.election} ${active &&
-                                styles.active}`}
+                              className={`${active && styles.active}`}
                             >
                               <div className={styles.linkContainer}>
                                 <Link

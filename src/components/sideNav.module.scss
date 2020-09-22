@@ -13,66 +13,57 @@
   margin-right: 5rem;
 }
 
-.section {
-  margin-bottom: 2rem;
-}
-
-.text {
-  margin: 0.9rem 0;
-  font-size: 2.4rem;
-  line-height: 130%;
-}
-
-.selected {
-  border-bottom: 10px solid $secondaryGreen;
-  opacity: 0;
-  margin-top: -2.2rem;
-  z-index: 2;
-}
-
-.linkContainer {
-  max-width: fit-content;
-}
-
-.election {
-  cursor: pointer;
-  .text {
-    border: 1px solid red;
-  }
-}
-
-.active {
-  margin-left: -1rem;
-  .text {
-    padding: 0 1rem;
-    color: $primaryGreen;
-  }
-  .selected {
-    opacity: 1;
-  }
-}
-
-.election:hover {
-  .text {
-    color: $hoverGreen;
-  }
-  .selected {
-    opacity: 1;
-  }
-}
-
-.body {
-  display: flex;
-  flex-direction: column;
-  flex: 5;
-}
-
 .select {
   display: none;
 }
 
 .sidebar {
   padding-top: 8.8rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.text {
+  font-size: 2.4rem;
+  line-height: 130%;
+}
+
+.linkContainer {
+  max-width: fit-content;
+  padding: 1rem 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.active,
+.linkContainer:hover {
+  margin-left: -1rem;
+  .text {
+    padding: 0 1rem;
+    color: $primaryGreen;
+  }
+  .selected {
+    display: flex;
+  }
+}
+
+.active .linkContainer:hover {
+  margin-left: 0;
+}
+
+.selected {
+  border-bottom: 10px solid $secondaryGreen;
+  display: none;
+  margin-top: -1.2rem;
+  z-index: 1;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 5;
 }
 
 @media screen and (max-width: 760px) {
@@ -94,7 +85,7 @@
   }
 
   .text {
-    font-size: 1.4rem;
+    font-size: g.4rem;
     line-height: 1.7rem;
     margin: 1.2rem 0;
   }
