@@ -49,7 +49,6 @@ export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
 
   const currentElection = props.data.allElection.edges[0].node
-  console.log(currentElection)
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )
@@ -74,7 +73,7 @@ export default function MainPage(props) {
   })
 
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
-  const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
+  const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums["11/3/2020"].fields.slug}`
 
   const snapshot = {
     title: "San José live election snapshot",

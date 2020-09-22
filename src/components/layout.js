@@ -84,7 +84,7 @@ export default function Layout(props) {
           },
           {
             name: "Measures",
-            endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
+            endpoint: `/${election.Date}/referendums/${election.Referendums["11/3/2020"].fields.slug}`,
           },
           {
             name: "About",

@@ -39,7 +39,6 @@ export default () => {
       `}
       render={data => {
         const currentElection = data.allElection.edges[0].node
-        console.log(currentElection)
         const links = [
           {
             pageName: "Home",
@@ -51,7 +50,7 @@ export default () => {
           },
           {
             pageName: "Measures",
-            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums["11/3/2020"].fields.slug}`,
           },
           {
             pageName: "Find Your Ballot",

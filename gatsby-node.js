@@ -94,9 +94,9 @@ async function fetchEndpoint(endpoint) {
       `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
-      return DUMMY_DATA[endpoint]
-
-      // return await response.json()
+      // NOTE: If `gatsby develop` gives errors related to errors like `Cannot query field "fields" on type "OfficeElection"`, comment return DUMMY_DATA[endpoints] back in
+      // return DUMMY_DATA[endpoint]
+      return await response.json()
     }
   } catch (networkError) {
     console.warn(
@@ -137,7 +137,6 @@ exports.sourceNodes = async ({
     })
   })
   const election = electionData.Elections["11/3/2020"]
-  console.log(election.Referendums)
   createNode({
     ...election,
     OfficeElections: election.OfficeElections.map(officeElection => {
@@ -222,7 +221,7 @@ exports.createPages = async ({ graphql, actions }) => {
             Referendums {
               Title
               Description
-              Total_Contributions
+              TotalContributions
               fields {
                 slug
               }
@@ -254,14 +253,12 @@ exports.createPages = async ({ graphql, actions }) => {
     })
     node.Referendums.forEach(referendum => {
       createPage({
-        path:
-          "/" +
-          node.Date +
-          "/referendums/" +
-          referendum.Title.toLowerCase()
-            .split(" ")
-            .join("-"),
+        path: `/${node.Date}/referendums/${referendum.fields.slug}`,
         component: path.resolve("src/templates/referendum.js"),
+        context: {
+          slug: referendum.fields.slug,
+          id: referendum.ID,
+        },
       })
     })
   })
@@ -311,6 +308,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       Title: String!
       Description: String
       Total_Contributions: String
+    }
+
+    type MeasuresJson implements Node {
+      electionDate: String!
+      title: String!
+      description: String!
+      ballotLanguage: String!
     }
 
     type Metadata implements Node{
