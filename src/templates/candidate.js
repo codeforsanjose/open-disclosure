@@ -164,7 +164,7 @@ export default function Candidate({ data }) {
                 ]}
                 showPercentages
               />
-              {Committees && Committees.legnth > 0 ? (
+              {Committees && Committees.length > 0 ? (
                 <section>
                   <SectionHeader title="Other committees controlled by candidate" />
                   {data.candidate.Committees.map(({ Name }) => (
