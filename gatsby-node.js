@@ -338,7 +338,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
-      TotalContributions: Float 
+      TotalContributions: Float
     }
 
     type Metadata implements Node{
