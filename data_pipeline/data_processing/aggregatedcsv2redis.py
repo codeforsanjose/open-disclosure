@@ -42,8 +42,8 @@ class Csv2Redis:
             logger.info('{} only have {} row.'.format(
                 filename, self.data.shape[0]))
         # Add candidate ID column. candidate ID is <Ballot Item>;<CandidateControlledName>;<Election Date>
-        self.data['ID'] = self.data['Ballot Item'].map(str) + ';' + self.data['CandidateControlledName'].map(
-            str) + ';' + self.data['Election Date'].map(str)
+        self.data['ID'] = self.data['Ballot Item'].map(
+            str) + ';' + self.data['CandidateControlledName'].str.replace(' ', '-') + ';' + self.data['Election Date'].map(str)
         # Round Amount to decimal 2
         self.data['Amount'] = self.data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(
             float).round(decimals=2)
