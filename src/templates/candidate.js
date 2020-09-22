@@ -15,15 +15,9 @@ import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import ArrowIcon from "../../static/images/arrow.png"
 import NoData from "../components/noData"
+import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 
 // TODO Hook up charts to real data
-const expenditures = [
-  { label: "Fundraising", value: 25000 },
-  { label: "Media", value: 18000 },
-  { label: "Administrative", value: 14000 },
-  { label: "Campaign salaries", value: 4000 },
-]
-
 const breakdowns = [
   { label: "Out of State", value: 65487 },
   { label: "Within California", value: 327438 },
@@ -44,6 +38,7 @@ export default function Candidate({ data }) {
   const {
     Name,
     Committees,
+    ExpenditureByType,
     FundingByType,
     TotalRCPT,
     TotalEXPN,
@@ -135,12 +130,13 @@ export default function Candidate({ data }) {
                 type="contributions"
                 id="contributions"
                 total={totalFunding}
-                data={[
-                  { label: "Committee", value: FundingByType.COM },
-                  { label: "Individual", value: FundingByType.IND },
-                  { label: "Party?", value: FundingByType.PTY },
-                  { label: "Other", value: FundingByType.OTH },
-                ]}
+                data={Object.keys(FundingByType)
+                  .filter(key => FundingByType[key] != null)
+                  .map(key => ({
+                    label: ContributorCodes[key],
+                    value: FundingByType[key],
+                  }))
+                  .sort((a, b) => b.value - a.value)}
               />
               <Link className={styles.seeAllLink} to="/">
                 See all contributions
@@ -155,7 +151,14 @@ export default function Candidate({ data }) {
                 type="expenditures"
                 id="expenditures"
                 total={TotalEXPN}
-                data={expenditures}
+                data={Object.keys(ExpenditureByType)
+                  .filter(key => ExpenditureByType[key] != null)
+                  .map(key => ({
+                    label: ExpenditureCodes[key],
+                    value: ExpenditureByType[key],
+                  }))
+                  .sort((a, b) => b.value - a.value)
+                  .slice(0, 4)}
               />
               <ChartSection
                 title="Breakdown by region"
@@ -193,6 +196,27 @@ export const query = graphql`
         IND
         PTY
         OTH
+      }
+      ExpenditureByType {
+        SAL
+        CMP
+        CNS
+        CVC
+        FIL
+        FND
+        LIT
+        MBR
+        MTG
+        OFC
+        POL
+        POS
+        PRO
+        PRT
+        RAD
+        RFD
+        TEL
+        TRS
+        WEB
       }
       Committees {
         Name
