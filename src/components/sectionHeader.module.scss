@@ -7,6 +7,28 @@
   }
 }
 
+.pageHeader {
+  h3 {
+    font-size: 4.5rem;
+    line-height: 5.85rem;
+  }
+  p {
+    margin-top: 2rem;
+    font-size: 2.4rem;
+    line-height: 3.12rems;
+  }
+}
+
+.subsection {
+  h3 {
+    font-size: 2.8rem;
+    margin: 4rem 0;
+  }
+  .divider {
+    display: none;
+  }
+}
+
 .divider {
   width: 100%;
   border: 0.2rem solid $backgroundGray;

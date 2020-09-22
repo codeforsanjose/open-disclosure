@@ -1,5 +1,10 @@
-.container {
-  padding: 10rem 20rem;
+.outerContainer {
+  padding: 10rem;
+}
+
+.innerContainer {
+  max-width: 1440px;
+  margin: auto;
 
   h1 {
     font-size: 3.2rem;
@@ -10,14 +15,14 @@
     font-size: 2rem;
     line-height: 2.6rem;
   }
+}
 
-  .iframe {
-    padding-top: 5.1rem;
-  }
+.iframe {
+  padding-top: 5.1rem;
 }
 
 @media screen and (max-width: 760px) {
-  .container {
+  .outerContainer {
     padding: 2rem 5rem;
   }
 

@@ -1,31 +1,22 @@
-import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
-import { Link, graphql } from "gatsby"
-import TotalAmountItem, {
-  TotalAmountPanelItem,
-} from "../components/totalAmountItem"
-
-import ArrowIcon from "../../static/images/arrow.png"
-import BarChart from "../components/barChart"
-import Layout from "../components/layout"
-import NoData from "../components/noData"
 import React from "react"
-import SectionHeader from "../components/sectionHeader"
+import { Link, graphql } from "gatsby"
+// Components
+import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
+import SectionHeader from "../components/sectionHeader"
+import ChartSection from "../components/chartSection"
+import { TotalAmountPanelItem } from "../components/totalAmountItem"
+import NoData from "../components/noData"
+// Styles
+import styles from "./candidate.module.scss"
+// Utilities
+import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
+import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
+// Assets
+import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
-import styles from "./candidate.module.scss"
-import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
-
-function ChartSection({ id, title, type, total, data, ...passProps }) {
-  return (
-    <section id={id} className={styles.section}>
-      <SectionHeader title={title} />
-      <TotalAmountItem type={type} total={total} />
-      <BarChart type={type} total={total} rows={data} {...passProps} />
-    </section>
-  )
-}
 
 export default function Candidate({ data }) {
   const {
@@ -46,14 +37,14 @@ export default function Candidate({ data }) {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
-        candidate={true}
+        isCandidate
         headerBackground="blue"
         pageTitle={Name}
         pageSubtitle={seat}
       >
-        <div className={styles.mainSection}>
+        <div className={styles.container}>
           <section>
-            <SectionHeader title={Name} />
+            <SectionHeader isPageHeader title={Name} />
             <div className={styles.aboutSection}>
               <img
                 className={styles.profilePhoto}
@@ -118,54 +109,61 @@ export default function Candidate({ data }) {
                   <TotalAmountPanelItem type="balance" total={balance} />
                 </div>
               </section>
-              <ChartSection
-                title="Where the money is coming from"
-                type="contributions"
-                id="contributions"
-                total={TotalContributions}
-                data={Object.keys(FundingByType)
-                  .filter(key => FundingByType[key] != null)
-                  .map(key => ({
-                    label: ContributorCodes[key],
-                    value: FundingByType[key],
-                  }))
-                  .sort((a, b) => b.value - a.value)}
-              />
-              <Link className={styles.seeAllLink} to="/">
-                See all contributions
-                <img
-                  alt="Right arrow icon"
-                  className={`${styles.icon} ${styles.seeAllIcon}`}
-                  src={ArrowIcon}
+              <section>
+                <ChartSection
+                  title="Where the money is coming from"
+                  type="contributions"
+                  id="contributions"
+                  total={TotalContributions}
+                  data={Object.keys(FundingByType)
+                    .filter(key => FundingByType[key] != null)
+                    .map(key => ({
+                      label: ContributorCodes[key],
+                      value: FundingByType[key],
+                    }))
+                    .sort((a, b) => b.value - a.value)}
                 />
-              </Link>
-              <ChartSection
-                title="How the money is being spent"
-                type="expenditures"
-                id="expenditures"
-                total={TotalEXPN}
-                data={Object.keys(ExpenditureByType)
-                  .filter(key => ExpenditureByType[key] != null)
-                  .map(key => ({
-                    label: ExpenditureCodes[key],
-                    value: ExpenditureByType[key],
-                  }))
-                  .sort((a, b) => b.value - a.value)
-                  .slice(0, 4)}
-              />
-              <ChartSection
-                title="Breakdown by region"
-                type="contributions"
-                id="balance"
-                total={TotalContributions}
-                data={[
-                  { label: "Within California", value: FundingByGeo.CA },
-                  { label: "Out of state", value: outOfStateFunding },
-                ]}
-                showPercentages
-              />
+                <Link className={styles.seeAllLink} to="/">
+                  See all contributions
+                  <img
+                    alt="Right arrow icon"
+                    className={`${styles.icon} ${styles.seeAllIcon}`}
+                    src={ArrowIcon}
+                  />
+                </Link>
+              </section>
+              <section>
+                <ChartSection
+                  title="How the money is being spent"
+                  type="expenditures"
+                  id="expenditures"
+                  total={TotalEXPN}
+                  data={Object.keys(ExpenditureByType)
+                    .filter(key => ExpenditureByType[key] != null)
+                    .map(key => ({
+                      label: ExpenditureCodes[key],
+                      value: ExpenditureByType[key],
+                    }))
+                    .sort((a, b) => b.value - a.value)
+                    .slice(0, 4)}
+                />
+              </section>
+              <section>
+                <ChartSection
+                  title="Breakdown by region"
+                  type="contributions"
+                  id="balance"
+                  total={TotalContributions}
+                  data={[
+                    { label: "Within California", value: FundingByGeo.CA },
+                    { label: "Out of state", value: outOfStateFunding },
+                  ]}
+                  showPercentages
+                />
+              </section>
+
               {Committees && Committees.length > 0 ? (
-                <section>
+                <section className={styles.committees}>
                   <SectionHeader title="Other committees controlled by candidate" />
                   {data.candidate.Committees.map(({ Name }) => (
                     <Link className={styles.committeeLink}>{Name}</Link>

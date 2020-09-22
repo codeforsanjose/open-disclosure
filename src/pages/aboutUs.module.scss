@@ -1,7 +1,9 @@
 @import "../styles/colors";
 
 .container {
-  padding: 10rem 20rem;
+  padding: 10rem;
+  max-width: 1440px;
+  margin: auto;
 
   h1,
   h2,

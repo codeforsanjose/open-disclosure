@@ -41,8 +41,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "MeasuresJson" } },
-        source: "name",
+        filter: { internal: { type: "Referendum" } },
+        source: "Title",
         fieldName: "slug",
       },
     },

@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: row;
   flex: 1;
-  margin: 4.5rem 0;
+  margin: 2rem 0;
+  padding: 3rem 0;
 
   img {
     height: 12.5rem;
@@ -12,6 +13,10 @@
     border-radius: 50%;
     margin-right: 2rem;
   }
+}
+
+.container:first-of-type {
+  margin: 3rem 0 2rem;
 }
 
 .candidate {
@@ -53,16 +58,16 @@
 
 @media screen and (max-width: 760px) {
   .container {
-    margin: 3rem 0;
-
+    padding: 2rem 0;
+    margin: 1rem 0;
     img {
       height: 65px;
       width: auto;
     }
   }
 
-  .container:first-child {
-    margin-top: 2rem;
+  .container:first-of-type {
+    margin: 0;
   }
 
   .headerText {

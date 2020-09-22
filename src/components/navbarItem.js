@@ -39,10 +39,11 @@ class NavbarItem extends Component {
   }
 
   toggleMenu = () => {
-    this.state.hasLinks && this.setState(prevState => ({
-      ...prevState,
-      menuItemIsOpen: !prevState.menuItemIsOpen,
-    }));
+    this.state.hasLinks &&
+      this.setState(prevState => ({
+        ...prevState,
+        menuItemIsOpen: !prevState.menuItemIsOpen,
+      }))
   }
 
   render() {
@@ -51,8 +52,8 @@ class NavbarItem extends Component {
     return (
       <li
         className={`${styles.item} ${this.props.hidden && styles.hidden} ${this
-          .props.menuIsOpen && styles.open} ${this.props.submenu && styles.submenu}`
-        }
+          .props.menuIsOpen && styles.open} ${this.props.submenu &&
+          styles.submenu}`}
         key={`link item ${this.props.name}`}
         onClick={this.toggleMenu}
         onKeyUp={this.toggleMenu}
@@ -60,7 +61,7 @@ class NavbarItem extends Component {
       >
         <this.Anchor>
           <div className={`${styles.linkInner}`}>
-            <span>{this.props.name}</span>
+            <span>{this.props.name || this.props.position}</span>
             <div className={styles.selected} />
           </div>
           {hasLinks || this.props.arrow ? (
@@ -74,22 +75,13 @@ class NavbarItem extends Component {
             />
           ) : null}
         </this.Anchor>
-        {hasLinks ? (
+        {hasLinks && !this.props.windowIsLarge ? (
           <Menu
             menuIsOpen={this.state.menuItemIsOpen}
             submenu
             windowIsLarge={this.props.windowIsLarge}
-          >
-            {this.props.links.map(({ position, endpoint }, index) => (
-              <NavbarItem
-                endpoint={endpoint}
-                key={index}
-                name={position}
-                submenu
-                windowIsLarge={this.props.windowIsLarge}
-              />
-            ))}
-          </Menu>
+            links={this.props.links}
+          />
         ) : null}
       </li>
     )

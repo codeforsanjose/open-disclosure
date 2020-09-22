@@ -1,78 +1,88 @@
-.container {
-  .hero {
-    display: flex;
-    flex-direction: row;
-    padding: 5rem 3rem 6.2rem 4.6rem;
+.heroOuterContainer {
+  padding: 0 2rem;
+}
+
+.heroInnerContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 5rem 0 6.2rem 0;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  margin-right: 3rem;
+
+  h1 {
+    font-size: 4.8rem;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-family: "Lato";
+    font-size: 2.4rem;
+    font-weight: normal;
+    line-height: 3.4rem;
+  }
+}
+
+.heroRight {
+  margin: auto;
+
+  img {
+    max-width: 100%;
+    min-width: 20%;
+    height: auto;
+  }
+}
+
+.heroButtonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 6.2rem;
+}
+
+.primaryCTA {
+  margin-right: 1.6rem;
+}
+
+@media screen and (max-width: 760px) {
+  .heroInnerContainer {
+    flex-direction: column;
+    padding: 4rem 0;
   }
 
   .heroLeft {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
+    padding-left: 2.5rem;
 
     h1 {
-      font-size: 4.8rem;
-      margin-bottom: 2rem;
+      font-size: 2.8rem;
     }
 
     h2 {
-      font-family: "Lato";
-      font-size: 2.4rem;
-      font-weight: normal;
-      line-height: 3.4rem;
+      font-size: 1.6rem;
+      line-height: 2.1rem;
     }
   }
 
   .heroRight {
-    justify-content: center;
-    align-content: center;
+    padding: 0 0.5rem;
   }
 
   .heroButtonContainer {
-    display: flex;
-    flex-direction: row;
-    margin-top: 6.2rem;
+    flex-direction: column;
+    margin: 3.2rem 0;
+  }
+  .heroButtonContainer:first-child {
+    margin-bottom: 2rem;
   }
 
   .primaryCTA {
-    margin-right: 1.6rem;
-  }
-
-  @media screen and (max-width: 760px) {
-    .hero {
-      flex-direction: column;
-      padding: 4rem 0;
-    }
-
-    .heroLeft {
-      padding-left: 2.5rem;
-
-      h1 {
-        font-size: 2.8rem;
-      }
-
-      h2 {
-        font-size: 1.6rem;
-        line-height: 2.1rem;
-      }
-    }
-
-    .heroRight {
-      padding: 0 0.5rem;
-    }
-
-    .heroButtonContainer {
-      flex-direction: column;
-      margin: 3.2rem 0;
-    }
-    .heroButtonContainer:first-child {
-      margin-bottom: 2rem;
-    }
-
-    .primaryCTA {
-      margin-left: 0rem;
-      margin-bottom: 1.6rem;
-    }
+    margin-left: 0rem;
+    margin-bottom: 1.6rem;
   }
 }

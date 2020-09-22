@@ -1,11 +1,13 @@
 @import "../styles/colors";
 
 .hero {
-  padding: 9.5rem 8.5rem;
+  padding: 10rem 0;
 
   .text {
     flex: 1;
     justify-content: center;
+    max-width: 1440px;
+    margin: auto;
 
     h1 {
       font-size: 5.4rem;

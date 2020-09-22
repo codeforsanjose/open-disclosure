@@ -17,10 +17,10 @@ function formatDollarsInThousands(value) {
   return thousandsFormatter.format(value)
 }
 
-function Row({ label, value, total, type, showPercentages }) {
+function Row({ label, value, total, type, showPercentages, isCommittee }) {
   const percent = formatPercent(value / total)
   return (
-    <div className={styles.row}>
+    <div className={`${styles.row} ${isCommittee && styles.noLabel}`}>
       <div className={styles.rowTop}>
         <p className={styles.label}>{label}</p>
         <p className={styles.value}>
@@ -30,6 +30,7 @@ function Row({ label, value, total, type, showPercentages }) {
       <div className={styles.rowBottom}>
         <Bar percent={percent} type={type} />
       </div>
+      {isCommittee && <div className={styles.padding} />}
     </div>
   )
 }
@@ -43,18 +44,23 @@ export default function BarChart({
   total, // number
   rows, // Array<{label: string, value: number}>
   showPercentages = false, // Show percentages instead of dollar values
+  isCommittee = false, // Removes label to the left of row, places it above
 }) {
   return (
     <div className={styles.chart}>
-      {rows.map(({ label, value }) => (
-        <Row
-          key={label}
-          label={label}
-          value={value}
-          total={total}
-          type={type}
-          showPercentages={showPercentages}
-        />
+      {rows.map(({ label, title, value }) => (
+        <>
+          {isCommittee && <h4>***TO REMOVE: PLACEHOLDER COMMITTEE NAME***</h4>}
+          <Row
+            key={label}
+            label={label}
+            value={value}
+            total={total}
+            type={type}
+            isCommittee={isCommittee}
+            showPercentages={showPercentages}
+          />
+        </>
       ))}
     </div>
   )

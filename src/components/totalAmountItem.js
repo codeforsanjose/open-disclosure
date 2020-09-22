@@ -13,25 +13,39 @@ function formatDollars(value) {
 }
 
 function title(type) {
-  if (type === "expenditures") {
-    return "Total spent"
-  } else if (type === "balance") {
-    return "Current balance"
-  } else {
-    return "Total raised"
+  switch (type) {
+    case "expenditures":
+      return "Total spent";
+    case "balance":
+      return "Current balance";
+    case "measureSupport":
+      return "Total Raised to Support";
+    case "measureOppose":
+      return "Total Raised to Oppose";
+    default:
+      return "Total raised";
   }
 }
 
 function detail(type) {
-  let detail
-  if (type === "expenditures") {
-    detail = "Expenditures"
-  } else if (type === "balance") {
-    detail = "Cash on hand"
-  } else {
-    detail = "Contributions"
+  let detail;
+
+  switch (type) {
+    case "expenditures":
+      detail = "Expenditures";
+      break;
+    case "balance":
+      detail = "Cash on hand";
+      break;
+    case "measureSupport":
+    case "measureOppose":
+      break;
+    default:
+      detail = "Contributions";
+      break;
   }
-  return " (" + detail + ")"
+
+  return detail ? " (" + detail + ")" : "";
 }
 
 export default function TotalAmountItem({ total, type = "contributions" }) {

@@ -9,10 +9,10 @@
 
 @media screen and (max-width: 760px) {
   .navigation {
-    width: 100%;
     flex-direction: column;
     transition: all 350ms ease-in-out;
     margin-left: 0;
+    width: 100%;
   }
 
   .closed {

@@ -6,6 +6,8 @@ import Select from "react-select"
 import SectionHeader from "./sectionHeader"
 import LandingPageHero from "./landingPageHero"
 
+const REFERENDUMS = "Ballot Measure"
+
 const textStyles = {
   fontFamily: "Lato",
   fontWeight: "bold",
@@ -80,40 +82,48 @@ const offices = [
   { type: "San José Unified School District", filter: "sjusd" },
 ]
 
-function formatMenu(input) {
-  const menu = {}
-  const menuOptions = []
+function formatMenuForCandidates(candidateData) {
+  const menu = []
   offices.forEach(({ type, filter }) => {
     const menuGroup = { label: type, options: [] }
-    input.forEach(race => {
+    candidateData.forEach(race => {
       const title = race.Title.toLowerCase()
       if (title.includes(filter)) {
-        if (menu[type]) {
-          menu[type].push(race)
-        } else {
-          menu[type] = [race]
-        }
         menuGroup.options.push({ label: race.Title, value: race.fields.slug })
       }
     })
     if (menuGroup.options.length) {
-      menuOptions.push(menuGroup)
+      menu.push(menuGroup)
     }
   })
 
-  return [menu, menuOptions]
+  return menu
 }
 
-function onSelect({ value }, { action }, date) {
+function formatMenuForMeasures(measureData) {
+  const menu = { label: REFERENDUMS, options: [] }
+  measureData.forEach(measure => {
+    menu.options.push({
+      label: measure.Title,
+      value: measure.fields.slug,
+    })
+  })
+  return menu
+}
+
+const formatLink = label =>
+  label.includes(REFERENDUMS) ? "referendums" : "candidates"
+
+function onSelect({ label, value }, { action }, date) {
   if (action === "select-option") {
-    navigate(`/${date}/candidates/${value}`)
+    navigate(`/${date}/${formatLink(label)}/${value}`)
   }
 }
 
 export default function sideNav({
-  candidate,
   children,
   headerBackground,
+  isCandidate = false,
   pageSubtitle,
   pageTitle,
 }) {
@@ -132,15 +142,25 @@ export default function sideNav({
                     slug
                   }
                 }
+                Referendums {
+                  Title
+                  Description
+                  Total_Contributions
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
         }
       `}
       render={data => {
-        const { Date, OfficeElections } = data.allElection.edges[0].node
-        const [menu, menuOptions] = formatMenu(OfficeElections)
-        const sections = Object.keys(menu)
+        const { Date, OfficeElections, Referendums } =
+          data.allElection?.edges?.[0]?.node ?? []
+        const measureMenu = formatMenuForMeasures(Referendums)
+        const candidateMenu = formatMenuForCandidates(OfficeElections)
+        const menuOptions = [...candidateMenu, measureMenu]
         let selectedTitle = window.location.href.split("/")
         selectedTitle = selectedTitle[selectedTitle.length - 1]
           .split("-")
@@ -156,32 +176,38 @@ export default function sideNav({
             />
             <div className={styles.innerContainer}>
               <nav className={styles.navbar}>
-                <div className={styles.select}>
-                  <Select
-                    styles={customStyles}
-                    placeholder={candidate ? pageSubtitle : selectedTitle}
-                    options={menuOptions}
-                    onChange={(val, act) => onSelect(val, act, Date)}
-                  />
-                </div>
+                {!isCandidate && (
+                  <div className={styles.select}>
+                    <Select
+                      styles={customStyles}
+                      placeholder={isCandidate ? pageSubtitle : selectedTitle}
+                      options={menuOptions}
+                      onChange={(val, act) => onSelect(val, act, Date)}
+                    />
+                  </div>
+                )}
                 <ul className={styles.sidebar}>
-                  {sections.map((section, index) => (
-                    <li key={section} className={styles.section}>
-                      <h4 className={styles.text}>{section}</h4>
+                  {menuOptions.map((section, index) => (
+                    <li key={section.label} className={styles.section}>
+                      <h4 className={styles.text}>{section.label}</h4>
                       <ul>
-                        {menu[section].map(({ Title, fields: { slug } }) => {
+                        {section.options.map(race => {
                           const active =
-                            Title === selectedTitle ||
-                            (candidate && Title === pageSubtitle)
+                            race.label === selectedTitle ||
+                            (isCandidate && race.label === pageSubtitle)
                           return (
                             <li
-                              key={`${section}-${slug}`}
+                              key={`${section.label}-${race.value}`}
                               className={`{${styles.election} ${active &&
                                 styles.active}`}
                             >
                               <div className={styles.linkContainer}>
-                                <Link to={`/${Date}/candidates/${slug}`}>
-                                  <p className={styles.text}>{Title}</p>
+                                <Link
+                                  to={`/${Date}/${formatLink(section.label)}/${
+                                    race.value
+                                  }`}
+                                >
+                                  <p className={styles.text}>{race.label}</p>
                                 </Link>
                                 <div className={styles.selected} />
                               </div>
@@ -193,10 +219,7 @@ export default function sideNav({
                   ))}
                 </ul>
               </nav>
-              <div className={styles.body}>
-                <SectionHeader title={selectedTitle} />
-                {children}
-              </div>
+              <div className={styles.body}>{children}</div>
             </div>
           </div>
         )
