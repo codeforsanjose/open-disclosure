@@ -24,17 +24,17 @@ export default function Candidates({ data }) {
             pageSubtitle="City of San José Candidates"
           >
             <div className={styles.candidateList}>
-              <SectionHeader title={selectedElection} />
-              {election.OfficeElections.filter(
-                election => election.Title === selectedElection
-              ).map(({ Candidates, fields: { slug } }) =>
-                Candidates.map(candidate => (
-                  <CandidatesListItem
-                    path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
-                    key={candidate.fields.slug}
-                    {...candidate}
-                  />
-                ))
+            <SectionHeader title={selectedElection} />
+              {election.OfficeElections.map(
+                ({ Candidates, TotalContributions, fields: { slug } }) =>
+                  Candidates.filter(Boolean).map(candidate => (
+                    <CandidatesListItem
+                      path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
+                      key={candidate.fields.slug}
+                      electionTotal={TotalContributions}
+                      {...candidate}
+                    />
+                  ))
               )}
             </div>
           </SideNav>
@@ -56,8 +56,12 @@ export const query = graphql`
             Candidates {
               id
               Name
+              TotalContributions
               fields {
                 slug
+              }
+              jsonNode {
+                ballotDesignation
               }
             }
             fields {

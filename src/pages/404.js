@@ -50,7 +50,7 @@ export default () => {
           },
           {
             pageName: "Measures",
-            href: `/${currentElection.Date}/referendums/${currentElection.Referendums["11/3/2020"].fields.slug}`,
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
           },
           {
             pageName: "Find Your Ballot",
