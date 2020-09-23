@@ -65,7 +65,50 @@ class Csv2Redis:
                 totalContributions = dataPerElectionDate[dataPerElectionDate['Rec_Type'] == 'RCPT'][
                     'Amount'].sum().round(decimals=2)
                 officeElections = []
-                referendums = []
+                referendums = [
+	{
+		"Name": "Ballot Measure X",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ # Any committees linked to that candidate and election.
+			"Name": "For Measure X",
+			"TotalFunding": 300
+		}, 
+        {
+			"Name": "Against Measure X",
+			"TotalFunding": 300
+		}]
+	},
+    {
+		"Name": "Ballot Measure Y",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ 
+			"Name": "For Measure Y",
+			"TotalFunding": 456
+		}, {
+			"Name": "Against Measure Y",
+			"TotalFunding": 799
+		}]
+	},
+    {
+		"Name": "Ballot Measure Z",
+		"Election":
+		{
+			"ElectionCycle": "2020 Election Cycle"	
+		},
+        "Committee": [{ 
+			"Name": "For Measure Z",
+			"TotalFunding": 78678
+		}, {
+			"Name": "Against Measure Z",
+			"TotalFunding": 22454
+		}]
+	}]
                 for bi in dataPerElectionDate['Ballot Item'].unique():
                     dataPerElectionDateAndBallotItem = dataPerElectionDate[
                         dataPerElectionDate['Ballot Item'] == bi]
