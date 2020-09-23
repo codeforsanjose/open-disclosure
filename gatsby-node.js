@@ -77,7 +77,7 @@ const DUMMY_DATA = {
           {
             Title: "Ballot Measure C",
             Description: "This ballot measure will allow people to have fun",
-            "Total Contributions": 700,
+            TotalContributions: 700,
           },
         ],
       },
@@ -161,22 +161,26 @@ exports.sourceNodes = async ({
       })
       return id
     }),
-    Referendums: election.Referendums.map(referendum => {
-      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
+    // TODO: Switch this out for real Referendum data once edge cases get fixed
+    // Referendums: election.Referendums.map(referendum => {
+    Referendums: DUMMY_DATA.elections.Elections["11/3/2020"].Referendums.map(
+      referendum => {
+        const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
 
-      createNode({
-        ...referendum,
-        id,
-        parent: null,
-        children: [],
-        internal: {
-          type: REFERENDUM_NODE_TYPE,
-          content: JSON.stringify(referendum),
-          contentDigest: createContentDigest(referendum),
-        },
-      })
-      return id
-    }),
+        createNode({
+          ...referendum,
+          id,
+          parent: null,
+          children: [],
+          internal: {
+            type: REFERENDUM_NODE_TYPE,
+            content: JSON.stringify(referendum),
+            contentDigest: createContentDigest(referendum),
+          },
+        })
+        return id
+      }
+    ),
     id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
     parent: null,
     children: [],
