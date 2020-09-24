@@ -12,6 +12,8 @@ import pandas as pd
 from rejson import Client, Path
 
 logger = logging.getLogger(__name__)
+loggingLevel = eval('logging.' + os.environ.get('LOGGING_LEVEL', 'WARNING'))
+logging.basicConfig(level=loggingLevel, format='%(message)s')
 
 
 class Csv2Redis:
@@ -42,8 +44,10 @@ class Csv2Redis:
             logger.info('{} only have {} row.'.format(
                 filename, self.data.shape[0]))
         # Add candidate ID column. candidate ID is <Ballot Item>;<CandidateControlledName>;<Election Date>
-        self.data['ID'] = self.data['Ballot Item'].map(
-            str) + ';' + self.data['CandidateControlledName'].str.replace(' ', '-') + ';' + self.data['Election Date'].map(str)
+        self.data['Ballot Item'] = self.data['Ballot Item'].str.replace('-', ' ')
+        self.data['ID'] = self.data['Ballot Item'].str.replace(
+            ' ', '_') + ';' + self.data['CandidateControlledName'].str.replace(' ', '_') + ';' + self.data[
+                              'Election Date'].map(str)
         # Round Amount to decimal 2
         self.data['Amount'] = self.data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(
             float).round(decimals=2)
@@ -171,7 +175,7 @@ class Csv2Redis:
 
             for cid in candidateIDs:
                 candidate = {'ID': cid}
-                name = cid.split(';')[1]
+                name = cid.split(';')[1].replace('_', ' ')
                 candidate['Name'] = name
                 dataPerCandidate = dataAmount[
                     (dataAmount['CandidateControlledName'] == name) & (dataAmount['Election Date'] == electionDate)]
@@ -187,6 +191,8 @@ class Csv2Redis:
                     candidate['TotalLOAN'] = totalByRecType['Amount']['LOAN']
                 if 'S497' in totalByRecType['Amount']:
                     candidate['TotalS497'] = totalByRecType['Amount']['S497']
+                candidate['TotalFunding'] = candidate['TotalRCPT'] + \
+                                            candidate['TotalLOAN']
 
                 # Get funding by committee type
                 recpDataPerCandidate = dataPerCandidate[dataPerCandidate['Rec_Type'] == 'RCPT']
@@ -195,9 +201,16 @@ class Csv2Redis:
                 candidate['FundingByType'] = totalByComType['Amount']
 
                 # Get funding by geo
-                totalByGeo = recpDataPerCandidate.groupby(
-                    ['Entity_ST'])[['Amount']].sum().round(decimals=2).to_dict()
-                candidate['FundingByGeo'] = totalByGeo['Amount']
+                totalByGeoSJ = recpDataPerCandidate[recpDataPerCandidate['Entity_City'] == 'San Jose'][
+                    'Amount'].sum().round(decimals=2)
+                totalByGeoNonSJ = recpDataPerCandidate[recpDataPerCandidate['Entity_City'] != 'San Jose'][
+                    'Amount'].sum().round(decimals=2)
+                totalByGeoCA = recpDataPerCandidate[recpDataPerCandidate['Entity_ST'] == 'CA']['Amount'].sum().round(
+                    decimals=2)
+                totalByGeoNonCA = recpDataPerCandidate[recpDataPerCandidate['Entity_ST'] != 'CA']['Amount'].sum().round(
+                    decimals=2)
+                candidate['FundingByGeo'] = {'SJ': totalByGeoSJ, 'NonSJ': totalByGeoNonSJ, 'CA': totalByGeoCA,
+                                             'NonCA': totalByGeoNonCA}
 
                 # Get expenditure by type
                 expnDataPerCandidate = dataPerCandidate[dataPerCandidate['Rec_Type'] == 'EXPN']
@@ -206,9 +219,12 @@ class Csv2Redis:
                 candidate['ExpenditureByType'] = totalByExpnType['Amount']
 
                 # Get Committees
-                committees = recpDataPerCandidate[recpDataPerCandidate['Entity_Cd'] == 'COM'][
-                    'Entity_Nam L'].unique().tolist()
-                candidate['Committees'] = committees
+                totalByCommittees = \
+                recpDataPerCandidate[recpDataPerCandidate['Entity_Cd'] == 'COM'].groupby(['Entity_Nam L'])[
+                    ['Amount']].sum().round(decimals=2).to_dict()
+                totalByCommitteesList = [{'Name': c, 'TotalFunding': totalByCommittees['Amount'][c]} for c in
+                                         totalByCommittees['Amount']]
+                candidate['Committees'] = totalByCommitteesList
 
                 candidateShape['Candidates'].append(candidate)
                 candidateShape['Metadata'] = self.metadata
