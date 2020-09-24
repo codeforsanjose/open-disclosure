@@ -26,8 +26,15 @@ export default () => {
                   }
                 }
                 Referendums {
-                  Title
-                  Description
+                  id
+                  Name
+                  Election {
+                    ElectionCycle
+                  }
+                  Committee {
+                    Name
+                    TotalFunding
+                  }
                   fields {
                     slug
                   }

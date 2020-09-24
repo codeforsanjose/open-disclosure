@@ -118,9 +118,15 @@ exports.sourceNodes = async ({
 }) => {
   const { createNode } = actions
 
-  const [candidateData, electionData, metadata] = await Promise.all([
+  const [
+    candidateData,
+    electionData,
+    referendumData,
+    metadata,
+  ] = await Promise.all([
     fetchEndpoint("candidates"),
     fetchEndpoint("elections"),
+    fetchEndpoint("referendums"),
     fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
@@ -163,24 +169,22 @@ exports.sourceNodes = async ({
     }),
     // TODO: Switch this out for real Referendum data once edge cases get fixed
     // Referendums: election.Referendums.map(referendum => {
-    Referendums: DUMMY_DATA.elections.Elections["11/3/2020"].Referendums.map(
-      referendum => {
-        const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
+    Referendums: election.Referendums.map(referendum => {
+      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Name}`)
 
-        createNode({
-          ...referendum,
-          id,
-          parent: null,
-          children: [],
-          internal: {
-            type: REFERENDUM_NODE_TYPE,
-            content: JSON.stringify(referendum),
-            contentDigest: createContentDigest(referendum),
-          },
-        })
-        return id
-      }
-    ),
+      createNode({
+        ...referendum,
+        id,
+        parent: null,
+        children: [],
+        internal: {
+          type: REFERENDUM_NODE_TYPE,
+          content: JSON.stringify(referendum),
+          contentDigest: createContentDigest(referendum),
+        },
+      })
+      return id
+    }),
     id: createNodeId(`${ELECTION_NODE_TYPE}-${election.Date}`),
     parent: null,
     children: [],
@@ -228,9 +232,15 @@ exports.createPages = async ({ graphql, actions }) => {
               }
             }
             Referendums {
-              Title
-              Description
-              TotalContributions
+              id
+              Name
+              Election {
+                ElectionCycle
+              }
+              Committee {
+                Name
+                TotalFunding
+              }
               fields {
                 slug
               }
@@ -266,7 +276,7 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve("src/templates/referendum.js"),
         context: {
           slug: referendum.fields.slug,
-          id: referendum.ID,
+          id: referendum.id,
         },
       })
     })
@@ -361,10 +371,20 @@ exports.createSchemaCustomization = ({ actions }) => {
       fields: NodeFields
     }
 
+    type RefElectionCycle {
+      ElectionCycle: String
+    }
+
+    type RefCommittee {
+      Name: String
+      TotalFunding: Float
+    }
+
     type Referendum implements Node {
-      Title: String!
-      Description: String
-      TotalContributions: String
+      id: ID
+      Name: String!
+      Election: RefElectionCycle
+      Committee: RefCommittee
       fields: NodeFields 
     }
 

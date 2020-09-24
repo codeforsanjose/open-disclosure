@@ -48,7 +48,6 @@ const vote = {
 export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
   const currentElection = props.data.allElection.edges[0].node
-  console.log(props.data.allElection)
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )
@@ -219,8 +218,15 @@ export const query = graphql`
             }
           }
           Referendums {
-            Title
-            Description
+            id
+            Name
+            Election {
+              ElectionCycle
+            }
+            Committee {
+              Name
+              TotalFunding
+            }
             fields {
               slug
             }
