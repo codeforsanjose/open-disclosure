@@ -170,7 +170,7 @@ exports.sourceNodes = async ({
     // TODO: Switch this out for real Referendum data once edge cases get fixed
     // Referendums: election.Referendums.map(referendum => {
     Referendums: election.Referendums.map(referendum => {
-      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Name}`)
+      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${referendum.Name}`)
 
       createNode({
         ...referendum,
