@@ -48,7 +48,6 @@ const vote = {
 export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
   const currentElection = props.data.allElection.edges[0].node
-  console.log(props.data.allElection)
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )
@@ -58,14 +57,10 @@ export default function MainPage(props) {
     candidatesRunning += election.Candidates.length
     election.Candidates.forEach(candidate => {
       if (candidate) {
-        let funding = 0
-        candidate.Committees.forEach(committee => {
-          funding += parseInt(committee.TotalFunding)
-        })
         candidateList.push({
           name: candidate.Name,
           position: election.Title,
-          amount: funding,
+          amount: candidate.TotalFunding,
           image: "https://picsum.photos/180",
         })
       }
@@ -209,10 +204,7 @@ export const query = graphql`
             }
             Candidates {
               Name
-              Committees {
-                Name
-                TotalFunding
-              }
+              TotalFunding
               fields {
                 slug
               }
