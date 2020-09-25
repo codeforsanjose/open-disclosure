@@ -1,4 +1,5 @@
 import React from "react"
+import { formatDollarsInThousands } from "../common/util/formatters"
 import styles from "./candidateItem.module.scss"
 
 const CandidateItem = item => (
@@ -7,13 +8,7 @@ const CandidateItem = item => (
     <div className={styles.candidateInfo}>
       <h4>{item.name}</h4>
       <p>{item.position}</p>
-      <h3>
-        {item.amount.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-          maximumSignificantDigits: 3,
-        })}
-      </h3>
+      <h3>{formatDollarsInThousands(item.amount)}</h3>
       <p className={styles.amountRaised}>Amount raised</p>
     </div>
   </div>
