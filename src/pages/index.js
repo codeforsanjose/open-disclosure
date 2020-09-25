@@ -52,7 +52,7 @@ export default function MainPage(props) {
     props.data.allMetadata.edges[0].node.DateProcessed
   )
   let candidatesRunning = 0
-  const candidateList = []
+  let candidateList = []
   currentElection.OfficeElections.forEach(election => {
     candidatesRunning += election.Candidates.length
     election.Candidates.forEach(candidate => {
@@ -67,6 +67,13 @@ export default function MainPage(props) {
       }
     })
   })
+  candidateList = candidateList.sort(
+    (candidate1, candidate2) => candidate2.amount - candidate1.amount
+  )
+
+  if (candidateList.length > 3) {
+    candidateList = candidateList.slice(0, 3)
+  }
 
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
   const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
