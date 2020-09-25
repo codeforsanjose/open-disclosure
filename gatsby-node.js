@@ -218,6 +218,7 @@ exports.createPages = async ({ graphql, actions }) => {
             Date
             TotalContributions
             OfficeElections {
+              id
               Title
               TotalContributions
               fields {
@@ -257,6 +258,8 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve("src/templates/candidates.js"),
         context: {
           slug: election.fields.slug,
+          officeElectionID: election.id,
+          electionDate: node.Date,
         },
       })
       election.Candidates.forEach(candidate => {
