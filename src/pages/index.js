@@ -52,24 +52,28 @@ export default function MainPage(props) {
     props.data.allMetadata.edges[0].node.DateProcessed
   )
   let candidatesRunning = 0
-  const candidateList = []
+  let candidateList = []
   currentElection.OfficeElections.forEach(election => {
     candidatesRunning += election.Candidates.length
     election.Candidates.forEach(candidate => {
       if (candidate) {
-        let funding = 0
-        candidate.Committees.forEach(committee => {
-          funding += parseInt(committee.TotalFunding)
-        })
         candidateList.push({
           name: candidate.Name,
           position: election.Title,
-          amount: funding,
+          amount: candidate.TotalFunding,
           image: "https://picsum.photos/180",
+          href: `/${currentElection.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
         })
       }
     })
   })
+  candidateList = candidateList.sort(
+    (candidate1, candidate2) => candidate2.amount - candidate1.amount
+  )
+
+  if (candidateList.length > 3) {
+    candidateList = candidateList.slice(0, 3)
+  }
 
   const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
   const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
@@ -208,10 +212,7 @@ export const query = graphql`
             }
             Candidates {
               Name
-              Committees {
-                Name
-                TotalFunding
-              }
+              TotalFunding
               fields {
                 slug
               }

@@ -2,6 +2,7 @@
 
 .container {
   display: flex;
+  min-width: 36rem;
   flex-direction: column;
   background-color: transparent;
   margin: 4rem 1.5rem 4rem;
@@ -21,7 +22,7 @@
     background-color: $primaryWhite;
     border-radius: 4px;
     margin-top: -9rem;
-    padding: 10rem 10rem 4rem;
+    padding: 10rem 1rem 4rem;
     text-align: center;
     z-index: 1;
 
@@ -29,6 +30,7 @@
     h4,
     p {
       font-family: "Lato";
+      max-width: 34rem;
     }
 
     h4 {
