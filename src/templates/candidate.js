@@ -29,7 +29,7 @@ export default function Candidate({ data }) {
     TotalEXPN,
     jsonNode,
   } = data.candidate
-  const { seat, ballotDesignation, website, twitter } = jsonNode
+  const { seat, ballotDesignation, website, twitter, votersEdge } = jsonNode
 
   const balance = TotalContributions - TotalEXPN
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
@@ -71,7 +71,7 @@ export default function Candidate({ data }) {
                     <img alt="Web icon" src={WebIcon} className={styles.icon} />
                     {website}
                   </a>
-                  <a href="/" className={styles.aboutLink}>
+                  <a href={votersEdge} className={styles.aboutLink}>
                     <img
                       alt="External link icon"
                       src={VotersEdgeIcon}
@@ -224,6 +224,7 @@ export const query = graphql`
         ballotDesignation
         website
         twitter
+        votersEdge
       }
     }
   }
