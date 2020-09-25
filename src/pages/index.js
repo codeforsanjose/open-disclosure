@@ -62,6 +62,7 @@ export default function MainPage(props) {
           position: election.Title,
           amount: candidate.TotalFunding,
           image: "https://picsum.photos/180",
+          href: `/${currentElection.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
         })
       }
     })
