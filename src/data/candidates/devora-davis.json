@@ -1,8 +1,9 @@
 {
   "name": "Dev Davis",
-  "id": "Councilmember-District-6;Dev-Davis;11-3-2020",
-  "seat": "District 6",
+  "id": "Councilmember_District_6;Dev_Davis;11/3/2020",
+  "seat": "Councilmember District 6",
   "ballotDesignation": "Councilwoman/Mother",
   "website": "www.devdavis.com",
-  "twitter": "devdavisca"
+  "twitter": "devdavisca",
+  "votersEdge": "http://votersedge.org/ca/en/election/2020-11-03/santa-clara-county/city-council-city-of-san-jose-district-6/Devora-\"Dev\"-Davis"
 }

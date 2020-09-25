@@ -24,10 +24,10 @@ export default function Candidates({ data }) {
             pageSubtitle="City of San José Candidates"
           >
             <div className={styles.candidateList}>
-            <SectionHeader title={selectedElection} />
+              <SectionHeader title={selectedElection} />
               {election.OfficeElections.map(
                 ({ Candidates, TotalContributions, fields: { slug } }) =>
-                  Candidates.filter(Boolean).map(candidate => (
+                  Candidates.map(candidate => (
                     <CandidatesListItem
                       path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
                       key={candidate.fields.slug}
