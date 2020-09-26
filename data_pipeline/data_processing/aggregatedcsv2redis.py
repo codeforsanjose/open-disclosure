@@ -23,7 +23,6 @@ class Csv2Redis:
             'REDIS_HOST', 'localhost'), decode_responses=True)
         # Read the clean csv file from Google sheet. This file won't work on just aggregated csv from scrapper.
         # Skip every other line. If the clean csv changes to every line, we need to update this as well.
-        os.environ["PYTHONHASHSEED"] = "1" # set seed for hash so value is consistent
         if not os.path.exists(filename):
             logger.warning(
                 '{} does not exist. Please double check the file path.'.format(filename))
