@@ -125,11 +125,13 @@ export default function Candidate({ data }) {
                 />
                 <Link className={styles.seeAllLink} to="/">
                   See all contributions
-                  <img
-                    alt="Right arrow icon"
-                    className={`${styles.icon} ${styles.seeAllIcon}`}
-                    src={ArrowIcon}
-                  />
+                  <div>
+                    <img
+                      alt="Right arrow icon"
+                      className={`${styles.icon} ${styles.seeAllIcon}`}
+                      src={ArrowIcon}
+                    />
+                  </div>
                 </Link>
               </section>
               <section>
