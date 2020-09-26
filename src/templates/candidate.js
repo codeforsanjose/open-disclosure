@@ -17,7 +17,7 @@ import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
-import BlankProfile from "../../static/images/blankProfile.jpg"
+import blankProfile from "../../static/images/blankProfile.png"
 
 export default function Candidate({ data }) {
   const {
@@ -30,7 +30,14 @@ export default function Candidate({ data }) {
     TotalEXPN,
     jsonNode,
   } = data.candidate
-  const { seat, ballotDesignation, website, twitter, votersEdge } = jsonNode
+  const {
+    seat,
+    ballotDesignation,
+    website,
+    twitter,
+    votersEdge,
+    profilePhoto,
+  } = jsonNode
 
   const balance = TotalContributions - TotalEXPN
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
@@ -51,7 +58,7 @@ export default function Candidate({ data }) {
                 height={"12.5rem"}
                 width={"12.5rem"}
                 className={styles.profilePhoto}
-                src={BlankProfile}
+                src={profilePhoto || BlankProfile}
                 alt={`Headshot of candidate ${Name}`}
               />
               <div>
