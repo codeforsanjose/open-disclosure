@@ -45,14 +45,28 @@ class Csv2Redis:
                 filename, self.data.shape[0]))
         # Add candidate ID column. candidate ID is <Ballot Item>;<CandidateControlledName>;<Election Date>
         self.data['Ballot Item'] = self.data['Ballot Item'].str.replace('-', ' ')
+        self.candidate_ids = {"David Cohen": "3h2g45h3j", 'Jacob "Jake" Tonkel': "089wegvb7", 
+                        "Dev Davis": "456hjkl2l", "Lan Diep": "cf90g8cii"}
+
         self.data['ID'] = self.data['Ballot Item'].str.replace(
             ' ', '_') + ';' + self.data['CandidateControlledName'].str.replace(' ', '_') + ';' + self.data[
                               'Election Date'].map(str)
         # Round Amount to decimal 2
         self.data['Amount'] = self.data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(
             float).round(decimals=2)
-        self.metadata = str(datetime.fromtimestamp(os.path.getmtime(filename)))
+        self.metadata = str(datetime.fromtimestamp(os.path.getmtime(filename)))   
 
+    def get_ids(self, ids) -> str:
+        """
+        :param ids: list of strings in format <Ballot Item>;<CandidateControlledName>;<Election Date>
+        :return: unique candidate id from candidate_ids dict
+        """
+        ret = []
+        for id in ids:
+            cand_name = id.split(";")[1].replace("_", " ")
+            ret.append(self.candidate_ids[cand_name])
+        return ret
+    
     def setElectionShapeInRedis(self) -> list:
         '''
         Populate election shape into redis
@@ -121,7 +135,7 @@ class Csv2Redis:
                             'Amount'].sum().round(decimals=2)
                     if not 'measure' in bi:
                         officeElections.append(
-                            {'Title': bi, 'CandidateIDs': dataPerElectionDateAndBallotItem['ID'].unique().tolist(),
+                            {'Title': bi, 'CandidateIDs': self.get_ids(dataPerElectionDateAndBallotItem['ID'].unique().tolist()),
                              'TotalContributions': totalContributionsPerBallotItem})
                     else:
                         referendums.append(
@@ -174,8 +188,9 @@ class Csv2Redis:
             candidateIDs = pd.unique(dataAmount['ID'])
 
             for cid in candidateIDs:
-                candidate = {'ID': cid}
+                candidate = dict()
                 name = cid.split(';')[1].replace('_', ' ')
+                candidate['ID'] = self.candidate_ids[name]
                 candidate['Name'] = name
                 dataPerCandidate = dataAmount[
                     (dataAmount['CandidateControlledName'] == name) & (dataAmount['Election Date'] == electionDate)]
