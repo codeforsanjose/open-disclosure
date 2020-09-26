@@ -17,6 +17,7 @@ import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
+import BlankProfile from "../../static/images/blankProfile.jpg"
 
 export default function Candidate({ data }) {
   const {
@@ -47,8 +48,10 @@ export default function Candidate({ data }) {
             <SectionHeader isPageHeader title={Name} />
             <div className={styles.aboutSection}>
               <img
+                height={"12.5rem"}
+                width={"12.5rem"}
                 className={styles.profilePhoto}
-                src="https://picsum.photos/125"
+                src={BlankProfile}
                 alt={`Headshot of candidate ${Name}`}
               />
               <div>
