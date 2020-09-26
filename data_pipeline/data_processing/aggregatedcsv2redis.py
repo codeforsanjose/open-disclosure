@@ -51,7 +51,7 @@ class Csv2Redis:
 
         self.data['ID'] = self.data['Ballot Item'].str.replace(
             ' ', '_') + ';' + self.data['CandidateControlledName'].str.replace(' ', '_') + ';' + self.data[
-                              'Election Date'].str.replace('/','-').map(str)
+                              'Election Date'].map(str)
         # Round Amount to decimal 2
         self.data['Amount'] = self.data['Amount'].str.replace(',', '').replace('$', '').replace("'", '').astype(
             float).round(decimals=2)
