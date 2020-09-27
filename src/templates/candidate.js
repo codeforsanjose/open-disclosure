@@ -156,8 +156,7 @@ export default function Candidate({ data }) {
                       ...ExpenditureCodes[key],
                       value: ExpenditureByType[key],
                     }))
-                    .sort((a, b) => b.value - a.value)
-                    .slice(0, 4)}
+                    .sort((a, b) => b.value - a.value)}
                 />
               </section>
               <section>
