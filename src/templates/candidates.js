@@ -51,6 +51,7 @@ export const query = graphql`
         }
         jsonNode {
           ballotDesignation
+          profilePhoto
         }
       }
       fields {

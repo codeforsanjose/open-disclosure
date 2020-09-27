@@ -4,6 +4,7 @@ import Bar from "./bar"
 import { Link } from "gatsby"
 import React from "react"
 import styles from "./candidatesListItem.module.scss"
+import blankProfile from "../../static/images/blankProfile.png"
 
 export default ({
   Name,
@@ -18,7 +19,7 @@ export default ({
       <img
         height="12.5rem"
         width="12.5rem"
-        src="https://picsum.photos/125"
+        src={jsonNode.profilePhoto || BlankProfile}
         alt={`Headshot of candidate ${Name}`}
       />
       <div className={styles.candidate}>

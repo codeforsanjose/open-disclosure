@@ -14,6 +14,7 @@ import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
 import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from "./../../static/images/Tertiary.png"
+import blankProfile from "./../../static/images/blankProfile.png"
 import blue from "./../../static/images/blue.png"
 import orange from "./../../static/images/orange.png"
 import green from "./../../static/images/green.png"
@@ -61,7 +62,7 @@ export default function MainPage(props) {
           name: candidate.Name,
           position: election.Title,
           amount: candidate.TotalFunding,
-          image: "https://picsum.photos/180",
+          image: candidate.jsonNode?.profilePhoto || BlankProfile,
           href: `/${currentElection.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
         })
       }
@@ -212,6 +213,9 @@ export const query = graphql`
             }
             Candidates {
               Name
+              jsonNode {
+                profilePhoto
+              }
               TotalFunding
               fields {
                 slug
