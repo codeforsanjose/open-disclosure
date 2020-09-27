@@ -4,7 +4,7 @@ import Bar from "./bar"
 import { Link } from "gatsby"
 import React from "react"
 import styles from "./candidatesListItem.module.scss"
-import blankProfile from "../../static/images/blankProfile.png"
+import BlankProfile from "../../static/images/blankProfile.png"
 
 export default ({
   Name,
