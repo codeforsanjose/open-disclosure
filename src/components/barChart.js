@@ -7,12 +7,22 @@ import Bar from "./bar"
 import React from "react"
 import styles from "./barChart.module.scss"
 
-function Row({ label, value, total, type, showPercentages, isCommittee }) {
+function Row({
+  label,
+  value,
+  tooltip,
+  total,
+  type,
+  showPercentages,
+  isCommittee,
+}) {
   const percent = formatPercent(value / total)
   return (
     <div className={`${styles.row} ${isCommittee && styles.noLabel}`}>
       <div className={styles.rowTop}>
-        <p className={styles.label}>{label}</p>
+        <p className={styles.label} title={tooltip ?? label}>
+          {label}
+        </p>
         <p className={styles.value}>
           {showPercentages ? percent : formatDollarsInThousands(value)}
         </p>
@@ -32,13 +42,13 @@ function Row({ label, value, total, type, showPercentages, isCommittee }) {
 export default function BarChart({
   type = "contributions", // "contributions" | "expenditures"
   total, // number
-  rows, // Array<{label: string, value: number}>
+  rows, // Array<{label: string, value: number, tooltip?: string}>
   showPercentages = false, // Show percentages instead of dollar values
   isCommittee = false, // Removes label to the left of row, places it above
 }) {
   return (
     <div className={styles.chart}>
-      {rows.map(({ label, title, value }) => (
+      {rows.map(({ label, value, tooltip }) => (
         <>
           {isCommittee && <h4>***TO REMOVE: PLACEHOLDER COMMITTEE NAME***</h4>}
           <Row
@@ -49,6 +59,7 @@ export default function BarChart({
             type={type}
             isCommittee={isCommittee}
             showPercentages={showPercentages}
+            tooltip={tooltip}
           />
         </>
       ))}
