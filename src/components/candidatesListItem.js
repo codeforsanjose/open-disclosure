@@ -1,25 +1,10 @@
-import React from "react"
-import { Link } from "gatsby"
+import { formatDollars, formatPercent } from "../common/util/formatters"
+
 import Bar from "./bar"
+import { Link } from "gatsby"
+import React from "react"
 import styles from "./candidatesListItem.module.scss"
 import blankProfile from "../../static/images/blankProfile.png"
-
-const percentFormatter = Intl.NumberFormat("en-US", { style: "percent" })
-
-function formatPercent(value) {
-  return percentFormatter.format(value)
-}
-
-const currencyFormatter = Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
-})
-
-function formatDollars(value) {
-  return currencyFormatter.format(value)
-}
 
 export default ({
   Name,

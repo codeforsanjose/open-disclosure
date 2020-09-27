@@ -1,21 +1,11 @@
+import {
+  formatDollarsInThousands,
+  formatPercent,
+} from "../common/util/formatters"
+
+import Bar from "./bar"
 import React from "react"
 import styles from "./barChart.module.scss"
-import Bar from "./bar"
-
-const percentFormatter = Intl.NumberFormat("en-US", { style: "percent" })
-const thousandsFormatter = Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  notation: "compact",
-})
-
-function formatPercent(value) {
-  return percentFormatter.format(value)
-}
-
-function formatDollarsInThousands(value) {
-  return thousandsFormatter.format(value)
-}
 
 function Row({ label, value, total, type, showPercentages, isCommittee }) {
   const percent = formatPercent(value / total)
