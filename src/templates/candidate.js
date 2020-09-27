@@ -40,7 +40,6 @@ export default function Candidate({ data }) {
   } = jsonNode
 
   const balance = TotalContributions - TotalEXPN
-  const outOfStateFunding = TotalContributions - FundingByGeo.CA
 
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
@@ -167,8 +166,12 @@ export default function Candidate({ data }) {
                   id="balance"
                   total={TotalContributions}
                   data={[
-                    { label: "Within California", value: FundingByGeo.CA },
-                    { label: "Out of state", value: outOfStateFunding },
+                    { label: "Within San José", value: FundingByGeo.SJ },
+                    {
+                      label: "Within California",
+                      value: FundingByGeo.CA - FundingByGeo.SJ, // excluding San José
+                    },
+                    { label: "Out of state", value: FundingByGeo.NonCA },
                   ]}
                   showPercentages
                 />
@@ -204,6 +207,8 @@ export const query = graphql`
       }
       FundingByGeo {
         CA
+        NonCA
+        SJ
       }
       ExpenditureByType {
         SAL
