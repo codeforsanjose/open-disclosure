@@ -3,7 +3,6 @@ import { StaticQuery, graphql, Link, navigate } from "gatsby"
 import styles from "./sideNav.module.scss"
 import { primaryBlack, primaryGreen } from "../styles/_exports.scss"
 import Select from "react-select"
-import SectionHeader from "./sectionHeader"
 import LandingPageHero from "./landingPageHero"
 
 const REFERENDUMS = "Ballot Measure"

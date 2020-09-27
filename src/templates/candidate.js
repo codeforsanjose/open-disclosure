@@ -17,7 +17,7 @@ import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
-import blankProfile from "../../static/images/blankProfile.png"
+import BlankProfile from "../../static/images/blankProfile.png"
 
 export default function Candidate({ data }) {
   const {

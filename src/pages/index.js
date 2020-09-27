@@ -14,7 +14,7 @@ import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
 import headerBlob from "./../../static/images/headerBlob.png"
 import tertiary from "./../../static/images/Tertiary.png"
-import blankProfile from "./../../static/images/blankProfile.png"
+import BlankProfile from "./../../static/images/blankProfile.png"
 import blue from "./../../static/images/blue.png"
 import orange from "./../../static/images/orange.png"
 import green from "./../../static/images/green.png"
