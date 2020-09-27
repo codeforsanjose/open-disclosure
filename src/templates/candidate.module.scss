@@ -80,11 +80,18 @@
 }
 
 .seeAllIcon {
-  height: 1.7rem;
+  height: 2rem;
+  width: auto;
   vertical-align: middle;
+  margin-bottom: 0.3rem;
+  margin-left: 1.5rem;
 }
 
 .seeAllLink {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  align-items: center;
   font-family: "DM Sans";
   font-size: 2rem;
   font-weight: bold;
