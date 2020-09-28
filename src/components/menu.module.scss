@@ -7,6 +7,13 @@
   width: 0;
 }
 
+@media screen and (min-width: 761px) {
+  .navigation {
+    flex: 2;
+    justify-content: space-around;
+  }
+}
+
 @media screen and (max-width: 760px) {
   .navigation {
     flex-direction: column;

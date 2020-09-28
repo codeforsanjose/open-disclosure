@@ -14,6 +14,11 @@
   z-index: 4;
 }
 
+.logo {
+  display: flex;
+  flex: 3;
+}
+
 @media screen and (max-width: 760px) {
   .navbar {
     padding: 0;
