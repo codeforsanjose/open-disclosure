@@ -128,7 +128,7 @@ export default function Candidate({ data }) {
                   data={Object.keys(FundingByType)
                     .filter(key => FundingByType[key] != null)
                     .map(key => ({
-                      label: ContributorCodes[key],
+                      ...ContributorCodes[key],
                       value: FundingByType[key],
                     }))
                     .sort((a, b) => b.value - a.value)}
@@ -153,11 +153,10 @@ export default function Candidate({ data }) {
                   data={Object.keys(ExpenditureByType)
                     .filter(key => ExpenditureByType[key] != null)
                     .map(key => ({
-                      label: ExpenditureCodes[key],
+                      ...ExpenditureCodes[key],
                       value: ExpenditureByType[key],
                     }))
-                    .sort((a, b) => b.value - a.value)
-                    .slice(0, 4)}
+                    .sort((a, b) => b.value - a.value)}
                 />
               </section>
               <section>
