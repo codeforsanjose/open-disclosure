@@ -94,9 +94,18 @@ export const query = graphql`
       edges {
         node {
           Referendums {
-            Title
-            Description
-            Total_Contributions
+            id
+            Name
+            Election {
+              ElectionCycle
+            }
+            Committee {
+              Name
+              TotalFunding
+            }
+            fields {
+              slug
+            }
           }
         }
       }

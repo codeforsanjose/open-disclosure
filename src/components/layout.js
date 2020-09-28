@@ -59,9 +59,15 @@ export default function Layout(props) {
                   }
                 }
                 Referendums {
-                  Title
-                  Description
-                  Total_Contributions
+                  id
+                  Name
+                  Election {
+                    ElectionCycle
+                  }
+                  Committee {
+                    Name
+                    TotalFunding
+                  }
                   fields {
                     slug
                   }

@@ -77,7 +77,7 @@ const DUMMY_DATA = {
           {
             Title: "Ballot Measure C",
             Description: "This ballot measure will allow people to have fun",
-            "Total Contributions": 700,
+            TotalContributions: 700,
           },
         ],
       },
@@ -94,9 +94,9 @@ async function fetchEndpoint(endpoint) {
       `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
-      return DUMMY_DATA[endpoint]
-
-      // return await response.json()
+      // NOTE: If `gatsby develop` gives errors related to errors like `Cannot query field "fields" on type "OfficeElection"`, comment return DUMMY_DATA[endpoints] back in
+      // return DUMMY_DATA[endpoint]
+      return await response.json()
     }
   } catch (networkError) {
     console.warn(
@@ -118,14 +118,25 @@ exports.sourceNodes = async ({
 }) => {
   const { createNode } = actions
 
-  const [candidateData, electionData, metadata] = await Promise.all([
+  const [
+    candidateData,
+    electionData,
+    referendumData,
+    metadata,
+  ] = await Promise.all([
     fetchEndpoint("candidates"),
     fetchEndpoint("elections"),
+    fetchEndpoint("referendums"),
     fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
+    const { TotalRCPT, TotalLOAN } = candidate
+    // We're currently using RCPT because all the aggregations only use RCPT.
+    // TODO Include LOAN in TotalContributions
+    const TotalContributions = TotalRCPT
     createNode({
       ...candidate,
+      TotalContributions,
       id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
@@ -156,8 +167,10 @@ exports.sourceNodes = async ({
       })
       return id
     }),
+    // TODO: Switch this out for real Referendum data once edge cases get fixed
+    // Referendums: election.Referendums.map(referendum => {
     Referendums: election.Referendums.map(referendum => {
-      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${election.Date}`)
+      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${referendum.Name}`)
 
       createNode({
         ...referendum,
@@ -205,6 +218,7 @@ exports.createPages = async ({ graphql, actions }) => {
             Date
             TotalContributions
             OfficeElections {
+              id
               Title
               TotalContributions
               fields {
@@ -219,9 +233,15 @@ exports.createPages = async ({ graphql, actions }) => {
               }
             }
             Referendums {
-              Title
-              Description
-              Total_Contributions
+              id
+              Name
+              Election {
+                ElectionCycle
+              }
+              Committee {
+                Name
+                TotalFunding
+              }
               fields {
                 slug
               }
@@ -238,6 +258,8 @@ exports.createPages = async ({ graphql, actions }) => {
         component: path.resolve("src/templates/candidates.js"),
         context: {
           slug: election.fields.slug,
+          officeElectionID: election.id,
+          electionDate: node.Date,
         },
       })
       election.Candidates.forEach(candidate => {
@@ -253,14 +275,12 @@ exports.createPages = async ({ graphql, actions }) => {
     })
     node.Referendums.forEach(referendum => {
       createPage({
-        path:
-          "/" +
-          node.Date +
-          "/referendums/" +
-          referendum.Title.toLowerCase()
-            .split(" ")
-            .join("-"),
+        path: `/${node.Date}/referendums/${referendum.fields.slug}`,
         component: path.resolve("src/templates/referendum.js"),
+        context: {
+          slug: referendum.fields.slug,
+          id: referendum.id,
+        },
       })
     })
   })
@@ -269,9 +289,47 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   createTypes(`
+    type NodeFields {
+      slug: String
+    }
+
     type Committee {
       Name: String
       TotalFunding: String
+    }
+
+    type GeoBreakdown {
+      CA: Float
+    }
+
+    type FundingTypeBreakdown {
+      IND: Float
+      COM: Float
+      OTH: Float
+      PTY: Float
+      SCC: Float
+    }
+
+    type ExpenditureTypeBreakdown {
+      SAL: Float
+      CMP: Float
+      CNS: Float
+      CVC: Float
+      FIL: Float
+      FND: Float
+      LIT: Float
+      MBR: Float
+      MTG: Float
+      OFC: Float
+      POL: Float
+      POS: Float
+      PRO: Float
+      PRT: Float
+      RAD: Float
+      RFD: Float
+      TEL: Float
+      TRS: Float
+      WEB: Float
     }
 
     type Candidate implements Node {
@@ -279,7 +337,15 @@ exports.createSchemaCustomization = ({ actions }) => {
       ID: String!
       Name: String!
       Committees: [Committee]
+      TotalContributions: Float 
+      TotalEXPN: Float
+      TotalLOAN: Float
+      TotalRCPT: Float
+      FundingByGeo: GeoBreakdown
+      FundingByType: FundingTypeBreakdown
+      ExpenditureByType: ExpenditureTypeBreakdown
       jsonNode: CandidatesJson @link(by: "id" from: "ID")
+      fields: NodeFields
     }
 
     type CandidatesJson implements Node {
@@ -289,27 +355,48 @@ exports.createSchemaCustomization = ({ actions }) => {
       seat: String
       ballotDesignation: String
       website: String
+      votersEdge: String
       apiNode: Candidate @link(by: "ID" from: "id")
     }
 
     type Election implements Node {
       Title: String!
       Date: String 
-      TotalContributions: String 
+      TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
       Referendums: [Referendum] @link
+      fields: NodeFields
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
       Title: String
-      TotalContributions: String
+      TotalContributions: Float
+      fields: NodeFields
+    }
+
+    type RefElectionCycle {
+      ElectionCycle: String
+    }
+
+    type RefCommittee {
+      Name: String
+      TotalFunding: Float
     }
 
     type Referendum implements Node {
-      Title: String!
-      Description: String
-      Total_Contributions: String
+      id: ID
+      Name: String!
+      Election: RefElectionCycle
+      Committee: RefCommittee
+      fields: NodeFields 
+    }
+
+    type MeasuresJson implements Node {
+      electionDate: String!
+      title: String!
+      description: String!
+      ballotLanguage: String!
     }
 
     type Metadata implements Node{

@@ -7,14 +7,9 @@ import CandidatesListItem from "../components/candidatesListItem"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import SectionHeader from "../components/sectionHeader"
 
-export default function Candidates({ data }) {
-  const election = data.allElection.edges[0].node
-  let selectedElection = window.location.href.split("/")
-  selectedElection = selectedElection[selectedElection.length - 1]
-    .split("-")
-    .map(word => word[0].toUpperCase() + word.slice(1))
-    .join(" ")
-
+export default function Candidates({ data, pageContext }) {
+  const { electionDate } = pageContext
+  const { officeElection } = data
   return (
     <div className={styles.outerContainer}>
       <Layout windowIsLarge={useWindowIsLarge()}>
@@ -24,18 +19,15 @@ export default function Candidates({ data }) {
             pageSubtitle="City of San José Candidates"
           >
             <div className={styles.candidateList}>
-              <SectionHeader title={selectedElection} />
-              {election.OfficeElections.filter(
-                election => election.Title === selectedElection
-              ).map(({ Candidates, fields: { slug } }) =>
-                Candidates.map(candidate => (
-                  <CandidatesListItem
-                    path={`/${election.Date}/candidate/${slug}/${candidate.fields.slug}`}
-                    key={candidate.fields.slug}
-                    {...candidate}
-                  />
-                ))
-              )}
+              <SectionHeader title={officeElection.Title} />
+              {officeElection.Candidates.map(candidate => (
+                <CandidatesListItem
+                  path={`/${electionDate}/candidate/${officeElection.fields.slug}/${candidate.fields.slug}`}
+                  key={candidate.fields.slug}
+                  electionTotal={officeElection.TotalContributions}
+                  {...candidate}
+                />
+              ))}
             </div>
           </SideNav>
         </div>
@@ -45,26 +37,25 @@ export default function Candidates({ data }) {
 }
 
 export const query = graphql`
-  query {
-    allElection {
-      edges {
-        node {
-          Date
-          OfficeElections {
-            Title
-            TotalContributions
-            Candidates {
-              id
-              Name
-              fields {
-                slug
-              }
-            }
-            fields {
-              slug
-            }
-          }
+  query($officeElectionID: String) {
+    officeElection(id: { eq: $officeElectionID }) {
+      id
+      Title
+      TotalContributions
+      Candidates {
+        id
+        Name
+        TotalContributions
+        fields {
+          slug
         }
+        jsonNode {
+          ballotDesignation
+          profilePhoto
+        }
+      }
+      fields {
+        slug
       }
     }
   }

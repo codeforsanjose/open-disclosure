@@ -13,12 +13,12 @@
   margin-right: 5rem;
 }
 
-.select {
+.selectMenu {
   display: none;
 }
 
 .sidebar {
-  padding-top: 8.8rem;
+  padding-top: 12.3rem;
 }
 
 .section {
@@ -46,6 +46,7 @@
   }
   .selected {
     display: flex;
+    margin-bottom: 0.2rem;
   }
 }
 
@@ -106,7 +107,7 @@
     margin: 1.2rem 0;
   }
 
-  .select {
+  .selectMenu {
     display: block;
     border: 1px solid $backgroundGray;
     border-radius: 6px;

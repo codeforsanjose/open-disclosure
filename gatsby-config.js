@@ -42,7 +42,7 @@ module.exports = {
       resolve: "gatsby-plugin-slug-field",
       options: {
         filter: { internal: { type: "Referendum" } },
-        source: "Title",
+        source: "Name",
         fieldName: "slug",
       },
     },

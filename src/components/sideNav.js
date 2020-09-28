@@ -3,7 +3,6 @@ import { StaticQuery, graphql, Link, navigate } from "gatsby"
 import styles from "./sideNav.module.scss"
 import { primaryBlack, primaryGreen } from "../styles/_exports.scss"
 import Select from "react-select"
-import SectionHeader from "./sectionHeader"
 import LandingPageHero from "./landingPageHero"
 
 const REFERENDUMS = "Ballot Measure"
@@ -143,9 +142,15 @@ export default function sideNav({
                   }
                 }
                 Referendums {
-                  Title
-                  Description
-                  Total_Contributions
+                  id
+                  Name
+                  Election {
+                    ElectionCycle
+                  }
+                  Committee {
+                    Name
+                    TotalFunding
+                  }
                   fields {
                     slug
                   }
@@ -177,7 +182,7 @@ export default function sideNav({
             <div className={styles.innerContainer}>
               <nav className={styles.navbar}>
                 {!isCandidate && (
-                  <div className={styles.select}>
+                  <div className={styles.selectMenu}>
                     <Select
                       styles={customStyles}
                       placeholder={isCandidate ? pageSubtitle : selectedTitle}
