@@ -24,6 +24,20 @@
   flex: 3;
 }
 
+.navbarTop {
+  flex: 2;
+}
+
+.navbarBottom {
+  display: flex;
+}
+
+@media screen and (min-width: 761px) {
+  .navbarBottom {
+    flex: 1;
+  }
+}
+
 @media screen and (max-width: 760px) {
   .innerContainer {
     padding: 0;

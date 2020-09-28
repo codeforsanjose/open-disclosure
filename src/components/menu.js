@@ -9,6 +9,11 @@ const Menu = ({ links, menuIsOpen, submenu, windowIsLarge }) => (
       styles.open} ${submenu && styles.submenu} ${menuIsOpen &&
       submenu &&
       styles.openSubmenu}`}
+    style={{
+      submenu: {
+        maxHeight: (links.length - 1) * 4.3 + "rem",
+      },
+    }}
   >
     {(menuIsOpen || windowIsLarge) &&
       links.map((link, index) => {

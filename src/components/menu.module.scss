@@ -1,17 +1,12 @@
 .navigation {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  flex: 1;
 }
 
 .submenu {
   width: 0;
-}
-
-@media screen and (min-width: 761px) {
-  .navigation {
-    flex: 2;
-    justify-content: space-around;
-  }
 }
 
 @media screen and (max-width: 760px) {
@@ -20,6 +15,7 @@
     transition: all 350ms ease-in-out;
     margin-left: 0;
     width: 100%;
+    justify-content: start;
   }
 
   .closed {
@@ -33,8 +29,12 @@
     transform: scaleY(1);
   }
 
+  .submenu {
+    margin-left: 2rem;
+  }
+
   .openSubmenu {
-    height: 13rem;
+    height: 100%;
     transform: scaleY(1);
   }
 }
