@@ -272,20 +272,22 @@ class Scraper:
                 # will result in the website bringing us back to page 1.
                 self.website.navigateToPage(self.driver, search_page_num)
                 self.website.extractTableData(self.driver, entry_index)
-                self.website.clickEntryIndex(self.driver, entry_index % 10)
 
-                sleep(self.DEFAULT_SLEEP_TIME)
+                if self.website.ELECTIONDATE == "11/3/2020":
+                    self.website.clickEntryIndex(self.driver, entry_index % 10)
 
-                if self.website.errorDialogExists(self.driver):
-                    # If there are no forms for a specific entry, we get an error message.
-                    self.website.closeErrorDialog(self.driver)
-                else:
-                    # If there are forms, then we will be brought to the "forms" page.
-                    self.website.verifyDownloadFormTableLoadComplete(self.driver)
-                    self.website.downloadExcel(self.driver)
+                    sleep(self.DEFAULT_SLEEP_TIME)
 
-                    self.website.clickBackButton(self.driver)
-                    self.website.verifySearchTableLoadComplete(self.driver)
+                    if self.website.errorDialogExists(self.driver):
+                        # If there are no forms for a specific entry, we get an error message.
+                        self.website.closeErrorDialog(self.driver)
+                    else:
+                        # If there are forms, then we will be brought to the "forms" page.
+                        self.website.verifyDownloadFormTableLoadComplete(self.driver)
+                        self.website.downloadExcel(self.driver)
+
+                        self.website.clickBackButton(self.driver)
+                        self.website.verifySearchTableLoadComplete(self.driver)
 
         # Close browser once scrape is complete
         self.driver.quit()
