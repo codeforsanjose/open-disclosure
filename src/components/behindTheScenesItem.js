@@ -9,7 +9,7 @@ const BehindTheScenesItem = item => (
     <h3>{item.title}</h3>
     <p className={styles.description}>{item.description}</p>
     <div className={styles.footer}>
-      <Button secondary text={item.buttonText} href={item.href} />
+      <Button secondary responsive text={item.buttonText} href={item.href} />
     </div>
   </div>
 )
