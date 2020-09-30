@@ -189,10 +189,12 @@ export default function MainPage(props) {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <img
-                alt="A man and a women walking into San José City Hall"
-                src={headerBlob}
-              />
+              <div className={styles.imageContainer}>
+                <img
+                  alt="A man and a women walking into San José City Hall"
+                  src={headerBlob}
+                />
+              </div>
             </div>
           </div>
         </header>
