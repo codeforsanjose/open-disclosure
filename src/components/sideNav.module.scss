@@ -13,66 +13,74 @@
   margin-right: 5rem;
 }
 
+.selectMenu {
+  display: none;
+}
+
+.sidebar {
+  padding-top: 12.3rem;
+}
+
 .section {
   margin-bottom: 2rem;
 }
 
 .text {
-  margin: 0.9rem 0;
   font-size: 2.4rem;
   line-height: 130%;
 }
 
-.selected {
-  border-bottom: 10px solid $secondaryGreen;
-  opacity: 0;
-  margin-top: -2.2rem;
-  z-index: 2;
-}
-
 .linkContainer {
   max-width: fit-content;
-}
-
-.election {
+  padding: 1rem 0;
+  z-index: 2;
   cursor: pointer;
-  .text {
-    border: 1px solid red;
-  }
 }
 
-.active {
+.active,
+.linkContainer:hover {
   margin-left: -1rem;
   .text {
     padding: 0 1rem;
     color: $primaryGreen;
   }
   .selected {
-    opacity: 1;
+    display: flex;
+    margin-bottom: 0.2rem;
   }
 }
 
-.election:hover {
+.active {
+  pointer-events: none;
   .text {
-    color: $hoverGreen;
+    font-weight: bold;
   }
+}
+
+.active .linkContainer {
+  margin-left: 0;
   .selected {
-    opacity: 1;
+    display: none;
   }
+  &:hover {
+    cursor: default;
+    .selected {
+      display: none;
+    }
+  }
+}
+
+.selected {
+  border-bottom: 10px solid $secondaryGreen;
+  display: none;
+  margin-top: -1.2rem;
+  z-index: 1;
 }
 
 .body {
   display: flex;
   flex-direction: column;
   flex: 5;
-}
-
-.select {
-  display: none;
-}
-
-.sidebar {
-  padding-top: 12.3rem;
 }
 
 @media screen and (max-width: 760px) {
@@ -94,12 +102,12 @@
   }
 
   .text {
-    font-size: 1.4rem;
+    font-size: g.4rem;
     line-height: 1.7rem;
     margin: 1.2rem 0;
   }
 
-  .select {
+  .selectMenu {
     display: block;
     border: 1px solid $backgroundGray;
     border-radius: 6px;

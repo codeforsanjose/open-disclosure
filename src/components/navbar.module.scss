@@ -1,32 +1,57 @@
 @import "../styles/colors";
 
-.navbar {
-  display: flex;
-  align-items: center;
-  background-color: $primaryWhite;
-  box-shadow: 0px 2px 6px rgba(201, 201, 201, 0.7);
-  font-family: "Lato";
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 3rem;
+.outerContainer {
   position: sticky;
   top: 0;
   z-index: 4;
+  box-shadow: 0px 2px 6px rgba(201, 201, 201, 0.7);
+  background-color: $primaryWhite;
+  font-family: "Lato";
+}
+
+.innerContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3rem;
+  position: relative;
+}
+
+.navbarTop,
+.navbarBottom {
+  display: flex;
+  flex-direction: row;
+}
+
+.navbarTop {
+  flex: 1;
+}
+
+.navbarBottom {
+  flex: 1;
+  justify-content: flex-end;
 }
 
 @media screen and (max-width: 760px) {
-  .navbar {
+  .innerContainer {
     padding: 0;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .logo {
+  .navbarTop {
+    align-items: center;
+    justify-content: space-between;
     width: stretch;
-    width: -moz-available; /* WebKit-based browsers will ignore this. */
-    width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-    a {
-      padding: 2.6rem;
-    }
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+  }
+
+  .navbarBottom {
+    position: absolute;
+    background-color: $primaryWhite;
+    width: stretch;
+    top: 8rem;
   }
 }

@@ -5,6 +5,7 @@
   flex-direction: column;
   flex: 1;
   text-align: center;
+  justify-content: space-between;
 
   .value {
     font-weight: bold;
@@ -13,12 +14,12 @@
 }
 
 .header {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   color: $tertiaryGray;
 }
 
 .title {
-  font-size: 2.8rem;
+  font-size: 2.4rem;
   font-weight: bold;
   color: $primaryGreen;
 }
@@ -31,7 +32,7 @@
 }
 
 .value {
-  font-size: 3.6rem;
+  font-size: 3.2rem;
   margin: 1.6rem 0;
 }
 

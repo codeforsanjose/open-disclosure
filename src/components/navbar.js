@@ -1,19 +1,39 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import styles from "./navbar.module.scss"
 import Logo from "./logo"
 import Menu from "./menu"
 import HamburgerIcon from "../common/hamburgerIcon"
 
-class Navbar extends Component {
-  state = { menuIsOpen: false }
-
-  handleClick = () => {
-    this.setState({ menuIsOpen: !this.state.menuIsOpen })
+function disableScroll() {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+  window.onscroll = function() {
+    window.scrollTo(scrollLeft, scrollTop)
   }
+}
 
-  links = [
+function enableScroll() {
+  window.onscroll = function() {}
+}
+
+const handleClick = (menuIsOpen, setMenuIsOpen) => {
+  //TODO: Make only menu scroll in landscape mode
+
+  setMenuIsOpen(!menuIsOpen)
+  if (menuIsOpen) {
+    enableScroll()
+    document.body.style.overflow = "visible"
+  } else {
+    disableScroll()
+    document.body.style.overflow = "hidden"
+  }
+}
+
+export default function Navbar(props) {
+  const [menuIsOpen, setMenuIsOpen] = useState(false)
+  const links = [
     { name: "Home", endpoint: "/", hidden: true },
-    ...this.props.links,
+    ...props.links,
     {
       name: "Register to vote",
       endpoint: "/registerToVote",
@@ -23,22 +43,28 @@ class Navbar extends Component {
     { name: "Find your ballot", endpoint: "/", hidden: true },
   ]
 
-  render() {
-    return (
-      <nav className={styles.navbar}>
-        <Logo header containerStyle={styles.logo} />
-        <HamburgerIcon
-          handleClick={this.handleClick}
-          menuIsOpen={this.state.menuIsOpen}
-        />
-        <Menu
-          menuIsOpen={this.state.menuIsOpen}
-          windowIsLarge={this.props.windowIsLarge}
-          links={this.links}
-        />
-      </nav>
-    )
+  if (menuIsOpen && props.windowIsLarge) {
+    handleClick(true, setMenuIsOpen)
   }
-}
 
-export default Navbar
+  return (
+    <nav className={styles.outerContainer}>
+      <div className={styles.innerContainer}>
+        <div className={styles.navbarTop}>
+          <Logo header containerStyle={styles.logo} />
+          <HamburgerIcon
+            handleClick={() => handleClick(menuIsOpen, setMenuIsOpen)}
+            menuIsOpen={menuIsOpen}
+          />
+        </div>
+        <div className={styles.navbarBottom}>
+          <Menu
+            menuIsOpen={menuIsOpen}
+            windowIsLarge={props.windowIsLarge}
+            links={links}
+          />
+        </div>
+      </div>
+    </nav>
+  )
+}
