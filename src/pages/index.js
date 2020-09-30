@@ -28,6 +28,23 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
 })
 
+const formatTotalContributions = value => {
+  let maximumSignificantDigits = 3
+  if (value < 1000) {
+    maximumSignificantDigits = 1
+  } else if (value < 10000) {
+    maximumSignificantDigits = 2
+  }
+
+  return (
+    (parseInt(value) / 1000).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumSignificantDigits,
+    }) + "K"
+  )
+}
+
 const about = {
   title: "Power to the people",
   description:
@@ -90,14 +107,7 @@ export default function MainPage(props) {
         description: "Of donations from the city of San José",
       },
       {
-        number: parseInt(currentElection.TotalContributions).toLocaleString(
-          "en-US",
-          {
-            style: "currency",
-            currency: "USD",
-            maximumSignificantDigits: 3,
-          }
-        ),
+        number: formatTotalContributions(currentElection.TotalContributions),
         description: "Amount raised to date",
       },
       {
@@ -179,7 +189,10 @@ export default function MainPage(props) {
               </div>
             </div>
             <div className={styles.heroRight}>
-              <img alt="header" width="724px" src={headerBlob} />
+              <img
+                alt="A man and a women walking into San José City Hall"
+                src={headerBlob}
+              />
             </div>
           </div>
         </header>
