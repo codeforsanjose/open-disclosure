@@ -13,13 +13,14 @@
   }
 
   p {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 }
 
 .label {
   align-self: center;
   flex: 1;
+  word-wrap: normal;
 }
 
 .row {
@@ -32,7 +33,7 @@
 .rowTop {
   display: flex;
   flex-direction: row;
-  flex: 1;
+  flex: 3;
 }
 
 .noLabel {
@@ -48,7 +49,7 @@
 .rowBottom {
   display: flex;
   flex-direction: row;
-  flex: 2;
+  flex: 4;
 }
 
 .value {

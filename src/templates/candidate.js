@@ -69,13 +69,6 @@ export default function Candidate({ data }) {
                   {/* TODO - add this back when we have some way of knowing if the candidate is an incumbent? */}
                   {/* {" - elected"} */}
                 </p>
-                <p className={styles.aboutText}>
-                  This candidate has agreed to voluntary spending limits. The
-                  maximum contribution this candidate can accept is $800 from
-                  any individual, business entity, committee or other
-                  organization and $1,600 from a qualified broad-based
-                  committee.
-                </p>
                 <div className={styles.aboutLinks}>
                   <a href={"http://" + website} className={styles.aboutLink}>
                     <img alt="Web icon" src={WebIcon} className={styles.icon} />
