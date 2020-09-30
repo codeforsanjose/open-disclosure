@@ -182,7 +182,7 @@ export default function sideNav({
             <div className={styles.innerContainer}>
               <nav className={styles.navbar}>
                 {!isCandidate && (
-                  <div className={styles.select}>
+                  <div className={styles.selectMenu}>
                     <Select
                       styles={customStyles}
                       placeholder={isCandidate ? pageSubtitle : selectedTitle}
@@ -203,8 +203,7 @@ export default function sideNav({
                           return (
                             <li
                               key={`${section.label}-${race.value}`}
-                              className={`{${styles.election} ${active &&
-                                styles.active}`}
+                              className={`${active && styles.active}`}
                             >
                               <div className={styles.linkContainer}>
                                 <Link
