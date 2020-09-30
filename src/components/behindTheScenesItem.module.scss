@@ -42,7 +42,8 @@
 
     img {
       margin-bottom: 2.9rem;
-      max-width: 50%;
+      min-width: unset;
+      width: 60%;
       height: auto;
     }
 
@@ -53,6 +54,12 @@
     p {
       font-size: 1.6rem;
       line-height: 2.1rem;
+    }
+  }
+
+  .container:first-of-type {
+    img {
+      max-width: 20rem;
     }
   }
 }
