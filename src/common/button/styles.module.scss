@@ -7,13 +7,13 @@
   background-color: $primaryGreen;
   border: 2px solid $primaryGreen;
   border-radius: 4px;
+}
 
-  .buttonText {
-    font-family: "DM Sans";
-    font-weight: bold;
-    font-size: 2rem;
-    color: $primaryWhite;
-  }
+.buttonText {
+  font-family: "DM Sans";
+  font-weight: bold;
+  font-size: 2rem;
+  color: $primaryWhite;
 }
 
 .secondary {
@@ -21,6 +21,12 @@
 
   .buttonText {
     color: $primaryGreen;
+  }
+}
+
+.responsive {
+  .buttonText {
+    font-size: 1.7rem;
   }
 }
 

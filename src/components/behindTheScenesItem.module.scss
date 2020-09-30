@@ -6,29 +6,39 @@
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
+  justify-content: space-between;
+  max-width: 25%;
+  margin: 4rem 1rem 1rem;
+
+  img {
+    height: auto;
+    min-width: 80%;
+    max-width: 100%;
+  }
+
+  h3,
+  .description {
+    text-align: center;
+  }
 
   h3 {
     font-size: 2.8rem;
-    padding: 0.9rem;
+    padding: 1rem;
   }
+}
 
-  p {
-    font-size: 2rem;
-  }
+.description {
+  font-size: 2rem;
+}
 
-  .description {
-    text-align: center;
-    max-width: 60%;
-  }
-
-  .footer {
-    margin-top: 4rem;
-  }
+.footer {
+  margin-top: 4rem;
 }
 
 @media screen and (max-width: 760px) {
   .container {
     margin-bottom: 8rem;
+    max-width: 100%;
 
     img {
       margin-bottom: 2.9rem;
