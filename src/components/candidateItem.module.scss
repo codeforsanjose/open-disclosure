@@ -63,7 +63,7 @@
 @media screen and (max-width: 760px) {
   .container {
     margin: 0 auto;
-    width: max-content;
+    min-width: auto;
 
     img {
       border: 5.3px solid $secondaryGreen;
