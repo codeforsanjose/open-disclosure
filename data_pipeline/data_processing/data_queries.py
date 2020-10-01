@@ -14,6 +14,10 @@ pp = pprint.PrettyPrinter(indent=4)
 class Data_Query:
 
   def __init__(self):
+    self.rj = Client(host=os.environ.get(
+            'redis.corp'), decode_responses=True)
+    self.SANJOSE_ZIPCODES1 = [94089, 95002, 95008, 95013, 95014, 95032, 95035, 95037, 95050, 95054, 95070, 95110, 95111, 95112, 95113, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95140, 95148]
+    self.SANJOSE_ZIPCODES2 = [95101, 95103, 95106, 95108, 95109, 95110, 95111, 95112, 95113, 95115, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95141, 95148, 95150, 95151, 95152, 95153, 95154, 95155, 95156, 95157, 95158, 95159, 95160, 95161, 95164, 95170, 95172, 95173, 95190, 95191, 95192, 95193, 95194, 95196]
     self.ELECTION_DATE = ''
     self.engine = create_engine('mysql+mysqldb://app_user:Dn4wPfGnT78d4FtT@database-1.c2fzqal0xakt.us-west-1.rds.amazonaws.com/test2')
     # Base = declarative_base(self.engine)
@@ -83,9 +87,35 @@ class Data_Query:
       district = candidate_info[0][1]
       election_date = candidate_info[0][2]
       committee_total_funding = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE Filer_Nam_L = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(committee, self.ELECTION_DATE))[0][0]
-      candidate_total_funding = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE))[0][0]
-      
+      candidate_total_funding = round(self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE))[0][0],2)
+      candidate_total_expenditure = round(self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S496" OR Rec_Type = "EXPN") AND Election_Date = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE))[0][0],2)
+      candidate_total_loans = round(self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "LOAN") AND Election_Date = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE))[0][0],2)
 
+      # GeoBreakdown
+      candidate_sanjose_funding = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}" AND Entity_City = "San Jose";'.format(candidate.replace('"','\\"'),self.ELECTION_DATE))[0][0]
+      candidate_california_funding = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}" AND Entity_ST = "CA";'.format(candidate.replace('"','\\"'),self.ELECTION_DATE))[0][0]
+
+      # FundingTypeBreakdown
+      funding_codes = ["IND", "COM", "OTH", "PTY", "SCC"]
+      code_funding_breakdown = {}
+      for fc in funding_codes:
+        try:
+          code_fund = round(self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}" AND Entity_Cd = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE, fc))[0][0],2)
+        except TypeError:
+          code_fund = 0
+        code_funding_breakdown[fc] = round(code_fund/candidate_total_funding,2)
+
+      # ExpenditureTypeBreakdown
+      expn_codes = ["SAL", "CMP", "CNS", "CVC", "FIL", "FND", "LIT", "MBR", "MTG", "OFC", "POL", "POS", "PRO", "PRT", "RAD", "RFD", "TEL", "TRS", "WEB"]
+      expn_funding_breakdown = {}
+      for ec in expn_codes:
+        try:
+          ex_fund = round(self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S496" OR Rec_Type = "EXPN") AND Election_Date = "{}" AND Expn_Code = "{}";'.format(candidate.replace('"','\\"'), self.ELECTION_DATE, ec))[0][0],2)
+        except TypeError:
+          ex_fund = 0
+        expn_funding_breakdown[ec] = round(ex_fund/candidate_total_expenditure,2)
+      
+      # Contributor Breakdown
       contributors_data = []
       contributors = self.execute_query('SELECT Entity_Nam_F, Entity_Nam_L, Entity_Cd, Entity_Occ, Entity_ZIP4, Amount, Tran_Date  FROM test2 WHERE CandidateControlledName = "{}" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(candidate.replace('"','\\"'),self.ELECTION_DATE))
       for c in contributors:
@@ -97,20 +127,30 @@ class Data_Query:
         else:
           name = "Anonymous Donor"
         
-        contributors_data.append({
-          "Name": name,
-          "Contributor_Type": c[2],
-          "Occupation": c[3],
-          "Zip_Code": c[4][:5],
-          "Amount": c[5],
-          "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
-        })
+        # contributors_data.append({
+        #   "Name": name,
+        #   "Contributor_Type": c[2],
+        #   "Occupation": c[3],
+        #   "Zip_Code": c[4][:5],
+        #   "Amount": c[5],
+        #   "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
+        # })
       
       
       self.candidates_data['Candidates'].append({
         "ID": "{};{};{}".format(self.lc_n_rm_spc(district), self.lc_n_rm_spc(candidate), election_date),
         "Name": candidate,
-        "TotalFunding": round(candidate_total_funding, 2),
+        "GeoBreakdown": {
+          "InSanJosePercent": round(round(candidate_sanjose_funding,2)/candidate_total_funding,2),
+          "OutSanJosePercent": round(1-round(candidate_sanjose_funding,2)/candidate_total_funding,2),
+          "InCAPercent": round(round(candidate_california_funding,2)/candidate_total_funding,2),
+          "OutCAPercent": round(1-round(candidate_california_funding,2)/candidate_total_funding,2)
+        },
+        "FundingTypeBreakdown": code_funding_breakdown,
+        "ExpendituresTypeBreakdown": expn_funding_breakdown,
+        "TotalFunding": candidate_total_funding,
+        "TotalExpenditures": candidate_total_expenditure,
+        "TotalLoans": candidate_total_loans,
         "Committees": [
           {
             "ID": "{};{}".format(self.lc_n_rm_spc(committee), election_date),
@@ -120,7 +160,7 @@ class Data_Query:
         ],
         "Contributors": contributors_data 
       })
-    # pp.pprint(self.candidates_data)
+    pp.pprint(self.candidates_data)
 
   
   def extract_data_for_election(self):
@@ -186,8 +226,15 @@ class Data_Query:
   
   def metadata(self):
     self.election_data["metadata"] = {"DateProcesses": datetime.date.strftime(datetime.date.today(), "%Y/%m/%d")}
-
+    # print(len(self.SANJOSE_ZIPCODES1))
+    # print(len(self.SANJOSE_ZIPCODES2))
     # pp.pprint(self.election_data)
+  
+  def insertRedis(self):
+    from rejson import Client, Path
+    with self.rj.pipeline() as pipe:
+            pipe.jsonset('elections', Path.rootPath(), self.election_data)
+            pipe.execute()
 
 data = Data_Query()
 data.extract_latest_election()
