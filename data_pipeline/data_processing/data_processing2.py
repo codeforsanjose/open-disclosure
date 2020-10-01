@@ -99,7 +99,7 @@ import pymysql
 from sqlalchemy import create_engine
 
 pymysql.install_as_MySQLdb()
-conn = create_engine("mysql+mysqldb://admin:QEruiTUa7GjHVrQUnP2P@database-1.c2fzqal0xakt.us-west-1.rds.amazonaws.com/test2")
+conn = create_engine("mysql+mysqldb://admin:@database-1.c2fzqal0xakt.us-west-1.rds.amazonaws.com/test2")
 new_ods.to_sql(con=conn, name='test2', if_exists='replace', index=True)
 
 with conn.connect() as con:
