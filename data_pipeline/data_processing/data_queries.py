@@ -166,7 +166,7 @@ class Data_Query:
 
   
   def extract_data_for_election(self):
-    total_contributions = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName != "Independent" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(self.ELECTION_DATE))[0][0]
+    self.total_contributions = self.execute_query('SELECT SUM(Amount) FROM test2 WHERE CandidateControlledName != "Independent" AND (Rec_Type = "S497" OR Rec_Type = "RCPT") AND Election_Date = "{}";'.format(self.ELECTION_DATE))[0][0]
     
     ### Retrieve Office Data
     # Retrieve All Elections for Office in N election cycle
@@ -217,7 +217,7 @@ class Data_Query:
     ### Export data into Class variable
     self.election_data["Elections"] = {
       self.ELECTION_DATE_US: {
-      "TotalContributions": round(total_contributions, 2),
+      "TotalContributions": round(self.total_contributions, 2),
       "Date": self.ELECTION_DATE,
       "Office Elections": office_elections_data,
       "Referendums": referendum_data
@@ -235,7 +235,7 @@ class Data_Query:
   def insertRedis(self):
     self.r.execute_command("JSON.SET", "candidates", ".", json.dumps(list(self.candidates_data.values())))
     self.r.execute_command("JSON.SET", "elections", ".", json.dumps(list(self.election_data.values())))
-    self.r.execute_command("JSON.SET", "TotalContributions", ".", json.dumps(list({'Test':1000}.values())))
+    self.r.execute_command("JSON.SET", "TotalContributions", ".", json.dumps(list({"TotalFunding":round(self.total_contributions, 2)}.values())))
     self.r.execute_command("SAVE")
     # with self.rj.pipeline() as pipe:
     #   pipe.jsonset('elections', "/data", self.election_data)

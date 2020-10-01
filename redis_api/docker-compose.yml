@@ -10,11 +10,11 @@ services:
     container_name: api
     environment:
       - FLASK_APP=api
-      - PYTHONPATH=.
+      - FLASK_RUN_HOST=0.0.0.0
       - REDIS_API_URL=redis
       - REDIS_API_PORT=6379
     ports:
       - "5000:5000"
-    command: python -m flask run --host=0.0.0.0
+    command: python -m flask run
     depends_on:
       - redis_dev
