@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask import Blueprint, jsonify
 
@@ -10,7 +11,7 @@ from api.services import RedisClient
 
 redis_bp = Blueprint("redis_bp", "redis_api",
                      url_prefix="/open-disclosure/api/v1.0")
-r = StrictRedis(host="localhost", port=6379)
+r = StrictRedis(host=os.environ.get('REDIS_API_URL'), port=6379)
 
 
 @redis_bp.route("/", methods=["GET"])
