@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 # from sqlalchemy import func
 # from sqlalchemy import distinct
 
-from rejson import Client, Path
+import redis
 
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -16,7 +16,7 @@ pp = pprint.PrettyPrinter(indent=4)
 class Data_Query:
 
   def __init__(self):
-    self.rj = Client(host="redis.corp", decode_responses=True)
+    self.r = redis.StrictRedis(host="redis.corp", port=6379)
     self.SANJOSE_ZIPCODES1 = [94089, 95002, 95008, 95013, 95014, 95032, 95035, 95037, 95050, 95054, 95070, 95110, 95111, 95112, 95113, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95140, 95148]
     self.SANJOSE_ZIPCODES2 = [95101, 95103, 95106, 95108, 95109, 95110, 95111, 95112, 95113, 95115, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95141, 95148, 95150, 95151, 95152, 95153, 95154, 95155, 95156, 95157, 95158, 95159, 95160, 95161, 95164, 95170, 95172, 95173, 95190, 95191, 95192, 95193, 95194, 95196]
     self.ELECTION_DATE = ''
@@ -128,14 +128,14 @@ class Data_Query:
         else:
           name = "Anonymous Donor"
         
-        contributors_data.append({
-          "Name": name,
-          "Contributor_Type": c[2],
-          "Occupation": c[3],
-          "Zip_Code": c[4][:5],
-          "Amount": c[5],
-          "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
-        })
+        # contributors_data.append({
+        #   "Name": name,
+        #   "Contributor_Type": c[2],
+        #   "Occupation": c[3],
+        #   "Zip_Code": c[4][:5],
+        #   "Amount": c[5],
+        #   "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
+        # })
       
       
       self.candidates_data['Candidates'].append({
@@ -232,12 +232,15 @@ class Data_Query:
     pp.pprint(self.election_data)
   
   def insertRedis(self):
-    with self.rj.pipeline() as pipe:
-      pipe.jsonset('elections', Path.rootPath(), self.election_data)
-      pipe.jsonset('candidates', Path.rootPath(), self.candidates_data)
-      pipe.execute()
-    print(self.rj.jsonget('elections'))
-    print(self.rj.jsonget('candidates'))
+    r.execute_command("JSON.SET", "Candidates", ".", json.dumps(list(self.candidates_data.values())))
+    r.execute_command("JSON.SET", "Elections", ".", json.dumps(list(self.election_data.values())))
+    r.execute_command("SAVE")
+    # with self.rj.pipeline() as pipe:
+    #   pipe.jsonset('elections', "/data", self.election_data)
+    #   pipe.jsonset('candidates', "/data", self.candidates_data)
+    #   pipe.execute()
+    # print(self.rj.jsonget('elections'))
+    # print(self.rj.jsonget('candidates'))
 
 data = Data_Query()
 data.extract_latest_election()
