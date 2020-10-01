@@ -11,7 +11,7 @@ from api.services import RedisClient
 
 redis_bp = Blueprint("redis_bp", "redis_api",
                      url_prefix="/open-disclosure/api/v1.0")
-r = StrictRedis(host=os.environ.get('REDIS_API_URL'), port=6379)
+r = StrictRedis(host=os.environ.get('REDIS_API_URL'), port=os.environ.get('REDIS_API_PORT')) 
 
 
 @redis_bp.route("/", methods=["GET"])
@@ -20,7 +20,7 @@ def home():
 
 
 @redis_bp.route("/total-contributions", methods=["GET"])
-def get_total_contributions(serve_fake=True):
+def get_total_contributions(serve_fake=False):
     """
     Query redis to get the total amount of monies spent
     :return: int representing the total for (either all time or current election)

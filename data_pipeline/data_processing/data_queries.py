@@ -235,6 +235,7 @@ class Data_Query:
   def insertRedis(self):
     self.r.execute_command("JSON.SET", "candidates", ".", json.dumps(list(self.candidates_data.values())))
     self.r.execute_command("JSON.SET", "elections", ".", json.dumps(list(self.election_data.values())))
+    self.r.execute_command("JSON.SET", "TotalContributions", ".", json.dumps(list({'Test':1000}.values())))
     self.r.execute_command("SAVE")
     # with self.rj.pipeline() as pipe:
     #   pipe.jsonset('elections', "/data", self.election_data)
