@@ -232,9 +232,9 @@ class Data_Query:
     pp.pprint(self.election_data)
   
   def insertRedis(self):
-    r.execute_command("JSON.SET", "Candidates", ".", json.dumps(list(self.candidates_data.values())))
-    r.execute_command("JSON.SET", "Elections", ".", json.dumps(list(self.election_data.values())))
-    r.execute_command("SAVE")
+    self.r.execute_command("JSON.SET", "Candidates", ".", json.dumps(list(self.candidates_data.values())))
+    self.r.execute_command("JSON.SET", "Elections", ".", json.dumps(list(self.election_data.values())))
+    self.r.execute_command("SAVE")
     # with self.rj.pipeline() as pipe:
     #   pipe.jsonset('elections', "/data", self.election_data)
     #   pipe.jsonset('candidates', "/data", self.candidates_data)
