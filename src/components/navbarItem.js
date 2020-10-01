@@ -1,28 +1,26 @@
-import React, { Component } from "react"
+import React, { useState, useEffect } from "react"
 import styles from "./navbarItem.module.scss"
 import linkArrow from "../../static/images/linkArrow.png"
 import Menu from "./menu.js"
 import { Link } from "gatsby"
 
-class NavbarItem extends Component {
-  state = { menuItemIsOpen: false, hasLinks: false }
+export default function NavbarItem(props) {
+  const [menuItemIsOpen, setMenuItemIsOpen] = useState(false);
+  const [hasLinks, setHasLinks] = useState(false);
 
-  componentDidMount() {
-    const { links } = this.props
-    this.setState({
-      hasLinks: links && links.length,
-    })
-  }
+  useEffect(() => {
+    const { links } = props
+    setHasLinks(links && links.length);
+  });
 
-  Anchor = props => {
-    const { menuItemIsOpen, hasLinks } = this.state
-    if (hasLinks && !this.props.windowIsLarge) {
+  const Anchor = ({ children }) => {
+    if (hasLinks && !props.windowIsLarge) {
       return (
         <div
           className={`${styles.link} ${styles.fullWidth} ${menuItemIsOpen &&
             styles.bold}`}
         >
-          {props.children}
+          {children}
         </div>
       )
     }
@@ -31,61 +29,50 @@ class NavbarItem extends Component {
       <Link
         className={`${styles.link} ${styles.fullWidth} ${hasLinks &&
           styles.disabled} ${hasLinks && menuItemIsOpen && styles.bold}`}
-        to={this.props.endpoint}
+        to={props.endpoint}
       >
-        {props.children}
+        {children}
       </Link>
     )
   }
 
-  toggleMenu = () => {
-    this.state.hasLinks &&
-      this.setState(prevState => ({
-        ...prevState,
-        menuItemIsOpen: !prevState.menuItemIsOpen,
-      }))
+  const toggleMenu = () => {
+    hasLinks && setMenuItemIsOpen(!menuItemIsOpen)
   }
 
-  render() {
-    const { menuItemIsOpen, hasLinks } = this.state
-
-    return (
-      <li
-        className={`${styles.item} ${this.props.hidden && styles.hidden} ${this
-          .props.menuIsOpen && styles.open} ${this.props.submenu &&
-          styles.submenu}`}
-        key={`link item ${this.props.name}`}
-        onClick={this.toggleMenu}
-        onKeyUp={this.toggleMenu}
-        role="presentation"
-      >
-        <this.Anchor>
-          <div className={`${styles.linkInner}`}>
-            <span>{this.props.name || this.props.position}</span>
-            <div className={styles.selected} />
-          </div>
-          {hasLinks || this.props.arrow ? (
-            <img
-              alt="link-arrow"
-              src={linkArrow}
-              height="9.2px"
-              width="15.5px"
-              className={`${styles.arrow} ${menuItemIsOpen &&
-                styles.openMenuItem}`}
-            />
-          ) : null}
-        </this.Anchor>
-        {hasLinks && !this.props.windowIsLarge ? (
-          <Menu
-            menuIsOpen={this.state.menuItemIsOpen}
-            submenu
-            windowIsLarge={this.props.windowIsLarge}
-            links={this.props.links}
+  return (
+    <li
+      className={`${styles.item} ${props.hidden && styles.hidden} ${props.menuIsOpen && styles.open} ${props.submenu &&
+        styles.submenu}`}
+      key={`link item ${props.name}`}
+      onClick={toggleMenu}
+      onKeyUp={toggleMenu}
+      role="presentation"
+    >
+      <Anchor>
+        <div className={`${styles.linkInner}`}>
+          <span>{props.name || props.position}</span>
+          <div className={styles.selected} />
+        </div>
+        {hasLinks || props.arrow ? (
+          <img
+            alt="link-arrow"
+            src={linkArrow}
+            height="9.2px"
+            width="15.5px"
+            className={`${styles.arrow} ${menuItemIsOpen &&
+              styles.openMenuItem}`}
           />
         ) : null}
-      </li>
-    )
-  }
+      </Anchor>
+      {hasLinks && !props.windowIsLarge ? (
+        <Menu
+          menuIsOpen={menuItemIsOpen}
+          submenu
+          windowIsLarge={props.windowIsLarge}
+          links={props.links}
+        />
+      ) : null}
+    </li>
+  )
 }
-
-export default NavbarItem
