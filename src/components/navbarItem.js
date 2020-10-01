@@ -13,7 +13,7 @@ export default function NavbarItem(props) {
     setHasLinks(links && links.length);
   });
 
-  const Anchor = children => {
+  const Anchor = ({ children }) => {
     if (hasLinks && !props.windowIsLarge) {
       return (
         <div
