@@ -161,7 +161,7 @@ class Data_Query:
         ],
         "Contributors": contributors_data 
       })
-    pp.pprint(self.candidates_data)
+    # pp.pprint(self.candidates_data)
 
   
   def extract_data_for_election(self):
@@ -191,7 +191,6 @@ class Data_Query:
     referendum_data = []
     referendums = self.execute_query('SELECT DISTINCT Ballot_Item FROM test2 WHERE Ballot_Type = "Ballot Measure" AND Election_Date = "{}";'.format(self.ELECTION_DATE))
     for r in referendums:
-      print(r)
       referendum_letter = ""
       headers = ["Bal_Num", "G_From_E_F"]
       for h in headers:
@@ -233,8 +232,9 @@ class Data_Query:
   
   def insertRedis(self):
     with self.rj.pipeline() as pipe:
-            pipe.jsonset('elections', Path.rootPath(), self.election_data)
-            pipe.execute()
+      pipe.jsonset('elections', Path.rootPath(), self.election_data)
+      pipe.execute()
+    self.rj.jsonget('elections')
 
 data = Data_Query()
 data.extract_latest_election()
