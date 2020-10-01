@@ -131,9 +131,9 @@ class Data_Query:
         
         contributors_data.append({
           "Name": name,
-          "Contributor_Type": c[2],
+          "ContributorType": c[2],
           "Occupation": c[3],
-          "Zip_Code": c[4][:5],
+          "ZipCode": c[4][:5],
           "Amount": c[5],
           "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
         })
@@ -219,7 +219,7 @@ class Data_Query:
       self.ELECTION_DATE_US: {
       "TotalContributions": round(self.total_contributions, 2),
       "Date": self.ELECTION_DATE,
-      "Office Elections": office_elections_data,
+      "OfficeElections": office_elections_data,
       "Referendums": referendum_data
       }
     }
