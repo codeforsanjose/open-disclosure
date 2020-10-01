@@ -234,8 +234,10 @@ class Data_Query:
   def insertRedis(self):
     with self.rj.pipeline() as pipe:
       pipe.jsonset('elections', Path.rootPath(), self.election_data)
+      pipe.jsonset('candidates', Path.rootPath(), self.candidates)
       pipe.execute()
-    self.rj.jsonget('elections')
+    print(self.rj.jsonget('elections'))
+    print(self.rj.jsonget('candidates'))
 
 data = Data_Query()
 data.extract_latest_election()
