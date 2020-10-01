@@ -129,14 +129,14 @@ class Data_Query:
         else:
           name = "Anonymous Donor"
         
-        # contributors_data.append({
-        #   "Name": name,
-        #   "Contributor_Type": c[2],
-        #   "Occupation": c[3],
-        #   "Zip_Code": c[4][:5],
-        #   "Amount": c[5],
-        #   "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
-        # })
+        contributors_data.append({
+          "Name": name,
+          "Contributor_Type": c[2],
+          "Occupation": c[3],
+          "Zip_Code": c[4][:5],
+          "Amount": c[5],
+          "Date": datetime.date.strftime(datetime.datetime(1899, 12, 30) + datetime.timedelta(days=c[6]), "%m/%d/%Y")
+        })
       
       
       self.candidates_data['Candidates'].append({
