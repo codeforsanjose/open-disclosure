@@ -13,14 +13,14 @@ export default function NavbarItem(props) {
     setHasLinks(links && links.length);
   });
 
-  const Anchor = props => {
+  const Anchor = children => {
     if (hasLinks && !props.windowIsLarge) {
       return (
         <div
           className={`${styles.link} ${styles.fullWidth} ${menuItemIsOpen &&
             styles.bold}`}
         >
-          {props.children}
+          {children}
         </div>
       )
     }
@@ -31,7 +31,7 @@ export default function NavbarItem(props) {
           styles.disabled} ${hasLinks && menuItemIsOpen && styles.bold}`}
         to={props.endpoint}
       >
-        {props.children}
+        {children}
       </Link>
     )
   }
