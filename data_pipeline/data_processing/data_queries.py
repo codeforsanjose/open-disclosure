@@ -228,7 +228,8 @@ class Data_Query:
     self.election_data["metadata"] = {"DateProcesses": datetime.date.strftime(datetime.date.today(), "%Y/%m/%d")}
     # print(len(self.SANJOSE_ZIPCODES1))
     # print(len(self.SANJOSE_ZIPCODES2))
-    # pp.pprint(self.election_data)
+    pp.pprint(self.candidates_data)
+    pp.pprint(self.election_data)
   
   def insertRedis(self):
     with self.rj.pipeline() as pipe:
