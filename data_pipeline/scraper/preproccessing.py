@@ -50,7 +50,7 @@ class PreProcessing():
                         new_worksheet.writerow(sheet.row_values(rownum))
                     header = True
 
-    def insertColumns(self, numDownloads, CandidateName, ElectionDate, BallotItem):
+    def insertColumns(self, numDownloads, CandidateName, ElectionDate, BallotItem, BallotType, Supp_Opp):
         print('Processing {} for {}'.format(numDownloads, CandidateName))
 
         if numDownloads == 0:
@@ -63,8 +63,10 @@ class PreProcessing():
 
 
         candidateHeader = "CandidateControlledName"
-        electionDateHeader = "Election Date"
-        ballotItemHeader = "Ballot Item"
+        electionDateHeader = "Election_Date"
+        ballotItemHeader = "Ballot_Item"
+        ballotTypeHeader = "Ballot_Type"
+        suppOppHeader = "Support_or_Oppose"
 
         print(filenames)
         for fullfilepathname in filenames[-numDownloads:]:
@@ -80,8 +82,11 @@ class PreProcessing():
             else:
                 data.insert(0, candidateHeader, CandidateName)
             
-            data.insert(0, electionDateHeader, ElectionDate)
             data.insert(0, ballotItemHeader, BallotItem)
+            data.insert(0, suppOppHeader, Supp_Opp)
+            data.insert(0, ballotTypeHeader, BallotType)
+            data.insert(0, electionDateHeader, ElectionDate)
+            
 
             data.to_excel('{}/{}'.format(new_folder, filename), index=False)
     

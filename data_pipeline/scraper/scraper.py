@@ -118,7 +118,7 @@ class SjcWebsite:
                     downloadLinkElement.click()
                     count += 1
         print('NUM DOWNLOADS {}'.format(count))
-        self.preprocessing.insertColumns(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM)
+        self.preprocessing.insertColumns(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM, self.BALLOTTYPE, self.SUPPORT_OPPOSE)
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -212,6 +212,8 @@ class SjcWebsite:
 
         self.ELECTIONDATE = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[2]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
         self.BALLOTITEM = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[7]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        self.SUPPORT_OPPOSE = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[8]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
+        self.BALLOTTYPE = driver.find_elements_by_xpath('//*[@id="{}{}"]/td[9]'.format(self.SEARCH_TABLE_ROW_ID, entry_index))[0].text
 
 class Scraper:
     def __init__(self):
@@ -273,7 +275,7 @@ class Scraper:
                 self.website.navigateToPage(self.driver, search_page_num)
                 self.website.extractTableData(self.driver, entry_index)
 
-                if self.website.ELECTIONDATE == "11/3/2020":
+                if "2020" in self.website.ELECTIONDATE:
                     self.website.clickEntryIndex(self.driver, entry_index % 10)
 
                     sleep(self.DEFAULT_SLEEP_TIME)
