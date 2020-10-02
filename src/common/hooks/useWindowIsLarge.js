@@ -4,7 +4,7 @@ const LARGE_WINDOW_SIZE = 760
 
 export default function useWindowIsLarge() {
   const [windowIsLarge, setWindowIsLarge] = useState(
-    window && window.innerWidth >= LARGE_WINDOW_SIZE
+    typeof window !== "undefined" && window.innerWidth >= LARGE_WINDOW_SIZE
   )
   const updateWindowDimensions = useCallback(() => {
     setWindowIsLarge(window.innerWidth >= LARGE_WINDOW_SIZE)

@@ -125,6 +125,7 @@ export default function sideNav({
   isCandidate = false,
   pageSubtitle,
   pageTitle,
+  selectedTitle,
 }) {
   return (
     <StaticQuery
@@ -166,11 +167,6 @@ export default function sideNav({
         const measureMenu = formatMenuForMeasures(Referendums)
         const candidateMenu = formatMenuForCandidates(OfficeElections)
         const menuOptions = [...candidateMenu, measureMenu]
-        let selectedTitle = window.location.href.split("/")
-        selectedTitle = selectedTitle[selectedTitle.length - 1]
-          .split("-")
-          .map(word => word[0].toUpperCase() + word.slice(1))
-          .join(" ")
 
         return (
           <div className={styles.outerContainer}>

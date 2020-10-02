@@ -25,9 +25,8 @@ const supportingCommittees = [
   },
 ]
 
-function MeasureDetails(props) {
-  const measure =
-    props.data?.allElection?.edges?.[0]?.node?.Referendums?.[0] ?? {}
+function MeasureDetails({ data }) {
+  const measure = data.referendum
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
@@ -35,11 +34,12 @@ function MeasureDetails(props) {
         headerBackground="green"
         pageTitle="Measures"
         pageSubtitle="City of San José Ballot Measures"
+        selectedTitle={measure.Name}
       >
         <div className={styles.mainSection}>
           <SectionHeader
             isPageHeader
-            title={measure.Title}
+            title={measure.Name}
             subtitle="***TO REMOVE: PLACEHOLDER ONE LINE DESC OF MEASURE***"
           />
           <section>
@@ -89,25 +89,19 @@ function MeasureDetails(props) {
 }
 
 export const query = graphql`
-  query {
-    allElection {
-      edges {
-        node {
-          Referendums {
-            id
-            Name
-            Election {
-              ElectionCycle
-            }
-            Committee {
-              Name
-              TotalFunding
-            }
-            fields {
-              slug
-            }
-          }
-        }
+  query($id: String) {
+    referendum(id: { eq: $id }) {
+      id
+      Name
+      Election {
+        ElectionCycle
+      }
+      Committee {
+        Name
+        TotalFunding
+      }
+      fields {
+        slug
       }
     }
   }
