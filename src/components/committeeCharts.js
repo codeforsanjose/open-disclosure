@@ -3,7 +3,7 @@ import BarChart from "./barChart"
 import SectionHeader from "./sectionHeader"
 import styles from "./committeeCharts.module.scss"
 
-export default function({ type, total, data }) {
+export default function({ id, type, total, data }) {
   const typeText = {
     thirdPerson: "",
     gerund: "",
@@ -23,7 +23,7 @@ export default function({ type, total, data }) {
   }
 
   return (
-    <section>
+    <section id={id}>
       <div className={styles.margin}>
         <SectionHeader title={`Who ${typeText.thirdPerson} this measure?`} />
         <SectionHeader title={`${typeText.gerund} Committee(s)`} isSubsection />

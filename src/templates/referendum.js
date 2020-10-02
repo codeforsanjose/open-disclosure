@@ -27,6 +27,8 @@ const supportingCommittees = [
 
 function MeasureDetails({ data }) {
   const measure = data.referendum
+  const { jsonNode } = measure
+  console.log(measure, jsonNode)
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <SideNav
@@ -40,7 +42,7 @@ function MeasureDetails({ data }) {
           <SectionHeader
             isPageHeader
             title={measure.Name}
-            subtitle="***TO REMOVE: PLACEHOLDER ONE LINE DESC OF MEASURE***"
+            subtitle={jsonNode.description}
           />
           <section>
             <div className={styles.aboutSection}>
@@ -49,12 +51,9 @@ function MeasureDetails({ data }) {
                   What would this measure do?
                 </span>
               </p>
-              <p className={styles.aboutText}>{measure?.Description ?? ""}</p>
+              <p className={styles.aboutText}>{jsonNode.ballotLanguage}</p>
               <div className={styles.aboutLinks}>
-                <a
-                  href="https://votersedge.org/ca"
-                  className={styles.aboutLink}
-                >
+                <a href={jsonNode.href} className={styles.aboutLink}>
                   <img
                     alt="External link icon"
                     src={VotersEdgeIcon}
@@ -73,11 +72,13 @@ function MeasureDetails({ data }) {
             </div>
           </section>
           <CommitteeCharts
+            id="measureSupport"
             type="contributions"
             total={654876}
             data={supportingCommittees}
           />
           <CommitteeCharts
+            id="measureOppose"
             type="expenditures"
             total={654876}
             data={supportingCommittees}
@@ -93,15 +94,19 @@ export const query = graphql`
     referendum(id: { eq: $id }) {
       id
       Name
-      Election {
-        ElectionCycle
-      }
       Committee {
         Name
         TotalFunding
       }
       fields {
         slug
+      }
+      jsonNode {
+        ballotLanguage
+        description
+        electionDate
+        name
+        href
       }
     }
   }
