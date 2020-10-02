@@ -103,7 +103,7 @@ function formatMenuForMeasures(measureData) {
   const menu = { label: REFERENDUMS, options: [] }
   measureData.forEach(measure => {
     menu.options.push({
-      label: measure.Title,
+      label: measure.Name,
       value: measure.fields.slug,
     })
   })

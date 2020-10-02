@@ -32,6 +32,10 @@
   justify-content: space-between;
 }
 
+.candidateInfo {
+  flex: 4;
+}
+
 .headerText {
   font-family: "Lato";
   font-size: 2.8rem;
@@ -45,7 +49,8 @@
 }
 
 .totalRaised {
-  margin: 1.6rem 3.5rem;
+  flex: 1;
+  margin: 1.6rem 3rem;
 
   .headerText {
     font-weight: 900;
