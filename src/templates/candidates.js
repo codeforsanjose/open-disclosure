@@ -17,6 +17,7 @@ export default function Candidates({ data, pageContext }) {
           <SideNav
             pageTitle="Candidates"
             pageSubtitle="City of San José Candidates"
+            selectedTitle={officeElection.Title}
           >
             <div className={styles.candidateList}>
               <SectionHeader title={officeElection.Title} />

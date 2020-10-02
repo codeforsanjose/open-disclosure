@@ -49,6 +49,7 @@ export default function Candidate({ data }) {
         headerBackground="blue"
         pageTitle={Name}
         pageSubtitle={seat}
+        selectedTitle={seat}
       >
         <div className={styles.container}>
           <section>
