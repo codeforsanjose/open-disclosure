@@ -19,17 +19,26 @@
   position: relative;
 }
 
+.navbarTop,
+.navbarBottom {
+  display: flex;
+  flex-direction: row;
+}
+
+.navbarTop {
+  flex: 1;
+}
+
+.navbarBottom {
+  flex: 1;
+  justify-content: flex-end;
+}
+
 @media screen and (max-width: 760px) {
   .innerContainer {
     padding: 0;
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .navbarTop,
-  .navbarBottom {
-    display: flex;
-    flex-direction: row;
   }
 
   .navbarTop {

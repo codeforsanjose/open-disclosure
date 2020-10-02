@@ -2,94 +2,112 @@
 
 .container {
   display: flex;
-  min-width: 36rem;
   flex-direction: column;
+  min-width: 25%;
   background-color: transparent;
   margin: 4rem 1.5rem 4rem;
+  align-items: center;
+}
+
+.imageContainer {
+  background-color: $primaryWhite;
+  max-height: 18rem;
+  max-width: 18rem;
+  width: 75%;
+  z-index: 2;
+  display: flex;
+  border-radius: 50%;
+  object-fit: contain;
+  padding-bottom: 2rem;
 
   img {
-    align-self: center;
-    background-color: $primaryWhite;
-    border: 8px solid $secondaryBlue;
     border-radius: 50%;
-    max-height: 18rem;
-    max-width: 18rem;
     object-fit: contain;
+    border: 8px solid $secondaryBlue;
+    height: auto;
+    width: 100%;
     z-index: 2;
   }
+}
 
-  .candidateInfo {
-    background-color: $primaryWhite;
-    border-radius: 4px;
-    margin-top: -9rem;
-    padding: 10rem 1rem 4rem;
-    text-align: center;
-    z-index: 1;
+.candidateInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  background-color: $primaryWhite;
+  border-radius: 4px;
+  margin-top: -9rem;
+  padding: 10rem 1.5rem 4rem;
+  align-items: center;
+  z-index: 1;
 
-    h3,
-    h4,
-    p {
-      font-family: "Lato";
-      max-width: 34rem;
-    }
-
-    h4 {
-      font-size: 2rem;
-      line-height: 2.6rem;
-    }
-
-    h3 {
-      font-size: 4rem;
-      line-height: 5.2rem;
-      margin-top: 2.5rem;
-    }
-
-    p {
-      color: $darkGray;
-      font-size: 1.4rem;
-      line-height: 1.82rem;
-    }
-
-    .amountRaised {
-      color: $primaryGreen;
-    }
+  h3,
+  h4,
+  p {
+    font-family: "Lato";
+    max-width: 34rem;
   }
 
-  .candidateInfo:hover {
-    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.7);
+  h4 {
+    font-size: 2rem;
+    line-height: 2.6rem;
   }
+
+  h3 {
+    font-size: 4rem;
+    line-height: 5.2rem;
+    margin-top: 2.5rem;
+  }
+
+  p {
+    color: $darkGray;
+    font-size: 1.4rem;
+    line-height: 1.82rem;
+  }
+
+  .amountRaised {
+    color: $primaryGreen;
+  }
+}
+
+.candidateInfo:hover {
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.7);
 }
 
 @media screen and (max-width: 760px) {
   .container {
-    margin: 0 auto;
-    min-width: auto;
+    margin: 1rem auto;
+    width: max-content;
+  }
+
+  .imageContainer {
+    max-width: 12rem;
 
     img {
       border: 5.3px solid $secondaryGreen;
-      max-width: 12rem;
       height: auto;
     }
+  }
 
-    .candidateInfo {
-      margin: -6.3rem 0 3rem;
-      padding: 7.3rem 6rem 2.5rem;
+  .candidateInfo {
+    margin: -7.3rem 0 3rem;
+    padding: 7.3rem 3rem 2.5rem;
 
-      h4 {
-        font-size: 1.3rem;
-        line-height: 1.7rem;
-      }
+    h4 {
+      font-size: 1.3rem;
+      line-height: 1.7rem;
+    }
 
-      h3 {
-        font-size: 2.6rem;
-        line-height: 3.4rem;
-        margin-top: 1.3rem;
-      }
+    h3 {
+      font-size: 2.6rem;
+      line-height: 3.4rem;
+      margin-top: 1.3rem;
+    }
 
-      p {
-        font-size: 0.9rem;
-        line-height: 1.2rem;
-      }
+    p {
+      font-size: 0.9rem;
+      line-height: 1.2rem;
     }
   }
 }

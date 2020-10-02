@@ -1,6 +1,8 @@
 .navigation {
   display: flex;
+  flex: 1;
   flex-direction: row;
+  justify-content: space-around;
 }
 
 .submenu {
@@ -13,6 +15,7 @@
     transition: all 350ms ease-in-out;
     margin-left: 0;
     width: 100%;
+    justify-content: flex-start;
   }
 
   .closed {
