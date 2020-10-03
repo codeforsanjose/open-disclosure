@@ -127,7 +127,7 @@ export default function Candidate({ data }) {
                     }))
                     .sort((a, b) => b.value - a.value)}
                 />
-                <Link className={styles.seeAllLink} to="/">
+                {/* <Link className={styles.seeAllLink} to="/">
                   See all contributions
                   <div>
                     <img
@@ -136,7 +136,7 @@ export default function Candidate({ data }) {
                       src={ArrowIcon}
                     />
                   </div>
-                </Link>
+                </Link> */}
               </section>
               <section>
                 <ChartSection
@@ -160,7 +160,11 @@ export default function Candidate({ data }) {
                   id="balance"
                   total={TotalContributions}
                   data={[
-                    { label: "Within California", value: FundingByGeo.CA },
+                    { label: "Within San José", value: FundingByGeo.SJ },
+                    {
+                      label: "Within California",
+                      value: FundingByGeo.CA - FundingByGeo.SJ,
+                    },
                     { label: "Out of state", value: outOfStateFunding },
                   ]}
                   showPercentages
@@ -169,9 +173,9 @@ export default function Candidate({ data }) {
 
               {Committees && Committees.length > 0 ? (
                 <section className={styles.committees}>
-                  <SectionHeader title="Other committees controlled by candidate" />
+                  <SectionHeader title="Committees supporting this candidate" />
                   {data.candidate.Committees.map(({ Name }) => (
-                    <Link className={styles.committeeLink}>{Name}</Link>
+                    <p className={styles.committeeLink}>{Name}</p>
                   ))}
                 </section>
               ) : null}
@@ -197,6 +201,7 @@ export const query = graphql`
       }
       FundingByGeo {
         CA
+        SJ
       }
       ExpenditureByType {
         SAL
