@@ -5,11 +5,18 @@
  */
 
 module.exports = {
+  siteMetadata: {
+    title: "Open Disclosure San José",
+    description:
+      "Keep tabs on the influence of money in local San José elections",
+    author: "Code for San José",
+  },
   plugins: [
     `gatsby-plugin-sass`,
     `gatsby-transformer-json`,
     `gatsby-plugin-eslint`,
     `gatsby-plugin-react-axe`,
+    `gatsby-plugin-react-helmet`,
     {
       resolve: "gatsby-source-filesystem",
       options: {

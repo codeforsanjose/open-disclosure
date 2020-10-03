@@ -6,14 +6,18 @@ import styles from "./registerToVote.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function RegisterToVote() {
+  const title = "Register to Vote"
+  const subtitle = "Register to vote or see if you're already registered."
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <div className={styles.container}>
         <header className={styles.hero}>
-          <LandingPageHero
-            title="Register to Vote"
-            subtitle="Register to vote or see if you're already registered."
-          />
+          <LandingPageHero title={title} subtitle={subtitle} />
         </header>
         <div className={styles.body}>
           <RegisterToVoteCard

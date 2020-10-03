@@ -163,7 +163,7 @@ export default function MainPage(props) {
   }
 
   return (
-    <Layout windowIsLarge={windowIsLarge}>
+    <Layout title="Home" windowIsLarge={windowIsLarge}>
       <div className={styles.container}>
         <header className={styles.heroOuterContainer}>
           <div className={styles.heroInnerContainer}>

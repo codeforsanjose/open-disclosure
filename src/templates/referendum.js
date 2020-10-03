@@ -28,7 +28,11 @@ const supportingCommittees = [
 function MeasureDetails({ data }) {
   const measure = data.referendum
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={measure.Name}
+      description={`Finances supporting and opposing ${measure.Name}`}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <SideNav
         isReferendum
         headerBackground="green"

@@ -43,7 +43,11 @@ export default function Candidate({ data }) {
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
 
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={Name}
+      description={`Profile of ${Name} running for ${seat}`}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <SideNav
         isCandidate
         headerBackground="blue"

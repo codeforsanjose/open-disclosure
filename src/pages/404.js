@@ -66,7 +66,7 @@ export default () => {
         ]
 
         return (
-          <Layout windowIsLarge={useWindowIsLarge()}>
+          <Layout title="Page not found" windowIsLarge={useWindowIsLarge()}>
             <div className={styles.container}>
               <img
                 height={"286.93px"}

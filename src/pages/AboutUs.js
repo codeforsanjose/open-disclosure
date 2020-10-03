@@ -7,15 +7,18 @@ import Layout from "../components/layout"
 import LandingPageHero from "../components/landingPageHero"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
-export default function AboutUsPage() {
+export default function AboutUs() {
+  const title = "About Us"
+  const subtitle = "On a mission to promote local government accountability"
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <header>
-        <LandingPageHero
-          background="green"
-          title="About Us"
-          subtitle="On a mission to promote local government accountability"
-        />
+        <LandingPageHero background="green" title={title} subtitle={subtitle} />
       </header>
       <div className={styles.container}>
         <h1>About Open Disclosure San José</h1>
