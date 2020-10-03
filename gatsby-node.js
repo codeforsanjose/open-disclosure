@@ -2,8 +2,11 @@ const path = require(`path`)
 
 const fetch = require("node-fetch")
 
-// TODO Add dev/prod variations
-const HOSTNAME = process.env.GATSBY_API_HOST || "localhost:5000"
+const HOSTNAME =
+  process.env.GATSBY_API_HOST ||
+  (process.env.production
+    ? "open-disclosure-api.codeforsanjose.com"
+    : "localhost:5000")
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
