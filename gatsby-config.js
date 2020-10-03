@@ -8,6 +8,8 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
     `gatsby-transformer-json`,
+    `gatsby-plugin-eslint`,
+    `gatsby-plugin-react-axe`,
     {
       resolve: "gatsby-source-filesystem",
       options: {

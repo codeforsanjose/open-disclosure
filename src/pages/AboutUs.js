@@ -7,7 +7,7 @@ import Layout from "../components/layout"
 import LandingPageHero from "../components/landingPageHero"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
-export default () => {
+export default function AboutUsPage() {
   return (
     <Layout windowIsLarge={useWindowIsLarge()}>
       <header>
@@ -42,7 +42,7 @@ export default () => {
         <p>
           Special thanks to{" "}
           <a href="https://www.opendisclosure.io/">
-            Open Oakland's Open Disclosure
+            Open Oakland&apos;s Open Disclosure
           </a>{" "}
           for the inspiration behind our project.
         </p>

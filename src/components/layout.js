@@ -9,7 +9,7 @@ import Logo from "./logo"
 
 const renderNavItems = items => (
   <ul>
-    {items.map(({ name, endpoint, anchor = false }, index) => (
+    {items.map(({ name, endpoint, anchor = false }) => (
       <li key={`footer nav item ${name}`} className={styles.footerNavItem}>
         {anchor ? (
           <a href={endpoint}>{name}</a>
@@ -142,13 +142,13 @@ export default function Layout(props) {
                   <h1>
                     Special thanks to{" "}
                     <a href="https://www.opendisclosure.io/">
-                      Open Oakland's Open Disclosure
+                      Open Oakland&apos;s Open Disclosure
                     </a>{" "}
                     for the inspiration.
                   </h1>
                   <p>
-                    Brought to you by Open San José and San José's Public Ethics
-                    Commission
+                    Brought to you by Open San José and San José&apos;s Public
+                    Ethics Commission
                   </p>
                   <p>
                     Campaign finance data provided by the City of San José

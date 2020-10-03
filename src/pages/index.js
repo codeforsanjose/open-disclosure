@@ -124,6 +124,7 @@ export default function MainPage(props) {
       "Money makes a difference in determining who wins elections.  Find out who's backing local candidates and influencing local government.",
     items: candidateList,
     renderItem: CandidateItem,
+    // eslint-disable-next-line react/display-name
     footer: () => (
       <Link to={candidatesPageLink}>
         <img alt="candidates" height="37px" width="285px" src={tertiary} />

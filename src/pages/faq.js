@@ -71,11 +71,11 @@ export default function FAQ() {
         />
       </header>
       <div className={styles.body}>
-        {faq.map(faqSection => (
-          <section className={styles.faqSection}>
+        {faq.map((faqSection, index) => (
+          <section key={`faq-section-${index}`} className={styles.faqSection}>
             <h2>{faqSection.sectionName}</h2>
-            {faqSection.questions.map(faqItem => (
-              <FAQItem {...faqItem} />
+            {faqSection.questions.map((faqItem, i) => (
+              <FAQItem key={`faq-section-${index}-item-${i}`} {...faqItem} />
             ))}
           </section>
         ))}

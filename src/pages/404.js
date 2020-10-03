@@ -75,7 +75,7 @@ export default () => {
                 alt="A smiling person shrugging"
               />
               <div className={styles.text}>
-                <h1>Sorry, we can't find that page...</h1>
+                <h1>Sorry, we can&apos;t find that page...</h1>
                 <p>
                   <span
                     onClick={handleClick}
@@ -89,7 +89,7 @@ export default () => {
                 </p>
                 <ul>
                   {links.map(link => (
-                    <li>
+                    <li key={`404-link-${link.pageName}`}>
                       <Link to={link.href}>
                         <p className={styles.link}>{link.pageName}</p>
                       </Link>

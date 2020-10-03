@@ -81,7 +81,7 @@ export default function Candidate({ data }) {
                       src={VotersEdgeIcon}
                       className={styles.icon}
                     />
-                    Voter's Edge Profile
+                    Voter&apos;s Edge Profile
                   </a>
                   <a
                     href={"http://twitter.com/" + twitter}
@@ -170,8 +170,13 @@ export default function Candidate({ data }) {
               {Committees && Committees.length > 0 ? (
                 <section className={styles.committees}>
                   <SectionHeader title="Other committees controlled by candidate" />
-                  {data.candidate.Committees.map(({ Name }) => (
-                    <Link className={styles.committeeLink}>{Name}</Link>
+                  {data.candidate.Committees.map(({ Name }, index) => (
+                    <Link
+                      key={`candidate-committee-${index}`}
+                      className={styles.committeeLink}
+                    >
+                      {Name}
+                    </Link>
                   ))}
                 </section>
               ) : null}

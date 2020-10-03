@@ -60,7 +60,7 @@ function MeasureDetails({ data }) {
                     src={VotersEdgeIcon}
                     className={styles.icon}
                   />
-                  More information on Voter's Edge
+                  More information on Voter&apos;s Edge
                 </a>
               </div>
             </div>

@@ -33,7 +33,7 @@ const customStyles = {
   indicatorSeparator: () => ({
     display: "none",
   }),
-  dropdownIndicator: (provided, state) => ({
+  dropdownIndicator: provided => ({
     ...provided,
     color: primaryBlack,
     ":hover": {
@@ -188,7 +188,7 @@ export default function sideNav({
                   </div>
                 )}
                 <ul className={styles.sidebar}>
-                  {menuOptions.map((section, index) => (
+                  {menuOptions.map(section => (
                     <li key={section.label} className={styles.section}>
                       <h4 className={styles.text}>{section.label}</h4>
                       <ul>
