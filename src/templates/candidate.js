@@ -1,5 +1,8 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import {
+  // Link,
+  graphql,
+} from "gatsby"
 // Components
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
@@ -13,7 +16,7 @@ import styles from "./candidate.module.scss"
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 // Assets
-import ArrowIcon from "../../static/images/arrow.png"
+// import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
