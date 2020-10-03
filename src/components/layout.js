@@ -4,12 +4,13 @@ import React from "react"
 // Styles
 import styles from "./layout.module.scss"
 // Components
+import SEO from "./seo"
 import Navbar from "./navbar"
 import Logo from "./logo"
 
 const renderNavItems = items => (
   <ul>
-    {items.map(({ name, endpoint, anchor = false }, index) => (
+    {items.map(({ name, endpoint, anchor = false }) => (
       <li key={`footer nav item ${name}`} className={styles.footerNavItem}>
         {anchor ? (
           <a href={endpoint}>{name}</a>
@@ -21,7 +22,12 @@ const renderNavItems = items => (
   </ul>
 )
 
-export default function Layout(props) {
+export default function Layout({
+  title,
+  description,
+  windowIsLarge,
+  children,
+}) {
   const footerLinks = [
     {
       name: "Join Us",
@@ -104,9 +110,13 @@ export default function Layout(props) {
 
         return (
           <div className={styles.container}>
-            <Navbar links={links} windowIsLarge={props.windowIsLarge} />
+            <SEO
+              title={`Open Disclosure San José - ${title}`}
+              description={description}
+            />
+            <Navbar links={links} windowIsLarge={windowIsLarge} />
 
-            {props.children}
+            {children}
 
             <footer className={styles.footer}>
               <div className={styles.footerInner}>
@@ -142,13 +152,13 @@ export default function Layout(props) {
                   <h1>
                     Special thanks to{" "}
                     <a href="https://www.opendisclosure.io/">
-                      Open Oakland's Open Disclosure
+                      Open Oakland&apos;s Open Disclosure
                     </a>{" "}
                     for the inspiration.
                   </h1>
                   <p>
-                    Brought to you by Open San José and San José's Public Ethics
-                    Commission
+                    Brought to you by Open San José and San José&apos;s Public
+                    Ethics Commission
                   </p>
                   <p>
                     Campaign finance data provided by the City of San José

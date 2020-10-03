@@ -19,7 +19,9 @@ export default function NoData({ page }) {
       <h1>{text[page].h1}</h1>
       <p>{text[page].p}</p>
       <p>
-        <a>Get notified</a> about updates.
+        {/* TODO: Add email notifications */}
+        {/* <a>Get notified</a> about updates. */}
+        Check back soon for updated information!
       </p>
       <img
         className={styles.noDataImg}

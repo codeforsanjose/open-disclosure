@@ -49,8 +49,8 @@ export default function BarChart({
 }) {
   return (
     <div className={styles.chart}>
-      {rows.map(({ label, value, tooltip }) => (
-        <>
+      {rows.map(({ label, value, tooltip }, index) => (
+        <div key={`${type}-${label}-barchart-${index}`}>
           {isCommittee && <h4>***TO REMOVE: PLACEHOLDER COMMITTEE NAME***</h4>}
           <Row
             key={label}
@@ -62,7 +62,7 @@ export default function BarChart({
             showPercentages={showPercentages}
             tooltip={tooltip}
           />
-        </>
+        </div>
       ))}
     </div>
   )

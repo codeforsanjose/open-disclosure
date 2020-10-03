@@ -5,13 +5,13 @@ import Menu from "./menu.js"
 import { Link } from "gatsby"
 
 export default function NavbarItem(props) {
-  const [menuItemIsOpen, setMenuItemIsOpen] = useState(false);
-  const [hasLinks, setHasLinks] = useState(false);
+  const [menuItemIsOpen, setMenuItemIsOpen] = useState(false)
+  const [hasLinks, setHasLinks] = useState(false)
 
   useEffect(() => {
     const { links } = props
-    setHasLinks(links && links.length);
-  });
+    setHasLinks(links && links.length)
+  })
 
   const Anchor = ({ children }) => {
     if (hasLinks && !props.windowIsLarge) {
@@ -42,7 +42,8 @@ export default function NavbarItem(props) {
 
   return (
     <li
-      className={`${styles.item} ${props.hidden && styles.hidden} ${props.menuIsOpen && styles.open} ${props.submenu &&
+      className={`${styles.item} ${props.hidden &&
+        styles.hidden} ${props.menuIsOpen && styles.open} ${props.submenu &&
         styles.submenu}`}
       key={`link item ${props.name}`}
       onClick={toggleMenu}

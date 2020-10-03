@@ -6,12 +6,16 @@ import styles from "./getRegistered.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function GetRegistered() {
+  const title = "Get registered"
+  const subtitle = "Get registered to vote in less than two minutes"
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
-      <LandingPageHero
-        title="Get registered"
-        subtitle="Get registered to vote in less than two minutes"
-      />
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
+      <LandingPageHero title={title} subtitle={subtitle} />
       <div className={styles.body}>
         <IframeResizer
           log

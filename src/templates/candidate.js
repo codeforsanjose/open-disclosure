@@ -1,5 +1,8 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import {
+  // Link,
+  graphql,
+} from "gatsby"
 // Components
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
@@ -13,7 +16,7 @@ import styles from "./candidate.module.scss"
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 // Assets
-import ArrowIcon from "../../static/images/arrow.png"
+// import ArrowIcon from "../../static/images/arrow.png"
 import TwitterIcon from "../../static/images/twitter.png"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import WebIcon from "../../static/images/web.png"
@@ -43,7 +46,11 @@ export default function Candidate({ data }) {
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
 
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={Name}
+      description={`Profile of ${Name} running for ${seat}`}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <SideNav
         isCandidate
         headerBackground="blue"
@@ -81,7 +88,7 @@ export default function Candidate({ data }) {
                       src={VotersEdgeIcon}
                       className={styles.icon}
                     />
-                    Voter's Edge Profile
+                    Voter&apos;s Edge Profile
                   </a>
                   <a
                     href={"http://twitter.com/" + twitter}
@@ -174,8 +181,13 @@ export default function Candidate({ data }) {
               {Committees && Committees.length > 0 ? (
                 <section className={styles.committees}>
                   <SectionHeader title="Committees supporting this candidate" />
-                  {data.candidate.Committees.map(({ Name }) => (
-                    <p className={styles.committeeLink}>{Name}</p>
+                  {data.candidate.Committees.map(({ Name }, index) => (
+                    <p
+                      key={`candidate-committee-${index}`}
+                      className={styles.committeeLink}
+                    >
+                      {Name}
+                    </p>
                   ))}
                 </section>
               ) : null}

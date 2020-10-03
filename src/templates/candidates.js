@@ -9,23 +9,29 @@ import SectionHeader from "../components/sectionHeader"
 
 export default function Candidates({ data, pageContext }) {
   const { electionDate } = pageContext
-  const { officeElection } = data
+  const {
+    officeElection: { Title, Candidates, fields, TotalContributions },
+  } = data
   return (
     <div className={styles.outerContainer}>
-      <Layout windowIsLarge={useWindowIsLarge()}>
+      <Layout
+        title={Title}
+        description={`Candidates running for election in the ${Title} race`}
+        windowIsLarge={useWindowIsLarge()}
+      >
         <div className={styles.innerContainer}>
           <SideNav
             pageTitle="Candidates"
             pageSubtitle="City of San José Candidates"
-            selectedTitle={officeElection.Title}
+            selectedTitle={Title}
           >
             <div className={styles.candidateList}>
-              <SectionHeader title={officeElection.Title} />
-              {officeElection.Candidates.map(candidate => (
+              <SectionHeader title={Title} />
+              {Candidates.map(candidate => (
                 <CandidatesListItem
-                  path={`/${electionDate}/candidate/${officeElection.fields.slug}/${candidate.fields.slug}`}
+                  path={`/${electionDate}/candidate/${fields.slug}/${candidate.fields.slug}`}
                   key={candidate.fields.slug}
-                  electionTotal={officeElection.TotalContributions}
+                  electionTotal={TotalContributions}
                   {...candidate}
                 />
               ))}
