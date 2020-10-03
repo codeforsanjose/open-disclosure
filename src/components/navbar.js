@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./navbar.module.scss"
 import Logo from "./logo"
 import Menu from "./menu"
 import HamburgerIcon from "../common/hamburgerIcon"
 
 function disableScroll() {
+  document.body.style.overflow = "hidden"
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
   window.onscroll = function() {
@@ -13,24 +14,19 @@ function disableScroll() {
 }
 
 function enableScroll() {
+  document.body.style.overflow = "visible"
   window.onscroll = function() {}
-}
-
-const handleClick = (menuIsOpen, setMenuIsOpen) => {
-  //TODO: Make only menu scroll in landscape mode
-
-  setMenuIsOpen(!menuIsOpen)
-  if (menuIsOpen) {
-    enableScroll()
-    document.body.style.overflow = "visible"
-  } else {
-    disableScroll()
-    document.body.style.overflow = "hidden"
-  }
 }
 
 export default function Navbar(props) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
+
+  useEffect(() => {
+    menuIsOpen ? disableScroll() : enableScroll()
+    // Return this function so it's called on unmount (just in case)
+    return enableScroll
+  }, [menuIsOpen])
+
   const links = [
     { name: "Home", endpoint: "/", hidden: true },
     ...props.links,
@@ -43,17 +39,15 @@ export default function Navbar(props) {
     { name: "Find your ballot", endpoint: "/", hidden: true },
   ]
 
-  if (menuIsOpen && props.windowIsLarge) {
-    handleClick(true, setMenuIsOpen)
-  }
-
   return (
     <nav className={styles.outerContainer}>
       <div className={styles.innerContainer}>
         <div className={styles.navbarTop}>
           <Logo header containerStyle={styles.logo} />
           <HamburgerIcon
-            handleClick={() => handleClick(menuIsOpen, setMenuIsOpen)}
+            handleClick={() => {
+              setMenuIsOpen(!menuIsOpen)
+            }}
             menuIsOpen={menuIsOpen}
           />
         </div>
