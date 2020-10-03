@@ -130,13 +130,14 @@ exports.sourceNodes = async ({
     fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
-    const { TotalRCPT, TotalLOAN } = candidate
-    // We're currently using RCPT because all the aggregations only use RCPT.
-    // TODO Include LOAN in TotalContributions
+    const { TotalRCPT } = candidate
+    // We're only including RCPT right now because the API only uses RCPT for aggregations
+    // TODO #171 Update to include LOAN
     const TotalContributions = TotalRCPT
     createNode({
       ...candidate,
       TotalContributions,
+      TotalFunding: TotalContributions, // TODO #171 Remove this override
       id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
@@ -338,6 +339,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       Name: String!
       Committees: [Committee]
       TotalContributions: Float 
+      TotalFunding: Float
       TotalEXPN: Float
       TotalLOAN: Float
       TotalRCPT: Float
