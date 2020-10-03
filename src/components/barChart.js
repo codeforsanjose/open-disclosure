@@ -16,7 +16,6 @@ function Row({
   showPercentages,
   isCommittee,
 }) {
-  const percent = formatPercent(value / total)
   return (
     <div className={`${styles.row} ${isCommittee && styles.noLabel}`}>
       <div className={styles.rowTop}>
@@ -24,11 +23,13 @@ function Row({
           {label}
         </p>
         <p className={styles.value}>
-          {showPercentages ? percent : formatDollarsInThousands(value)}
+          {showPercentages
+            ? formatPercent(value / total)
+            : formatDollarsInThousands(value)}
         </p>
       </div>
       <div className={styles.rowBottom}>
-        <Bar percent={percent} type={type} />
+        <Bar ratio={value / total} type={type} />
       </div>
       {isCommittee && <div className={styles.padding} />}
     </div>
