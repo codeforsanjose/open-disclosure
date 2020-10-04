@@ -36,7 +36,7 @@ export default function FAQItem({ question, answer }) {
         </div>
       </div>
       <div className={`${styles.itemBottom} ${isOpen && styles.open}`}>
-        <p>{answer}</p>
+        {typeof answer === "function" ? answer() : <p>{answer}</p>}
       </div>
     </div>
   )
