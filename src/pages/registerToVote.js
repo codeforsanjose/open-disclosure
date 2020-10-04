@@ -19,7 +19,7 @@ export default function RegisterToVote() {
         <header className={styles.hero}>
           <LandingPageHero title={title} subtitle={subtitle} />
         </header>
-        <div className={styles.body}>
+        <main className={styles.body}>
           <RegisterToVoteCard
             color="green"
             title="Am I registered to vote?"
@@ -35,7 +35,7 @@ export default function RegisterToVote() {
             cta="Register to vote"
             href="/getRegistered"
           />
-        </div>
+        </main>
       </div>
     </Layout>
   )

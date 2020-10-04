@@ -74,7 +74,7 @@ export default function FAQ() {
       <header>
         <LandingPageHero title={title} subtitle={subtitle} />
       </header>
-      <div className={styles.body}>
+      <main className={styles.body}>
         {faq.map((faqSection, index) => (
           <section key={`faq-section-${index}`} className={styles.faqSection}>
             <h2>{faqSection.sectionName}</h2>
@@ -83,7 +83,7 @@ export default function FAQ() {
             ))}
           </section>
         ))}
-      </div>
+      </main>
     </Layout>
   )
 }

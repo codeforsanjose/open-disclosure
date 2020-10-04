@@ -23,13 +23,14 @@ export default function FAQItem({ question, answer }) {
             }
           }}
           role="button"
+          aria-label="FAQ Item"
           tabIndex={0}
         >
           <div
             className={`${styles.horizontalBar}`}
             style={{
               transform: `rotate(${degrees + "deg"})`,
-              "-webkit-transform": `rotate(${degrees + "deg"})`,
+              WebkitTransform: `rotate(${degrees + "deg"})`,
             }}
           />
           <div className={styles.verticalBar} />

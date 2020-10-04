@@ -8,6 +8,7 @@ const hamburgerIcon = props => {
       onClick={props.handleClick}
       onKeyUp={props.handleClick}
       role="button"
+      aria-label="Open Mobile Menu"
       tabIndex={0}
     >
       <div className={`${styles.top} ${props.menuIsOpen && styles.rotate}`} />
