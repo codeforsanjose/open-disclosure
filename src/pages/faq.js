@@ -62,20 +62,24 @@ const faq = [
 ]
 
 export default function FAQ() {
+  const title = "Frequently Asked Questions"
+  const subtitle = "Learn more about campaign finance."
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <header>
-        <LandingPageHero
-          title="Frequently Asked Questions"
-          subtitle="Learn more about campaign finance."
-        />
+        <LandingPageHero title={title} subtitle={subtitle} />
       </header>
       <div className={styles.body}>
-        {faq.map(faqSection => (
-          <section className={styles.faqSection}>
+        {faq.map((faqSection, index) => (
+          <section key={`faq-section-${index}`} className={styles.faqSection}>
             <h2>{faqSection.sectionName}</h2>
-            {faqSection.questions.map(faqItem => (
-              <FAQItem {...faqItem} />
+            {faqSection.questions.map((faqItem, i) => (
+              <FAQItem key={`faq-section-${index}-item-${i}`} {...faqItem} />
             ))}
           </section>
         ))}

@@ -6,13 +6,13 @@ import React from "react"
 import styles from "./candidatesListItem.module.scss"
 import BlankProfile from "../../static/images/blankProfile.png"
 
-export default ({
+export default function CandidatesListItem({
   Name,
   path,
   electionTotal,
   TotalContributions,
   jsonNode,
-}) => {
+}) {
   const percent = formatPercent(TotalContributions / electionTotal)
   return (
     <Link className={styles.container} to={path}>

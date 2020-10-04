@@ -6,12 +6,17 @@ import styles from "./checkRegistration.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function CheckRegistration() {
+  const title = "Check if you’re registered"
+  const subtitle =
+    "It only takes 30 seconds to make sure you’re registered to vote."
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
-      <LandingPageHero
-        title="Check if you’re registered"
-        subtitle="It only takes 30 seconds to make sure you’re registered to vote."
-      />
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
+      <LandingPageHero title={title} subtitle={subtitle} />
       <div className={styles.body}>
         <IframeResizer
           log

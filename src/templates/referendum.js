@@ -30,7 +30,11 @@ function MeasureDetails({ data }) {
   const { jsonNode } = measure
   console.log(measure, jsonNode)
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={measure.Name}
+      description={`Finances supporting and opposing ${measure.Name}`}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <SideNav
         isReferendum
         headerBackground="green"
@@ -59,7 +63,7 @@ function MeasureDetails({ data }) {
                     src={VotersEdgeIcon}
                     className={styles.icon}
                   />
-                  More information on Voter's Edge
+                  More information on Voter&apos;s Edge
                 </a>
               </div>
             </div>

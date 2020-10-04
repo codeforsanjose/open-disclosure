@@ -16,7 +16,6 @@ function Row({
   showPercentages,
   isCommittee,
 }) {
-  const percent = formatPercent(value / total)
   return (
     <div className={`${styles.row} ${isCommittee && styles.noLabel}`}>
       <div className={styles.rowTop}>
@@ -24,11 +23,13 @@ function Row({
           {label}
         </p>
         <p className={styles.value}>
-          {showPercentages ? percent : formatDollarsInThousands(value)}
+          {showPercentages
+            ? formatPercent(value / total)
+            : formatDollarsInThousands(value)}
         </p>
       </div>
       <div className={styles.rowBottom}>
-        <Bar percent={percent} type={type} />
+        <Bar ratio={value / total} type={type} />
       </div>
       {isCommittee && <div className={styles.padding} />}
     </div>
@@ -48,8 +49,8 @@ export default function BarChart({
 }) {
   return (
     <div className={styles.chart}>
-      {rows.map(({ label, value, tooltip }) => (
-        <>
+      {rows.map(({ label, value, tooltip }, index) => (
+        <div key={`${type}-${label}-barchart-${index}`}>
           {isCommittee && <h4>***TO REMOVE: PLACEHOLDER COMMITTEE NAME***</h4>}
           <Row
             key={label}
@@ -61,7 +62,7 @@ export default function BarChart({
             showPercentages={showPercentages}
             tooltip={tooltip}
           />
-        </>
+        </div>
       ))}
     </div>
   )

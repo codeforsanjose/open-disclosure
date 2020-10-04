@@ -6,14 +6,17 @@ import styles from "./findYourBallot.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function FindYourBallot() {
+  const title = "Find your ballot"
+  const subtitle = "Get the facts before you vote"
+
   return (
-    <Layout windowIsLarge={useWindowIsLarge()}>
+    <Layout
+      title={title}
+      description={subtitle}
+      windowIsLarge={useWindowIsLarge()}
+    >
       <header>
-        <LandingPageHero
-          background="blue"
-          title="Find your ballot"
-          subtitle="Get the facts before you vote"
-        />
+        <LandingPageHero background="blue" title={title} subtitle={subtitle} />
       </header>
       <div className={styles.outerContainer}>
         <div className={styles.innerContainer}>
