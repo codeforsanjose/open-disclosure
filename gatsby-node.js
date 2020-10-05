@@ -666,7 +666,6 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     })
     node.Referendums.forEach(referendum => {
-      console.log(referendum)
       createPage({
         path: `/${node.Date}/referendums/${referendum.fields.slug}`,
         component: path.resolve("src/templates/referendum.js"),
@@ -820,7 +819,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       TotalSupport: Float
       TotalOppose: Float
       Support: RefCampaign
-      Oppose: RefCampaign
+      Opposition: RefCampaign
       jsonNode: MeasuresJson @link(by: "id" from: "ID")
       fields: NodeFields 
     }

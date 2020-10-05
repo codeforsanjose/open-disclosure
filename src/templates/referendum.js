@@ -10,21 +10,6 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import CommitteeCharts from "../components/committeeCharts"
 
-const supportingCommittees = [
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 500000,
-  },
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 400000,
-  },
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 14000,
-  },
-]
-
 function MeasureDetails({ data }) {
   const measure = data.referendum
   console.log(data)
@@ -71,21 +56,27 @@ function MeasureDetails({ data }) {
           <section>
             <SectionHeader title="Fundraising totals" />
             <div className={styles.totals}>
-              <TotalAmountPanelItem type="measureSupport" total={654876} />
-              <TotalAmountPanelItem type="measureOppose" total={383254} />
+              <TotalAmountPanelItem
+                type="measureSupport"
+                total={measure.TotalSupport}
+              />
+              <TotalAmountPanelItem
+                type="measureOppose"
+                total={measure.TotalOppose}
+              />
             </div>
           </section>
           <CommitteeCharts
             id="measureSupport"
             type="contributions"
-            total={654876}
-            data={supportingCommittees}
+            total={measure.TotalSupport}
+            data={measure.Support}
           />
           <CommitteeCharts
             id="measureOppose"
             type="expenditures"
-            total={654876}
-            data={supportingCommittees}
+            total={measure.TotalOppose}
+            data={measure.Opposition}
           />
         </div>
       </SideNav>
@@ -140,6 +131,10 @@ export const query = graphql`
           CA
           NonCA
         }
+        Committees {
+          Name
+          TotalContributions
+        }
         Contributors {
           Name
           ContributionType
@@ -150,7 +145,7 @@ export const query = graphql`
           Date
         }
       }
-      Oppose {
+      Opposition {
         TotalFunding
         TotalEXPN
         TotalLOAN
@@ -188,6 +183,10 @@ export const query = graphql`
           NonSJ
           CA
           NonCA
+        }
+        Committees {
+          Name
+          TotalContributions
         }
         Contributors {
           Name
