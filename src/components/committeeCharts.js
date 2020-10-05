@@ -3,7 +3,7 @@ import BarChart from "./barChart"
 import SectionHeader from "./sectionHeader"
 import styles from "./committeeCharts.module.scss"
 
-export default function CommitteeCharts({ type, total, data }) {
+export default function CommitteeCharts({ id, type, total, data }) {
   const typeText = {
     thirdPerson: "",
     gerund: "",

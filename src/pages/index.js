@@ -244,10 +244,6 @@ export const query = graphql`
             Election {
               ElectionCycle
             }
-            Committee {
-              Name
-              TotalFunding
-            }
             fields {
               slug
             }

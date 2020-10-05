@@ -232,48 +232,253 @@ const DUMMY_DATA = {
             TotalContributions: 345484.99,
           },
         ],
-        Referendums: [
-          {
-            Name: "Ballot Measure H",
-            Election: { ElectionCycle: "2020 Election Cycle" },
-            Committee: [
-              { Name: "For Measure H", TotalFunding: 123 },
-              { Name: "Against Measure H", TotalFunding: 456 },
-            ],
-          },
-          {
-            Name: "Ballot Measure G",
-            Election: { ElectionCycle: "2020 Election Cycle" },
-            Committee: [
-              { Name: "For Measure G", TotalFunding: 456 },
-              { Name: "Against Measure G", TotalFunding: 789 },
-            ],
-          },
-        ],
+        ReferendumIDs: ["295owncuj3", "038qishux7"],
       },
     },
   },
   referendums: {
     Referendums: [
       {
+        ID: "295owncuj3",
         Name: "Ballot Measure H",
-        Election: {
-          ElectionCycle: "2020 Election Cycle",
+        Election: { Date: "11/3/2020", ElectionCycle: "2020 Election Cycle" },
+        TotalSupport: 177665.6,
+        TotalOppose: 177665.6,
+        Support: {
+          TotalRCPT: 91165.6,
+          TotalEXPN: 78378.76,
+          TotalLOAN: 86500,
+          TotalS497: 7000,
+          TotalFunding: 177665.6,
+          FundingByType: {
+            COM: 13899,
+            IND: 71017.6,
+            OTH: 5649,
+            PTY: 600,
+          },
+          FundingByGeo: {
+            SJ: 45159,
+            NonSJ: 46006.6,
+            CA: 82430.6,
+            NonCA: 8735,
+          },
+          ExpenditureByType: {
+            CMP: 4485.95,
+            CVC: 250,
+            FIL: 2965,
+            LIT: 34625.3,
+            MTG: 200,
+            OFC: 1655.96,
+            POS: 250.75,
+            PRO: 7150,
+            SAL: 17732.63,
+            TEL: 27,
+            WEB: 9036.17,
+          },
+          Committees: [
+            {
+              Name: "For Measure H",
+              TotalContributions: 12345,
+            },
+          ],
+          Contributors: [
+            {
+              Name: "Some Person",
+              ContributionType: "Individual",
+              Occupation: "Developer",
+              Employer: "Code for San Jose",
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+            {
+              Name: "Some Union Local 123",
+              Occupation: null,
+              Employer: null,
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+          ],
         },
-        Committee: [
-          { Name: "For Measure H", TotalFunding: 123 },
-          { Name: "Against Measure H", TotalFunding: 456 },
-        ],
+        Opposition: {
+          TotalRCPT: 91165.6,
+          TotalEXPN: 78378.76,
+          TotalLOAN: 86500,
+          TotalS497: 7000,
+          TotalFunding: 177665.6,
+          FundingByType: {
+            COM: 13899,
+            IND: 71017.6,
+            OTH: 5649,
+            PTY: 600,
+          },
+          FundingByGeo: {
+            SJ: 45159,
+            NonSJ: 46006.6,
+            CA: 82430.6,
+            NonCA: 8735,
+          },
+          ExpenditureByType: {
+            CMP: 4485.95,
+            CVC: 250,
+            FIL: 2965,
+            LIT: 34625.3,
+            MTG: 200,
+            OFC: 1655.96,
+            POS: 250.75,
+            PRO: 7150,
+            SAL: 17732.63,
+            TEL: 27,
+            WEB: 9036.17,
+          },
+          Committees: [
+            {
+              Name: "Against Measure H",
+              TotalContributions: 89403,
+            },
+          ],
+          Contributors: [
+            {
+              Name: "Some Person",
+              ContributionType: "Individual",
+              Occupation: "Developer",
+              Employer: "Code for San Jose",
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+            {
+              Name: "Some Union Local 123",
+              Occupation: null,
+              Employer: null,
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+          ],
+        },
       },
       {
+        ID: "038qishux7",
         Name: "Ballot Measure G",
-        Election: {
-          ElectionCycle: "2020 Election Cycle",
+        Election: { Date: "11/3/2020", ElectionCycle: "2020 Election Cycle" },
+        TotalSupport: 0,
+        TotalOppose: 0,
+        Support: {
+          TotalRCPT: 91165.6,
+          TotalEXPN: 78378.76,
+          TotalLOAN: 86500,
+          TotalS497: 7000,
+          TotalFunding: 177665.6,
+          FundingByType: {
+            COM: 13899,
+            IND: 71017.6,
+            OTH: 5649,
+            PTY: 600,
+          },
+          FundingByGeo: {
+            SJ: 45159,
+            NonSJ: 46006.6,
+            CA: 82430.6,
+            NonCA: 8735,
+          },
+          ExpenditureByType: {
+            CMP: 4485.95,
+            CVC: 250,
+            FIL: 2965,
+            LIT: 34625.3,
+            MTG: 200,
+            OFC: 1655.96,
+            POS: 250.75,
+            PRO: 7150,
+            SAL: 17732.63,
+            TEL: 27,
+            WEB: 9036.17,
+          },
+          Committees: [
+            {
+              Name: "For Measure G",
+              TotalContributions: 89403,
+            },
+          ],
+          Contributors: [
+            {
+              Name: "Some Person",
+              ContributionType: "Individual",
+              Occupation: "Developer",
+              Employer: "Code for San Jose",
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+            {
+              Name: "Some Union Local 123",
+              Occupation: null,
+              Employer: null,
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+          ],
         },
-        Committee: [
-          { Name: "For Measure G", TotalFunding: 456 },
-          { Name: "Against Measure G", TotalFunding: 789 },
-        ],
+        Opposition: {
+          TotalRCPT: 91165.6,
+          TotalEXPN: 78378.76,
+          TotalLOAN: 86500,
+          TotalS497: 7000,
+          TotalFunding: 177665.6,
+          FundingByType: {
+            COM: 13899,
+            IND: 71017.6,
+            OTH: 5649,
+            PTY: 600,
+          },
+          FundingByGeo: {
+            SJ: 45159,
+            NonSJ: 46006.6,
+            CA: 82430.6,
+            NonCA: 8735,
+          },
+          ExpenditureByType: {
+            CMP: 4485.95,
+            CVC: 250,
+            FIL: 2965,
+            LIT: 34625.3,
+            MTG: 200,
+            OFC: 1655.96,
+            POS: 250.75,
+            PRO: 7150,
+            SAL: 17732.63,
+            TEL: 27,
+            WEB: 9036.17,
+          },
+          Committees: [
+            {
+              Name: "Against Measure G",
+              TotalContributions: 89403,
+            },
+          ],
+          Contributors: [
+            {
+              Name: "Some Person",
+              ContributionType: "Individual",
+              Occupation: "Developer",
+              Employer: "Code for San Jose",
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+            {
+              Name: "Some Union Local 123",
+              Occupation: null,
+              Employer: null,
+              ZipCode: 12345,
+              Contributions: 900,
+              Date: "11-3-20",
+            },
+          ],
+        },
       },
     ],
   },
@@ -343,6 +548,22 @@ exports.sourceNodes = async ({
       },
     })
   })
+  referendumData.Referendums.map(referendum => {
+    const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${referendum.ID}`)
+
+    createNode({
+      ...referendum,
+      id,
+      parent: null,
+      children: [],
+      internal: {
+        type: REFERENDUM_NODE_TYPE,
+        content: JSON.stringify(referendum),
+        contentDigest: createContentDigest(referendum),
+      },
+    })
+    return id
+  })
   const election = electionData.Elections["11/3/2020"]
   createNode({
     ...election,
@@ -359,22 +580,6 @@ exports.sourceNodes = async ({
           type: OFFICE_ELECTION_NODE_TYPE,
           content: JSON.stringify(officeElection),
           contentDigest: createContentDigest(officeElection),
-        },
-      })
-      return id
-    }),
-    Referendums: election.Referendums.map(referendum => {
-      const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${referendum.Name}`)
-
-      createNode({
-        ...referendum,
-        id,
-        parent: null,
-        children: [],
-        internal: {
-          type: REFERENDUM_NODE_TYPE,
-          content: JSON.stringify(referendum),
-          contentDigest: createContentDigest(referendum),
         },
       })
       return id
@@ -427,15 +632,8 @@ exports.createPages = async ({ graphql, actions }) => {
               }
             }
             Referendums {
-              id
+              ID
               Name
-              Election {
-                ElectionCycle
-              }
-              Committee {
-                Name
-                TotalFunding
-              }
               fields {
                 slug
               }
@@ -468,12 +666,13 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     })
     node.Referendums.forEach(referendum => {
+      console.log(referendum)
       createPage({
         path: `/${node.Date}/referendums/${referendum.fields.slug}`,
         component: path.resolve("src/templates/referendum.js"),
         context: {
           slug: referendum.fields.slug,
-          id: referendum.id,
+          id: referendum.ID,
         },
       })
     })
@@ -493,7 +692,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type GeoBreakdown {
+      SJ: Float
+      NonSJ: Float
       CA: Float
+      NonCA: Float
     }
 
     type FundingTypeBreakdown {
@@ -559,7 +761,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       Date: String 
       TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
-      Referendums: [Referendum] @link
+      Referendums: [Referendum] @link(by: "ID" from: "ReferendumIDs")
       fields: NodeFields
     }
 
@@ -571,12 +773,35 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type RefElectionCycle {
+      Date: String
       ElectionCycle: String
     }
 
     type RefCommittee {
       Name: String
       TotalFunding: Float
+    }
+
+    type RefContributor {
+      Name: String
+      ContributionType: String
+      Occupation: String
+      Employer: String
+      ZipCode: String
+      Contributions: Float
+      Date: String
+    }
+
+    type RefCampaign {
+      TotalFunding: Float
+      TotalEXPN: Float
+      TotalLOAN: Float
+      TotalRCPT: Float
+      FundingByGeo: GeoBreakdown
+      FundingByType: FundingTypeBreakdown
+      ExpenditureByType: ExpenditureTypeBreakdown
+      Committee: [RefCommittee]
+      Contributors: [RefContributor]
     }
 
     type MeasuresJson implements Node {
@@ -589,10 +814,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Referendum implements Node {
       id: ID
+      ID: String
       Name: String!
       Election: RefElectionCycle
-      Committee: RefCommittee
-      jsonNode: MeasuresJson @link(by: "name" from: "Name")
+      TotalSupport: Float
+      TotalOppose: Float
+      Support: RefCampaign
+      Oppose: RefCampaign
+      jsonNode: MeasuresJson @link(by: "id" from: "ID")
       fields: NodeFields 
     }
 

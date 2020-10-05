@@ -31,10 +31,6 @@ export default () => {
                   Election {
                     ElectionCycle
                   }
-                  Committee {
-                    Name
-                    TotalFunding
-                  }
                   fields {
                     slug
                   }

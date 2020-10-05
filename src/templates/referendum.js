@@ -27,8 +27,8 @@ const supportingCommittees = [
 
 function MeasureDetails({ data }) {
   const measure = data.referendum
+  console.log(data)
   const { jsonNode } = measure
-  console.log(measure, jsonNode)
   return (
     <Layout
       title={measure.Name}
@@ -95,12 +95,109 @@ function MeasureDetails({ data }) {
 
 export const query = graphql`
   query($id: String) {
-    referendum(id: { eq: $id }) {
+    referendum(ID: { eq: $id }) {
       id
+      ID
       Name
-      Committee {
-        Name
+      TotalSupport
+      TotalOppose
+      Support {
         TotalFunding
+        TotalEXPN
+        TotalLOAN
+        TotalRCPT
+        ExpenditureByType {
+          SAL
+          CMP
+          CNS
+          CVC
+          FIL
+          FND
+          LIT
+          MBR
+          MTG
+          OFC
+          POL
+          POS
+          PRO
+          PRT
+          RAD
+          RFD
+          TEL
+          TRS
+          WEB
+        }
+        FundingByType {
+          IND
+          COM
+          OTH
+          PTY
+          SCC
+        }
+        FundingByGeo {
+          SJ
+          NonSJ
+          CA
+          NonCA
+        }
+        Contributors {
+          Name
+          ContributionType
+          Occupation
+          Employer
+          ZipCode
+          Contributions
+          Date
+        }
+      }
+      Oppose {
+        TotalFunding
+        TotalEXPN
+        TotalLOAN
+        TotalRCPT
+        ExpenditureByType {
+          SAL
+          CMP
+          CNS
+          CVC
+          FIL
+          FND
+          LIT
+          MBR
+          MTG
+          OFC
+          POL
+          POS
+          PRO
+          PRT
+          RAD
+          RFD
+          TEL
+          TRS
+          WEB
+        }
+        FundingByType {
+          IND
+          COM
+          OTH
+          PTY
+          SCC
+        }
+        FundingByGeo {
+          SJ
+          NonSJ
+          CA
+          NonCA
+        }
+        Contributors {
+          Name
+          ContributionType
+          Occupation
+          Employer
+          ZipCode
+          Contributions
+          Date
+        }
       }
       fields {
         slug

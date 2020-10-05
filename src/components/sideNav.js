@@ -148,10 +148,6 @@ export default function sideNav({
                   Election {
                     ElectionCycle
                   }
-                  Committee {
-                    Name
-                    TotalFunding
-                  }
                   fields {
                     slug
                   }
