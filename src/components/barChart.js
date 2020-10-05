@@ -47,7 +47,6 @@ export default function BarChart({
   showPercentages = false, // Show percentages instead of dollar values
   isCommittee = false, // Removes label to the left of row, places it above
 }) {
-  console.log(total, rows)
   return (
     <div className={styles.chart}>
       {rows.map(({ label, value, tooltip }, index) => (

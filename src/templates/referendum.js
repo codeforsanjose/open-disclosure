@@ -12,7 +12,6 @@ import CommitteeCharts from "../components/committeeCharts"
 
 function MeasureDetails({ data }) {
   const measure = data.referendum
-  console.log(data)
   const { jsonNode } = measure
   return (
     <Layout
