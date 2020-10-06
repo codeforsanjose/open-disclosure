@@ -9,9 +9,9 @@ const CandidateItem = item => (
       <img alt="candidate" height="180px" width="180px" src={item.image} />
     </div>
     <div className={styles.candidateInfo}>
-      <h4>{item.name}</h4>
+      <h3>{item.name}</h3>
       <p>{item.position}</p>
-      <h3>{formatDollars(item.amount)}</h3>
+      <h4>{formatDollars(item.amount)}</h4>
       <p className={styles.amountRaised}>Amount raised</p>
     </div>
   </Link>

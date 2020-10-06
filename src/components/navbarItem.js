@@ -42,38 +42,41 @@ export default function NavbarItem(props) {
 
   return (
     <li
-      className={`${styles.item} ${props.hidden &&
-        styles.hidden} ${props.menuIsOpen && styles.open} ${props.submenu &&
-        styles.submenu}`}
-      key={`link item ${props.name}`}
-      onClick={toggleMenu}
-      onKeyUp={toggleMenu}
-      role="presentation"
+      key={`navbar-item-${props.name}`}
+      className={`${props.hidden && styles.hidden}`}
     >
-      <Anchor>
-        <div className={`${styles.linkInner}`}>
-          <span>{props.name || props.position}</span>
-          <div className={styles.selected} />
-        </div>
-        {hasLinks || props.arrow ? (
-          <img
-            alt="link-arrow"
-            src={linkArrow}
-            height="9.2px"
-            width="15.5px"
-            className={`${styles.arrow} ${menuItemIsOpen &&
-              styles.openMenuItem}`}
+      <div
+        className={`${styles.item} ${props.menuIsOpen &&
+          styles.open} ${props.submenu && styles.submenu}`}
+        onClick={toggleMenu}
+        onKeyUp={toggleMenu}
+        role="presentation"
+      >
+        <Anchor>
+          <div className={`${styles.linkInner}`}>
+            <span>{props.name || props.position}</span>
+            <div className={styles.selected} />
+          </div>
+          {hasLinks || props.arrow ? (
+            <img
+              alt="link-arrow"
+              src={linkArrow}
+              height="9.2px"
+              width="15.5px"
+              className={`${styles.arrow} ${menuItemIsOpen &&
+                styles.openMenuItem}`}
+            />
+          ) : null}
+        </Anchor>
+        {hasLinks && !props.windowIsLarge ? (
+          <Menu
+            menuIsOpen={menuItemIsOpen}
+            submenu
+            windowIsLarge={props.windowIsLarge}
+            links={props.links}
           />
         ) : null}
-      </Anchor>
-      {hasLinks && !props.windowIsLarge ? (
-        <Menu
-          menuIsOpen={menuItemIsOpen}
-          submenu
-          windowIsLarge={props.windowIsLarge}
-          links={props.links}
-        />
-      ) : null}
+      </div>
     </li>
   )
 }

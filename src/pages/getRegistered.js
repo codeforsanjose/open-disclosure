@@ -15,15 +15,17 @@ export default function GetRegistered() {
       description={subtitle}
       windowIsLarge={useWindowIsLarge()}
     >
-      <LandingPageHero title={title} subtitle={subtitle} />
-      <div className={styles.body}>
+      <header>
+        <LandingPageHero title={title} subtitle={subtitle} />
+      </header>
+      <main className={styles.body}>
         <IframeResizer
           log
           src="https://register.vote.org/?partner=111111&campaign=free-tools"
           style={{ width: "1px", minWidth: "100%" }}
           frameBorder="0"
         />
-      </div>
+      </main>
     </Layout>
   )
 }

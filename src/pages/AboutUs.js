@@ -17,10 +17,10 @@ export default function AboutUs() {
       description={subtitle}
       windowIsLarge={useWindowIsLarge()}
     >
-      <header>
+      <header id="about-us-header">
         <LandingPageHero background="green" title={title} subtitle={subtitle} />
       </header>
-      <div className={styles.container}>
+      <main className={styles.container} id="about-us-main-content">
         <h1>About Open Disclosure San José</h1>
         <p>
           Open Disclosure was created to support transparency and integrity in
@@ -49,7 +49,7 @@ export default function AboutUs() {
           </a>{" "}
           for the inspiration behind our project.
         </p>
-      </div>
+      </main>
     </Layout>
   )
 }

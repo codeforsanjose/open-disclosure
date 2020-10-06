@@ -170,16 +170,23 @@ export default function sideNav({
 
         return (
           <div className={styles.outerContainer}>
-            <LandingPageHero
-              background={headerBackground}
-              title={pageTitle}
-              subtitle={pageSubtitle}
-            />
-            <div className={styles.innerContainer}>
-              <nav className={styles.navbar}>
+            <header>
+              <LandingPageHero
+                background={headerBackground}
+                title={pageTitle}
+                subtitle={pageSubtitle}
+              />
+            </header>
+            <main className={styles.innerContainer}>
+              <nav
+                className={styles.navbar}
+                role="navigation"
+                aria-label="Side Navigator"
+              >
                 {!isCandidate && (
                   <div className={styles.selectMenu}>
                     <Select
+                      aria-label="Dropdown Navigation for Mobile"
                       styles={customStyles}
                       placeholder={isCandidate ? pageSubtitle : selectedTitle}
                       options={menuOptions}
@@ -187,10 +194,13 @@ export default function sideNav({
                     />
                   </div>
                 )}
-                <ul className={styles.sidebar}>
+                <ul
+                  className={styles.sidebar}
+                  aria-label="Side Navigator for Desktop"
+                >
                   {menuOptions.map(section => (
                     <li key={section.label} className={styles.section}>
-                      <h4 className={styles.text}>{section.label}</h4>
+                      <h3 className={styles.text}>{section.label}</h3>
                       <ul>
                         {section.options.map(race => {
                           const active =
@@ -220,7 +230,7 @@ export default function sideNav({
                 </ul>
               </nav>
               <div className={styles.body}>{children}</div>
-            </div>
+            </main>
           </div>
         )
       }}
