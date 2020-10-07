@@ -18,7 +18,7 @@ export default function FindYourBallot() {
       <header>
         <LandingPageHero background="blue" title={title} subtitle={subtitle} />
       </header>
-      <div className={styles.outerContainer}>
+      <main className={styles.outerContainer}>
         <div className={styles.innerContainer}>
           <h1>Get your personalized ballot</h1>
           <p>Get information on candidates, measures and who supports them</p>
@@ -33,7 +33,7 @@ export default function FindYourBallot() {
             />
           </div>
         </div>
-      </div>
+      </main>
     </Layout>
   )
 }

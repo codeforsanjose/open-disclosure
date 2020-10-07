@@ -36,12 +36,16 @@ export default function Navbar(props) {
       hidden: true,
       arrow: true,
     },
-    { name: "Find your ballot", endpoint: "/", hidden: true },
+    { name: "Find your ballot", endpoint: "/findYourBallot", hidden: true },
   ]
 
   return (
-    <nav className={styles.outerContainer}>
-      <div className={styles.innerContainer}>
+    <div className={styles.outerContainer}>
+      <nav
+        className={styles.innerContainer}
+        role="navigation"
+        aria-label="Header Navigation"
+      >
         <div className={styles.navbarTop}>
           <Logo header containerStyle={styles.logo} />
           <HamburgerIcon
@@ -58,7 +62,7 @@ export default function Navbar(props) {
             links={links}
           />
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   )
 }

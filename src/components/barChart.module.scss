@@ -12,7 +12,8 @@
     margin-bottom: 2rem;
   }
 
-  p {
+  p,
+  .label {
     font-size: 1.8rem;
   }
 }
@@ -73,7 +74,8 @@
     margin-bottom: 0.6rem;
   }
 
-  .chart p {
+  .chart p,
+  .chart .label {
     font-size: 1.4rem;
     line-height: 130%;
   }

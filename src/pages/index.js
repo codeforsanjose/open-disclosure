@@ -199,15 +199,17 @@ export default function MainPage(props) {
             </div>
           </div>
         </header>
-        <MainPageSection secondary {...snapshot} />
-        <MainPageSection
-          {...candidates}
-          offWhite
-          windowIsLarge={windowIsLarge}
-        />
-        <MainPageSection {...behindTheScenes} />
-        <MainPagePic {...about} />
-        <MainPagePic {...vote} reversed={windowIsLarge} />
+        <main>
+          <MainPageSection secondary {...snapshot} />
+          <MainPageSection
+            {...candidates}
+            offWhite
+            windowIsLarge={windowIsLarge}
+          />
+          <MainPageSection {...behindTheScenes} />
+          <MainPagePic {...about} />
+          <MainPagePic {...vote} reversed={windowIsLarge} />
+        </main>
       </div>
     </Layout>
   )

@@ -44,14 +44,14 @@
   .navbarTop {
     align-items: center;
     justify-content: space-between;
-    width: stretch;
     padding: 1.5rem 1rem 1.5rem 1.5rem;
+    width: 96.4%;
   }
 
   .navbarBottom {
     position: absolute;
     background-color: $primaryWhite;
-    width: stretch;
+    width: 100%;
     top: 8rem;
   }
 }

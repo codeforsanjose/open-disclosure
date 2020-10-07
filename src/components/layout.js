@@ -107,15 +107,17 @@ export default function Layout({
               description={description}
             />
             <Navbar links={links} windowIsLarge={windowIsLarge} />
-
             {children}
-
-            <footer className={styles.footer}>
+            <footer className={styles.footer} aria-label="Site Footer">
               <div className={styles.footerInner}>
                 <div className={styles.footerTop}>
                   <div className={styles.footerLeft}>
                     <Logo />
-                    <nav className={styles.footerNav}>
+                    <nav
+                      className={styles.footerNav}
+                      role="navigation"
+                      aria-label="Footer Navigation"
+                    >
                       {renderNavItems(links, election)}
                       {renderNavItems(footerLinks)}
                     </nav>
@@ -148,17 +150,7 @@ export default function Layout({
                     </a>{" "}
                     for the inspiration.
                   </h1>
-                  <p>
-                    Brought to you by Open San José and San José&apos;s Public
-                    Ethics Commission
-                  </p>
-                  <p>
-                    Campaign finance data provided by the City of San José
-                    Public Ethics Commission Public Portal for Campaign Finance
-                    and Lobbyist Disclosure. Candidate and ballot measure
-                    information gathered from information provided to the Santa
-                    Clara County Registrar of Voters by the City of San José.
-                  </p>
+                  <p>Brought to you by Code for San José</p>
                 </div>
               </div>
             </footer>

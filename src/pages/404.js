@@ -63,7 +63,7 @@ export default () => {
 
         return (
           <Layout title="Page not found" windowIsLarge={useWindowIsLarge()}>
-            <div className={styles.container}>
+            <main className={styles.container}>
               <img
                 height={"286.93px"}
                 width={"271px"}
@@ -93,7 +93,7 @@ export default () => {
                   ))}
                 </ul>
               </div>
-            </div>
+            </main>
           </Layout>
         )
       }}

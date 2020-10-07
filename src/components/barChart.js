@@ -19,9 +19,9 @@ function Row({
   return (
     <div className={`${styles.row} ${isCommittee && styles.noLabel}`}>
       <div className={styles.rowTop}>
-        <p className={styles.label} title={tooltip ?? label}>
+        <label className={styles.label} title={tooltip ?? label}>
           {label}
-        </p>
+        </label>
         <p className={styles.value}>
           {showPercentages
             ? formatPercent(value / total)
