@@ -51,10 +51,10 @@ export default function BarChart({
     <div className={styles.chart}>
       {rows.map(({ label, value, tooltip }, index) => (
         <div key={`${type}-${label}-barchart-${index}`}>
-          {isCommittee && <h4>***TO REMOVE: PLACEHOLDER COMMITTEE NAME***</h4>}
+          {isCommittee && <h4>{label}</h4>}
           <Row
             key={label}
-            label={label}
+            label={!isCommittee ? label : ""}
             value={value}
             total={total}
             type={type}

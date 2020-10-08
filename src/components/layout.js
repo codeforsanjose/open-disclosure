@@ -65,15 +65,7 @@ export default function Layout({
                   }
                 }
                 Referendums {
-                  id
                   Name
-                  Election {
-                    ElectionCycle
-                  }
-                  Committee {
-                    Name
-                    TotalFunding
-                  }
                   fields {
                     slug
                   }

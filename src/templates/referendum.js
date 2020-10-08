@@ -10,23 +10,9 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import VotersEdgeIcon from "../../static/images/votersEdge.png"
 import CommitteeCharts from "../components/committeeCharts"
 
-const supportingCommittees = [
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 500000,
-  },
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 400000,
-  },
-  {
-    title: "Yes on Measure E! San José Neighbors for Parks & People",
-    value: 14000,
-  },
-]
-
 function MeasureDetails({ data }) {
   const measure = data.referendum
+  const { jsonNode } = measure
   return (
     <Layout
       title={measure.Name}
@@ -44,7 +30,7 @@ function MeasureDetails({ data }) {
           <SectionHeader
             isPageHeader
             title={measure.Name}
-            subtitle="***TO REMOVE: PLACEHOLDER ONE LINE DESC OF MEASURE***"
+            subtitle={jsonNode.description}
           />
           <section>
             <div className={styles.aboutSection}>
@@ -53,12 +39,9 @@ function MeasureDetails({ data }) {
                   What would this measure do?
                 </span>
               </p>
-              <p className={styles.aboutText}>{measure?.Description ?? ""}</p>
+              <p className={styles.aboutText}>{jsonNode.ballotLanguage}</p>
               <div className={styles.aboutLinks}>
-                <a
-                  href="https://votersedge.org/ca"
-                  className={styles.aboutLink}
-                >
+                <a href={jsonNode.href} className={styles.aboutLink}>
                   <img
                     alt="External link icon"
                     src={VotersEdgeIcon}
@@ -72,19 +55,27 @@ function MeasureDetails({ data }) {
           <section>
             <SectionHeader title="Fundraising totals" />
             <div className={styles.totals}>
-              <TotalAmountPanelItem type="measureSupport" total={654876} />
-              <TotalAmountPanelItem type="measureOppose" total={383254} />
+              <TotalAmountPanelItem
+                type="measureSupport"
+                total={measure.TotalSupport}
+              />
+              <TotalAmountPanelItem
+                type="measureOppose"
+                total={measure.TotalOppose}
+              />
             </div>
           </section>
           <CommitteeCharts
+            id="measureSupport"
             type="contributions"
-            total={654876}
-            data={supportingCommittees}
+            total={measure.TotalSupport}
+            data={measure.Support}
           />
           <CommitteeCharts
+            id="measureOppose"
             type="expenditures"
-            total={654876}
-            data={supportingCommittees}
+            total={measure.TotalOppose}
+            data={measure.Opposition}
           />
         </div>
       </SideNav>
@@ -94,18 +85,127 @@ function MeasureDetails({ data }) {
 
 export const query = graphql`
   query($id: String) {
-    referendum(id: { eq: $id }) {
+    referendum(ID: { eq: $id }) {
       id
+      ID
       Name
-      Election {
-        ElectionCycle
-      }
-      Committee {
-        Name
+      TotalSupport
+      TotalOppose
+      Support {
         TotalFunding
+        TotalEXPN
+        TotalLOAN
+        TotalRCPT
+        ExpenditureByType {
+          SAL
+          CMP
+          CNS
+          CVC
+          FIL
+          FND
+          LIT
+          MBR
+          MTG
+          OFC
+          POL
+          POS
+          PRO
+          PRT
+          RAD
+          RFD
+          TEL
+          TRS
+          WEB
+        }
+        FundingByType {
+          IND
+          COM
+          OTH
+          PTY
+          SCC
+        }
+        FundingByGeo {
+          SJ
+          NonSJ
+          CA
+          NonCA
+        }
+        Committees {
+          Name
+          TotalContributions
+        }
+        Contributors {
+          Name
+          ContributionType
+          Occupation
+          Employer
+          ZipCode
+          Contributions
+          Date
+        }
+      }
+      Opposition {
+        TotalFunding
+        TotalEXPN
+        TotalLOAN
+        TotalRCPT
+        ExpenditureByType {
+          SAL
+          CMP
+          CNS
+          CVC
+          FIL
+          FND
+          LIT
+          MBR
+          MTG
+          OFC
+          POL
+          POS
+          PRO
+          PRT
+          RAD
+          RFD
+          TEL
+          TRS
+          WEB
+        }
+        FundingByType {
+          IND
+          COM
+          OTH
+          PTY
+          SCC
+        }
+        FundingByGeo {
+          SJ
+          NonSJ
+          CA
+          NonCA
+        }
+        Committees {
+          Name
+          TotalContributions
+        }
+        Contributors {
+          Name
+          ContributionType
+          Occupation
+          Employer
+          ZipCode
+          Contributions
+          Date
+        }
       }
       fields {
         slug
+      }
+      jsonNode {
+        ballotLanguage
+        description
+        electionDate
+        name
+        href
       }
     }
   }
