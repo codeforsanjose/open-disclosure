@@ -29,6 +29,22 @@ class Csv2Redis:
             "Dev Davis": "456hjkl2l",
             "Lan Diep": "cf90g8cii",
         }
+        self.referendums = {
+            "df7g8y6d8": {
+                "id": "df7g8y6d8",
+                "electionDate": "2020-11-03",
+                "name": "Measure G",
+                "description": "Charter Amendment regarding Independent Police Auditor, Planning Commission, Redistricting",
+                "ballotLanguage": "Shall the City Charter be amended to: expand the Independent Police Auditor’s oversight, including review of officer-involved shootings and use of force incidents causing death or great bodily injury, review of department-initiated investigations against officers, and other technical amendments; increase the Planning Commission to 11 members with Council appointing one member from each Council District and one “at-large” member; and allow the Council to establish timelines for redistricting when Census results are late?",
+            },
+            "35j6kh45m": {
+                "id": "35j6kh45m",
+                "electionDate": "2020-11-03",
+                "name": "Measure H",
+                "description": "Cardroom Tax",
+                "ballotLanguage": "To fund general San Jose services, including fire protection, disaster preparedness, 911 emergency response, street repair, youth programs, addressing homelessness, and supporting vulnerable residents, shall an ordinance be adopted increasing the cardroom tax rate from 15% to 16.5%, applying the tax to third party providers at these rates: up to $25,000,000 at 5%; $25,000,001 to $30,000,000 at 7.5%; and over $30,000,000 at 10%, increasing card tables by 30, generating approximately $15,000,000 annually, until repealed?",
+            },
+        }
         self.extra_candidate_data = {
             "David Cohen": {
                 "seat": "Councilmember District 4",
@@ -134,10 +150,21 @@ class Csv2Redis:
             pipe.jsonset(path_name, Path.rootPath(), data_shape)
             pipe.execute()
         logger.debug(
-            "The election shape in redis {}".format(self.rj.jsonget(path_name))
+            "The new shape set in redis is {}".format(self.rj.jsonget(path_name))
         )
 
-    def setElectionShapeInRedis(self) -> list:
+    def set_referendums_shape_in_redis(self) -> None:
+        """
+        Set the referendums key in redis with the appropriate data (currently hardcoded)
+        """
+        try:
+            self.set_path_in_redis(
+                "referendums", {"Referendums": list(self.referendums.values())}
+            )
+        except Exception as e:
+            logger.debug(e)
+
+    def setElectionShapeInRedis(self) -> bool:
         """
         Populate election shape into redis
         """
@@ -169,20 +196,7 @@ class Csv2Redis:
                 )
                 officeElections = []
                 # Hardcoded from frontend data
-                referendums = [
-                    {
-                        "electionDate": "2020-11-03",
-                        "name": "Measure G",
-                        "description": "Charter Amendment regarding Independent Police Auditor, Planning Commission, Redistricting",
-                        "ballotLanguage": "Shall the City Charter be amended to: expand the Independent Police Auditor’s oversight, including review of officer-involved shootings and use of force incidents causing death or great bodily injury, review of department-initiated investigations against officers, and other technical amendments; increase the Planning Commission to 11 members with Council appointing one member from each Council District and one “at-large” member; and allow the Council to establish timelines for redistricting when Census results are late?",
-                    },
-                    {
-                        "electionDate": "2020-11-03",
-                        "name": "Measure H",
-                        "description": "Cardroom Tax",
-                        "ballotLanguage": "To fund general San Jose services, including fire protection, disaster preparedness, 911 emergency response, street repair, youth programs, addressing homelessness, and supporting vulnerable residents, shall an ordinance be adopted increasing the cardroom tax rate from 15% to 16.5%, applying the tax to third party providers at these rates: up to $25,000,000 at 5%; $25,000,001 to $30,000,000 at 7.5%; and over $30,000,000 at 10%, increasing card tables by 30, generating approximately $15,000,000 annually, until repealed?",
-                    },
-                ]
+                referendums = list(self.referendums.keys())
                 for bi in dataPerElectionDate["Ballot Item"].unique():
                     dataPerElectionDateAndBallotItem = dataPerElectionDate[
                         dataPerElectionDate["Ballot Item"] == bi
@@ -397,3 +411,4 @@ if __name__ == "__main__":
     csv2Redis.read_data_sheet()
     csv2Redis.setElectionShapeInRedis()
     csv2Redis.setCandidateShapeInRedis()
+    csv2Redis.set_referendums_shape_in_redis()

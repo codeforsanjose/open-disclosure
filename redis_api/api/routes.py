@@ -44,10 +44,10 @@ def get_candidates(serve_fake=False):
     :rtype: JSON
     """
     try:
-        candidateShape = redis.getAnyShape("candidates")
-        if not candidateShape:
+        candidate_shape = redis.getAnyShape("candidates")
+        if not candidate_shape:
             return empty_response("Candidates")
-        return jsonify(candidateShape)
+        return jsonify(candidate_shape)
     except Exception as error:
         return error_response(f"{error}")
 
@@ -76,23 +76,27 @@ def get_elections():
     :return: list or set of JSON objects containing individual election cycle information
     """
     try:
-        electionShape = redis.getAnyShape("elections")
-        if not electionShape:
+        election_shape = redis.getAnyShape("elections")
+        if not election_shape:
             return empty_response("Elections")
-        return jsonify(electionShape)
+        return jsonify(election_shape)
     except Exception as error:
         return error_response(f"{error}")
 
 
 @redis_bp.route("/referendums", methods=["GET"])
-def get_referendums(serve_fake=True):
+def get_referendums(serve_fake=False):
     """
     WIP
     :return:
     """
-    if serve_fake:
-        return fake_data.get_referendums_shape()
-    return empty_response("Referendums")
+    try:
+        referendums_shape = redis.getAnyShape("referendums")
+        if not referendums_shape:
+            return empty_response("Referendums")
+        return jsonify(referendums_shape)
+    except Exception as error:
+        return error_response(f"{error}")
 
 
 @redis_bp.route("/metadata", methods=["GET"])
