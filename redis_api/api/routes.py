@@ -3,14 +3,12 @@ import json
 from flask import Blueprint, jsonify
 
 from api.errors import empty_response, error_response
-from redis import RedisError, StrictRedis
-from api.tests.unit import fake_data
-
 from api.services import RedisClient
+from api.tests.unit import fake_data
+from redis import RedisError, StrictRedis
 
-redis_bp = Blueprint("redis_bp", "redis_api",
-                     url_prefix="/open-disclosure/api/v1.0")
-r = StrictRedis(host="localhost", port=6379)
+redis_bp = Blueprint("redis_bp", "redis_api", url_prefix="/open-disclosure/api/v1.0")
+redis = RedisClient()
 
 
 @redis_bp.route("/", methods=["GET"])
@@ -27,7 +25,7 @@ def get_total_contributions(serve_fake=True):
     if serve_fake:
         return jsonify({"TotalContributions": 100000})
     try:
-        response = r.execute_command("JSON.GET", "TotalContributions")
+        response = redis.getAnyShape("Total Contributions")
         if not response:
             return empty_response("TotalContributions")
         return jsonify({"TotalContributions": json.loads(response)})
@@ -35,9 +33,8 @@ def get_total_contributions(serve_fake=True):
         return error_response(f"{error}")
 
 
-@redis_bp.route("/candidates/", defaults={"candidate_id": None}, methods=["GET"])
-@redis_bp.route("/candidates/<string:candidate_id>", methods=["GET"])
-def get_candidates(candidate_id, serve_fake=False):
+@redis_bp.route("/candidates", methods=["GET"])
+def get_candidates(serve_fake=False):
     """
     Get all the candidates from the current election period or
     a specific candidate
@@ -47,28 +44,15 @@ def get_candidates(candidate_id, serve_fake=False):
     :rtype: JSON
     """
     try:
-        redis = RedisClient()
-        candidateShape = redis.getAnyShape('candidates')
-        if candidateShape:
-            if candidate_id is None:
-                return jsonify(candidateShape)
-            else:
-                # TODO: Sync up with Front-End for the spec. Currently the ID contains "/".
-                # candidateIDDict = [{x['ID']: x}
-                #                    for x in candidateShape['Candidates']]
-                # if candidate_id in candidateIDDict:
-                #     return jsonify({'Candidate': candidateIDDict[candidate_id]})
-                # else:
-                #     return jsonify({'Candidate': {}})
-                return jsonify(candidateShape)
-        else:
-            # TODO: discuss when index in redis is not found
-            return jsonify({"Candidates": []})
+        candidate_shape = redis.getAnyShape("candidates")
+        if not candidate_shape:
+            return empty_response("Candidates")
+        return jsonify(candidate_shape)
     except Exception as error:
         return error_response(f"{error}")
 
 
-@redis_bp.route("/committees/", methods=["GET"])
+@redis_bp.route("/committees", methods=["GET"])
 def get_committees(serve_fake=True):
     """
     Get all the committees from the current election period
@@ -77,7 +61,7 @@ def get_committees(serve_fake=True):
     if serve_fake:
         return jsonify({"Committees": fake_data.get_committees_shape()})
     try:
-        response = r.execute_command("JSON.GET", "Committees")
+        response = redis.getAnyShape("Committees")
         if not response:
             return empty_response("Committees")
         return jsonify({"Committees": json.loads(response)})
@@ -85,33 +69,34 @@ def get_committees(serve_fake=True):
         return error_response(f"{error}")
 
 
-@redis_bp.route("/elections/", methods=["GET"])
+@redis_bp.route("/elections", methods=["GET"])
 def get_elections():
     """
     Get all the election cycles from 2019-2020
     :return: list or set of JSON objects containing individual election cycle information
     """
     try:
-        redis = RedisClient()
-        electionShape = redis.getAnyShape('elections')
-        if electionShape:
-            return jsonify(electionShape)
-        else:
-            # TODO: discuss when index in redis is not found
-            return jsonify({"Elections": {}})
+        election_shape = redis.getAnyShape("elections")
+        if not election_shape:
+            return empty_response("Elections")
+        return jsonify(election_shape)
     except Exception as error:
         return error_response(f"{error}")
 
 
 @redis_bp.route("/referendums", methods=["GET"])
-def get_referendums(serve_fake=True):
+def get_referendums(serve_fake=False):
     """
     WIP
     :return:
     """
-    if serve_fake:
-        return fake_data.get_referendums_shape()
-    return empty_response("Referendums")
+    try:
+        referendums_shape = redis.getAnyShape("referendums")
+        if not referendums_shape:
+            return empty_response("Referendums")
+        return jsonify(referendums_shape)
+    except Exception as error:
+        return error_response(f"{error}")
 
 
 @redis_bp.route("/metadata", methods=["GET"])
