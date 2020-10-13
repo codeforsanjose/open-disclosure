@@ -490,13 +490,10 @@ const DUMMY_DATA = {
 async function fetchEndpoint(endpoint) {
   try {
     const response = await fetch(
-      `https://open-disclosure-api.darrenpham.info/open-disclosure/api/v1.0/${endpoint}`
-      // `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
+      `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
     )
     if (response.ok) {
-      // NOTE: If `gatsby develop` gives errors related to errors like `Cannot query field "fields" on type "OfficeElection"`, comment return DUMMY_DATA[endpoints] back in
-      return DUMMY_DATA[endpoint]
-      // return await response.json()
+      return await response.json()
     }
   } catch (networkError) {
     console.warn(
@@ -549,11 +546,13 @@ exports.sourceNodes = async ({
     })
   })
   referendumData.Referendums.map(referendum => {
-    const id = createNodeId(`${REFERENDUM_NODE_TYPE}-${referendum.ID}`)
+    const { id, name } = referendum
 
     createNode({
       ...referendum,
-      id,
+      id: createNodeId(`${REFERENDUM_NODE_TYPE}-${id}`),
+      ID: id,
+      Name: name,
       parent: null,
       children: [],
       internal: {
@@ -760,7 +759,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       Date: String 
       TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
-      Referendums: [Referendum] @link(by: "ID" from: "ReferendumIDs")
+      Referendums: [Referendum] @link(by: "ID")
       fields: NodeFields
     }
 
@@ -799,7 +798,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       FundingByGeo: GeoBreakdown
       FundingByType: FundingTypeBreakdown
       ExpenditureByType: ExpenditureTypeBreakdown
-      Committee: [RefCommittee]
+      Committees: [RefCommittee]
       Contributors: [RefContributor]
     }
 
@@ -815,6 +814,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: ID
       ID: String
       Name: String!
+      description: String
+      ballotLanguage: String
+      electionDate: String
       Election: RefElectionCycle
       TotalSupport: Float
       TotalOppose: Float

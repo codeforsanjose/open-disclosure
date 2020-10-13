@@ -65,18 +65,22 @@ function MeasureDetails({ data }) {
               />
             </div>
           </section>
-          <CommitteeCharts
-            id="measureSupport"
-            type="contributions"
-            total={measure.TotalSupport}
-            data={measure.Support}
-          />
-          <CommitteeCharts
-            id="measureOppose"
-            type="expenditures"
-            total={measure.TotalOppose}
-            data={measure.Opposition}
-          />
+          {measure.Support != null ? (
+            <CommitteeCharts
+              id="measureSupport"
+              type="contributions"
+              total={measure.TotalSupport}
+              data={measure.Support}
+            />
+          ) : null}
+          {measure.Opposition != null ? (
+            <CommitteeCharts
+              id="measureOppose"
+              type="expenditures"
+              total={measure.TotalOppose}
+              data={measure.Opposition}
+            />
+          ) : null}
         </div>
       </SideNav>
     </Layout>
@@ -132,7 +136,7 @@ export const query = graphql`
         }
         Committees {
           Name
-          TotalContributions
+          TotalFunding
         }
         Contributors {
           Name
@@ -185,7 +189,7 @@ export const query = graphql`
         }
         Committees {
           Name
-          TotalContributions
+          TotalFunding
         }
         Contributors {
           Name
