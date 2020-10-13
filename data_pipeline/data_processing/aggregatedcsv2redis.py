@@ -207,6 +207,12 @@ class Csv2Redis:
                         ]["Amount"]
                         .sum()
                         .round(decimals=2)
+                    ) + dataPerElectionDateAndBallotItem[
+                        dataPerElectionDateAndBallotItem["Rec_Type"] == "LOAN"
+                    ][
+                        "Amount"
+                    ].sum().round(
+                        decimals=2
                     )
                     if not "measure" in bi:
                         officeElections.append(
