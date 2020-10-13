@@ -53,14 +53,9 @@ exports.sourceNodes = async ({
     fetchEndpoint("metadata"),
   ])
   candidateData.Candidates.forEach(candidate => {
-    const { TotalRCPT } = candidate
-    // We're only including RCPT right now because the API only uses RCPT for aggregations
-    // TODO #171 Update to include LOAN
-    const TotalContributions = TotalRCPT
     createNode({
       ...candidate,
-      TotalContributions,
-      TotalFunding: TotalContributions, // TODO #171 Remove this override
+      TotalContributions: candidate.TotalFunding,
       id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
