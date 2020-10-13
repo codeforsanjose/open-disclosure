@@ -30,7 +30,7 @@ function MeasureDetails({ data }) {
           <SectionHeader
             isPageHeader
             title={measure.Name}
-            subtitle={jsonNode.description}
+            subtitle={measure.description}
           />
           <section>
             <div className={styles.aboutSection}>
@@ -39,7 +39,7 @@ function MeasureDetails({ data }) {
                   What would this measure do?
                 </span>
               </p>
-              <p className={styles.aboutText}>{jsonNode.ballotLanguage}</p>
+              <p className={styles.aboutText}>{measure.ballotLanguage}</p>
               <div className={styles.aboutLinks}>
                 <a href={jsonNode.href} className={styles.aboutLink}>
                   <img
@@ -93,6 +93,9 @@ export const query = graphql`
       id
       ID
       Name
+      description
+      ballotLanguage
+      electionDate
       TotalSupport
       TotalOppose
       Support {
