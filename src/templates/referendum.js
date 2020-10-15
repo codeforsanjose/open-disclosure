@@ -30,7 +30,7 @@ function MeasureDetails({ data }) {
           <SectionHeader
             isPageHeader
             title={measure.Name}
-            subtitle={jsonNode.description}
+            subtitle={measure.description}
           />
           <section>
             <div className={styles.aboutSection}>
@@ -39,7 +39,7 @@ function MeasureDetails({ data }) {
                   What would this measure do?
                 </span>
               </p>
-              <p className={styles.aboutText}>{jsonNode.ballotLanguage}</p>
+              <p className={styles.aboutText}>{measure.ballotLanguage}</p>
               <div className={styles.aboutLinks}>
                 <a href={jsonNode.href} className={styles.aboutLink}>
                   <img
@@ -65,18 +65,22 @@ function MeasureDetails({ data }) {
               />
             </div>
           </section>
-          <CommitteeCharts
-            id="measureSupport"
-            type="contributions"
-            total={measure.TotalSupport}
-            data={measure.Support}
-          />
-          <CommitteeCharts
-            id="measureOppose"
-            type="expenditures"
-            total={measure.TotalOppose}
-            data={measure.Opposition}
-          />
+          {measure.Support != null ? (
+            <CommitteeCharts
+              id="measureSupport"
+              type="contributions"
+              total={measure.TotalSupport}
+              data={measure.Support}
+            />
+          ) : null}
+          {measure.Opposition != null ? (
+            <CommitteeCharts
+              id="measureOppose"
+              type="expenditures"
+              total={measure.TotalOppose}
+              data={measure.Opposition}
+            />
+          ) : null}
         </div>
       </SideNav>
     </Layout>
@@ -89,6 +93,9 @@ export const query = graphql`
       id
       ID
       Name
+      description
+      ballotLanguage
+      electionDate
       TotalSupport
       TotalOppose
       Support {
@@ -132,7 +139,7 @@ export const query = graphql`
         }
         Committees {
           Name
-          TotalContributions
+          TotalFunding
         }
         Contributors {
           Name
@@ -185,7 +192,7 @@ export const query = graphql`
         }
         Committees {
           Name
-          TotalContributions
+          TotalFunding
         }
         Contributors {
           Name
