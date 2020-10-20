@@ -1,0 +1,395 @@
+{
+  "Elections": {
+    "11/3/2020": {
+      "Title": "2020 Election Cycle",
+      "Date": "11/3/2020",
+      "TotalContributions": 662734.9,
+      "OfficeElections": [
+        {
+          "Title": "Councilmember District 4",
+          "CandidateIDs": ["3h2g45h3j", "cf90g8cii"],
+          "TotalContributions": 317249.91
+        },
+        {
+          "Title": "Councilmember District 6",
+          "CandidateIDs": ["089wegvb7", "456hjkl2l"],
+          "TotalContributions": 345484.99
+        }
+      ],
+      "ReferendumIDs": ["df7g8y6d8", "35j6kh45m"]
+    }
+  },
+  "Candidates": [
+    {
+      "ID": "3h2g45h3j",
+      "Name": "David Cohen",
+      "TotalRCPT": 91165.6,
+      "TotalEXPN": 78378.76,
+      "TotalLOAN": 86500,
+      "TotalS497": 7000,
+      "TotalFunding": 177665.6,
+      "FundingByType": {
+        "COM": 13899,
+        "IND": 71017.6,
+        "OTH": 5649,
+        "PTY": 600
+      },
+      "FundingByGeo": {
+        "SJ": 45159,
+        "NonSJ": 46006.6,
+        "CA": 82430.6,
+        "NonCA": 8735
+      },
+      "ExpenditureByType": {
+        "CMP": 4485.95,
+        "CVC": 250,
+        "FIL": 2965,
+        "LIT": 34625.3,
+        "MTG": 200,
+        "OFC": 1655.96,
+        "POS": 250.75,
+        "PRO": 7150,
+        "SAL": 17732.63,
+        "TEL": 27,
+        "WEB": 9036.17
+      },
+      "Committees": [
+        {
+          "Name": "Bay Area Municipal Elections Committee",
+          "TotalFunding": 600
+        },
+        { "Name": "Beall for Board of Equalization 2022", "TotalFunding": 600 },
+        { "Name": "Biehl for School Board 2018", "TotalFunding": 99 },
+        {
+          "Name": "Bricklayers and Allied Craftworkers Local No. 3",
+          "TotalFunding": 500
+        },
+        {
+          "Name": "County Employee Management Association",
+          "TotalFunding": 1200
+        },
+        { "Name": "DRIVE Committee", "TotalFunding": 600 },
+        { "Name": "IBEW 332 Education Fund", "TotalFunding": 1200 },
+        { "Name": "IBEW Local 595 PAC", "TotalFunding": 600 },
+        { "Name": "Laborers Local Union 270 PAC", "TotalFunding": 1200 },
+        { "Name": "Marc Berman for Assembly 2020", "TotalFunding": 100 },
+        {
+          "Name": "Northern California District Council of Laborers PAC",
+          "TotalFunding": 600
+        },
+        {
+          "Name": "Operating Engineers Local Union No. 3",
+          "TotalFunding": 600
+        },
+        {
+          "Name": "Plumbers, Steamfitters & Refrigeration Fitters Local 393",
+          "TotalFunding": 600
+        },
+        {
+          "Name": "Robert Wackowski for Alameda County Supervisor",
+          "TotalFunding": 600
+        },
+        {
+          "Name": "SCC Probation Peace Officers' Union AFSCME-Local 1587",
+          "TotalFunding": 600
+        },
+        {
+          "Name": "Santa Clara & San Benito Counties Building & Construction Trades Council PAC",
+          "TotalFunding": 1200
+        },
+        {
+          "Name": "Sheet Metal Workers International Association Local Union #104",
+          "TotalFunding": 1200
+        },
+        { "Name": "Silicon Valley MEPS PAC", "TotalFunding": 600 },
+        { "Name": "Teamsters Local Union 350 PAC", "TotalFunding": 600 },
+        {
+          "Name": "United Food & Commercial Workers Local 5",
+          "TotalFunding": 600
+        }
+      ]
+    },
+    {
+      "ID": "cf90g8cii",
+      "Name": "Lan Diep",
+      "TotalRCPT": 226084.31,
+      "TotalEXPN": 166142.22,
+      "TotalLOAN": 10000,
+      "TotalS497": 5822.04,
+      "TotalFunding": 236084.31,
+      "FundingByType": { "COM": 3250, "IND": 162870.27, "OTH": 59964.04 },
+      "FundingByGeo": {
+        "SJ": 85070.63,
+        "NonSJ": 141013.68,
+        "CA": 207225.5,
+        "NonCA": 18858.81
+      },
+      "ExpenditureByType": {
+        "CMP": 4227.74,
+        "CNS": 3000,
+        "FIL": 100,
+        "FND": 815.01,
+        "LIT": 91868.25,
+        "OFC": 4583.31,
+        "POS": 625,
+        "PRO": 22821.24,
+        "PRT": 18315.51,
+        "RFD": 1200,
+        "SAL": 14576.58,
+        "TRS": 852.71,
+        "WEB": 3156.87
+      },
+      "Committees": [
+        { "Name": "Build Jobs PAC", "TotalFunding": 600 },
+        { "Name": "Business San Jose Chamber PAC", "TotalFunding": 600 },
+        { "Name": "California Apartment Association PAC", "TotalFunding": 600 },
+        { "Name": "HNTB Holdings Ltd. PAC", "TotalFunding": 250 },
+        { "Name": "The Silicon Valley Organization PAC", "TotalFunding": 1200 }
+      ]
+    },
+    {
+      "ID": "089wegvb7",
+      "Name": "Jacob \"Jake\" Tonkel",
+      "TotalRCPT": 107528.11,
+      "TotalEXPN": 53128.96,
+      "TotalLOAN": 24970,
+      "TotalFunding": 132498.11,
+      "FundingByType": { "COM": 1700, "IND": 94678.11, "OTH": 11150 },
+      "FundingByGeo": {
+        "SJ": 55079.42,
+        "NonSJ": 52448.69,
+        "CA": 88117.29,
+        "NonCA": 19410.82
+      },
+      "ExpenditureByType": {
+        "CMP": 568.3,
+        "FIL": 3015,
+        "FND": 527.29,
+        "LIT": 26853.45,
+        "MBR": 154.68,
+        "OFC": 48.92,
+        "POL": 4851.98,
+        "POS": 187,
+        "RAD": 2000,
+        "TEL": 2000,
+        "WEB": 12922.34
+      },
+      "Committees": [
+        { "Name": "Alex Lee for State Assembly", "TotalFunding": 600 },
+        { "Name": "Kenneth Mejia For Congress", "TotalFunding": 500 },
+        { "Name": "Silicon Valley MEPS PAC", "TotalFunding": 600 }
+      ]
+    },
+    {
+      "ID": "456hjkl2l",
+      "Name": "Dev Davis",
+      "TotalRCPT": 237956.88,
+      "TotalEXPN": 165202.96,
+      "TotalLOAN": 20000,
+      "TotalS497": 4076,
+      "TotalFunding": 257956.88,
+      "FundingByType": { "COM": 6000, "IND": 188943, "OTH": 43013.88 },
+      "FundingByGeo": {
+        "SJ": 129936.88,
+        "NonSJ": 108020,
+        "CA": 232746.88,
+        "NonCA": 5210
+      },
+      "ExpenditureByType": {
+        "CMP": 8268.24,
+        "CNS": 7061.17,
+        "FIL": 3015,
+        "FND": 998.88,
+        "LIT": 61901.42,
+        "MTG": 487.8,
+        "OFC": 7382.47,
+        "POL": 22000,
+        "POS": 369.74,
+        "PRO": 16524.2,
+        "PRT": 5100,
+        "RAD": 18160.25,
+        "RFD": 2499,
+        "TEL": 10002.8,
+        "WEB": 1431.99
+      },
+      "Committees": [
+        {
+          "Name": "Associated Builders and Contractors Northern California Chapter PAC",
+          "TotalFunding": 1200
+        },
+        {
+          "Name": "Bay Area Municipal Election Committee",
+          "TotalFunding": 600
+        },
+        { "Name": "Build Jobs PAC", "TotalFunding": 600 },
+        { "Name": "California Apartment Association", "TotalFunding": 600 },
+        { "Name": "Charles Stone for Belmont City 2018", "TotalFunding": 600 },
+        { "Name": "San Jose Chamber PAC", "TotalFunding": 600 },
+        { "Name": "The Silicon Valley Organization PAC", "TotalFunding": 1200 },
+        {
+          "Name": "Western Manufactured Housing Communities Assn.",
+          "TotalFunding": 600
+        }
+      ]
+    }
+  ],
+  "Referendums": [
+    {
+      "ID": "df7g8y6d8",
+      "Name": "Ballot Measure H",
+      "Election": {
+        "Date": "11/3/2020",
+        "ElectionCycle": "2020 Election Cycle"
+      },
+      "TotalSupport": 0,
+      "TotalOppose": 0,
+      "Support": {
+        "TotalRCPT": 0,
+        "TotalEXPN": 0,
+        "TotalLOAN": 0,
+        "TotalS497": 0,
+        "TotalFunding": 0,
+        "FundingByType": {
+          "COM": 0,
+          "IND": 0,
+          "OTH": 0,
+          "PTY": 0
+        },
+        "FundingByGeo": {
+          "SJ": 0,
+          "NonSJ": 0,
+          "CA": 0,
+          "NonCA": 0
+        },
+        "ExpenditureByType": {
+          "CMP": 0,
+          "CVC": 0,
+          "FIL": 0,
+          "LIT": 0,
+          "MTG": 0,
+          "OFC": 0,
+          "POS": 0,
+          "PRO": 0,
+          "SAL": 0,
+          "TEL": 0,
+          "WEB": 0
+        },
+        "Committees": [],
+        "Contributors": []
+      },
+      "Opposition": {
+        "TotalRCPT": 0,
+        "TotalEXPN": 0,
+        "TotalLOAN": 0,
+        "TotalS497": 0,
+        "TotalFunding": 0,
+        "FundingByType": {
+          "COM": 0,
+          "IND": 0,
+          "OTH": 0,
+          "PTY": 0
+        },
+        "FundingByGeo": {
+          "SJ": 0,
+          "NonSJ": 0,
+          "CA": 0,
+          "NonCA": 0
+        },
+        "ExpenditureByType": {
+          "CMP": 0,
+          "CVC": 0,
+          "FIL": 0,
+          "LIT": 0,
+          "MTG": 0,
+          "OFC": 0,
+          "POS": 0,
+          "PRO": 0,
+          "SAL": 0,
+          "TEL": 0,
+          "WEB": 0
+        },
+        "Committees": [],
+        "Contributors": []
+      }
+    },
+    {
+      "ID": "35j6kh45m",
+      "Name": "Ballot Measure G",
+      "Election": {
+        "Date": "11/3/2020",
+        "ElectionCycle": "2020 Election Cycle"
+      },
+      "TotalSupport": 0,
+      "TotalOppose": 0,
+      "Support": {
+        "TotalRCPT": 0,
+        "TotalEXPN": 0,
+        "TotalLOAN": 0,
+        "TotalS497": 0,
+        "TotalFunding": 0,
+        "FundingByType": {
+          "COM": 0,
+          "IND": 0,
+          "OTH": 0,
+          "PTY": 0
+        },
+        "FundingByGeo": {
+          "SJ": 0,
+          "NonSJ": 0,
+          "CA": 0,
+          "NonCA": 0
+        },
+        "ExpenditureByType": {
+          "CMP": 0,
+          "CVC": 0,
+          "FIL": 0,
+          "LIT": 0,
+          "MTG": 0,
+          "OFC": 0,
+          "POS": 0,
+          "PRO": 0,
+          "SAL": 0,
+          "TEL": 0,
+          "WEB": 0
+        },
+        "Committees": [],
+        "Contributors": []
+      },
+      "Opposition": {
+        "TotalRCPT": 0,
+        "TotalEXPN": 0,
+        "TotalLOAN": 0,
+        "TotalS497": 0,
+        "TotalFunding": 0,
+        "FundingByType": {
+          "COM": 0,
+          "IND": 0,
+          "OTH": 0,
+          "PTY": 0
+        },
+        "FundingByGeo": {
+          "SJ": 0,
+          "NonSJ": 0,
+          "CA": 0,
+          "NonCA": 0
+        },
+        "ExpenditureByType": {
+          "CMP": 0,
+          "CVC": 0,
+          "FIL": 0,
+          "LIT": 0,
+          "MTG": 0,
+          "OFC": 0,
+          "POS": 0,
+          "PRO": 0,
+          "SAL": 0,
+          "TEL": 0,
+          "WEB": 0
+        },
+        "Committees": [],
+        "Contributors": []
+      }
+    }
+  ],
+  "DateProcessed": "2020-07-20"
+}

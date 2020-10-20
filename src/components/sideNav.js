@@ -83,30 +83,33 @@ const offices = [
 
 function formatMenuForCandidates(candidateData) {
   const menu = []
-  offices.forEach(({ type, filter }) => {
-    const menuGroup = { label: type, options: [] }
-    candidateData.forEach(race => {
-      const title = race.Title.toLowerCase()
-      if (title.includes(filter)) {
-        menuGroup.options.push({ label: race.Title, value: race.fields.slug })
+  if (candidateData) {
+    offices.forEach(({ type, filter }) => {
+      const menuGroup = { label: type, options: [] }
+      candidateData.forEach(race => {
+        const title = race.Title.toLowerCase()
+        if (title.includes(filter)) {
+          menuGroup.options.push({ label: race.Title, value: race.fields.slug })
+        }
+      })
+      if (menuGroup.options.length) {
+        menu.push(menuGroup)
       }
     })
-    if (menuGroup.options.length) {
-      menu.push(menuGroup)
-    }
-  })
-
+  }
   return menu
 }
 
 function formatMenuForMeasures(measureData) {
   const menu = { label: REFERENDUMS, options: [] }
-  measureData.forEach(measure => {
-    menu.options.push({
-      label: measure.Name,
-      value: measure.fields.slug,
+  if (measureData) {
+    measureData.forEach(measure => {
+      menu.options.push({
+        label: measure.Name,
+        value: measure.fields.slug,
+      })
     })
-  })
+  }
   return menu
 }
 
@@ -162,7 +165,13 @@ export default function sideNav({
           data.allElection?.edges?.[0]?.node ?? []
         const measureMenu = formatMenuForMeasures(Referendums)
         const candidateMenu = formatMenuForCandidates(OfficeElections)
-        const menuOptions = [...candidateMenu, measureMenu]
+        const menuOptions = []
+        if (OfficeElections) {
+          menuOptions.push(...candidateMenu)
+        }
+        if (Referendums) {
+          menuOptions.push(measureMenu)
+        }
 
         return (
           <div className={styles.outerContainer}>
