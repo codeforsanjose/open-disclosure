@@ -19,7 +19,7 @@ export default function CandidatesListItem({
       <img
         height="12.5rem"
         width="12.5rem"
-        src={jsonNode.profilePhoto || BlankProfile}
+        src={`../../static/images/${jsonNode.profilePhoto}` || BlankProfile}
         alt={`Headshot of candidate ${Name}`}
       />
       <div className={styles.candidate}>
