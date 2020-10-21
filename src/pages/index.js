@@ -82,6 +82,7 @@ export default function MainPage(props) {
     OfficeElections.forEach(election => {
       candidatesRunning += election.Candidates.length
       election.Candidates.forEach(candidate => {
+        console.log(candidate)
         if (candidate) {
           candidateList.push({
             name: candidate.Name,
