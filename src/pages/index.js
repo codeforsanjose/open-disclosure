@@ -121,7 +121,7 @@ export default function MainPage(props) {
         // This currently only includes data from candidates!
         // TODO: Add measure funding data once we have it
         number: formatPercent(totalSJ / TotalContributions),
-        description: "Of donations from the city of San José",
+        description: "Of donations from San José residents",
       },
       {
         number: formatTotalContributions(TotalContributions),
@@ -129,7 +129,7 @@ export default function MainPage(props) {
       },
       {
         number: candidatesRunning,
-        description: "Candidates running",
+        description: OfficeElections ? `Candidates running in ${OfficeElections.length} races` :"Candidates running",
       },
     ],
     renderItem: SnapshotItem,
