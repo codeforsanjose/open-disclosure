@@ -23,6 +23,7 @@ import learnMore from "./../../static/images/learnMore.png"
 import voteBlob from "./../../static/images/voteBlob.png"
 import registerToVote from "./../../static/images/registerToVote.png"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
+import { formatPercent } from '../common/util/formatters'
 
 const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
@@ -76,6 +77,7 @@ export default function MainPage(props) {
   )
   let candidatesRunning = 0
   let candidateList = []
+  let totalSJ = 0
   if (OfficeElections) {
     OfficeElections.forEach(election => {
       candidatesRunning += election.Candidates.length
@@ -88,6 +90,7 @@ export default function MainPage(props) {
             image: candidate.jsonNode?.profilePhoto || BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
           })
+          totalSJ += candidate.FundingByGeo.SJ
         }
       })
     })
@@ -115,7 +118,9 @@ export default function MainPage(props) {
     )} City of San José Campaign Finance Report`,
     items: [
       {
-        number: "XXX",
+        // This currently only includes data from candidates!
+        // TODO: Add measure funding data once we have it
+        number: formatPercent(totalSJ / TotalContributions),
         description: "Of donations from the city of San José",
       },
       {
@@ -262,6 +267,9 @@ export const query = graphql`
               TotalFunding
               fields {
                 slug
+              }
+              FundingByGeo {
+                SJ
               }
             }
           }
