@@ -1,4 +1,4 @@
-import { formatDollars, formatPercent } from "../common/util/formatters"
+import { formatDollars } from "../common/util/formatters"
 
 import Bar from "./bar"
 import { Link } from "gatsby"
@@ -13,7 +13,6 @@ export default function CandidatesListItem({
   TotalContributions,
   jsonNode,
 }) {
-  const percent = formatPercent(TotalContributions / electionTotal)
   return (
     <Link className={styles.container} to={path}>
       <img
@@ -36,7 +35,10 @@ export default function CandidatesListItem({
           </div>
         </div>
         <div className={styles.visualization}>
-          <Bar type="contributions" percent={percent} />
+          <Bar
+            type="contributions"
+            ratio={TotalContributions / electionTotal}
+          />
         </div>
       </div>
     </Link>

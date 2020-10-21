@@ -23,6 +23,7 @@ import learnMore from "./../../static/images/learnMore.png"
 import voteBlob from "./../../static/images/voteBlob.png"
 import registerToVote from "./../../static/images/registerToVote.png"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
+import { formatPercent } from "../common/util/formatters"
 
 const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
@@ -65,38 +66,52 @@ const vote = {
 
 export default function MainPage(props) {
   const windowIsLarge = useWindowIsLarge()
-  const currentElection = props.data.allElection.edges[0].node
+  const {
+    Date: ElectionDate,
+    TotalContributions,
+    OfficeElections,
+    Referendums,
+  } = props.data.allElection.edges[0].node
   const lastScrape = new Date(
     props.data.allMetadata.edges[0].node.DateProcessed
   )
   let candidatesRunning = 0
   let candidateList = []
-  currentElection.OfficeElections.forEach(election => {
-    candidatesRunning += election.Candidates.length
-    election.Candidates.forEach(candidate => {
-      if (candidate) {
-        candidateList.push({
-          name: candidate.Name,
-          position: election.Title,
-          amount: candidate.TotalFunding,
-          image:
-            `../../static/images/${candidate.jsonNode?.profilePhoto}` ||
-            BlankProfile,
-          href: `/${currentElection.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
-        })
-      }
+  let totalSJ = 0
+  if (OfficeElections) {
+    OfficeElections.forEach(election => {
+      candidatesRunning += election.Candidates.length
+      election.Candidates.forEach(candidate => {
+        if (candidate) {
+          candidateList.push({
+            name: candidate.Name,
+            position: election.Title,
+            amount: candidate.TotalFunding,
+            image:
+              `../../static/images/${candidate.jsonNode?.profilePhoto}` ||
+              BlankProfile,
+            href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
+          })
+          totalSJ += candidate.FundingByGeo.SJ
+        }
+      })
     })
-  })
-  candidateList = candidateList.sort(
-    (candidate1, candidate2) => candidate2.amount - candidate1.amount
-  )
 
-  if (candidateList.length > 3) {
-    candidateList = candidateList.slice(0, 3)
+    candidateList = candidateList.sort(
+      (candidate1, candidate2) => candidate2.amount - candidate1.amount
+    )
+
+    if (candidateList.length > 3) {
+      candidateList = candidateList.slice(0, 3)
+    }
   }
 
-  const candidatesPageLink = `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`
-  const referendumsPageLink = `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`
+  const candidatesPageLink = OfficeElections
+    ? `/${ElectionDate}/candidates/${OfficeElections[0].fields.slug}`
+    : null
+  const referendumsPageLink = Referendums
+    ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
+    : null
 
   const snapshot = {
     title: "San José live election snapshot",
@@ -105,11 +120,13 @@ export default function MainPage(props) {
     )} City of San José Campaign Finance Report`,
     items: [
       {
-        number: "XXX",
+        // This currently only includes data from candidates!
+        // TODO: Add measure funding data once we have it
+        number: formatPercent(totalSJ / TotalContributions),
         description: "Of donations from the city of San José",
       },
       {
-        number: formatTotalContributions(currentElection.TotalContributions),
+        number: formatTotalContributions(TotalContributions),
         description: "Amount raised to date",
       },
       {
@@ -127,11 +144,13 @@ export default function MainPage(props) {
     items: candidateList,
     renderItem: CandidateItem,
     // eslint-disable-next-line react/display-name
-    footer: () => (
-      <Link to={candidatesPageLink}>
-        <img alt="candidates" height="37px" width="285px" src={tertiary} />
-      </Link>
-    ),
+    footer: candidatesPageLink
+      ? () => (
+          <Link to={candidatesPageLink}>
+            <img alt="candidates" height="37px" width="285px" src={tertiary} />
+          </Link>
+        )
+      : candidatesPageLink,
   }
 
   const behindTheScenes = {
@@ -139,20 +158,6 @@ export default function MainPage(props) {
     description:
       "We pull data from the City of San José campaign finance reporting database to bring you accurate information about the role and source of money in politics.",
     items: [
-      {
-        title: "Take action on measures",
-        description: "Track who opposes or supports upcoming ballot measures.",
-        buttonText: "View ballot measures",
-        image: blue,
-        href: referendumsPageLink,
-      },
-      {
-        title: "Compare local candidates",
-        description: "See who’s spending and raising the most.",
-        buttonText: "Browse candidates",
-        image: orange,
-        href: candidatesPageLink,
-      },
       {
         title: "Get the finance facts",
         description: "Learn more about campaign finance data.",
@@ -162,6 +167,24 @@ export default function MainPage(props) {
       },
     ],
     renderItem: BehindTheScenesItem,
+  }
+  if (candidatesPageLink) {
+    behindTheScenes.items.unshift({
+      title: "Compare local candidates",
+      description: "See who’s spending and raising the most.",
+      buttonText: "Browse candidates",
+      image: orange,
+      href: candidatesPageLink,
+    })
+  }
+  if (referendumsPageLink) {
+    behindTheScenes.items.unshift({
+      title: "Take action on measures",
+      description: "Track who opposes or supports upcoming ballot measures.",
+      buttonText: "View ballot measures",
+      image: blue,
+      href: referendumsPageLink,
+    })
   }
 
   return (
@@ -182,13 +205,20 @@ export default function MainPage(props) {
               </h2>
               <div className={styles.heroButtonContainer}>
                 <div className={styles.primaryCTA}>
-                  <Button text="Explore candidates" href={candidatesPageLink} />
+                  {candidatesPageLink && (
+                    <Button
+                      text="Explore candidates"
+                      href={candidatesPageLink}
+                    />
+                  )}
                 </div>
-                <Button
-                  secondary
-                  text="View measures"
-                  href={referendumsPageLink}
-                />
+                {referendumsPageLink && (
+                  <Button
+                    secondary
+                    text="View measures"
+                    href={referendumsPageLink}
+                  />
+                )}
               </div>
             </div>
             <div className={styles.heroRight}>
@@ -239,6 +269,9 @@ export const query = graphql`
               TotalFunding
               fields {
                 slug
+              }
+              FundingByGeo {
+                SJ
               }
             }
           }

@@ -2,10 +2,7 @@ const path = require(`path`)
 
 const fetch = require("node-fetch")
 
-const PROD_HOST = "open-disclosure-api.codeforsanjose.com"
-const HOSTNAME =
-  process.env.GATSBY_API_HOST ||
-  (process.env.production ? PROD_HOST : "localhost:5000")
+const HOSTNAME = process.env.GATSBY_API_HOST || "open-disclosure-api.codeforsanjose.com"
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
@@ -13,23 +10,10 @@ const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
 
 async function fetchEndpoint(endpoint) {
-  try {
-    const response = await fetch(
-      `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
-    )
-    if (response.ok) {
-      return await response.json()
-    }
-  } catch (networkError) {
-    if (process.env.production) {
-      throw networkError
-    }
-    console.warn(
-      "It seems like the API server isn't running locally, falling back to prod"
-    )
-    const response = await fetch(
-      `http://${PROD_HOST}/open-disclosure/api/v1.0/${endpoint}`
-    )
+  const response = await fetch(
+    `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
+  )
+  if (response.ok) {
     return await response.json()
   }
 }
@@ -52,15 +36,11 @@ exports.sourceNodes = async ({
     fetchEndpoint("referendums"),
     fetchEndpoint("metadata"),
   ])
+
   candidateData.Candidates.forEach(candidate => {
-    const { TotalRCPT } = candidate
-    // We're only including RCPT right now because the API only uses RCPT for aggregations
-    // TODO #171 Update to include LOAN
-    const TotalContributions = TotalRCPT
     createNode({
       ...candidate,
-      TotalContributions,
-      TotalFunding: TotalContributions, // TODO #171 Remove this override
+      TotalContributions: candidate.TotalFunding,
       id: createNodeId(`${CANDIDATE_NODE_TYPE}-${candidate.ID}`),
       parent: null,
       children: [],
@@ -169,37 +149,39 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   result.data.allElection.edges.forEach(({ node }) => {
-    node.OfficeElections.forEach(election => {
-      createPage({
-        path: `/${node.Date}/candidates/${election.fields.slug}`,
-        component: path.resolve("src/templates/candidates.js"),
-        context: {
-          slug: election.fields.slug,
-          officeElectionID: election.id,
-          electionDate: node.Date,
-        },
-      })
-      election.Candidates.forEach(candidate => {
+    node.OfficeElections &&
+      node.OfficeElections.forEach(election => {
         createPage({
-          path: `/${node.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
-          component: path.resolve("src/templates/candidate.js"),
+          path: `/${node.Date}/candidates/${election.fields.slug}`,
+          component: path.resolve("src/templates/candidates.js"),
           context: {
-            slug: candidate.fields.slug,
-            id: candidate.ID,
+            slug: election.fields.slug,
+            officeElectionID: election.id,
+            electionDate: node.Date,
+          },
+        })
+        election.Candidates.forEach(candidate => {
+          createPage({
+            path: `/${node.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
+            component: path.resolve("src/templates/candidate.js"),
+            context: {
+              slug: candidate.fields.slug,
+              id: candidate.ID,
+            },
+          })
+        })
+      })
+    node.Referendums &&
+      node.Referendums.forEach(referendum => {
+        createPage({
+          path: `/${node.Date}/referendums/${referendum.fields.slug}`,
+          component: path.resolve("src/templates/referendum.js"),
+          context: {
+            slug: referendum.fields.slug,
+            id: referendum.ID,
           },
         })
       })
-    })
-    node.Referendums.forEach(referendum => {
-      createPage({
-        path: `/${node.Date}/referendums/${referendum.fields.slug}`,
-        component: path.resolve("src/templates/referendum.js"),
-        context: {
-          slug: referendum.fields.slug,
-          id: referendum.ID,
-        },
-      })
-    })
   })
 }
 
