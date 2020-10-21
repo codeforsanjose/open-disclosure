@@ -2,11 +2,7 @@ const path = require(`path`)
 
 const fetch = require("node-fetch")
 
-const PROD_HOST = "open-disclosure-api.codeforsanjose.com"
-// const HOSTNAME =
-//   process.env.GATSBY_API_HOST ||
-//   (process.env.production ? PROD_HOST : "localhost:5000")
-const HOSTNAME = PROD_HOST
+const HOSTNAME = process.env.GATSBY_API_HOST || "open-disclosure-api.codeforsanjose.com"
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
@@ -14,23 +10,10 @@ const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
 
 async function fetchEndpoint(endpoint) {
-  try {
-    const response = await fetch(
-      `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
-    )
-    if (response.ok) {
-      return await response.json()
-    }
-  } catch (networkError) {
-    if (process.env.production) {
-      throw networkError
-    }
-    console.warn(
-      "It seems like the API server isn't running locally, falling back to prod"
-    )
-    const response = await fetch(
-      `http://${PROD_HOST}/open-disclosure/api/v1.0/${endpoint}`
-    )
+  const response = await fetch(
+    `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
+  )
+  if (response.ok) {
     return await response.json()
   }
 }
