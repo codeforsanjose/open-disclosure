@@ -79,18 +79,6 @@ export default function Layout({
         const election = data.allElection.edges[0].node
         const links = [
           {
-            name: "Candidates",
-            endpoint: `/${election.Date}/candidates/${election.OfficeElections[0].fields.slug}`,
-            links: election.OfficeElections.map(office => ({
-              position: office.Title,
-              endpoint: `/${election.Date}/candidates/${office.fields.slug}`,
-            })),
-          },
-          {
-            name: "Measures",
-            endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
-          },
-          {
             name: "About",
             endpoint: "/aboutUs",
           },
@@ -99,6 +87,23 @@ export default function Layout({
             endpoint: "/faq",
           },
         ]
+
+        if (election.Referendums) {
+          links.unshift({
+            name: "Measures",
+            endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
+          })
+        }
+        if (election.OfficeElections) {
+          links.unshift({
+            name: "Candidates",
+            endpoint: `/${election.Date}/candidates/${election.OfficeElections[0].fields.slug}`,
+            links: election.OfficeElections.map(office => ({
+              position: office.Title,
+              endpoint: `/${election.Date}/candidates/${office.fields.slug}`,
+            })),
+          })
+        }
 
         return (
           <div className={styles.container}>

@@ -48,18 +48,22 @@ export default () => {
             href: "/",
           },
           {
-            pageName: "Candidates",
-            href: `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`,
-          },
-          {
-            pageName: "Measures",
-            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
-          },
-          {
             pageName: "Find Your Ballot",
             href: "/findYourBallot",
           },
         ]
+        if (currentElection.Referendums) {
+          links.splice(1, 0, {
+            pageName: "Measures",
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
+          })
+        }
+        if (currentElection.OfficeElections) {
+          links.splice(1, 0, {
+            pageName: "Candidates",
+            href: `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`,
+          })
+        }
 
         return (
           <Layout title="Page not found" windowIsLarge={useWindowIsLarge()}>
