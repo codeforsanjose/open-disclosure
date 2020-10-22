@@ -6,7 +6,7 @@ import styles from "./404.module.scss"
 import { graphql, StaticQuery } from "gatsby"
 import Layout from "../components/layout"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
-import pageNotFound from "../../static/images/404.png"
+import pageNotFound from "../images/404.png"
 import { Link } from "gatsby"
 
 const handleClick = () => window.history.back()

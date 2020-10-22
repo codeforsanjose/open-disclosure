@@ -16,11 +16,11 @@ import styles from "./candidate.module.scss"
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 // Assets
-// import ArrowIcon from "../../static/images/arrow.png"
-import TwitterIcon from "../../static/images/twitter.png"
-import VotersEdgeIcon from "../../static/images/votersEdge.png"
-import WebIcon from "../../static/images/web.png"
-import BlankProfile from "../../static/images/blankProfile.png"
+// import ArrowIcon from "../images/arrow.png"
+import TwitterIcon from "../images/twitter.png"
+import VotersEdgeIcon from "../images/votersEdge.png"
+import WebIcon from "../images/web.png"
+import BlankProfile from "../images/blankProfile.png"
 
 export default function Candidate({ data }) {
   const {

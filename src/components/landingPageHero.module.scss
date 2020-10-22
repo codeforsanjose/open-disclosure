@@ -24,18 +24,18 @@
 }
 
 .orange {
-  background: url("../../static/images/orangeHeaderBlob.png") right/auto 100%
-    no-repeat $primaryOffWhite;
+  background: url("../images/orangeHeaderBlob.png") right/auto 100% no-repeat
+    $primaryOffWhite;
 }
 
 .blue {
-  background: url("../../static/images/blueHeaderBlob.png") right/auto 100%
-    no-repeat $primaryOffWhite;
+  background: url("../images/blueHeaderBlob.png") right/auto 100% no-repeat
+    $primaryOffWhite;
 }
 
 .green {
-  background: url("../../static/images/greenHeaderBlob.png") right/auto 100%
-    no-repeat $primaryOffWhite;
+  background: url("../images/greenHeaderBlob.png") right/auto 100% no-repeat
+    $primaryOffWhite;
 }
 
 @media screen and (max-width: 760px) {
