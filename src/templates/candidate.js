@@ -66,7 +66,7 @@ export default function Candidate({ data }) {
                 height={"12.5rem"}
                 width={"12.5rem"}
                 className={styles.profilePhoto}
-                src={profilePhoto || BlankProfile}
+                src={profilePhoto ? `/images/${profilePhoto}` : BlankProfile}
                 alt={`Headshot of candidate ${Name}`}
               />
               <div>
@@ -244,6 +244,7 @@ export const query = graphql`
         name
         seat
         ballotDesignation
+        profilePhoto
         website
         twitter
         votersEdge

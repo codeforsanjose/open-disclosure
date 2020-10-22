@@ -23,7 +23,7 @@ import learnMore from "../images/learnMore.png"
 import voteBlob from "../images/voteBlob.png"
 import registerToVote from "../images/registerToVote.png"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
-import { formatPercent } from '../common/util/formatters'
+import { formatPercent } from "../common/util/formatters"
 
 const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
@@ -82,12 +82,15 @@ export default function MainPage(props) {
     OfficeElections.forEach(election => {
       candidatesRunning += election.Candidates.length
       election.Candidates.forEach(candidate => {
+        console.log(candidate)
         if (candidate) {
           candidateList.push({
             name: candidate.Name,
             position: election.Title,
             amount: candidate.TotalFunding,
-            image: candidate.jsonNode?.profilePhoto || BlankProfile,
+            image:
+              `/images/${candidate.jsonNode?.profilePhoto}` ||
+              BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
           })
           totalSJ += candidate.FundingByGeo.SJ
