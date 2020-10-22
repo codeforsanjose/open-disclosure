@@ -89,7 +89,7 @@ export default function MainPage(props) {
             position: election.Title,
             amount: candidate.TotalFunding,
             image:
-              `../../static/images/${candidate.jsonNode?.profilePhoto}` ||
+              `/images/${candidate.jsonNode?.profilePhoto}` ||
               BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
           })
