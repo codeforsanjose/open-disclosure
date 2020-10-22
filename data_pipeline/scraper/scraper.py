@@ -298,7 +298,7 @@ s = Scraper()
 
 # Can use election_cycle='11/3/2020' to load only the latest elections data.
 # Can use election_cycle=None to load all election data.
-s.scrape(election_cycle=None)
+s.scrape(election_cycle='11/3/2020')
 print(
     "--- Finished ---\n---    In    ---\n--- {} ---".format(
         time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))

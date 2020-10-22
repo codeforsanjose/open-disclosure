@@ -1,6 +1,5 @@
 """
-Do not merge. For discussion only.
-Alternative way is to use awk and redis-cli
+This allows us to upload CSV data onto redis.
 """
 import logging
 import mimetypes
@@ -98,7 +97,7 @@ class Csv2Redis:
         filetype, _ = mimetypes.guess_type(self.filename)
         if "csv" in filetype:
             self.data = pd.read_csv(
-                self.filename, skiprows=lambda x: x % 2 == 1, sep=",", quotechar='"',
+                self.filename, skiprows=lambda x: x % 2 == 1, sep=",", quotechar='"', encoding='iso-8859-1'
             )
         elif "spreadsheet" in filetype:
             logger.info("Reading plain text csv is faster and is encouraged.")
@@ -122,6 +121,7 @@ class Csv2Redis:
         # Round Amount to decimal 2
         self.data["Amount"] = (
             self.data["Amount"]
+            .map(str)
             .str.replace(",", "")
             .replace("$", "")
             .replace("'", "")
@@ -138,7 +138,9 @@ class Csv2Redis:
         ret = []
         for id in ids:
             cand_name = id.split(";")[1].replace("_", " ")
-            ret.append(self.candidate_ids[cand_name])
+            # If there are independent contributions, they won't be associated with a candidate.
+            if cand_name in self.candidate_ids:
+                ret.append(self.candidate_ids[cand_name])
         return ret
 
     def set_path_in_redis(self, path_name, data_shape):
@@ -175,77 +177,77 @@ class Csv2Redis:
                 "Ballot Item",
                 "CandidateControlledName",
                 "Election Date",
+                "Entity_City",
+                "Entity_ST",
                 "Amount",
                 "Rec_Type",
                 "ID",
             ]
         ]
-        try:
-            # There are 4 types RCPT, EXPN, LOAN, S497.
-            elections = {}
-            for ed in dataAmount["Election Date"].unique():
-                dataPerElectionDate = dataAmount[dataAmount["Election Date"] == ed]
-                totalContributions = dataPerElectionDate[
-                    dataPerElectionDate["Rec_Type"] == "RCPT"
-                ]["Amount"].sum().round(decimals=2) + dataPerElectionDate[
-                    dataPerElectionDate["Rec_Type"] == "LOAN"
-                ][
-                    "Amount"
-                ].sum().round(
+        # There are 4 types RCPT, EXPN, LOAN, S497.
+        elections = {}
+        for ed in dataAmount["Election Date"].unique():
+            dataPerElectionDate = dataAmount[dataAmount["Election Date"] == ed]
+            totalContributions = dataPerElectionDate[
+                                     dataPerElectionDate["Rec_Type"] == "RCPT"
+                                     ]["Amount"].sum().round(decimals=2) + dataPerElectionDate[
+                                     dataPerElectionDate["Rec_Type"] == "LOAN"
+                                     ][
+                                     "Amount"
+                                 ].sum().round(
+                decimals=2
+            )
+
+            officeElections = []
+            # Hardcoded from frontend data
+            referendums = list(self.referendums.keys())
+            for bi in dataPerElectionDate["Ballot Item"].unique():
+                dataPerElectionDateAndBallotItem = dataPerElectionDate[
+                    dataPerElectionDate["Ballot Item"] == bi
+                    ]
+                totalContributionsPerBallotItem = (
+                                                      dataPerElectionDateAndBallotItem[
+                                                          dataPerElectionDateAndBallotItem["Rec_Type"] == "RCPT"
+                                                          ]["Amount"]
+                                                          .sum()
+                                                          .round(decimals=2)
+                                                  ) + dataPerElectionDateAndBallotItem[
+                                                      dataPerElectionDateAndBallotItem["Rec_Type"] == "LOAN"
+                                                      ][
+                                                      "Amount"
+                                                  ].sum().round(
                     decimals=2
                 )
-                officeElections = []
-                # Hardcoded from frontend data
-                referendums = list(self.referendums.keys())
-                for bi in dataPerElectionDate["Ballot Item"].unique():
-                    dataPerElectionDateAndBallotItem = dataPerElectionDate[
-                        dataPerElectionDate["Ballot Item"] == bi
-                    ]
-                    totalContributionsPerBallotItem = (
-                        dataPerElectionDateAndBallotItem[
-                            dataPerElectionDateAndBallotItem["Rec_Type"] == "RCPT"
-                        ]["Amount"]
-                        .sum()
-                        .round(decimals=2)
-                    ) + dataPerElectionDateAndBallotItem[
-                        dataPerElectionDateAndBallotItem["Rec_Type"] == "LOAN"
-                    ][
-                        "Amount"
-                    ].sum().round(
-                        decimals=2
-                    )
-                    if not "measure" in bi:
-                        officeElections.append(
-                            {
-                                "Title": bi,
-                                "CandidateIDs": self.get_ids(
-                                    dataPerElectionDateAndBallotItem["ID"]
+                if not "measure" in bi:
+                    officeElections.append(
+                        {
+                            "Title": bi,
+                            "CandidateIDs": self.get_ids(
+                                dataPerElectionDateAndBallotItem["ID"]
                                     .unique()
                                     .tolist()
-                                ),
-                                "TotalContributions": totalContributionsPerBallotItem,
-                            }
-                        )
-                    else:
-                        referendums.append(
-                            {
-                                "Title": bi,
-                                "Description": bi,
-                                "TotalContributions": totalContributionsPerBallotItem,
-                            }
-                        )
-                elections = {
-                    "Title": "{} Election Cycle".format(ed.split("/")[2]),
-                    "Date": ed,
-                    "TotalContributions": totalContributions,
-                    "OfficeElections": officeElections,
-                    "Referendums": referendums,
-                }
-                electionShape["Elections"][ed] = elections
-                electionShape["Metadata"] = self.metadata
-        except Exception as e:
-            logger.debug(e)
-            return False
+                            ),
+                            "TotalContributions": totalContributionsPerBallotItem,
+                        }
+                    )
+                else:
+                    referendums.append(
+                        {
+                            "Title": bi,
+                            "Description": bi,
+                            "TotalContributions": totalContributionsPerBallotItem,
+                        }
+                    )
+            elections = {
+                "Title": "{} Election Cycle".format(ed.split("/")[2]),
+                "Date": ed,
+                "TotalContributions": totalContributions,
+                "FundingByGeo": self.getFundingByGeo(dataPerElectionDate),
+                "OfficeElections": officeElections,
+                "Referendums": referendums,
+            }
+            electionShape["Elections"][ed] = elections
+            electionShape["Metadata"] = self.metadata
         self.set_path_in_redis("elections", electionShape)
         return True
 
@@ -265,7 +267,9 @@ class Csv2Redis:
             },
             FundingByGeo: {
                 CA: 300,
+                NonSJ: 200,
                 SJ: 100
+                NonCA: 0
             }
             ExpenditureByType: {
         # TODO: We could have populated candidates for all election date but right now the spec only asks for the current year.
@@ -273,137 +277,152 @@ class Csv2Redis:
         # TODO: TotalFunding - understand how TotalFunding is calculated and perhaps add TotalFunding
         data = self.data
         candidateShape = {"Candidates": []}
-        try:
-            dataAmount = data[
-                [
-                    "Ballot Item",
-                    "CandidateControlledName",
-                    "Election Date",
-                    "Amount",
-                    "Rec_Type",
-                    "Entity_Cd",
-                    "Entity_Nam L",
-                    "Entity_Nam F",
-                    "Entity_City",
-                    "Entity_ST",
-                    "Expn_Code",
-                    "ID",
-                ]
+        dataAmount = data[
+            [
+                "Ballot Item",
+                "CandidateControlledName",
+                "Election Date",
+                "Amount",
+                "Rec_Type",
+                "Entity_Cd",
+                "Entity_Nam L",
+                "Entity_Nam F",
+                "Entity_City",
+                "Entity_ST",
+                "Expn_Code",
+                "ID",
             ]
-            candidateIDs = pd.unique(dataAmount["ID"])
+        ]
+        candidateIDs = pd.unique(dataAmount["ID"])
 
-            for cid in candidateIDs:
-                candidate = dict()
-                name = cid.split(";")[1].replace("_", " ")
-                candidate["ID"] = self.candidate_ids[name]
-                candidate["Name"] = name
-                candidate.update(self.extra_candidate_data[name])
-                dataPerCandidate = dataAmount[
-                    (dataAmount["CandidateControlledName"] == name)
-                    & (dataAmount["Election Date"] == electionDate)
+        for cid in candidateIDs:
+            candidate = dict()
+            name = cid.split(";")[1].replace("_", " ")
+            # This is for contributions to "independent" committees
+            if name not in self.candidate_ids:
+                continue
+            candidate["ID"] = self.candidate_ids[name]
+            candidate["Name"] = name
+            candidate.update(self.extra_candidate_data[name])
+            dataPerCandidate = dataAmount[
+                (dataAmount["CandidateControlledName"] == name)
+                & (dataAmount["Election Date"] == electionDate)
                 ]
 
-                # Get transaction by type
-                totalByRecType = (
-                    dataPerCandidate.groupby(["Rec_Type"])[["Amount"]]
+            # Get transaction by type
+            totalByRecType = (
+                dataPerCandidate.groupby(["Rec_Type"])[["Amount"]]
                     .sum()
                     .round(decimals=2)
                     .to_dict()
-                )
-                if "RCPT" in totalByRecType["Amount"]:
-                    candidate["TotalRCPT"] = totalByRecType["Amount"]["RCPT"]
-                if "EXPN" in totalByRecType["Amount"]:
-                    candidate["TotalEXPN"] = totalByRecType["Amount"]["EXPN"]
-                if "LOAN" in totalByRecType["Amount"]:
-                    candidate["TotalLOAN"] = totalByRecType["Amount"]["LOAN"]
-                if "S497" in totalByRecType["Amount"]:
-                    candidate["TotalS497"] = totalByRecType["Amount"]["S497"]
-                candidate["TotalFunding"] = (
-                    candidate["TotalRCPT"] + candidate["TotalLOAN"]
-                )
+            )
+            if "RCPT" in totalByRecType["Amount"]:
+                candidate["TotalRCPT"] = totalByRecType["Amount"]["RCPT"]
+            if "EXPN" in totalByRecType["Amount"]:
+                candidate["TotalEXPN"] = totalByRecType["Amount"]["EXPN"]
+            if "LOAN" in totalByRecType["Amount"]:
+                candidate["TotalLOAN"] = totalByRecType["Amount"]["LOAN"]
+            if "S497" in totalByRecType["Amount"]:
+                candidate["TotalS497"] = totalByRecType["Amount"]["S497"]
+            candidate["TotalFunding"] = (
+                candidate["TotalRCPT"] + candidate["TotalLOAN"]
+            )
 
-                # Get funding by committee type
-                recpDataPerCandidate = dataPerCandidate[
-                    dataPerCandidate["Rec_Type"].isin(["RCPT", "LOAN"])
-                ]  # dataPerCandidate[(dataPerCandidate['Rec_Type'] == 'RCPT')
-                totalByComType = (
-                    recpDataPerCandidate.groupby(["Entity_Cd"])[["Amount"]]
+            # Get funding by committee type
+            recpDataPerCandidate = dataPerCandidate[
+                dataPerCandidate["Rec_Type"].isin(["RCPT", "LOAN"])
+            ]  # dataPerCandidate[(dataPerCandidate['Rec_Type'] == 'RCPT')
+            totalByComType = (
+                recpDataPerCandidate.groupby(["Entity_Cd"])[["Amount"]]
                     .sum()
                     .round(decimals=2)
                     .to_dict()
-                )
-                candidate["FundingByType"] = totalByComType["Amount"]
+            )
+            candidate["FundingByType"] = totalByComType["Amount"]
 
-                # Get funding by geo
-                totalByGeoSJ = (
-                    recpDataPerCandidate[
-                        recpDataPerCandidate["Entity_City"] == "San Jose"
-                    ]["Amount"]
-                    .sum()
-                    .round(decimals=2)
-                )
-                totalByGeoNonSJ = (
-                    recpDataPerCandidate[
-                        recpDataPerCandidate["Entity_City"] != "San Jose"
-                    ]["Amount"]
-                    .sum()
-                    .round(decimals=2)
-                )
-                totalByGeoCA = (
-                    recpDataPerCandidate[recpDataPerCandidate["Entity_ST"] == "CA"][
-                        "Amount"
-                    ]
-                    .sum()
-                    .round(decimals=2)
-                )
-                totalByGeoNonCA = (
-                    recpDataPerCandidate[recpDataPerCandidate["Entity_ST"] != "CA"][
-                        "Amount"
-                    ]
-                    .sum()
-                    .round(decimals=2)
-                )
-                candidate["FundingByGeo"] = {
-                    "SJ": totalByGeoSJ,
-                    "NonSJ": totalByGeoNonSJ,
-                    "CA": totalByGeoCA,
-                    "NonCA": totalByGeoNonCA,
-                }
+            # Get funding by geo
+            candidate['FundingByGeo'] = self.getFundingByGeo(recpDataPerCandidate)
 
-                # Get expenditure by type
-                expnDataPerCandidate = dataPerCandidate[
-                    dataPerCandidate["Rec_Type"] == "EXPN"
+            # Get expenditure by type
+            expnDataPerCandidate = dataPerCandidate[
+                dataPerCandidate["Rec_Type"] == "EXPN"
                 ]
-                totalByExpnType = (
-                    expnDataPerCandidate.groupby(["Expn_Code"])[["Amount"]]
+            totalByExpnType = (
+                expnDataPerCandidate.groupby(["Expn_Code"])[["Amount"]]
                     .sum()
                     .round(decimals=2)
                     .to_dict()
-                )
-                candidate["ExpenditureByType"] = totalByExpnType["Amount"]
+            )
+            candidate["ExpenditureByType"] = totalByExpnType["Amount"]
 
-                # Get Committees
-                totalByCommittees = (
-                    recpDataPerCandidate[recpDataPerCandidate["Entity_Cd"] == "COM"]
+            # Get Committees
+            totalByCommittees = (
+                recpDataPerCandidate[recpDataPerCandidate["Entity_Cd"] == "COM"]
                     .groupby(["Entity_Nam L"])[["Amount"]]
                     .sum()
                     .round(decimals=2)
                     .to_dict()
-                )
-                totalByCommitteesList = [
-                    {"Name": c, "TotalFunding": totalByCommittees["Amount"][c]}
-                    for c in totalByCommittees["Amount"]
+            )
+            totalByCommitteesList = [
+                {"Name": c, "TotalFunding": totalByCommittees["Amount"][c]}
+                for c in totalByCommittees["Amount"]
                 ]
-                candidate["Committees"] = totalByCommitteesList
+            candidate["Committees"] = totalByCommitteesList
 
-                candidateShape["Candidates"].append(candidate)
-                candidateShape["Metadata"] = self.metadata
-                logger.debug(candidateShape)
-        except Exception as e:
-            logger.debug(e)
-            return False
+            candidateShape["Candidates"].append(candidate)
+            candidateShape["Metadata"] = self.metadata
+            logger.debug(candidateShape)
         self.set_path_in_redis("candidates", candidateShape)
         return True
+
+    def getFundingByGeo(self, data):
+        """
+        Get total funding by GEO.
+
+        :param data: A filtered Pandas table with Entity_City and Entity_ST columns populated.
+        :return: Geo funding of the shape:
+            {
+                CA: 300,
+                NonSJ: 200,
+                SJ: 100
+                NonCA: 0
+            }
+
+        """
+        totalByGeoSJ = (
+            data[data["Entity_City"] == "San Jose"
+                ]["Amount"]
+                .sum()
+                .round(decimals=2)
+        )
+        totalByGeoNonSJ = (
+            data[
+                data["Entity_City"] != "San Jose"
+                ]["Amount"]
+                .sum()
+                .round(decimals=2)
+        )
+
+        totalByGeoCA = (
+            data[data["Entity_ST"] == "CA"][
+                "Amount"
+            ]
+                .sum()
+                .round(decimals=2)
+        )
+        totalByGeoNonCA = (
+            data[data["Entity_ST"] != "CA"][
+                "Amount"
+            ]
+                .sum()
+                .round(decimals=2)
+        )
+        return {
+            "SJ": totalByGeoSJ,
+            "NonSJ": totalByGeoNonSJ,
+            "CA": totalByGeoCA,
+            "NonCA": totalByGeoNonCA,
+        }
 
 
 if __name__ == "__main__":
@@ -411,7 +430,7 @@ if __name__ == "__main__":
     filename = (
         sys.argv[1]
         if len(sys.argv) > 1
-        else "../scraper/aggregated_data/2020 Election Data.csv"
+        else "../scraper/aggregated_data/data.csv"
     )
     csv2Redis = Csv2Redis(filename=filename)
     csv2Redis.read_data_sheet()
