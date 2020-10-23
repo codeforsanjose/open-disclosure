@@ -69,7 +69,7 @@ $ gatsby develop
 % virtualenv env
 % source env/bin/activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy
+(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
 
 (env) % python ./scraper.py
 ```
@@ -81,7 +81,7 @@ $ gatsby develop
 % virtualenv --system-site-packages -p python3 ./venv
 % .\venv\Scripts\activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy
+(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
 (env) % python3 scraper.py
 ```
 
