@@ -24,6 +24,7 @@ import voteBlob from "../images/voteBlob.png"
 import registerToVote from "../images/registerToVote.png"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import { formatPercent } from "../common/util/formatters"
+import { sortInDescendingOrder } from "../common/util/sorting"
 
 const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
@@ -82,15 +83,13 @@ export default function MainPage(props) {
     OfficeElections.forEach(election => {
       candidatesRunning += election.Candidates.length
       election.Candidates.forEach(candidate => {
-        console.log(candidate)
         if (candidate) {
           candidateList.push({
             name: candidate.Name,
             position: election.Title,
             amount: candidate.TotalFunding,
             image:
-              `/images/${candidate.jsonNode?.profilePhoto}` ||
-              BlankProfile,
+              `/images/${candidate.jsonNode?.profilePhoto}` || BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
           })
           totalSJ += candidate.FundingByGeo.SJ
@@ -98,9 +97,7 @@ export default function MainPage(props) {
       })
     })
 
-    candidateList = candidateList.sort(
-      (candidate1, candidate2) => candidate2.amount - candidate1.amount
-    )
+    candidateList = sortInDescendingOrder(candidateList, "amount")
 
     if (candidateList.length > 3) {
       candidateList = candidateList.slice(0, 3)
@@ -132,7 +129,9 @@ export default function MainPage(props) {
       },
       {
         number: candidatesRunning,
-        description: OfficeElections ? `Candidates running in ${OfficeElections.length} races` :"Candidates running",
+        description: OfficeElections
+          ? `Candidates running in ${OfficeElections.length} races`
+          : "Candidates running",
       },
     ],
     renderItem: SnapshotItem,
