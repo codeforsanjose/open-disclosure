@@ -97,7 +97,11 @@ class Csv2Redis:
         filetype, _ = mimetypes.guess_type(self.filename)
         if "csv" in filetype:
             self.data = pd.read_csv(
-                self.filename, skiprows=lambda x: x % 2 == 1, sep=",", quotechar='"', encoding='iso-8859-1'
+                self.filename,
+                skiprows=lambda x: x % 2 == 1,
+                sep=",",
+                quotechar='"',
+                encoding="iso-8859-1",
             )
         elif "spreadsheet" in filetype:
             logger.info("Reading plain text csv is faster and is encouraged.")
@@ -166,6 +170,15 @@ class Csv2Redis:
         except Exception as e:
             logger.debug(e)
 
+    def set_metadata_shape_in_redis(self) -> None:
+        """
+        Set metadata key in redis with date last processed
+        """
+        try:
+            self.set_path_in_redis("metadata", {"DateProcessed": self.metadata})
+        except Exception as e:
+            logger.debug(e)
+
     def setElectionShapeInRedis(self) -> bool:
         """
         Populate election shape into redis
@@ -189,12 +202,12 @@ class Csv2Redis:
         for ed in dataAmount["Election Date"].unique():
             dataPerElectionDate = dataAmount[dataAmount["Election Date"] == ed]
             totalContributions = dataPerElectionDate[
-                                     dataPerElectionDate["Rec_Type"] == "RCPT"
-                                     ]["Amount"].sum().round(decimals=2) + dataPerElectionDate[
-                                     dataPerElectionDate["Rec_Type"] == "LOAN"
-                                     ][
-                                     "Amount"
-                                 ].sum().round(
+                dataPerElectionDate["Rec_Type"] == "RCPT"
+            ]["Amount"].sum().round(decimals=2) + dataPerElectionDate[
+                dataPerElectionDate["Rec_Type"] == "LOAN"
+            ][
+                "Amount"
+            ].sum().round(
                 decimals=2
             )
 
@@ -204,18 +217,18 @@ class Csv2Redis:
             for bi in dataPerElectionDate["Ballot Item"].unique():
                 dataPerElectionDateAndBallotItem = dataPerElectionDate[
                     dataPerElectionDate["Ballot Item"] == bi
-                    ]
+                ]
                 totalContributionsPerBallotItem = (
-                                                      dataPerElectionDateAndBallotItem[
-                                                          dataPerElectionDateAndBallotItem["Rec_Type"] == "RCPT"
-                                                          ]["Amount"]
-                                                          .sum()
-                                                          .round(decimals=2)
-                                                  ) + dataPerElectionDateAndBallotItem[
-                                                      dataPerElectionDateAndBallotItem["Rec_Type"] == "LOAN"
-                                                      ][
-                                                      "Amount"
-                                                  ].sum().round(
+                    dataPerElectionDateAndBallotItem[
+                        dataPerElectionDateAndBallotItem["Rec_Type"] == "RCPT"
+                    ]["Amount"]
+                    .sum()
+                    .round(decimals=2)
+                ) + dataPerElectionDateAndBallotItem[
+                    dataPerElectionDateAndBallotItem["Rec_Type"] == "LOAN"
+                ][
+                    "Amount"
+                ].sum().round(
                     decimals=2
                 )
                 if not "measure" in bi:
@@ -223,9 +236,7 @@ class Csv2Redis:
                         {
                             "Title": bi,
                             "CandidateIDs": self.get_ids(
-                                dataPerElectionDateAndBallotItem["ID"]
-                                    .unique()
-                                    .tolist()
+                                dataPerElectionDateAndBallotItem["ID"].unique().tolist()
                             ),
                             "TotalContributions": totalContributionsPerBallotItem,
                         }
@@ -307,14 +318,14 @@ class Csv2Redis:
             dataPerCandidate = dataAmount[
                 (dataAmount["CandidateControlledName"] == name)
                 & (dataAmount["Election Date"] == electionDate)
-                ]
+            ]
 
             # Get transaction by type
             totalByRecType = (
                 dataPerCandidate.groupby(["Rec_Type"])[["Amount"]]
-                    .sum()
-                    .round(decimals=2)
-                    .to_dict()
+                .sum()
+                .round(decimals=2)
+                .to_dict()
             )
             if "RCPT" in totalByRecType["Amount"]:
                 candidate["TotalRCPT"] = totalByRecType["Amount"]["RCPT"]
@@ -324,9 +335,7 @@ class Csv2Redis:
                 candidate["TotalLOAN"] = totalByRecType["Amount"]["LOAN"]
             if "S497" in totalByRecType["Amount"]:
                 candidate["TotalS497"] = totalByRecType["Amount"]["S497"]
-            candidate["TotalFunding"] = (
-                candidate["TotalRCPT"] + candidate["TotalLOAN"]
-            )
+            candidate["TotalFunding"] = candidate["TotalRCPT"] + candidate["TotalLOAN"]
 
             # Get funding by committee type
             recpDataPerCandidate = dataPerCandidate[
@@ -334,39 +343,39 @@ class Csv2Redis:
             ]  # dataPerCandidate[(dataPerCandidate['Rec_Type'] == 'RCPT')
             totalByComType = (
                 recpDataPerCandidate.groupby(["Entity_Cd"])[["Amount"]]
-                    .sum()
-                    .round(decimals=2)
-                    .to_dict()
+                .sum()
+                .round(decimals=2)
+                .to_dict()
             )
             candidate["FundingByType"] = totalByComType["Amount"]
 
             # Get funding by geo
-            candidate['FundingByGeo'] = self.getFundingByGeo(recpDataPerCandidate)
+            candidate["FundingByGeo"] = self.getFundingByGeo(recpDataPerCandidate)
 
             # Get expenditure by type
             expnDataPerCandidate = dataPerCandidate[
                 dataPerCandidate["Rec_Type"] == "EXPN"
-                ]
+            ]
             totalByExpnType = (
                 expnDataPerCandidate.groupby(["Expn_Code"])[["Amount"]]
-                    .sum()
-                    .round(decimals=2)
-                    .to_dict()
+                .sum()
+                .round(decimals=2)
+                .to_dict()
             )
             candidate["ExpenditureByType"] = totalByExpnType["Amount"]
 
             # Get Committees
             totalByCommittees = (
                 recpDataPerCandidate[recpDataPerCandidate["Entity_Cd"] == "COM"]
-                    .groupby(["Entity_Nam L"])[["Amount"]]
-                    .sum()
-                    .round(decimals=2)
-                    .to_dict()
+                .groupby(["Entity_Nam L"])[["Amount"]]
+                .sum()
+                .round(decimals=2)
+                .to_dict()
             )
             totalByCommitteesList = [
                 {"Name": c, "TotalFunding": totalByCommittees["Amount"][c]}
                 for c in totalByCommittees["Amount"]
-                ]
+            ]
             candidate["Committees"] = totalByCommitteesList
 
             candidateShape["Candidates"].append(candidate)
@@ -390,32 +399,15 @@ class Csv2Redis:
 
         """
         totalByGeoSJ = (
-            data[data["Entity_City"] == "San Jose"
-                ]["Amount"]
-                .sum()
-                .round(decimals=2)
+            data[data["Entity_City"] == "San Jose"]["Amount"].sum().round(decimals=2)
         )
         totalByGeoNonSJ = (
-            data[
-                data["Entity_City"] != "San Jose"
-                ]["Amount"]
-                .sum()
-                .round(decimals=2)
+            data[data["Entity_City"] != "San Jose"]["Amount"].sum().round(decimals=2)
         )
 
-        totalByGeoCA = (
-            data[data["Entity_ST"] == "CA"][
-                "Amount"
-            ]
-                .sum()
-                .round(decimals=2)
-        )
+        totalByGeoCA = data[data["Entity_ST"] == "CA"]["Amount"].sum().round(decimals=2)
         totalByGeoNonCA = (
-            data[data["Entity_ST"] != "CA"][
-                "Amount"
-            ]
-                .sum()
-                .round(decimals=2)
+            data[data["Entity_ST"] != "CA"]["Amount"].sum().round(decimals=2)
         )
         return {
             "SJ": totalByGeoSJ,
@@ -428,12 +420,11 @@ class Csv2Redis:
 if __name__ == "__main__":
     # TODO: usage python aggregatedcsv2redis.py <filename> yet to be discussed
     filename = (
-        sys.argv[1]
-        if len(sys.argv) > 1
-        else "../scraper/aggregated_data/data.csv"
+        sys.argv[1] if len(sys.argv) > 1 else "../scraper/aggregated_data/data.csv"
     )
     csv2Redis = Csv2Redis(filename=filename)
     csv2Redis.read_data_sheet()
     csv2Redis.setElectionShapeInRedis()
     csv2Redis.setCandidateShapeInRedis()
     csv2Redis.set_referendums_shape_in_redis()
+    csv2Redis.set_metadata_shape_in_redis()
