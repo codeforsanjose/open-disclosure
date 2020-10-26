@@ -85,10 +85,10 @@ def get_elections():
 
 
 @redis_bp.route("/referendums", methods=["GET"])
-def get_referendums(serve_fake=False):
+def get_referendums():
     """
-    WIP
-    :return:
+    Get all referendums from current election cycle
+    :return: JSON containing referendum data
     """
     try:
         referendums_shape = redis.getAnyShape("referendums")
@@ -100,11 +100,15 @@ def get_referendums(serve_fake=False):
 
 
 @redis_bp.route("/metadata", methods=["GET"])
-def get_metadata(serve_fake=True):
+def get_metadata():
     """
-    WIP
-    :return:
+    Get 
+    :return: JSON containing metadata
     """
-    if serve_fake:
-        return fake_data.get_metadata_shape()
-    return empty_response("Metadata")
+    try:
+        metadata_shape = redis.getAnyShape("metadata")
+        if not metadata_shape:
+            return empty_response("Metadata")
+        return jsonify(metadata_shape)
+    except Exception as error:
+        return error_response(f"{error}")
