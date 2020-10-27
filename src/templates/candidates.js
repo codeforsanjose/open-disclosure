@@ -6,12 +6,18 @@ import SideNav from "../components/sideNav"
 import CandidatesListItem from "../components/candidatesListItem"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import SectionHeader from "../components/sectionHeader"
+import { sortInDescendingOrder } from "../common/util/sorting"
 
 export default function Candidates({ data, pageContext }) {
   const { electionDate } = pageContext
   const {
     officeElection: { Title, Candidates, fields, TotalContributions },
   } = data
+  const sortedCandidates = sortInDescendingOrder(
+    Candidates,
+    "TotalContributions"
+  )
+
   return (
     <div className={styles.outerContainer}>
       <Layout
@@ -27,7 +33,7 @@ export default function Candidates({ data, pageContext }) {
           >
             <div className={styles.candidateList}>
               <SectionHeader title={Title} />
-              {Candidates.map(candidate => (
+              {sortedCandidates.map(candidate => (
                 <CandidatesListItem
                   path={`/${electionDate}/candidate/${fields.slug}/${candidate.fields.slug}`}
                   key={candidate.fields.slug}
