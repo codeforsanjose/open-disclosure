@@ -335,7 +335,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type Metadata implements Node{
-      DateProcessed: String!
+      DateProcessed: String
     }
   `)
 }
