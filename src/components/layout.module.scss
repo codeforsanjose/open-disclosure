@@ -18,12 +18,12 @@
 .footerTop {
   display: flex;
   flex-direction: row;
-  padding: 3rem 0;
+  padding-top: 3rem;
 }
 
 .footerLeft {
   flex: 1;
-  padding: 1.8rem 0;
+  padding-top: 1.8rem;
   flex-direction: column;
 }
 
@@ -49,76 +49,80 @@
   }
 }
 
-.footerRight {
-  justify-content: center;
+// .footerRight {
+//   justify-content: center;
 
-  h5 {
-    font-family: "DM Sans";
-    font-size: 2.4rem;
-  }
+//   h5 {
+//     font-family: "DM Sans";
+//     font-size: 2.4rem;
+//   }
 
-  form {
-    display: flex;
-    flex-direction: row;
-    margin: 2.5rem 0;
-    border: solid 1px #d1d1d1;
-    border-radius: 4px;
+//   form {
+//     display: flex;
+//     flex-direction: row;
+//     margin: 2.5rem 0;
+//     border: solid 1px #d1d1d1;
+//     border-radius: 4px;
 
-    input {
-      font-size: 1.8rem;
-    }
-  }
-}
+//     input {
+//       font-size: 1.8rem;
+//     }
+//   }
+// }
 
-.emailInput {
-  background-color: transparent;
-  border: none;
-  color: $darkGray;
-  flex: 2;
-  padding: 1.3rem 2rem;
-}
+// .emailInput {
+//   background-color: transparent;
+//   border: none;
+//   color: $darkGray;
+//   flex: 2;
+//   padding: 1.3rem 2rem;
+// }
 
-.emailInput::placeholder,
-.emailInput::-webkit-input-placeholder,
-.emailInput:-ms-input-placeholder,
-.emailInput::-moz-placeholder,
-.emailInput:-moz-placeholder {
-  color: $darkGray;
-  opacity: 1;
-}
+// .emailInput::placeholder,
+// .emailInput::-webkit-input-placeholder,
+// .emailInput:-ms-input-placeholder,
+// .emailInput::-moz-placeholder,
+// .emailInput:-moz-placeholder {
+//   color: $darkGray;
+//   opacity: 1;
+// }
 
-.submitForm {
-  background-color: $primaryGreen;
-  border: solid 2px $primaryGreen;
-  border-radius: 0 4px 4px 0;
-  color: $primaryOffWhite;
-  flex: 1;
-  font-family: "DM Sans";
-  font-weight: bold;
-  padding: 1.3rem 2rem;
-}
+// .submitForm {
+//   background-color: $primaryGreen;
+//   border: solid 2px $primaryGreen;
+//   border-radius: 0 4px 4px 0;
+//   color: $primaryOffWhite;
+//   flex: 1;
+//   font-family: "DM Sans";
+//   font-weight: bold;
+//   padding: 1.3rem 2rem;
+// }
 
-.submitForm:hover {
-  cursor: pointer;
-  border-color: $hoverGreen;
-  background-color: $hoverGreen;
-}
+// .submitForm:hover {
+//   cursor: pointer;
+//   border-color: $hoverGreen;
+//   background-color: $hoverGreen;
+// }
 
 .footerBottom {
   padding-bottom: 4rem;
+}
 
-  h1 {
-    font-size: 2rem;
-    font-weight: 400;
-    margin-bottom: 4rem;
-    a {
-      color: $primaryGreen;
-    }
+.cfsjLogo {
+  display: flex;
+  a {
+    display: flex;
+    align-items: center;
   }
-
   p {
     font-size: 1.6rem;
-    margin-bottom: 2rem;
+    margin: 0 0 0 1.5rem;
+    color: $primaryGreen;
+  }
+  &:hover {
+    p {
+      color: $hoverGreen;
+    }
   }
 }
 
@@ -139,7 +143,7 @@
   }
 
   .footerNav {
-    margin: 3rem 0;
+    margin: 3rem 0 0;
     padding: 0;
 
     ul {
@@ -155,20 +159,20 @@
     }
   }
 
-  .footerRight {
-    align-items: normal;
-    padding-bottom: 3rem;
-    padding-top: 0;
+  // .footerRight {
+  //   align-items: normal;
+  //   padding-bottom: 3rem;
+  //   padding-top: 0;
 
-    h5 {
-      font-size: 1.4rem;
-    }
+  //   h5 {
+  //     font-size: 1.4rem;
+  //   }
 
-    form input {
-      font-size: 1.2rem;
-      display: block;
-    }
-  }
+  //   form input {
+  //     font-size: 1.2rem;
+  //     display: block;
+  //   }
+  // }
 
   .emailInput {
     margin: 0.5rem 0;
@@ -184,14 +188,15 @@
 
   .footerBottom {
     padding-bottom: 0;
+  }
 
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 2rem;
+  .cfsjLogo {
+    a {
+      flex-direction: column;
     }
-
     p {
-      font-size: 1rem;
+      font-size: 1.2rem;
+      margin: 0;
     }
   }
 }

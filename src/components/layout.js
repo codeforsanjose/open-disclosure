@@ -7,6 +7,7 @@ import styles from "./layout.module.scss"
 import SEO from "./seo"
 import Navbar from "./navbar"
 import Logo from "./logo"
+import cfsjLogo from "../images/cfsj-logo.png"
 
 const renderNavItems = items => (
   <ul>
@@ -148,14 +149,12 @@ export default function Layout({
                   </div>
                 </div>
                 <div className={styles.footerBottom}>
-                  <h1>
-                    Special thanks to{" "}
-                    <a href="https://www.opendisclosure.io/">
-                      Open Oakland&apos;s Open Disclosure
-                    </a>{" "}
-                    for the inspiration.
-                  </h1>
-                  <p>Brought to you by Code for San José</p>
+                  <div className={styles.cfsjLogo}>
+                    <a href="https://www.codeforsanjose.com/">
+                      <img src={cfsjLogo} alt="Logo of Code for San José" />
+                      <p>Brought to you by Code for San José</p>
+                    </a>
+                  </div>
                 </div>
               </div>
             </footer>
