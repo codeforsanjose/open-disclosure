@@ -1,0 +1,54 @@
+@import "../styles/colors";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.individual {
+  margin: 1rem 1rem 0;
+  padding: 1rem 0;
+  text-align: center;
+
+  img {
+    border: 4px solid $primaryBlack;
+    border-radius: 50%;
+    max-width: 12.5rem;
+    max-height: 12.5rem;
+  }
+
+  h1,
+  p {
+    margin: 1rem 0;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  a {
+    img {
+      border-color: $primaryGreen;
+    }
+    h1,
+    p {
+      color: $primaryGreen;
+    }
+  }
+
+  a:hover {
+    img {
+      border-color: $hoverGreen;
+    }
+    h1,
+    p {
+      color: $hoverGreen;
+    }
+  }
+}
