@@ -7,7 +7,7 @@ import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
 import styles from "./referendum.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
-import VotersEdgeIcon from "../../static/images/votersEdge.png"
+import VotersEdgeIcon from "../images/votersEdge.png"
 import CommitteeCharts from "../components/committeeCharts"
 
 function MeasureDetails({ data }) {
