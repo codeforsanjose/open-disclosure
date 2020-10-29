@@ -18,12 +18,6 @@
   z-index: 2;
 }
 
-.submenu {
-  .linkInner {
-    display: none;
-  }
-}
-
 .link,
 .link:visited {
   display: flex;
@@ -45,17 +39,6 @@
     margin: 0 0.5rem 0;
     z-index: 3;
   }
-}
-
-.arrow {
-  display: none;
-  transform: rotate(270deg);
-  -webkit-transform: rotate(270deg);
-  transition: transform 0.26s linear;
-}
-
-.openMenuItem {
-  transform: rotate(360deg);
 }
 
 .bold > .linkInner {
@@ -91,18 +74,6 @@
     .linkInner .selected {
       opacity: 1;
     }
-  }
-
-  .submenu {
-    width: 50%;
-    .linkInner {
-      display: block;
-      padding-left: 1.5rem;
-    }
-  }
-
-  .arrow {
-    display: block;
   }
 
   .open {

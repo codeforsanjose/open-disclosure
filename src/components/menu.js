@@ -3,27 +3,25 @@ import NavbarItem from "./navbarItem"
 
 import styles from "./menu.module.scss"
 
-const Menu = ({ links, menuIsOpen, submenu, windowIsLarge }) => {
-  const navItems = () =>
-    links.map((link, index) => {
-      return (
-        <NavbarItem
-          key={index}
-          menuIsOpen={menuIsOpen}
-          windowIsLarge={windowIsLarge}
-          {...link}
-        />
-      )
-    })
-
+const Menu = ({ links, menuIsOpen, windowIsLarge, closeMenu }) => {
   return (
     <ul
       className={`${styles.navigation} ${styles.closed} ${menuIsOpen &&
-        styles.open} ${submenu && styles.submenu} ${menuIsOpen &&
-        submenu &&
-        styles.openSubmenu}`}
+        styles.open}`}
     >
-      {(menuIsOpen || windowIsLarge) && navItems()}
+      {(menuIsOpen || windowIsLarge) &&
+        links.map((link, index) => {
+          return (
+            <NavbarItem
+              key={index}
+              menuIsOpen={menuIsOpen}
+              windowIsLarge={windowIsLarge}
+              isLast={links.length === index + 1}
+              closeMenu={closeMenu}
+              {...link}
+            />
+          )
+        })}
     </ul>
   )
 }
