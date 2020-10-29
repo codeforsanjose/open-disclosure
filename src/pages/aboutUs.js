@@ -59,21 +59,29 @@ export default function AboutUs() {
       <main className={styles.container} id="about-us-main-content">
         <h1>About Open Disclosure San José</h1>
         <p>
-          Open Disclosure was created to support transparency and integrity in
-          local elections. We reveal the source of candidates’ funds to expose
-          possible influence. We also show the source of money to support and
-          oppose ballot measures. We publish campaign finance data in a way that
-          is clear and accessible to give power to Oakland residents, strengthen
-          local democracy, and build trust in our electoral system.
+          Open Disclosure San José is an open source, volunteer-developed
+          project of Code for San José aimed at making it easier for the average
+          voter to see where money is coming from and going to in local
+          municipal elections. We believe that it is impractical to expect
+          interested voters to sift through hundreds of complex PDF and CSV
+          files in order to get an understanding of a campaign&apos;s finances,
+          and that voters should have this information in order to make informed
+          decisions when they submit their ballots. Therefore, our goal is to
+          aggregate and process the information contained in those documents in
+          one place in a user-friendly format.
         </p>
         <h1>About the data</h1>
         <p>
-          Open Disclosure was created to support transparency and integrity in
-          local elections. We reveal the source of candidates’ funds to expose
-          possible influence. We also show the source of money to support and
-          oppose ballot measures. We publish campaign finance data in a way that
-          is clear and accessible to give power to Oakland residents, strengthen
-          local democracy, and build trust in our electoral system.
+          Campaign finance data provided by the City of San José&apos;s{" "}
+          <a href="https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/">
+            Public Access Portal (CampaignDocs eRetrieval)
+          </a>
+          . Candidate and ballot measure information gathered from information
+          provided to the{" "}
+          <a href="https://www.sccgov.org/sites/rov/Pages/Registrar-of-Voters.aspx">
+            Santa Clara County Registrar of Voters
+          </a>
+          .
         </p>
         <h2>Current team:</h2>
         <TeamMembers team={currentTeam} />
