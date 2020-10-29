@@ -9,7 +9,11 @@ import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import pageNotFound from "../images/404.png"
 import { Link } from "gatsby"
 
-const handleClick = () => window.history.back()
+const handleClick = e => {
+  if (e.key === "Enter") {
+    window.history.back()
+  }
+}
 
 export default () => {
   return (
