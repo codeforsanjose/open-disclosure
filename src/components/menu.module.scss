@@ -5,10 +5,6 @@
   justify-content: space-around;
 }
 
-.submenu {
-  width: 0;
-}
-
 @media screen and (max-width: 760px) {
   .navigation {
     flex-direction: column;
@@ -26,11 +22,6 @@
 
   .open {
     height: 100vh;
-    transform: scaleY(1);
-  }
-
-  .openSubmenu {
-    height: 13rem;
     transform: scaleY(1);
   }
 }

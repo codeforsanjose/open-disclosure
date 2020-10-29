@@ -18,7 +18,7 @@ function enableScroll() {
   window.onscroll = function() {}
 }
 
-export default function Navbar(props) {
+export default function Navbar({ links, windowIsLarge }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
   useEffect(() => {
@@ -27,14 +27,13 @@ export default function Navbar(props) {
     return enableScroll
   }, [menuIsOpen])
 
-  const links = [
+  const allLinks = [
     { name: "Home", endpoint: "/", hidden: true },
-    ...props.links,
+    ...links,
     {
       name: "Register to vote",
       endpoint: "/registerToVote",
       hidden: true,
-      arrow: true,
     },
     { name: "Find your ballot", endpoint: "/findYourBallot", hidden: true },
   ]
@@ -57,9 +56,10 @@ export default function Navbar(props) {
         </div>
         <div className={styles.navbarBottom}>
           <Menu
+            closeMenu={() => setMenuIsOpen(false)}
             menuIsOpen={menuIsOpen}
-            windowIsLarge={props.windowIsLarge}
-            links={links}
+            windowIsLarge={windowIsLarge}
+            links={allLinks}
           />
         </div>
       </nav>
