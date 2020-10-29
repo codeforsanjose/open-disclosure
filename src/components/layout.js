@@ -99,10 +99,6 @@ export default function Layout({
           links.unshift({
             name: "Candidates",
             endpoint: `/${election.Date}/candidates/${election.OfficeElections[0].fields.slug}`,
-            links: election.OfficeElections.map(office => ({
-              position: office.Title,
-              endpoint: `/${election.Date}/candidates/${office.fields.slug}`,
-            })),
           })
         }
 
