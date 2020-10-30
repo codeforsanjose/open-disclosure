@@ -4,7 +4,7 @@ import Bar from "./bar"
 import { Link } from "gatsby"
 import React from "react"
 import styles from "./candidatesListItem.module.scss"
-import BlankProfile from "../images/blankProfile.png"
+import BlankProfile from "../images/blankProfile.webp"
 
 export default function CandidatesListItem({
   Name,

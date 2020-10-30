@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./teamMembers.module.scss"
-import Blank from "../images/blankProfile.png"
+import Blank from "../images/blankProfile.webp"
 
 const PersonalInfo = ({ position, name, image }) => (
   <>
