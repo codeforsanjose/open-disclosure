@@ -30,6 +30,24 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
 })
 
+const getDigits = value => {
+  return value.toString().length;
+}
+
+const getSuffix = value => {
+  let suffix = "";
+  if (getDigits(value) >= 6 && getDigits(value) < 9) {
+    suffix = "K";
+  } else if (getDigits(value) >= 9 && getDigits(value) < 12 ) {
+    suffix = "M";
+  } else if (getDigits(value) >= 12 && getDigits(value) < 15 ) {
+    suffix = "B";
+  } else if (getDigits(value) >= 15 && getDigits(value) < 18) {
+    suffix = "T"
+  }
+  return suffix;
+}
+ 
 const formatTotalContributions = value => {
   let maximumSignificantDigits = 3
   if (value < 1000) {
@@ -39,11 +57,13 @@ const formatTotalContributions = value => {
   }
 
   return (
-    (parseInt(value) / 1000).toLocaleString("en-US", {
+    // TODO: This assumes that we have a number in the billions. 
+    // Need to fix this later.
+    (parseInt(value)/1000000).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
-      maximumSignificantDigits,
-    }) + "K"
+      maximumSignificantDigits
+    }) + getSuffix(value)
   )
 }
 
