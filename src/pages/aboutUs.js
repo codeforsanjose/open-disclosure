@@ -38,6 +38,7 @@ export default function AboutUs() {
     { name: "Coco M", position: "Backend" },
     { name: "Diane L", position: "UX & Design" },
     { name: "Irina R", position: "UX & Design" },
+    { name: "Yan-Yin C", position: "Frontend"}
   ])
   const alumni = sortTeamByAlphabeticalOrder([
     { name: "Helen", position: "Project Lead", lead: true },
@@ -45,6 +46,17 @@ export default function AboutUs() {
     { name: "Karan B", position: "Backend" },
     { name: "Tim W", position: "Frontend" },
     { name: "Guy W", position: "Frontend" },
+    { name: "Myra C", position: "Fullstack" },
+    { name: "Duy N", position: "Fullstack" },
+    { name: "Glenn S", position: "Fullstack" },
+    { name: "Matthew N", position: "Fullstack" },
+    { name: "K Siddana", position: "Fullstack" },
+    { name: "Michele C", position: "Backend" },
+    { name: "Emily R", position: "Fullstack" },
+    { name: "Vivek B", position: "Fullstack" },
+    { name: "Lynna J", position: "Fullstack" },
+    { name: "Gajan N", position: "Fullstack" },
+    { name: "Nicole", position: "Fullstack" },
   ])
 
   return (
