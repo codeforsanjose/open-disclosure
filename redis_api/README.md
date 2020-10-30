@@ -33,6 +33,12 @@ Installing RedisJSON and redis-py
 2. Load RedisJSON and run the redis server: `redis-server --loadmodule ./target/release/librejson.dylib`
 3. Run `pip install redis` to install `redis-py`
 
+Populating Redis
+-
+1. OPTIONAL - run the scraper to generate new data.
+2. Follow steps in top-level readme to set up python virtualenv
+3. Run `python3 scraper_to_redis.py` to populate local redis instance with data.
+
 Running the API
 -
 **If you made a virtualenv, don't forget to activate it before running the API**
