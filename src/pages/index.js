@@ -109,7 +109,6 @@ export default function MainPage(props) {
     ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
     : null
 
-  console.log(OfficeElections)
   const lastScrape = DateProcessed
     ? formatDate.format(new Date(DateProcessed))
     : ""
