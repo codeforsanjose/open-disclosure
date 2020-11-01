@@ -7,7 +7,7 @@ import styles from "./layout.module.scss"
 import SEO from "./seo"
 import Navbar from "./navbar"
 import Logo from "./logo"
-import cfsjLogo from "../images/cfsj-logo.png"
+import cfsjLogo from "../images/cfsj-logo.webp"
 
 const renderNavItems = items => (
   <ul>

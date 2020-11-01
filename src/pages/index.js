@@ -12,16 +12,16 @@ import SnapshotItem from "../components/snapshotItem"
 import CandidateItem from "../components/candidateItem"
 import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
-import headerBlob from "../images/headerBlob.png"
-import tertiary from "../images/Tertiary.png"
-import BlankProfile from "../images/blankProfile.png"
-import blue from "../images/blue.png"
-import orange from "../images/orange.png"
-import green from "../images/green.png"
-import aboutBlob from "../images/aboutBlob.png"
-import learnMore from "../images/learnMore.png"
-import voteBlob from "../images/voteBlob.png"
-import registerToVote from "../images/registerToVote.png"
+import headerBlob from "../images/headerBlob.webp"
+import tertiary from "../images/Tertiary.webp"
+import BlankProfile from "../images/blankProfile.webp"
+import blue from "../images/blue.webp"
+import orange from "../images/orange.webp"
+import green from "../images/green.webp"
+import aboutBlob from "../images/aboutBlob.webp"
+import learnMore from "../images/learnMore.webp"
+import voteBlob from "../images/voteBlob.webp"
+import registerToVote from "../images/registerToVote.webp"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import { formatPercent } from "../common/util/formatters"
 import { sortInDescendingOrder } from "../common/util/sorting"
@@ -30,6 +30,24 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "short",
 })
 
+const getDigits = value => {
+  return value.toString().length;
+}
+
+const getSuffix = value => {
+  let suffix = "";
+  if (getDigits(value) >= 6 && getDigits(value) < 9) {
+    suffix = "K";
+  } else if (getDigits(value) >= 9 && getDigits(value) < 12 ) {
+    suffix = "M";
+  } else if (getDigits(value) >= 12 && getDigits(value) < 15 ) {
+    suffix = "B";
+  } else if (getDigits(value) >= 15 && getDigits(value) < 18) {
+    suffix = "T"
+  }
+  return suffix;
+}
+ 
 const formatTotalContributions = value => {
   let maximumSignificantDigits = 3
   if (value < 1000) {
@@ -39,11 +57,13 @@ const formatTotalContributions = value => {
   }
 
   return (
-    (parseInt(value) / 1000).toLocaleString("en-US", {
+    // TODO: This assumes that we have a number in the billions. 
+    // Need to fix this later.
+    (parseInt(value)/1000000).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
-      maximumSignificantDigits,
-    }) + "K"
+      maximumSignificantDigits
+    }) + getSuffix(value)
   )
 }
 
