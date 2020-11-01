@@ -93,7 +93,7 @@ export default function MainPage(props) {
     OfficeElections,
     Referendums,
   } = props.data.allElection.edges[0].node
-  const {DateProcessed} = props.data.allMetadata.edges[0].node
+  const { DateProcessed } = props.data.allMetadata.edges[0].node
   let candidatesRunning = 0
   let candidateList = []
   let totalSJ = 0
@@ -129,7 +129,9 @@ export default function MainPage(props) {
     ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
     : null
 
-  const lastScrape = DateProcessed ? formatDate.format(new Date(DateProcessed)) : ''
+  const lastScrape = DateProcessed
+    ? formatDate.format(new Date(DateProcessed))
+    : ""
   const snapshot = {
     title: "San José live election snapshot",
     description: `Source: ${lastScrape} City of San José Campaign Finance Report`,
@@ -147,7 +149,7 @@ export default function MainPage(props) {
       {
         number: candidatesRunning,
         description: OfficeElections
-          ? `Candidates running in ${OfficeElections.length} races`
+          ? `Candidates running in ${OfficeElections.length - 1} races`
           : "Candidates running",
       },
     ],
