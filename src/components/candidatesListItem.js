@@ -9,8 +9,8 @@ import BlankProfile from "../images/blankProfile.webp"
 export default function CandidatesListItem({
   Name,
   path,
-  electionTotal,
   TotalContributions,
+  highestContributions,
   jsonNode,
 }) {
   return (
@@ -37,7 +37,7 @@ export default function CandidatesListItem({
         <div className={styles.visualization}>
           <Bar
             type="contributions"
-            ratio={TotalContributions / electionTotal}
+            ratio={TotalContributions / highestContributions}
           />
         </div>
       </div>

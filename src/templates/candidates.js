@@ -11,12 +11,16 @@ import { sortInDescendingOrder } from "../common/util/sorting"
 export default function Candidates({ data, pageContext }) {
   const { electionDate } = pageContext
   const {
-    officeElection: { Title, Candidates, fields, TotalContributions },
+    officeElection: { Title, Candidates, fields },
   } = data
   const sortedCandidates = sortInDescendingOrder(
     Candidates,
     "TotalContributions"
   )
+  let highestContributions = 0
+  if (Candidates.length) {
+    highestContributions = sortedCandidates[0].TotalContributions
+  }
 
   return (
     <div className={styles.outerContainer}>
@@ -37,7 +41,7 @@ export default function Candidates({ data, pageContext }) {
                 <CandidatesListItem
                   path={`/${electionDate}/candidate/${fields.slug}/${candidate.fields.slug}`}
                   key={candidate.fields.slug}
-                  electionTotal={TotalContributions}
+                  highestContributions={highestContributions}
                   {...candidate}
                 />
               ))}
