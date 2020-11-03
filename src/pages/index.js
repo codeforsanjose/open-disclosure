@@ -31,23 +31,23 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
 })
 
 const getDigits = value => {
-  return value.toString().length;
+  return value.toString().length
 }
 
 const getSuffix = value => {
-  let suffix = "";
+  let suffix = ""
   if (getDigits(value) >= 6 && getDigits(value) < 9) {
-    suffix = "K";
-  } else if (getDigits(value) >= 9 && getDigits(value) < 12 ) {
-    suffix = "M";
-  } else if (getDigits(value) >= 12 && getDigits(value) < 15 ) {
-    suffix = "B";
+    suffix = "K"
+  } else if (getDigits(value) >= 9 && getDigits(value) < 12) {
+    suffix = "M"
+  } else if (getDigits(value) >= 12 && getDigits(value) < 15) {
+    suffix = "B"
   } else if (getDigits(value) >= 15 && getDigits(value) < 18) {
     suffix = "T"
   }
-  return suffix;
+  return suffix
 }
- 
+
 const formatTotalContributions = value => {
   let maximumSignificantDigits = 3
   if (value < 1000) {
@@ -57,12 +57,12 @@ const formatTotalContributions = value => {
   }
 
   return (
-    // TODO: This assumes that we have a number in the billions. 
+    // TODO: This assumes that we have a number in the billions.
     // Need to fix this later.
-    (parseInt(value)/1000000).toLocaleString("en-US", {
+    (parseInt(value) / 1000000).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
-      maximumSignificantDigits
+      maximumSignificantDigits,
     }) + getSuffix(value)
   )
 }
@@ -94,6 +94,8 @@ export default function MainPage(props) {
     Referendums,
   } = props.data.allElection.edges[0].node
   const { DateProcessed } = props.data.allMetadata.edges[0].node
+  const [processedDate, processedTime] = DateProcessed.split(" ")
+  const timestamp = `${processedDate}T${processedTime}`
   let candidatesRunning = 0
   let candidateList = []
   let totalSJ = 0
@@ -129,9 +131,7 @@ export default function MainPage(props) {
     ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
     : null
 
-  const lastScrape = DateProcessed
-    ? formatDate.format(new Date(DateProcessed))
-    : ""
+  const lastScrape = timestamp ? formatDate.format(new Date(timestamp)) : ""
   const snapshot = {
     title: "San José live election snapshot",
     description: `Source: ${lastScrape} City of San José Campaign Finance Report`,

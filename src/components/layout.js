@@ -109,7 +109,7 @@ export default function Layout({
               description={description}
             />
             <Navbar links={links} windowIsLarge={windowIsLarge} />
-            {children}
+            <div>{children}</div>
             <footer className={styles.footer} aria-label="Site Footer">
               <div className={styles.footerInner}>
                 <div className={styles.footerTop}>
