@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./noData.module.scss"
-import noDataImg from "../images/noData.webp"
+import noDataImg from "../images/noData.png"
 
 const text = {
   candidate: {

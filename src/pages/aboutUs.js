@@ -10,9 +10,9 @@ import TeamMembers from "../components/teamMembers"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import { sortTeamByAlphabeticalOrder } from "../common/util/sorting"
 // Images
-import Alex from "../images/alex.webp"
-import Geraldine from "../images/geraldine.webp"
-import Ryan from "../images/ryan.webp"
+import Alex from "../images/alex.jpg"
+import Geraldine from "../images/geraldine.jpg"
+import Ryan from "../images/ryan.jpg"
 
 export default function AboutUs() {
   const title = "About Us"
