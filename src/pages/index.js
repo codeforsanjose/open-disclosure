@@ -13,7 +13,7 @@ import CandidateItem from "../components/candidateItem"
 import BehindTheScenesItem from "../components/behindTheScenesItem"
 // Images
 import headerBlob from "../images/headerBlob.webp"
-import tertiary from "../images/Tertiary.webp"
+import tertiary from "../images/tertiary.webp"
 import BlankProfile from "../images/blankProfile.webp"
 import blue from "../images/blue.webp"
 import orange from "../images/orange.webp"
