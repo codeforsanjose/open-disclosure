@@ -8,6 +8,7 @@ import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
 import ChartSection from "../components/chartSection"
+import TableauViz from "../components/tableauViz"
 import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import NoData from "../components/noData"
 // Styles
@@ -61,6 +62,7 @@ export default function Candidate({ data }) {
         <div className={styles.container}>
           <section>
             <SectionHeader isPageHeader title={Name} />
+            <TableauViz candidateName={Name} />
             <div className={styles.aboutSection}>
               <img
                 height={"12.5rem"}
