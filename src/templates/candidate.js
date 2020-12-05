@@ -62,7 +62,6 @@ export default function Candidate({ data }) {
         <div className={styles.container}>
           <section>
             <SectionHeader isPageHeader title={Name} />
-            <TableauViz candidateName={Name} />
             <div className={styles.aboutSection}>
               <img
                 height={"12.5rem"}
@@ -178,6 +177,7 @@ export default function Candidate({ data }) {
                   ]}
                   showPercentages
                 />
+                <TableauViz candidateName={Name} candidateSeat={seat} />
               </section>
 
               {Committees && Committees.length > 0 ? (
