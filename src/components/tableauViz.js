@@ -3,7 +3,6 @@ import styles from "./tableauViz.module.scss"
 import TableauReport from "tableau-react"
 
 export default function TableauViz({ candidateName, candidateSeat }) {
-  const [firstName, lastName] = candidateName.split(" ")
   const candidateSeatArray = candidateSeat.split(" ")
   const candidateDistrict = candidateSeatArray[candidateSeatArray.length - 1]
 
@@ -16,10 +15,9 @@ export default function TableauViz({ candidateName, candidateSeat }) {
           width: "100%",
           "Council district calc": candidateDistrict,
           CandidateControlledName: candidateName,
-          "Candidate or Independent merged": candidateName,
+          "Candidate or Independent rename": "Candidate committees",
           "Form type calc": "Contributions",
         }}
-        query={`?:Candidates=${firstName}%20${lastName}`}
       />
     </div>
   )
