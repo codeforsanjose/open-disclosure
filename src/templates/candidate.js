@@ -3,12 +3,13 @@ import {
   // Link,
   graphql,
 } from "gatsby"
+import loadable from "@loadable/component"
 // Components
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
 import ChartSection from "../components/chartSection"
-import TableauViz from "../components/tableauViz"
+const TableauViz = loadable(() => import("../components/tableauViz"))
 import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import NoData from "../components/noData"
 // Styles
