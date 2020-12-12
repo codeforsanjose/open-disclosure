@@ -8,7 +8,6 @@ import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
 import ChartSection from "../components/chartSection"
-import TableauViz from "../components/tableauViz"
 import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import NoData from "../components/noData"
 // Styles
@@ -177,7 +176,6 @@ export default function Candidate({ data }) {
                   ]}
                   showPercentages
                 />
-                <TableauViz candidateName={Name} candidateSeat={seat} />
               </section>
 
               {Committees && Committees.length > 0 ? (
