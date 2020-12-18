@@ -11,7 +11,13 @@ const MainPagePic = props => {
       <div
         className={`${styles.innerContainer} ${reversed && styles.reversed}`}
       >
-        <img alt="main-page" className={styles.blob} src={image} />
+        <img
+          alt="main-page"
+          width="549px"
+          height="574px"
+          className={styles.blob}
+          src={image}
+        />
         <div className={styles.content}>
           <h2>{title}</h2>
           <p>{description}</p>

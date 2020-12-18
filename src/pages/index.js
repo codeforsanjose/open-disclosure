@@ -259,7 +259,7 @@ export default function MainPage(props) {
           />
           <MainPageSection {...behindTheScenes} />
           <MainPagePic {...about} />
-          <MainPagePic {...vote} reversed={windowIsLarge} />
+          <MainPagePic {...vote} reversed />
         </main>
       </div>
     </Layout>
