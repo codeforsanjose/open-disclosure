@@ -44,8 +44,9 @@
   .navbarTop {
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
     padding: 1.5rem 1rem 1.5rem 1.5rem;
-    width: 96.4%;
+    width: 100%;
   }
 
   .navbarBottom {
