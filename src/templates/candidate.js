@@ -178,6 +178,7 @@ export default function Candidate({ data }) {
                   ]}
                   showPercentages
                 />
+                <TableauViz candidateName={Name} candidateSeat={seat} />
               </section>
 
               {Committees && Committees.length > 0 ? (
