@@ -1,71 +1,38 @@
-version: "3"
+version: "3.8"
 services:
-  redis_dev:
+  redis_migration:
+    build:
+      context: ./data_pipeline
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  redis:
     image: redislabs/rejson:latest
     container_name: redis
     ports:
       - "6379:6379"
-  process:
-    build:
-      context: ./data_pipeline
-      dockerfile: Dockerfile
-      args:
-        - UID=${UID}
-        - USER=${USER}
-        - GID=${GID}
-        - GROUP=${GROUP}
-    container_name: process
-    user: $USER
-    environment:
-      - HEADLESS=${HEADLESS}
-      - REDIS_HOST=redis
-    stdin_open: true
-    tty: true
-    entrypoint: /bin/sh
-    volumes:
-      - .:/app
-    depends_on:
-      - redis_dev
+
   api:
     build:
       context: ./redis_api
       dockerfile: Dockerfile
-      args:
-        - UID=${UID}
-        - USER=${USER}
-        - GID=${GID}
-        - GROUP=${GROUP}
     container_name: api
-    user: $USER
     environment:
-      - FLASK_APP=api
-      - PYTHONPATH=.
       - REDIS_HOST=redis
-    ports:
-      - "5000:5000"
-    command: python -m flask run --host=0.0.0.0
-    volumes:
-      - .:/app
     depends_on:
-      - redis_dev
+      - redis
+      - redis_migration
+
   ui:
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        - UID=${UID}
-        - USER=${USER}
-        - GID=${GID}
-        - GROUP=${GROUP}
+      dockerfile: Dockerfile.dev
     container_name: ui
-    user: $USER
-    environment: #TODO: remove
-      - PATH=/app/node_modules/.bin:$PATH
-      - GATSBY_API_HOST=api
-    command: gatsby develop -H 0.0.0.0 -p 3000
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
     depends_on:
       - api
+    network_mode: "service:api"
