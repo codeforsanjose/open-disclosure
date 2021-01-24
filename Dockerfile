@@ -4,13 +4,6 @@ RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-# RUN apk --no-cache --virtual build-dependencies add \
-#     python \
-#     make \
-#     g++ \
-#     git \
-#     openssh-client
-
 RUN npm install
 RUN npm install -g gatsby-cli
 
