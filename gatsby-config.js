@@ -18,6 +18,12 @@ module.exports = {
     `gatsby-plugin-react-axe`,
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "G-1ZFK2JF1YP",
+      },
+    },
+    {
       resolve: "gatsby-source-filesystem",
       options: {
         path: "./src/data",
