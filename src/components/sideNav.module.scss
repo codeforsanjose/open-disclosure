@@ -51,7 +51,6 @@
 }
 
 .active {
-  pointer-events: none;
   .text {
     font-weight: bold;
   }
@@ -65,7 +64,7 @@
   &:hover {
     cursor: default;
     .selected {
-      display: none;
+      display: flex;
     }
   }
 }

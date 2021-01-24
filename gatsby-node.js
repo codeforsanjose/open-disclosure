@@ -2,12 +2,13 @@ const path = require(`path`)
 
 const fetch = require("node-fetch")
 
-const HOSTNAME = process.env.GATSBY_API_HOST || "open-disclosure-api.codeforsanjose.com"
+const HOSTNAME = process.env.GATSBY_API_HOST
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
 const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
+const DEFAULT_ELECTION_TARGET = "11/3/2020"
 
 async function fetchEndpoint(endpoint) {
   const response = await fetch(
@@ -69,7 +70,7 @@ exports.sourceNodes = async ({
     })
     return id
   })
-  const election = electionData.Elections["11/3/2020"]
+  const election = electionData.Elections[DEFAULT_ELECTION_TARGET]
   createNode({
     ...election,
     OfficeElections: election.OfficeElections.map(officeElection => {
