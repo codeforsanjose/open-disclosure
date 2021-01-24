@@ -11,7 +11,7 @@ const REFERENDUM_NODE_TYPE = `Referendum`
 
 async function fetchEndpoint(endpoint) {
   const response = await fetch(
-    `http://${HOSTNAME}:5000/open-disclosure/api/v1.0/${endpoint}`
+    `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
   )
   if (response.ok) {
     return await response.json()

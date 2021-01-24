@@ -20,6 +20,8 @@ services:
       context: ./redis_api
       dockerfile: Dockerfile
     container_name: api
+    ports:
+      - "80:5000"
     environment:
       - REDIS_HOST=redis
     depends_on:
@@ -30,9 +32,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      network: host
     container_name: ui
     ports:
       - "3000:3000"
     depends_on:
       - api
-    network_mode: "service:api"
