@@ -10,8 +10,5 @@ RUN npm install -g gatsby-cli
 
 COPY . .
 
-ENV GATSBY_API_HOST=localhost
-RUN npm run-script build
-
 EXPOSE 3000
-CMD ["gatsby", "develop"]
+CMD ["gatsby", "develop", "-H", "0.0.0.0"]

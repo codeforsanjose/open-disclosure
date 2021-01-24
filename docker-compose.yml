@@ -15,18 +15,7 @@ services:
     ports:
       - "6379:6379"
 
-  api-internal:
-    build:
-      context: ./redis_api
-      dockerfile: Dockerfile
-    container_name: api
-    environment:
-      - REDIS_HOST=redis
-    depends_on:
-      - redis
-      - redis_migration
-
-  api-external:
+  api:
     build:
       context: ./redis_api
       dockerfile: Dockerfile
@@ -34,22 +23,21 @@ services:
     environment:
       - REDIS_HOST=redis
     ports:
-      - "80:5000"
+      - "5000:5000"
     depends_on:
       - redis
       - redis_migration
-      - api-internal
 
   ui:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      network: "host"
     container_name: ui
     environment:
       - PORT=3000       # gastby develop defaults to 8000
-      - GATSBY_API_HOST=api
-      - GATSBY_API_PORT=5000
+      - GATSBY_API_HOST=api:5000
     ports:
       - "3000:3000"
     depends_on:
-      - api-internal
+      - api
