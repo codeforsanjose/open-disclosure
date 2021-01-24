@@ -2,8 +2,7 @@ const path = require(`path`)
 
 const fetch = require("node-fetch")
 
-const HOSTNAME =
-  process.env.GATSBY_API_HOST || "open-disclosure-api.codeforsanjose.com"
+const HOSTNAME = process.env.GATSBY_API_HOST
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
