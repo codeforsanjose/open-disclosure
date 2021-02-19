@@ -7,6 +7,9 @@ Are the donors from the same jurisdiction (city/county/state) as the candidate's
 outside of the jurisdiction? Are the donors individuals, or Political Action Committees (PACs)? What
 is the donor history of the PAC(s)?
 
+View the currently deployed version of our web app: 
+[https://open-disclosure.codeforsanjose.org/](https://open-disclosure.codeforsanjose.org/)
+
 We are inspired by Open Oakland's Open Disclosure: https://www.opendisclosure.io
 
 Initially this project will cover City of San Jose elections and later will broaden to cover elections more widely.
