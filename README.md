@@ -29,43 +29,65 @@ The Presidential Primary Election is on March 3, 2020 in the state of California
 After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2020/)
 
-## How to Launch the Server
 
-1. Clone the project to your local machine.
+## Development setup
+
+Full local Development has not been tested for Windows computers. Setup assumes Mac OS
+
+1. [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+2. Clone the project to your local machine.
 
 ```sh
 $ git clone https://github.com/codeforsanjose/open-disclosure.git
 ```
 
-2. If not yet installed, install Gatsby globally to your machine.
-
-```ssh
-$ npm install -g gatsby-cli
-```
-
 3. Go into the project folder.
 
-```ssh
+```sh
 $ cd open-disclosure/
 ```
 
-4. Install dependencies.
+4. Enable `entrypoint.sh` to be executable
 
-```ssh
-$ yarn install
+```sh
+$ chmod +x entrypoint.sh
 ```
 
-5. Run local Gatsby server.
+5. Build Docker images.
 
-```ssh
-$ gatsby develop
+```sh
+$ docker-compose build
+```
+
+6. Run Docker images to start local development
+
+```sh
+$ docker-compose up
 ```
 
 6. Open webpage in http://localhost:8000.
 
+### Use Production API to build the UI
+Edit `docker-compose.yml`
+Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsanjose.com`
+```
+  ui:
+    container_name: ui
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+      network: "host"
+    working_dir: /app
+    environment:
+      - GATSBY_API_HOST=open-disclosure.codeforsanjose.com
+```
+
 ## How to Launch the Scraper
 
 ### MacOS:
+
+[Install Python3.8 for MacOS](https://docs.python-guide.org/starting/install3/osx/)
 
 ```
 % cd data_pipeline/scraper
@@ -79,6 +101,8 @@ $ gatsby develop
 
 ### Windows:
 
+[Install Python3.8 for Windows](https://phoenixnap.com/kb/how-to-install-python-3-windows)
+
 ```
 % cd data_pipeline/scraper
 % virtualenv --system-site-packages -p python3 ./venv
@@ -91,16 +115,13 @@ $ gatsby develop
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
 
-## How to Launch the API
-Instructions [here](https://github.com/codeforsanjose/open-disclosure/tree/master/redis_api)
-
 ## How to Contribute
 
-0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
+[Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
 
 - Communicate with the team on Slack (channel: #open-disclosure).
-- [Join our Slack](https://slackin-c4sj.herokuapp.com/) or [Log onto our Slack](https://codeforsanjose.slack.com/)
-- Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
+- [Join our Slack](https://join.slack.com/t/codeforsanjose/shared_invite/zt-iwnx99kh-motBC0J47O8ItlR3zjAIBA)
+- Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose
 
 Inspired by [Open Oakland's Open Disclosure](https://www.opendisclosure.io/)  
 Made with <3 by Code for San José

@@ -29,15 +29,19 @@ services:
       - redis_migration
 
   ui:
-    build:
+    container_name: ui
+    build: 
       context: .
       dockerfile: Dockerfile.dev
       network: "host"
-    container_name: ui
+    working_dir: /app
     environment:
-      - PORT=3000       # gastby develop defaults to 8000
       - GATSBY_API_HOST=api:5000
+    command: ./entrypoint.sh
     ports:
-      - "3000:3000"
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/node_modules/
     depends_on:
       - api
