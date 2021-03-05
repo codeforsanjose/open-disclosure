@@ -117,11 +117,11 @@ of other python applications you may use.
 
 ## How to Contribute
 
-0 [Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
+[Find an issue and assign yourself](https://github.com/codeforsanjose/open-disclosure/issues)
 
 - Communicate with the team on Slack (channel: #open-disclosure).
-- [Join our Slack](https://slackin-c4sj.herokuapp.com/) or [Log onto our Slack](https://codeforsanjose.slack.com/)
-- Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose/
+- [Join our Slack](https://join.slack.com/t/codeforsanjose/shared_invite/zt-iwnx99kh-motBC0J47O8ItlR3zjAIBA)
+- Attend a Code for San Jose civic hack night meetup: https://www.meetup.com/code-for-san-jose
 
 Inspired by [Open Oakland's Open Disclosure](https://www.opendisclosure.io/)  
 Made with <3 by Code for San José
