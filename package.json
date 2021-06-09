@@ -13,6 +13,9 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "dependencies": {
+    "@fontsource/dm-sans": "^4.4.5",
+    "@fontsource/lato": "^4.4.5",
+    "@fontsource/roboto": "^4.4.5",
     "@loadable/component": "^5.14.1",
     "gatsby": "^2.15.28",
     "gatsby-plugin-google-analytics": "^2.8.0",
