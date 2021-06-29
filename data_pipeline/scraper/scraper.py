@@ -1,6 +1,6 @@
 import os
 import time
-import asyncio
+
 from time import sleep
 
 from selenium import webdriver
