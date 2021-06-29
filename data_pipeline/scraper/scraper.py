@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 from time import sleep
 
 from selenium import webdriver
@@ -83,9 +84,9 @@ class SjcWebsite:
     def verifyDownloadFormTableLoadComplete(self, driver):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, self.FORM_TABLE_MAIN_TABLE_ID))
-        )
+        ) 
 
-    def downloadExcel(self, driver):
+    def downloadExcel(self, driver, countFile):
         # Finds all the Excel files linked on the page and downloads them.
         # First create array that handles ammendments, to ensure we're only downloading the latest/most accurate
         numFormTableRows = driver.find_elements_by_xpath(
@@ -117,8 +118,16 @@ class SjcWebsite:
                 else:
                     downloadLinkElement.click()
                     count += 1
+                    sleep(1)
+                    if os.path.exists('./data/transactionExportGrid.xls'):
+                        countFile += 1
+                        renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
+                        os.rename('./data/transactionExportGrid.xls', renamedFile)
+
+
         print('NUM DOWNLOADS {}'.format(count))
         self.preprocessing.insertColumns(count, self.CANDIDATENAME, self.ELECTIONDATE, self.BALLOTITEM)
+        return countFile
 
     # Returns a boolean.
     def errorDialogExists(self, driver):
@@ -230,11 +239,12 @@ class Scraper:
 
         # Uncomment block BELOW for headless data-retrieval
         # --> Currently not working 100%, only downloads first link on form table
-        isHeadless = os.environ.get('HEADLESS', False)
+        #isHeadless = os.environ.get('HEADLESS', False)
+        isHeadless = os.environ.get('HEADLESS', True)
         if isHeadless:
             options.add_argument("--headless")
-        # options.add_argument("--disable-gpu")
-        # options.add_argument("--window-size=1280,800")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1280,800")
         # Uncomment block ABOVE for headless data-retrieval
 
         options.add_argument("--ignore-certificate-errors")
@@ -255,10 +265,13 @@ class Scraper:
         options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
+
     def scrape(self, election_cycle=None):
         # Navigate to https://www.southtechhosting.com/SanJoseCity/CampaignDocsWebRetrieval/Search/SearchByElection.aspx
         self.website.navigateToSearchPage(self.driver, self.SEARCH_FORM_ADDRESS, election_cycle=election_cycle)
         self.website.verifySearchTableLoadComplete(self.driver)
+
+        countFile = 0
 
         for search_page_num in range(1, self.website.numPages(self.driver) + 1):
             print('PAGE {}'.format(search_page_num))
@@ -282,7 +295,7 @@ class Scraper:
                 else:
                     # If there are forms, then we will be brought to the "forms" page.
                     self.website.verifyDownloadFormTableLoadComplete(self.driver)
-                    self.website.downloadExcel(self.driver)
+                    countFile = self.website.downloadExcel(self.driver, countFile)
 
                     self.website.clickBackButton(self.driver)
                     self.website.verifySearchTableLoadComplete(self.driver)
