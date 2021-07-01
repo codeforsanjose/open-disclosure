@@ -118,11 +118,22 @@ class SjcWebsite:
                 else:
                     downloadLinkElement.click()
                     count += 1
+                    
+                    while(1):
+                        if os.path.exists('./data/transactionExportGrid.xls'):
+                            countFile += 1
+                            renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
+                            os.rename('./data/transactionExportGrid.xls', renamedFile)
+                            break
+                        sleep(0.1)
+                    
+                    """
                     sleep(1)
                     if os.path.exists('./data/transactionExportGrid.xls'):
                         countFile += 1
                         renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
                         os.rename('./data/transactionExportGrid.xls', renamedFile)
+                    """
 
 
         print('NUM DOWNLOADS {}'.format(count))
