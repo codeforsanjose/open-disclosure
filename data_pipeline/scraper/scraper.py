@@ -248,15 +248,12 @@ class Scraper:
 
         options = webdriver.ChromeOptions()
 
-        # Uncomment block BELOW for headless data-retrieval
-        # --> Currently not working 100%, only downloads first link on form table
-        #isHeadless = os.environ.get('HEADLESS', False)
+        # enable headless data retrieval 
         isHeadless = os.environ.get('HEADLESS', True)
         if isHeadless:
             options.add_argument("--headless")
         options.add_argument("--disable-gpu")
         options.add_argument("--window-size=1280,800")
-        # Uncomment block ABOVE for headless data-retrieval
 
         options.add_argument("--ignore-certificate-errors")
         options.add_argument("--test_type")
