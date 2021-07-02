@@ -126,14 +126,6 @@ class SjcWebsite:
                             os.rename('./data/transactionExportGrid.xls', renamedFile)
                             break
                         sleep(0.1)
-                    
-                    """
-                    sleep(1)
-                    if os.path.exists('./data/transactionExportGrid.xls'):
-                        countFile += 1
-                        renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
-                        os.rename('./data/transactionExportGrid.xls', renamedFile)
-                    """
 
 
         print('NUM DOWNLOADS {}'.format(count))
@@ -313,7 +305,7 @@ class Scraper:
 
         # Custom module to aggregate data into single CSV
         self.website.preprocessing.aggregateData()
-
+"""
 start_time = time.time()
 s = Scraper()
 
@@ -325,3 +317,4 @@ print(
         time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))
     )
 )
+"""
