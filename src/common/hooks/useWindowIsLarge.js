@@ -4,10 +4,10 @@ const LARGE_WINDOW_SIZE = 760
 
 export default function useWindowIsLarge() {
   const [windowIsLarge, setWindowIsLarge] = useState(
-    typeof window !== "undefined" && window.innerWidth >= LARGE_WINDOW_SIZE
+    typeof window !== "undefined" && window.innerWidth > LARGE_WINDOW_SIZE
   )
   const updateWindowDimensions = useCallback(() => {
-    setWindowIsLarge(window.innerWidth >= LARGE_WINDOW_SIZE)
+    setWindowIsLarge(window.innerWidth > LARGE_WINDOW_SIZE)
   }, [])
   useEffect(() => {
     window.addEventListener("resize", updateWindowDimensions)

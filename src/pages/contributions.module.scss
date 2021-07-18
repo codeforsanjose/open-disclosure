@@ -1,0 +1,268 @@
+@import "../styles/colors";
+
+.container {
+  padding: 10rem;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.totalRaised {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 6rem;
+
+  h3 {
+    font-size: 2.8rem;
+    margin-right: 2rem;
+  }
+  h2 {
+    font-size: 3.6rem;
+  }
+}
+
+.contributions {
+  h1 {
+    font-size: 3.2rem;
+  }
+}
+
+.sort,
+.filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.filters {
+  flex: 6;
+  flex-wrap: wrap;
+}
+
+.sort {
+  flex: 1;
+  justify-content: space-between;
+  margin: 4rem 0;
+}
+
+.filterCategory {
+  background-color: $secondaryGray;
+  padding: 1rem 2rem;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: fit-content;
+
+  p {
+    font-size: 2rem;
+    color: $darkGray;
+  }
+}
+
+.selected {
+  background-color: $primaryGreen;
+
+  p {
+    color: $primaryWhite;
+  }
+}
+
+.search {
+  display: flex;
+  flex: 4;
+  justify-content: flex-end;
+
+  input {
+    outline: none;
+    min-width: 47rem;
+    min-height: 4.3rem;
+    font-size: 2rem;
+    line-height: 2.6rem;
+    padding: 0 1rem;
+    border: 2px solid $backgroundGray;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+
+  input::placeholder {
+    font-family: Lato;
+  }
+}
+
+.contributionsTable {
+  font-size: 2rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableHeader,
+.tableRow {
+  display: inline-row;
+  width: 100%;
+
+  th,
+  td {
+    padding: 2.6rem 1rem;
+    align-items: center;
+
+    &:first-child,
+    &:nth-child(4) {
+      max-width: 20rem;
+    }
+
+    p {
+      display: inline;
+    }
+  }
+}
+
+.tableHeader {
+  background-color: $secondaryGreen;
+
+  th {
+    text-align: left;
+    color: $primaryGreen;
+    white-space: nowrap;
+  }
+}
+
+.tableRow td {
+  line-height: 2.6rem;
+  border-bottom: 2px solid $backgroundGray;
+  &:first-child {
+    border-left: 2px solid $backgroundGray;
+  }
+  &:last-child {
+    border-right: 2px solid $backgroundGray;
+  }
+}
+
+.contribSmall {
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $secondaryGray;
+}
+
+.contribSmallRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+@media screen and (max-width: 1288px) {
+  .sort {
+    flex-direction: column;
+  }
+
+  .search {
+    justify-content: flex-start;
+    margin-top: 1rem;
+    input {
+      min-width: 55rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .tableHeader,
+  .tableRow {
+    th,
+    td {
+      font-size: 1.6rem;
+      line-height: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 985px) {
+  .tableHeader,
+  .tableRow {
+    th,
+    td {
+      padding: 1.6rem 1rem;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 910px) {
+  .tableHeader,
+  .tableRow {
+    th,
+    td {
+      padding: 1rem;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 833px) {
+  .tableHeader,
+  .tableRow {
+    th,
+    td {
+      padding: 1rem;
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+  }
+}
+
+@media screen and (max-width: 792px) {
+  .filterCategory {
+    p {
+      font-size: 1.6rem;
+    }
+  }
+  .search {
+    input {
+      line-height: 2rem;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .contributions {
+    h1 {
+      font-size: 2.8rem;
+    }
+  }
+
+  .totalRaised {
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.4rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+    }
+  }
+  .search {
+    input {
+      min-width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .search {
+    input {
+      min-width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .filterCategory {
+    max-width: min-content;
+  }
+}
