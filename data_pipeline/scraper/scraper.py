@@ -61,6 +61,7 @@ class SjcWebsite:
         if election_cycle:
             el = driver.find_element_by_id("ctl00_DefaultContent_ASPxRoundPanel1_ASPxDDL_ElectionDate_I");
             el.click()
+            sleep(1)
             election_el = driver.find_element_by_xpath("//*[contains(text(), '{}')]".format(election_cycle))
             election_el.click()
             sleep(3)

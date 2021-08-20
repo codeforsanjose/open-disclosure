@@ -19,6 +19,8 @@ class PreProcessing():
         download_file_dir_wildcard = '{}/*.xls'.format(scraper_download_dir)
         self.filenames = glob.glob(download_file_dir_wildcard)
         self.download_dir = scraper_download_dir    
+        self.insertCandidateFolder = DirManager(['insertedData'])
+        self.insertCandidateFolder.createFolder()
 
     def aggregateData(self):
         # Create new directory for storing aggregated data
@@ -34,6 +36,8 @@ class PreProcessing():
         with open(new_csv_file, 'w') as new_aggregate_csv:
             new_worksheet = csv.writer(new_aggregate_csv, quoting=csv.QUOTE_ALL)
 
+            transactions = set()
+
             # Loop through all workbooks (EXCEL)
             header = False
             for filename in filenames:
@@ -42,13 +46,16 @@ class PreProcessing():
                 sheet = wb.sheet_by_index(0)
 
                 # Only pull excel header from the first file to reduce duplicates
-                if header:
-                    for rownum in range(1, sheet.nrows):
-                        new_worksheet.writerow(sheet.row_values(rownum))
-                else:
-                    for rownum in range(sheet.nrows):
-                        new_worksheet.writerow(sheet.row_values(rownum))
+                if not header:
+                    new_worksheet.writerow(sheet.row_values(0))
                     header = True
+                for rownum in range(1, sheet.nrows):
+                    # Skip duplicated entries.
+                    transaction_id = sheet.row_values(rownum)[12]
+                    if transaction_id in transactions:
+                        continue
+                    transactions.add(transaction_id)
+                    new_worksheet.writerow(sheet.row_values(rownum))
 
     def insertColumns(self, numDownloads, CandidateName, ElectionDate, BallotItem):
         print('Processing {} for {}'.format(numDownloads, CandidateName))
@@ -56,8 +63,6 @@ class PreProcessing():
         if numDownloads == 0:
             return
 
-        self.insertCandidateFolder = DirManager(['insertedData'])
-        self.insertCandidateFolder.createFolder()
         new_folder = self.insertCandidateFolder.getDirectory()
         filenames = self.insertColumnsHelper()
 
