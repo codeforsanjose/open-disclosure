@@ -5,6 +5,7 @@ RUN apk update && apk add build-base autoconf automake libtool pkgconfig nasm
 # Add the package.json file and build the node_modules folder
 WORKDIR /app
 COPY ./package*.json ./
+
 RUN mkdir node_modules
 RUN apk update && apk add yarn python g++ make && rm -rf /var/cache/apk/*
 RUN yarn install

@@ -98,7 +98,6 @@ class Csv2Redis:
         if "csv" in filetype:
             self.data = pd.read_csv(
                 self.filename,
-                skiprows=lambda x: x % 2 == 1,
                 sep=",",
                 quotechar='"',
                 encoding="iso-8859-1",
@@ -327,16 +326,11 @@ class Csv2Redis:
                 .round(decimals=2)
                 .to_dict()
             )
-            if "RCPT" in totalByRecType["Amount"]:
-                candidate["TotalRCPT"] = totalByRecType["Amount"]["RCPT"]
-            if "EXPN" in totalByRecType["Amount"]:
-                candidate["TotalEXPN"] = totalByRecType["Amount"]["EXPN"]
-            if "LOAN" in totalByRecType["Amount"]:
-                candidate["TotalLOAN"] = totalByRecType["Amount"]["LOAN"]
-            if "S497" in totalByRecType["Amount"]:
-                candidate["TotalS497"] = totalByRecType["Amount"]["S497"]
-            candidate["TotalFunding"] = candidate["TotalRCPT"] + candidate["TotalLOAN"]
-
+            candidate["TotalRCPT"] = totalByRecType["Amount"].get("RCPT", 0)
+            candidate["TotalEXPN"] = totalByRecType["Amount"].get("EXPN", 0)
+            candidate["TotalLOAN"] = totalByRecType["Amount"].get("LOAN", 0)
+            candidate["TotalS497"] = totalByRecType["Amount"].get("S497", 0)
+            candidate["TotalFunding"] = candidate.get("TotalRCPT", 0) + candidate.get("TotalLOAN", 0)
             # Get funding by committee type
             recpDataPerCandidate = dataPerCandidate[
                 dataPerCandidate["Rec_Type"].isin(["RCPT", "LOAN"])
