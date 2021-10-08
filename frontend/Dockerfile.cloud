@@ -1,0 +1,16 @@
+FROM node:12 as builder
+
+WORKDIR /srv
+
+COPY package.json yarn.lock ./
+RUN npm install --legacy-peer-deps
+RUN npm install -g gatsby-cli@3.12.0
+
+ENV GATSBY_API_HOST open-disclosure.codeforsanjose.org
+COPY . .
+RUN npm run-script build
+
+FROM nginx:1.21.3
+COPY --from=builder /srv/public /usr/share/nginx/html/
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

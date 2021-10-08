@@ -18,7 +18,7 @@ services:
   api:
     build:
       context: ./redis_api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
     container_name: api
     environment:
       - REDIS_HOST=redis
@@ -31,8 +31,8 @@ services:
   ui:
     container_name: ui
     build: 
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ./frontend
+      dockerfile: frontend/Dockerfile.local
       network: "host"
     working_dir: /app
     environment:
