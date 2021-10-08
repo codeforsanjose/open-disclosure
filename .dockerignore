@@ -1,2 +1,3 @@
+# Docker ignore for frontend builds
 data_pipeline
 redis_api
