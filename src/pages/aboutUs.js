@@ -20,10 +20,9 @@ export default function AboutUs() {
   const currentTeam = sortTeamByAlphabeticalOrder([
     {
       name: "Alex P",
-      position: "Frontend / Co-lead",
+      position: "Frontend",
       github: "alessandro-pianetta",
       image: Alex,
-      lead: true,
     },
     {
       name: "Geraldine E",
@@ -31,14 +30,12 @@ export default function AboutUs() {
       github: "geleazar1000111",
       image: Geraldine,
     },
-    { name: "Ryan W", position: "Backend", image: Ryan },
+    { name: "Ryan W", position: "Backend / Co-lead", image: Ryan, lead: true },
     { name: "Darren P", position: "Backend / Co-lead", lead: true },
-    { name: "Emily J", position: "Frontend" },
     { name: "Mark N", position: "Frontend" },
     { name: "Coco M", position: "Backend" },
     { name: "Diane L", position: "UX & Design" },
     { name: "Irina R", position: "UX & Design" },
-    { name: "Yan-Yin C", position: "Frontend"}
   ])
   const alumni = sortTeamByAlphabeticalOrder([
     { name: "Helen", position: "Project Lead", lead: true },
@@ -57,6 +54,8 @@ export default function AboutUs() {
     { name: "Lynna J", position: "Fullstack" },
     { name: "Gajan N", position: "Fullstack" },
     { name: "Nicole", position: "Fullstack" },
+    { name: "Emily J", position: "Frontend" },
+    { name: "Yan-Yin C", position: "Frontend" },
   ])
 
   return (
