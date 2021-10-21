@@ -108,6 +108,7 @@ export default function MainPage(props) {
             name: candidate.Name,
             position: election.Title,
             amount: candidate.TotalFunding,
+            supportingIndependentExpenditures: candidate.FundingByType.IndependentSupport,
             image:
               `/images/${candidate.jsonNode?.profilePhoto}` || BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
@@ -291,6 +292,10 @@ export const query = graphql`
               }
               FundingByGeo {
                 SJ
+              }
+              FundingByType {
+                IndependentSupport
+                IndependentOppose
               }
             }
           }

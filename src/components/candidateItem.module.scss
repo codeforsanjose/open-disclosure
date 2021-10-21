@@ -41,6 +41,13 @@
   align-items: center;
   z-index: 1;
 
+  .money {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    text-align: center;
+  }
+
   h3,
   h4,
   p {
@@ -54,7 +61,7 @@
   }
 
   h4 {
-    font-size: 4rem;
+    font-size: 3.2rem;
     line-height: 5.2rem;
     margin-top: 2.5rem;
   }

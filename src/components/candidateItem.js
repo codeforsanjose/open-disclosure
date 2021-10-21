@@ -11,8 +11,19 @@ const CandidateItem = item => (
     <div className={styles.candidateInfo}>
       <h3>{item.name}</h3>
       <p>{item.position}</p>
-      <h4>{formatDollars(item.amount)}</h4>
-      <p className={styles.amountRaised}>Amount raised</p>
+      <div className={styles.money}>
+        <div>
+          <h4>{formatDollars(item.amount)}</h4>
+          <p>Raised by</p>
+          <p>candidate</p>
+        </div>
+        <div>
+        <h4>{formatDollars(item.supportingIndependentExpenditures)}</h4>
+        <p>Supporting</p>
+        <p>Independent</p>
+        <p>Expenditures</p>
+        </div>
+      </div>
     </div>
   </Link>
 )

@@ -301,6 +301,9 @@ class Csv2Redis:
                 "Entity_ST",
                 "Expn_Code",
                 "ID",
+                "Cand_Nam L",
+                "Sup_Opp_Cd",
+                "Form_Type"
             ]
         ]
         candidateIDs = pd.unique(dataAmount["ID"])
@@ -319,6 +322,14 @@ class Csv2Redis:
                 & (dataAmount["Election Date"] == electionDate)
             ]
 
+            # For some reason, the Cand_Nam column uses Jake Tonkel instead of "Jacob "Jake" Tonkel".
+            namePlaceholder = "Jake Tonkel" if name == "Jacob \"Jake\" Tonkel" else name
+            candidateIndependentExpenditures = dataAmount[
+                (dataAmount["Cand_Nam L"].str.lower() == namePlaceholder.lower())
+                & (dataAmount["Election Date"] == electionDate)
+                & (dataAmount["Form_Type"] == "D")
+            ]
+
             # Get transaction by type
             totalByRecType = (
                 dataPerCandidate.groupby(["Rec_Type"])[["Amount"]]
@@ -331,6 +342,13 @@ class Csv2Redis:
             candidate["TotalLOAN"] = totalByRecType["Amount"].get("LOAN", 0)
             candidate["TotalS497"] = totalByRecType["Amount"].get("S497", 0)
             candidate["TotalFunding"] = candidate.get("TotalRCPT", 0) + candidate.get("TotalLOAN", 0)
+
+            totalBySupOpp = (
+                candidateIndependentExpenditures.groupby(["Sup_Opp_Cd"])[["Amount"]]
+                .sum()
+                .round(decimals=2)
+                .to_dict()
+            )
             # Get funding by committee type
             recpDataPerCandidate = dataPerCandidate[
                 dataPerCandidate["Rec_Type"].isin(["RCPT", "LOAN"])
@@ -342,6 +360,10 @@ class Csv2Redis:
                 .to_dict()
             )
             candidate["FundingByType"] = totalByComType["Amount"]
+            candidate["FundingByType"]["IndependentSupport"] = totalBySupOpp["Amount"].get("S")
+            candidate["FundingByType"]["IndependentOppose"] = totalBySupOpp["Amount"].get("O")
+            print(name)
+            print(candidate["FundingByType"])
 
             # Get funding by geo
             candidate["FundingByGeo"] = self.getFundingByGeo(recpDataPerCandidate)
