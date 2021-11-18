@@ -31,18 +31,18 @@ const formatDate = new Intl.DateTimeFormat("en-US", {
 })
 
 const getDigits = value => {
-  return value.toString().length
+  return Math.trunc(value).toString().length
 }
 
 const getSuffix = value => {
   let suffix = ""
-  if (getDigits(value) >= 6 && getDigits(value) < 9) {
+  if (getDigits(value) >= 4 && getDigits(value) < 7) {
     suffix = "K"
-  } else if (getDigits(value) >= 9 && getDigits(value) < 12) {
+  } else if (getDigits(value) >= 7 && getDigits(value) < 10) {
     suffix = "M"
-  } else if (getDigits(value) >= 12 && getDigits(value) < 15) {
+  } else if (getDigits(value) >= 10 && getDigits(value) < 13) {
     suffix = "B"
-  } else if (getDigits(value) >= 15 && getDigits(value) < 18) {
+  } else if (getDigits(value) >= 13 && getDigits(value) < 16) {
     suffix = "T"
   }
   return suffix
@@ -56,15 +56,23 @@ const formatTotalContributions = value => {
     maximumSignificantDigits = 2
   }
 
-  return (
     // TODO: This assumes that we have a number in the billions.
     // Need to fix this later.
-    (parseInt(value) / 1000000).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumSignificantDigits,
-    }) + getSuffix(value)
-  )
+    if (value > 1000000) {
+      return (parseInt(value) / 1000000).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumSignificantDigits,
+      }) + getSuffix(value)
+    }
+    else {
+      return (parseInt(value) / 1000).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumSignificantDigits,
+      }) + getSuffix(value)
+    }
+
 }
 
 const about = {
@@ -99,6 +107,7 @@ export default function MainPage(props) {
   let candidatesRunning = 0
   let candidateList = []
   let totalSJ = 0
+  let totalIndependent = 0
   if (OfficeElections) {
     OfficeElections.forEach(election => {
       candidatesRunning += election.Candidates.length
@@ -113,6 +122,7 @@ export default function MainPage(props) {
               `/images/${candidate.jsonNode?.profilePhoto}` || BlankProfile,
             href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
           })
+          totalIndependent += candidate.FundingByType.IndependentSupport + candidate.FundingByType.IndependentOppose
           totalSJ += candidate.FundingByGeo.SJ
         }
       })
@@ -146,6 +156,10 @@ export default function MainPage(props) {
       {
         number: formatTotalContributions(TotalContributions),
         description: "Amount raised to date",
+      },
+      {
+        number: formatTotalContributions(totalIndependent),
+        description: "Spent on independent expenditures",
       },
       {
         number: candidatesRunning,

@@ -1,4 +1,5 @@
 import React from "react"
+import Chart from "react-apexcharts"
 import {
   // Link,
   graphql,
@@ -46,6 +47,14 @@ export default function Candidate({ data }) {
 
   const balance = TotalContributions - TotalEXPN
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
+
+  const chart = {
+    options: {
+      series: [FundingByType["IndependentSupport"]+1, FundingByType["IndependentOppose"]+1],
+      labels: ["Supporting", "Opposing"],
+      colors:['#025b3c', '#fb7b5f']
+    }
+  };
 
   return (
     <Layout
@@ -163,6 +172,24 @@ export default function Candidate({ data }) {
                 />
               </section>
               <section>
+                <SectionHeader title="Independent Expenditures"/>
+                <p className={styles.sectiontext}>
+                Not sure how independent expenditures differ from direct campaign donations? Visit the independent expenditures page to learn more!
+                </p>
+                <div id="pieChart" className={styles.piechart}>
+                  <Chart
+                    options={chart.options}
+                    series={chart.options.series}
+                    colors={chart.options.colors}
+                    type="pie"
+                    width="100%"
+                  />
+                  <div className={styles.graphlabel}>
+                  Total: ${(FundingByType["IndependentSupport"]+FundingByType["IndependentOppose"]).toLocaleString('en-US')}
+                  </div>
+                </div>
+              </section>
+              <section>
                 <ChartSection
                   title="Breakdown by region"
                   type="contributions"
@@ -213,6 +240,8 @@ export const query = graphql`
         IND
         PTY
         OTH
+        IndependentSupport
+        IndependentOppose
       }
       FundingByGeo {
         CA
