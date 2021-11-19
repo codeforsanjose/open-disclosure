@@ -66,9 +66,19 @@
   flex-direction: column;
 }
 
+.graphlabel {
+  font-size: 30px;
+  left: 50px;
+  position: relative;
+}
+
 .icon {
   margin-right: 0.8rem;
   width: 2.4rem;
+}
+
+.piechart {
+  max-width: 500px;
 }
 
 .profilePhoto {
@@ -77,6 +87,10 @@
   margin-right: 3.3rem;
   object-fit: contain; // TODO We'll probably want to change this
   width: 12.5rem;
+}
+
+.sectiontext {
+  font-size: 15px;
 }
 
 .seeAllIcon {

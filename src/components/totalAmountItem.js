@@ -38,6 +38,18 @@ function detail(type) {
   return detail ? " (" + detail + ")" : ""
 }
 
+export function AmountItem({ total, title, type }) {
+  return (
+    <div className={styles.totalAmount}>
+      <label className={styles.header}>
+        <span className={styles.title}>{title}</span>
+        {type}
+      </label>
+      <p className={styles.value}>{formatDollars(total)}</p>
+    </div>
+  )
+}
+
 export default function TotalAmountItem({ total, type = "contributions" }) {
   return (
     <div className={styles.totalAmount}>

@@ -211,6 +211,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       OTH: Float
       PTY: Float
       SCC: Float
+      IndependentSupport: Float
+      IndependentOppose: Float
     }
 
     type ExpenditureTypeBreakdown {

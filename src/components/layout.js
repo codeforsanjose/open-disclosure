@@ -33,7 +33,7 @@ export default function Layout({
     {
       name: "Join Us",
       anchor: true,
-      endpoint: "https://www.codeforsanjose.com/",
+      endpoint: "https://www.codeforsanjose.org/",
     },
     {
       name: "Find your ballot",
@@ -146,7 +146,7 @@ export default function Layout({
                 </div>
                 <div className={styles.footerBottom}>
                   <div className={styles.cfsjLogo}>
-                    <a href="https://www.codeforsanjose.com/">
+                    <a href="https://www.codeforsanjose.org/">
                       <img src={cfsjLogo} alt="Logo of Code for San José" />
                       <p>Brought to you by Code for San José</p>
                     </a>
