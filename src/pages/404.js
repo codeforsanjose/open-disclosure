@@ -15,7 +15,7 @@ const handleClick = e => {
   }
 }
 
-export default () => {
+export default function Component404(){
   return (
     <StaticQuery
       query={graphql`
