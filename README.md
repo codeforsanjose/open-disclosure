@@ -36,37 +36,39 @@ Full local Development has not been tested for Windows computers. Setup assumes 
 
 1. [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-2. Clone the project to your local machine.
+2. Start docker (by opening it)
+
+3. Clone the project to your local machine.
 
 ```sh
 $ git clone https://github.com/codeforsanjose/open-disclosure.git
 ```
 
-3. Go into the project folder.
+4. Go into the project folder.
 
 ```sh
 $ cd open-disclosure/
 ```
 
-4. Enable `entrypoint.sh` to be executable
+5. Enable `entrypoint.sh` to be executable
 
 ```sh
 $ chmod +x entrypoint.sh
 ```
 
-5. Build Docker images.
+6. Build Docker images.
 
 ```sh
 $ docker-compose build
 ```
 
-6. Run Docker images to start local development
+7. Run Docker images to start local development
 
 ```sh
 $ docker-compose up
 ```
 
-6. Open webpage in http://localhost:8000.
+8. Open webpage in http://localhost:8000.
 
 ### Use Production API to build the UI
 Edit `docker-compose.yml`
