@@ -1,4 +1,5 @@
 import React from "react"
+import Divider from "../common/divider"
 import styles from "./sectionHeader.module.scss"
 
 export default function SectionHeader({
@@ -14,7 +15,7 @@ export default function SectionHeader({
     >
       <h3>{title}</h3>
       <p>{subtitle}</p>
-      <div className={styles.divider} />
+      {!isSubsection && <Divider/>}
     </div>
   )
 }

@@ -24,15 +24,6 @@
     font-size: 2.8rem;
     margin: 4rem 0;
   }
-  .divider {
-    display: none;
-  }
-}
-
-.divider {
-  width: 100%;
-  border: 0.2rem solid $backgroundGray;
-  margin: 2.4rem 0;
 }
 
 @media screen and (max-width: 760px) {
@@ -41,8 +32,5 @@
       font-size: 2.2rem;
       line-height: 120%;
     }
-  }
-  .divider {
-    margin: 1rem 0 1.4rem;
   }
 }
