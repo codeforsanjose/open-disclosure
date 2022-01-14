@@ -12,9 +12,6 @@ on:
       ref:
         description: "Branch, Tag, or Full SHA"
         required: true
-  push:
-    branch:
-      - main
 
 env:
   AWS_APP_NAME: open-disclosure-backend
