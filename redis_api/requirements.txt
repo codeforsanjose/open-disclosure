@@ -2,3 +2,4 @@ Flask~=1.1.2
 python-dotenv~=0.14.0
 rejson~=0.5.4
 redis~=3.5.3
+markupsafe==2.0.1
