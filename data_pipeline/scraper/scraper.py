@@ -306,16 +306,15 @@ class Scraper:
 
         # Custom module to aggregate data into single CSV
         self.website.preprocessing.aggregateData()
-"""
+
 start_time = time.time()
 s = Scraper()
 
 # Can use election_cycle='11/3/2020' to load only the latest elections data.
 # Can use election_cycle=None to load all election data.
-s.scrape(election_cycle='11/3/2020')
+s.scrape(election_cycle='6/7/2022')
 print(
     "--- Finished ---\n---    In    ---\n--- {} ---".format(
         time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time))
     )
 )
-"""

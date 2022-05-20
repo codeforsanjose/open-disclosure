@@ -23,62 +23,29 @@ class Csv2Redis:
         self.filename = filename
         # Hardcoded data we need for 2020 election candidates
         self.candidate_ids = {
-            "David Cohen": "3h2g45h3j",
-            'Jacob "Jake" Tonkel': "089wegvb7",
-            "Dev Davis": "456hjkl2l",
-            "Lan Diep": "cf90g8cii",
+            "Andres Quintero": "1",
+            "Bien Doan": "2",
+            "Cindy Chavez": "3",
+            "Dev Davis": "4",
+            "Elizabeth Chien-Hale": "5",
+            "HG Nguyen": "6",
+            "Irene Smith": "7",
+            "James Spence": "8",
+            "Joanna Rauh": "9",
+            "Justin Lardinois": "10",
+            "Matt Mahan": "11",
+            "Maya Esparza": "12",
+            "Nora Campos": "13",
+            "Omar Torres": "14",
+            "Pam Foley": "15",
+            "Peter Ortiz": "16",
+            "Ramona Snyder": "17",
+            "Raul Peralez": "18",
+            "Rolando Bonilla": "19",
+            "Rosemary Kamei": "20",
+            "Van Le": "21"
         }
-        self.referendums = {
-            "df7g8y6d8": {
-                "id": "df7g8y6d8",
-                "electionDate": "2020-11-03",
-                "name": "Measure G",
-                "description": "Charter Amendment regarding Independent Police Auditor, Planning Commission, Redistricting",
-                "ballotLanguage": "Shall the City Charter be amended to: expand the Independent Police Auditor’s oversight, including review of officer-involved shootings and use of force incidents causing death or great bodily injury, review of department-initiated investigations against officers, and other technical amendments; increase the Planning Commission to 11 members with Council appointing one member from each Council District and one “at-large” member; and allow the Council to establish timelines for redistricting when Census results are late?",
-            },
-            "35j6kh45m": {
-                "id": "35j6kh45m",
-                "electionDate": "2020-11-03",
-                "name": "Measure H",
-                "description": "Cardroom Tax",
-                "ballotLanguage": "To fund general San Jose services, including fire protection, disaster preparedness, 911 emergency response, street repair, youth programs, addressing homelessness, and supporting vulnerable residents, shall an ordinance be adopted increasing the cardroom tax rate from 15% to 16.5%, applying the tax to third party providers at these rates: up to $25,000,000 at 5%; $25,000,001 to $30,000,000 at 7.5%; and over $30,000,000 at 10%, increasing card tables by 30, generating approximately $15,000,000 annually, until repealed?",
-            },
-        }
-        self.extra_candidate_data = {
-            "David Cohen": {
-                "seat": "Councilmember District 4",
-                "ballotDesignation": "Governing Board Member, Berryessa Union School District",
-                "website": "www.electdavidcohen.com",
-                "twitter": "electdavidcohen",
-                "votersEdge": "http://votersedge.org/ca/en/election/2020-11-03/santa-clara-county/city-council-city-of-san-jose-district-4/David-Cohen",
-                "profilePhoto": "",
-            },
-            "Lan Diep": {
-                "seat": "Councilmember District 4",
-                "ballotDesignation": "City Councilmember",
-                "website": "www.lanforsanjose.com",
-                "twitter": "ltdiep",
-                "votersEdge": "http://votersedge.org/ca/en/election/2020-11-03/santa-clara-county/city-council-city-of-san-jose-district-4/Lan-Diep",
-                "profilePhoto": "",
-            },
-            'Jacob "Jake" Tonkel': {
-                "seat": "Councilmember District 6",
-                "ballotDesignation": "Senior Biomedical Engineer",
-                "website": "www.jake4d6.com",
-                "twitter": "jake4d6",
-                "votersEdge": "http://votersedge.org/ca/en/election/2020-11-03/santa-clara-county/city-council-city-of-san-jose-district-6/Jake-Tonkel",
-                "profilePhoto": "",
-            },
-            "Dev Davis": {
-                "seat": "Councilmember District 6",
-                "ballotDesignation": "Councilwoman/Mother",
-                "website": "www.devdavis.com",
-                "twitter": "devdavisca",
-                "votersEdge": 'http://votersedge.org/ca/en/election/2020-11-03/santa-clara-county/city-council-city-of-san-jose-district-6/Devora-"Dev"-Davis',
-                "profilePhoto": "",
-            },
-        }
-
+        self.referendums = {}
     def read_data_sheet(self):
         # Read the clean csv file from Google sheet. This file won't work on just aggregated csv from scrapper.
         # Skip every other line. If the clean csv changes to every line, we need to update this as well.
@@ -214,6 +181,9 @@ class Csv2Redis:
             # Hardcoded from frontend data
             referendums = list(self.referendums.keys())
             for bi in dataPerElectionDate["Ballot Item"].unique():
+                # This is not a valid election.
+                if bi == "Mayoral Elections to Presidential Cycle":
+                    continue
                 dataPerElectionDateAndBallotItem = dataPerElectionDate[
                     dataPerElectionDate["Ballot Item"] == bi
                 ]
@@ -261,7 +231,7 @@ class Csv2Redis:
         self.set_path_in_redis("elections", electionShape)
         return True
 
-    def setCandidateShapeInRedis(self, electionDate="11/3/2020") -> bool:
+    def setCandidateShapeInRedis(self, electionDate="6/7/2022") -> bool:
         """
         Populate candidate shape into redis
         Redis data spec
@@ -316,7 +286,6 @@ class Csv2Redis:
                 continue
             candidate["ID"] = self.candidate_ids[name]
             candidate["Name"] = name
-            candidate.update(self.extra_candidate_data[name])
             dataPerCandidate = dataAmount[
                 (dataAmount["CandidateControlledName"] == name)
                 & (dataAmount["Election Date"] == electionDate)

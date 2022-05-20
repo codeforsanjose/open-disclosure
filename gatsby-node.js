@@ -8,7 +8,7 @@ const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
 const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
-const DEFAULT_ELECTION_TARGET = "11/3/2020"
+const DEFAULT_ELECTION_TARGET = "6/7/2022"
 
 async function fetchEndpoint(endpoint) {
   const response = await fetch(
