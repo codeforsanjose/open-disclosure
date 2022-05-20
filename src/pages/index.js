@@ -138,7 +138,7 @@ export default function MainPage(props) {
   const candidatesPageLink = OfficeElections
     ? `/${ElectionDate}/candidates/${OfficeElections[0].fields.slug}`
     : null
-  const referendumsPageLink = Referendums
+  const referendumsPageLink = Referendums[0]
     ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
     : null
 

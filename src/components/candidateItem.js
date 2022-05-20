@@ -6,7 +6,8 @@ import styles from "./candidateItem.module.scss"
 const CandidateItem = item => (
   <Link className={styles.container} key={item.name} to={item.href}>
     <div className={styles.imageContainer}>
-      <img alt="candidate" height="180px" width="180px" src={item.image} />
+      <img alt="candidate" height="180px" width="180px" src={item.image} 
+      className={styles.profilePhoto}/>
     </div>
     <div className={styles.candidateInfo}>
       <h3>{item.name}</h3>

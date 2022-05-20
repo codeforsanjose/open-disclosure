@@ -23,10 +23,16 @@
     border-radius: 50%;
     object-fit: contain;
     border: 8px solid $secondaryBlue;
-    height: auto;
     width: 100%;
     z-index: 2;
   }
+}
+
+.profilePhoto {
+  border-radius: 6.25rem;
+  height: 18rem;
+  object-fit: contain; // TODO We'll probably want to change this
+  width: 18rem;
 }
 
 .candidateInfo {
@@ -92,7 +98,6 @@
 
     img {
       border: 5.3px solid $secondaryGreen;
-      height: auto;
     }
   }
 

@@ -26,6 +26,14 @@
   justify-content: center;
 }
 
+.profilePhoto {
+  border-radius: 6.25rem;
+  height: 12.5rem;
+  margin-right: 3.3rem;
+  object-fit: contain; // TODO We'll probably want to change this
+  width: 12.5rem;
+}
+
 .textInfo {
   display: flex;
   flex-direction: row;

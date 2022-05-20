@@ -89,7 +89,7 @@ export default function Layout({
           },
         ]
 
-        if (election.Referendums) {
+        if (election.Referendums[0]) {
           links.unshift({
             name: "Measures",
             endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
