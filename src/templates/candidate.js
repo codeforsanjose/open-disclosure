@@ -4,13 +4,11 @@ import {
   // Link,
   graphql,
 } from "gatsby"
-import loadable from "@loadable/component"
 // Components
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
 import ChartSection from "../components/chartSection"
-const TableauViz = loadable(() => import("../components/tableauViz"))
 import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import NoData from "../components/noData"
 // Styles
@@ -20,7 +18,6 @@ import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 // Assets
 // import ArrowIcon from "../images/arrow.png"
-import TwitterIcon from "../images/twitter.png"
 import VotersEdgeIcon from "../images/votersEdge.png"
 import WebIcon from "../images/web.png"
 import BlankProfile from "../images/blankProfile.png"
@@ -40,8 +37,6 @@ export default function Candidate({ data }) {
     seat,
     ballotDesignation,
     website,
-    twitter,
-    votersEdge,
     profilePhoto,
   } = jsonNode
 
@@ -93,24 +88,13 @@ export default function Candidate({ data }) {
                     <img alt="Web icon" src={WebIcon} className={styles.icon} />
                     {website}
                   </a>
-                  <a href={votersEdge} className={styles.aboutLink}>
+                  <a href={`http://ballotpedia.org/${Name.replace(" ", "_")}`} className={styles.aboutLink}>
                     <img
                       alt="External link icon"
                       src={VotersEdgeIcon}
                       className={styles.icon}
                     />
-                    Voter&apos;s Edge Profile
-                  </a>
-                  <a
-                    href={"http://twitter.com/" + twitter}
-                    className={styles.aboutLink}
-                  >
-                    <img
-                      alt="Twitter icon"
-                      src={TwitterIcon}
-                      className={styles.icon}
-                    />
-                    {"@" + twitter}
+                    Ballotpedia
                   </a>
                 </div>
               </div>
@@ -205,7 +189,7 @@ export default function Candidate({ data }) {
                   ]}
                   showPercentages
                 />
-                <TableauViz candidateName={Name} candidateSeat={seat} />
+                {/**<TableauViz candidateName={Name} candidateSeat={seat} />**/}
               </section>
 
               {Committees && Committees.length > 0 ? (
