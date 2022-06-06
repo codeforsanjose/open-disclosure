@@ -56,7 +56,7 @@ export default function Component404(){
             href: "/findYourBallot",
           },
         ]
-        if (currentElection.Referendums) {
+        if (currentElection.Referendums.length) {
           links.splice(1, 0, {
             pageName: "Measures",
             href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
