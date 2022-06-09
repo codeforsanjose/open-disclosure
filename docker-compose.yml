@@ -34,14 +34,5 @@ services:
       context: .
       dockerfile: Dockerfile.dev
       network: "host"
-    working_dir: /app
-    environment:
-      - GATSBY_API_HOST=api:5000
-    command: ./entrypoint.sh
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
-      - /app/node_modules/
-    depends_on:
-      - api
