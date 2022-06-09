@@ -21,6 +21,10 @@ import VotersEdgeIcon from "../images/votersEdge.png"
 import WebIcon from "../images/web.png"
 import BlankProfile from "../images/blankProfile.png"
 
+// https://www.gatsbyjs.com/docs/debugging-html-builds/#fixing-third-party-modules
+import loadable from "@loadable/component"
+const Chart = loadable(() => import("react-apexcharts"))
+
 export default function Candidate({ data }) {
   const {
     Name,
@@ -41,6 +45,14 @@ export default function Candidate({ data }) {
 
   const balance = TotalContributions - TotalEXPN
   const outOfStateFunding = TotalContributions - FundingByGeo.CA
+
+  const chart = {
+    options: {
+      series: [FundingByType["IndependentSupport"]+1, FundingByType["IndependentOppose"]+1],
+      labels: ["Supporting", "Opposing"],
+      colors:['#025b3c', '#fb7b5f']
+    }
+  };
 
   return (
     <Layout
@@ -152,12 +164,13 @@ export default function Candidate({ data }) {
                 Not sure how independent expenditures differ from direct campaign donations? Visit the independent expenditures page to learn more!
                 </p>
                 <div id="pieChart" className={styles.piechart}>
-                  <div className={styles.graphlabel}>
-                  Support: ${(FundingByType["IndependentSupport"]||0).toLocaleString("en-US")}
-                  </div>
-                  <div className={styles.graphlabel}>
-                  Oppose: ${(FundingByType["IndependentOppose"]||0).toLocaleString("en-US")}
-                  </div>
+                  <Chart
+                    options={chart.options}
+                    series={chart.options.series}
+                    colors={chart.options.colors}
+                    type="pie"
+                    width="100%"
+                  />
                   <div className={styles.graphlabel}>
                   Total: ${(FundingByType["IndependentSupport"]+FundingByType["IndependentOppose"]).toLocaleString('en-US')}
                   </div>

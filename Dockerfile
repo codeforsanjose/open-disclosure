@@ -1,16 +1,14 @@
-FROM node:alpine as builder
+FROM node:12 as builder
 
-RUN mkdir -p /usr/src/app
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /srv
 
-RUN npm install
+COPY package.json yarn.lock ./
+RUN npm install --legacy-peer-deps
+RUN npm config set unsafe-perm true
 RUN npm install -g gatsby-cli
-
+COPY . .
 RUN npm run-script build
 
-FROM openresty/openresty
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY --from=builder /usr/src/app/open-disclosure/public /usr/local/openresty/nginx/html
-EXPOSE 80
+FROM nginx:1.21.3
+COPY --from=builder /srv/public /usr/share/nginx/html/
+CMD ["nginx", "-g", "daemon off;"]
