@@ -30,7 +30,7 @@ After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2020/)
 
 
-## Development setup
+## Frontend Development setup
 
 Full local Development has not been tested for Windows computers. Setup assumes Mac OS
 
@@ -59,31 +59,17 @@ $ chmod +x entrypoint.sh
 6. Build Docker images.
 
 ```sh
-$ docker-compose build
+$ docker-compose build ui
 ```
 
 7. Run Docker images to start local development
 
 ```sh
-$ docker-compose up
+$ docker-compose up ui
 ```
 
 8. Open webpage in http://localhost:8000.
 
-### Use Production API to build the UI
-Edit `docker-compose.yml`
-Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsanjose.com`
-```
-  ui:
-    container_name: ui
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-      network: "host"
-    working_dir: /app
-    environment:
-      - GATSBY_API_HOST=open-disclosure.codeforsanjose.com
-```
 
 ## How to Launch the Scraper
 
@@ -96,7 +82,7 @@ Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsa
 % virtualenv env
 % source env/bin/activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
+(env) % python3 -m pip install -r requirements.txt
 
 (env) % python ./scraper.py
 ```
@@ -110,12 +96,27 @@ Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsa
 % virtualenv --system-site-packages -p python3 ./venv
 % .\venv\Scripts\activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
+(env) % python3 -m pip install -r requirements.txt
 (env) % python3 scraper.py
 ```
 
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
+
+## How to Launch Scraper Post-Processor
+
+[Install Python3.8 for MacOS](https://docs.python-guide.org/starting/install3/osx/)
+
+```
+% cd data_pipeline/data_processing
+% virtualenv env
+% source env/bin/activate
+
+(env) % python3 -m pip install -r requirements.txt
+
+(env) % python3 aggregatedcsvtoredis.py
+```
+
 
 ## How to Contribute
 
