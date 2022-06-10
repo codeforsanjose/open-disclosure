@@ -123,7 +123,7 @@ First, gain access to the CFSJ AWS account. Once you have the desired code chang
 ```
 docker build --platform=linux/amd64 .
 ```
-Then, follow [This Guide]([https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html](https://us-west-2.console.aws.amazon.com/ecr/repositories/private/253016134262/open-disclosure-frontend-prod?region=us-west-2) to push the image to ECS.
+Then, follow [This Guide]([https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html](https://us-west-2.console.aws.amazon.com/ecr/repositories/private/253016134262/open-disclosure-frontend-prod?region=us-west-2)) to push the image to ECS.
 
 Finally, stop any currently active tasks associated with the service ([found here](https://us-west-2.console.aws.amazon.com/ecs/home?region=us-west-2#/clusters/multi-tenant-prod/services/open-disclosure-frontend-prod/tasks)).  This will cause new tasks to be automatically started using the newly deployed docker image.
 
