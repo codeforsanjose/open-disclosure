@@ -6,6 +6,7 @@ import mimetypes
 import os
 import sys
 from datetime import datetime
+import json
 
 import pandas as pd
 from rejson import Client, Path
@@ -17,9 +18,6 @@ logging.basicConfig(level=loggingLevel, format="%(message)s")
 
 class Csv2Redis:
     def __init__(self, filename: str):
-        self.rj = Client(
-            host=os.environ.get("REDIS_HOST", "localhost"), decode_responses=True
-        )
         self.filename = filename
         # Hardcoded data we need for 2020 election candidates
         self.candidate_ids = {
@@ -118,12 +116,8 @@ class Csv2Redis:
         :param path_name: str representing the name of our new path
         :param data_shape: dict/json of data we're inserting
         """
-        with self.rj.pipeline() as pipe:
-            pipe.jsonset(path_name, Path.rootPath(), data_shape)
-            pipe.execute()
-        logger.debug(
-            "The new shape set in redis is {}".format(self.rj.jsonget(path_name))
-        )
+        print(path_name)
+        print(json.dumps(data_shape))
 
     def set_referendums_shape_in_redis(self) -> None:
         """
@@ -331,8 +325,6 @@ class Csv2Redis:
             candidate["FundingByType"] = totalByComType["Amount"]
             candidate["FundingByType"]["IndependentSupport"] = totalBySupOpp["Amount"].get("S")
             candidate["FundingByType"]["IndependentOppose"] = totalBySupOpp["Amount"].get("O")
-            print(name)
-            print(candidate["FundingByType"])
 
             # Get funding by geo
             candidate["FundingByGeo"] = self.getFundingByGeo(recpDataPerCandidate)
