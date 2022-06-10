@@ -9,7 +9,6 @@ from datetime import datetime
 import json
 
 import pandas as pd
-from rejson import Client, Path
 
 logger = logging.getLogger(__name__)
 loggingLevel = eval("logging." + os.environ.get("LOGGING_LEVEL", "WARNING"))

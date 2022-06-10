@@ -2,6 +2,8 @@ chromedriver_binary
 webdriver-manager 
 selenium 
 xlrd 
+pymysql
+sqlalchemy
 pandas
 xlwt
 redis

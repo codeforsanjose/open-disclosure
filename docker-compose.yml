@@ -4,29 +4,6 @@ services:
     build:
       context: ./data_pipeline
       dockerfile: Dockerfile
-    environment:
-      - REDIS_HOST=redis
-    depends_on:
-      - redis
-
-  redis:
-    image: redislabs/rejson:latest
-    container_name: redis
-    ports:
-      - "6379:6379"
-
-  api:
-    build:
-      context: ./redis_api
-      dockerfile: Dockerfile
-    container_name: api
-    environment:
-      - REDIS_HOST=redis
-    ports:
-      - "5000:5000"
-    depends_on:
-      - redis
-      - redis_migration
 
   ui:
     container_name: ui
