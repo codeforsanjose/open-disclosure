@@ -119,7 +119,9 @@ of other python applications you may use.
 
 ## Deploy to Prod
 
-First, gain access to the CFSJ AWS account. Once you have the desired code changes, use the Dockerfile to build a new image:
+First, gain access to the CFSJ AWS account. You will also want to [configure the CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) at this point.
+
+Once you have the desired code changes, use the Dockerfile to build a new image:
 ```
 docker build --platform=linux/amd64 .
 ```
