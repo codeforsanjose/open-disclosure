@@ -14,6 +14,10 @@ We are inspired by Open Oakland's Open Disclosure: https://www.opendisclosure.io
 
 Initially this project will cover City of San Jose elections and later will broaden to cover elections more widely.
 
+## Resources
+- [Google Drive Folder for Project](https://drive.google.com/drive/u/0/folders/1OuialqdlG-dC_ulXTemSH7Y3uHOJQDvd)
+- [Google Doc for Project](https://docs.google.com/document/d/1F9FoelkKFdi4j7b3ksXITHb9vfCoUpca3oxCMPaM9lo/edit?usp=sharing)
+
 ## California Election Information:
 
 San Jose voters will vote on November 3, 2020 for 5 Councilmembers in Districts 2, 4, 6, 8 and 10.
@@ -30,7 +34,7 @@ After the primary, the general election will be on November 3, 2020.
 [More information here](https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2020/)
 
 
-## Development setup
+## Frontend Development setup
 
 Full local Development has not been tested for Windows computers. Setup assumes Mac OS
 
@@ -59,31 +63,17 @@ $ chmod +x entrypoint.sh
 6. Build Docker images.
 
 ```sh
-$ docker-compose build
+$ docker-compose build ui
 ```
 
 7. Run Docker images to start local development
 
 ```sh
-$ docker-compose up
+$ docker-compose up ui
 ```
 
 8. Open webpage in http://localhost:8000.
 
-### Use Production API to build the UI
-Edit `docker-compose.yml`
-Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsanjose.com`
-```
-  ui:
-    container_name: ui
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-      network: "host"
-    working_dir: /app
-    environment:
-      - GATSBY_API_HOST=open-disclosure.codeforsanjose.com
-```
 
 ## How to Launch the Scraper
 
@@ -96,7 +86,7 @@ Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsa
 % virtualenv env
 % source env/bin/activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
+(env) % python3 -m pip install -r requirements.txt
 
 (env) % python ./scraper.py
 ```
@@ -110,12 +100,39 @@ Change `ui` container `environment` - `GASTBY_API_HOST=open-disclosure.codeforsa
 % virtualenv --system-site-packages -p python3 ./venv
 % .\venv\Scripts\activate
 
-(env) % python3 -m pip install chromedriver_binary webdriver-manager selenium xlrd pymysql sqlalchemy rejson
+(env) % python3 -m pip install -r requirements.txt
 (env) % python3 scraper.py
 ```
 
 The example above uses virtualenv to help create a clean working environment and help you not pollute the spaces
 of other python applications you may use.
+
+## How to Launch Scraper Post-Processor
+
+[Install Python3.8 for MacOS](https://docs.python-guide.org/starting/install3/osx/)
+
+```
+% cd data_pipeline/data_processing
+% virtualenv env
+% source env/bin/activate
+
+(env) % python3 -m pip install -r requirements.txt
+
+(env) % python3 aggregatedcsvtoredis.py
+```
+
+## Deploy to Prod
+
+First, gain access to the CFSJ AWS account. You will also want to [configure the CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) at this point.  You can contact Darren P. or Ryan W. for help with this.
+
+Once you have the desired code changes, use the Dockerfile to build a new image:
+```
+docker build --platform=linux/amd64 .
+```
+Then, follow [This Guide](https://us-west-2.console.aws.amazon.com/ecr/repositories/private/253016134262/open-disclosure-frontend-prod?region=us-west-2) to push the image to ECS.
+
+Finally, stop any currently active tasks associated with the service ([found here](https://us-west-2.console.aws.amazon.com/ecs/home?region=us-west-2#/clusters/multi-tenant-prod/services/open-disclosure-frontend-prod/tasks)).  This will cause new tasks to be automatically started using the newly deployed docker image.
+
 
 ## How to Contribute
 
