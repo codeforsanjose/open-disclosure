@@ -15,8 +15,8 @@ We are inspired by Open Oakland's Open Disclosure: https://www.opendisclosure.io
 Initially this project will cover City of San Jose elections and later will broaden to cover elections more widely.
 
 ## Resources
-[Google Drive Folder for Project](https://drive.google.com/drive/u/0/folders/1OuialqdlG-dC_ulXTemSH7Y3uHOJQDvd)
-[Google Doc for Project](https://docs.google.com/document/d/1F9FoelkKFdi4j7b3ksXITHb9vfCoUpca3oxCMPaM9lo/edit?usp=sharing)
+- [Google Drive Folder for Project](https://drive.google.com/drive/u/0/folders/1OuialqdlG-dC_ulXTemSH7Y3uHOJQDvd)
+- [Google Doc for Project](https://docs.google.com/document/d/1F9FoelkKFdi4j7b3ksXITHb9vfCoUpca3oxCMPaM9lo/edit?usp=sharing)
 
 ## California Election Information:
 
