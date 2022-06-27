@@ -108,25 +108,24 @@ class SjcWebsite:
                 formTable_FormType, formTable_FilingPeriod
             )
 
-            if uniqueKeyFormId not in downloadExcelRows:
-                downloadExcelRows.append(uniqueKeyFormId)
-                try:
-                    downloadLinkElement = driver.find_elements_by_xpath(
-                        '//*[@id="{}{}"]/td[6]/a'.format(self.FORM_TABLE_ROW_ID, i)
-                    )[0]
-                except IndexError:
-                    continue
-                else:
-                    downloadLinkElement.click()
-                    count += 1
+            downloadExcelRows.append(uniqueKeyFormId)
+            try:
+                downloadLinkElement = driver.find_elements_by_xpath(
+                    '//*[@id="{}{}"]/td[6]/a'.format(self.FORM_TABLE_ROW_ID, i)
+                )[0]
+            except IndexError:
+                continue
+            else:
+                downloadLinkElement.click()
+                count += 1
                     
-                    while(1):
-                        if os.path.exists('./data/transactionExportGrid.xls'):
-                            countFile += 1
-                            renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
-                            os.rename('./data/transactionExportGrid.xls', renamedFile)
-                            break
-                        sleep(0.1)
+                while(1):
+                    if os.path.exists('./data/transactionExportGrid.xls'):
+                        countFile += 1
+                        renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
+                        os.rename('./data/transactionExportGrid.xls', renamedFile)
+                        break
+                    sleep(0.1)
 
 
         print('NUM DOWNLOADS {}'.format(count))

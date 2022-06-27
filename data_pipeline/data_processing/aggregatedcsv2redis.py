@@ -4,6 +4,7 @@ This allows us to upload CSV data onto redis.
 import logging
 import mimetypes
 import os
+from re import A
 import sys
 from datetime import datetime
 import json
@@ -94,6 +95,9 @@ class Csv2Redis:
             .replace("'", "")
             .astype(float)
             .round(decimals=2)
+        )
+        self.data["Cand_Nam L"] = (
+            self.data["Cand_Nam L"].map(lambda name: "Dev Davis" if name == "DEVORA 'DEV' DAVIS" else name)
         )
         self.metadata = str(datetime.fromtimestamp(os.path.getmtime(self.filename)))
 
@@ -284,10 +288,8 @@ class Csv2Redis:
                 & (dataAmount["Election Date"] == electionDate)
             ]
 
-            # For some reason, the Cand_Nam column uses Jake Tonkel instead of "Jacob "Jake" Tonkel".
-            namePlaceholder = "Jake Tonkel" if name == "Jacob \"Jake\" Tonkel" else name
             candidateIndependentExpenditures = dataAmount[
-                (dataAmount["Cand_Nam L"].str.lower() == namePlaceholder.lower())
+                (dataAmount["Cand_Nam L"].str.lower() == name.lower())
                 & (dataAmount["Election Date"] == electionDate)
                 & (dataAmount["Form_Type"] == "D")
             ]
