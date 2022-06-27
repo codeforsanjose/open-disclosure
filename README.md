@@ -133,6 +133,8 @@ Then, follow [This Guide](https://us-west-2.console.aws.amazon.com/ecr/repositor
 
 Finally, stop any currently active tasks associated with the service ([found here](https://us-west-2.console.aws.amazon.com/ecs/home?region=us-west-2#/clusters/multi-tenant-prod/services/open-disclosure-frontend-prod/tasks)).  This will cause new tasks to be automatically started using the newly deployed docker image.
 
+You can access container logs if you run into any issues [here](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#logsV2:log-groups).
+
 
 ## How to Contribute
 
