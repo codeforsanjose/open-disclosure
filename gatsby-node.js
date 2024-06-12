@@ -1,9 +1,9 @@
 const path = require(`path`)
 
-const fetch = require("node-fetch")
+// const fetch = require("node-fetch")
 const data = require("./election-data")
 
-const HOSTNAME = process.env.GATSBY_API_HOST
+// const HOSTNAME = process.env.GATSBY_API_HOST
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
@@ -11,14 +11,14 @@ const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
 const DEFAULT_ELECTION_TARGET = "6/7/2022"
 
-async function fetchEndpoint(endpoint) {
-  const response = await fetch(
-    `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
-  )
-  if (response.ok) {
-    return await response.json()
-  }
-}
+// async function fetchEndpoint(endpoint) {
+//   const response = await fetch(
+//     `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
+//   )
+//   if (response.ok) {
+//     return await response.json()
+//   }
+// }
 
 exports.sourceNodes = async ({
   actions,
