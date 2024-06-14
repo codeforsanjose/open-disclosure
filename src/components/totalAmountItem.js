@@ -1,6 +1,6 @@
 import React from "react"
 import { formatDollars } from "../common/util/formatters"
-import styles from "./totalAmountItem.module.scss"
+import * as styles from "./totalAmountItem.module.scss"
 
 function title(type) {
   switch (type) {

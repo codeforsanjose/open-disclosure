@@ -2,7 +2,7 @@ import LandingPageHero from "../components/landingPageHero"
 import Layout from "../components/layout"
 import React from "react"
 import RegisterToVoteCard from "../components/registerToVoteCard"
-import styles from "./registerToVote.module.scss"
+import * as styles from "./registerToVote.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 
 export default function RegisterToVote() {

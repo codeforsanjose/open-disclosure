@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./faq.module.scss"
+import * as styles from "./faq.module.scss"
 import Layout from "../components/layout"
 import FAQItem from "../components/faqitem"
 import LandingPageHero from "../components/landingPageHero"

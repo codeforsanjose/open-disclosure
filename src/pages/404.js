@@ -1,7 +1,7 @@
 // Libraries
 import React from "react"
 // Styles
-import styles from "./404.module.scss"
+import * as styles from "./404.module.scss"
 // Components
 import { graphql, StaticQuery } from "gatsby"
 import Layout from "../components/layout"
@@ -25,9 +25,7 @@ export default function Component404(){
               node {
                 Date
                 OfficeElections {
-                  fields {
-                    slug
-                  }
+                  slug
                 }
                 Referendums {
                   id
@@ -35,9 +33,7 @@ export default function Component404(){
                   Election {
                     ElectionCycle
                   }
-                  fields {
-                    slug
-                  }
+                  slug
                 }
               }
             }
@@ -59,13 +55,13 @@ export default function Component404(){
         if (currentElection.Referendums.length) {
           links.splice(1, 0, {
             pageName: "Measures",
-            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].fields.slug}`,
+            href: `/${currentElection.Date}/referendums/${currentElection.Referendums[0].slug}`,
           })
         }
         if (currentElection.OfficeElections) {
           links.splice(1, 0, {
             pageName: "Candidates",
-            href: `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].fields.slug}`,
+            href: `/${currentElection.Date}/candidates/${currentElection.OfficeElections[0].Title}`,
           })
         }
 

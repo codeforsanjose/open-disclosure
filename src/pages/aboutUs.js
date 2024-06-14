@@ -1,7 +1,7 @@
 // Libraries
 import React from "react"
 // Styles
-import styles from "./aboutUs.module.scss"
+import * as styles from "./aboutUs.module.scss"
 import Layout from "../components/layout"
 // Components
 import LandingPageHero from "../components/landingPageHero"

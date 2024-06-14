@@ -5,7 +5,7 @@ import {
 
 import Bar from "./bar"
 import React from "react"
-import styles from "./barChart.module.scss"
+import * as styles from "./barChart.module.scss"
 
 function Row({
   label,

@@ -1,7 +1,7 @@
 import React from "react"
 import NavbarItem from "./navbarItem"
 
-import styles from "./menu.module.scss"
+import * as styles from "./menu.module.scss"
 
 const Menu = ({ links, menuIsOpen, windowIsLarge, closeMenu }) => {
   return (

@@ -4,7 +4,7 @@ import LandingPageHero from "../components/landingPageHero";
 import Layout from "../components/layout"
 import SectionHeader from "../components/sectionHeader";
 
-import styles from "./independentExpenditures.module.scss"
+import * as styles from "./independentExpenditures.module.scss"
 
 export default function IndependentExpenditures() {
     const title = "Independent Expenditures"

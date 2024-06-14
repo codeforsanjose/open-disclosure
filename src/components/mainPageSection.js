@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./mainPageSection.module.scss"
+import * as styles from "./mainPageSection.module.scss"
 
 const MainPageSection = props => (
   <section

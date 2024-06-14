@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import styles from "./navbar.module.scss"
+import * as styles from "./navbar.module.scss"
 import Logo from "./logo"
 import Menu from "./menu"
 import HamburgerIcon from "../common/hamburgerIcon"

@@ -1,6 +1,6 @@
 import React from "react"
 import { StaticQuery, graphql, Link, navigate } from "gatsby"
-import styles from "./sideNav.module.scss"
+import * as styles from "./sideNav.module.scss"
 import { primaryBlack, primaryGreen } from "../styles/_exports.scss"
 import Select from "react-select"
 import LandingPageHero from "./landingPageHero"
@@ -89,7 +89,7 @@ function formatMenuForCandidates(candidateData) {
       candidateData.forEach(race => {
         const title = race.Title.toLowerCase()
         if (title.includes(filter)) {
-          menuGroup.options.push({ label: race.Title, value: race.fields.slug })
+          menuGroup.options.push({ label: race.Title, value: race.slug })
         }
       })
       if (menuGroup.options.length) {
@@ -106,7 +106,7 @@ function formatMenuForMeasures(measureData) {
     measureData.forEach(measure => {
       menu.options.push({
         label: measure.Name,
-        value: measure.fields.slug,
+        value: measure.slug,
       })
     })
   }
@@ -141,9 +141,7 @@ export default function sideNav({
                 OfficeElections {
                   Title
                   TotalContributions
-                  fields {
-                    slug
-                  }
+                  slug
                 }
                 Referendums {
                   id
@@ -151,9 +149,7 @@ export default function sideNav({
                   Election {
                     ElectionCycle
                   }
-                  fields {
-                    slug
-                  }
+                  slug
                 }
               }
             }

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import styles from "./faqItem.module.scss"
+import * as styles from "./faqItem.module.scss"
 
 export default function FAQItem({ question, answer }) {
   const [isOpen, setIsOpen] = useState(false)

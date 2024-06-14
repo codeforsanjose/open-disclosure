@@ -3,7 +3,7 @@ import { formatDollars } from "../common/util/formatters"
 import Bar from "./bar"
 import { Link } from "gatsby"
 import React from "react"
-import styles from "./candidatesListItem.module.scss"
+import * as styles from "./candidatesListItem.module.scss"
 
 export default function CandidatesListItem({
   Name,

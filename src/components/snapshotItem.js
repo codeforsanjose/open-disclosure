@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./snapshotItem.module.scss"
+import * as styles from "./snapshotItem.module.scss"
 
 const SnapshotItem = item => (
   <div className={styles.container} key={item.number}>

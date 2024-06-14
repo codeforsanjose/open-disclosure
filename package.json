@@ -15,16 +15,16 @@
   "dependencies": {
     "@loadable/component": "^5.15.2",
     "apexcharts": "^3.35.3",
-    "gatsby": "^2.15.28",
-    "gatsby-plugin-google-analytics": "^2.8.0",
-    "gatsby-plugin-react-axe": "^0.5.0",
-    "gatsby-plugin-react-helmet": "^3.3.12",
+    "gatsby": "^4.0.0",
     "gatsby-plugin-eslint": "^4.0.1",
-    "gatsby-plugin-sass": "^3.2.0",
-    "gatsby-plugin-slug-field": "^0.2.0",
+    "gatsby-plugin-google-analytics": "^4.25.0",
+    "gatsby-plugin-react-axe": "^0.5.0",
+    "gatsby-plugin-react-helmet": "^5.25.0",
+    "gatsby-plugin-sass": "^5.25.0",
+    "gatsby-plugin-slug-field": "^4.0.3",
     "gatsby-source-apiserver": "^2.1.7",
-    "gatsby-source-filesystem": "^2.3.29",
-    "gatsby-transformer-json": "^2.4.11",
+    "gatsby-source-filesystem": "^4.25.0",
+    "gatsby-transformer-json": "^4.25.0",
     "iframe-resizer-react": "^1.0.4",
     "node-sass": "^9.0.0",
     "react": "^16.10.1",
@@ -37,11 +37,15 @@
     "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
-    "eslint": "7.18",
-    "eslint-loader": "^4.0.2",
+    "eslint": "^8.0.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.3",
     "prettier": "^1.18.2"
+  },
+  "overrides": {
+    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
+      "react": "^16.10.1"
+    }
   },
   "repository": {
     "type": "git",
