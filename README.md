@@ -36,11 +36,9 @@ After the primary, the general election will be on November 3, 2020.
 
 ## Frontend Development setup
 
-Full local Development has not been tested for Windows computers. Setup assumes Mac OS
-
 1. [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-2. Start docker (by opening it)
+2. Open and start Docker.
 
 3. Clone the project to your local machine.
 
@@ -54,25 +52,19 @@ $ git clone https://github.com/codeforsanjose/open-disclosure.git
 $ cd open-disclosure/
 ```
 
-5. Enable `entrypoint.sh` to be executable
+5. Build Docker images.
 
 ```sh
-$ chmod +x entrypoint.sh
+$ docker compose build ui
 ```
 
-6. Build Docker images.
+6. Run Docker images to start local development
 
 ```sh
-$ docker-compose build ui
+$ docker compose up ui
 ```
 
-7. Run Docker images to start local development
-
-```sh
-$ docker-compose up ui
-```
-
-8. Open webpage in http://localhost:8000.
+7. Open webpage in http://localhost:8000.
 
 
 ## How to Launch the Scraper
