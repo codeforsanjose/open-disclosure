@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./bar.module.scss"
+import * as styles from "./bar.module.scss"
 import { formatPercent } from "../common/util/formatters"
 
 export default function Bar({ ratio, type }) {

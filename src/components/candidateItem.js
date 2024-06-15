@@ -1,7 +1,7 @@
 import { Link } from "gatsby"
 import React from "react"
 import { formatDollars } from "../common/util/formatters"
-import styles from "./candidateItem.module.scss"
+import * as styles from "./candidateItem.module.scss"
 
 const CandidateItem = item => (
   <Link className={styles.container} key={item.name} to={item.href}>

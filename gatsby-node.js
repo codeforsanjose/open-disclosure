@@ -1,9 +1,9 @@
 const path = require(`path`)
 
-const fetch = require("node-fetch")
+// const fetch = require("node-fetch")
 const data = require("./election-data")
 
-const HOSTNAME = process.env.GATSBY_API_HOST
+// const HOSTNAME = process.env.GATSBY_API_HOST
 const CANDIDATE_NODE_TYPE = `Candidate`
 const ELECTION_NODE_TYPE = `Election`
 const METADATA_NODE_TYPE = `Metadata`
@@ -11,14 +11,14 @@ const OFFICE_ELECTION_NODE_TYPE = `OfficeElection`
 const REFERENDUM_NODE_TYPE = `Referendum`
 const DEFAULT_ELECTION_TARGET = "6/7/2022"
 
-async function fetchEndpoint(endpoint) {
-  const response = await fetch(
-    `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
-  )
-  if (response.ok) {
-    return await response.json()
-  }
-}
+// async function fetchEndpoint(endpoint) {
+//   const response = await fetch(
+//     `http://${HOSTNAME}/open-disclosure/api/v1.0/${endpoint}`
+//   )
+//   if (response.ok) {
+//     return await response.json()
+//   }
+// }
 
 exports.sourceNodes = async ({
   actions,
@@ -115,15 +115,11 @@ exports.createPages = async ({ graphql, actions }) => {
               id
               Title
               TotalContributions
-              fields {
-                slug
-              }
+              slug
               Candidates {
                 ID
                 Name
-                fields {
-                  slug
-                }
+                slug
                 jsonNode {
                   ballotDesignation
                   profilePhoto
@@ -133,9 +129,7 @@ exports.createPages = async ({ graphql, actions }) => {
             Referendums {
               ID
               Name
-              fields {
-                slug
-              }
+              slug
             }
           }
         }
@@ -146,20 +140,20 @@ exports.createPages = async ({ graphql, actions }) => {
     node.OfficeElections &&
       node.OfficeElections.forEach(election => {
         createPage({
-          path: `/${node.Date}/candidates/${election.fields.slug}`,
+          path: `/${node.Date}/candidates/${election.slug}`,
           component: path.resolve("src/templates/candidates.js"),
           context: {
-            slug: election.fields.slug,
+            slug: election.slug,
             officeElectionID: election.id,
             electionDate: node.Date,
           },
         })
         election.Candidates.forEach(candidate => {
           createPage({
-            path: `/${node.Date}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
+            path: `/${node.Date}/candidate/${election.slug}/${candidate.slug}`,
             component: path.resolve("src/templates/candidate.js"),
             context: {
-              slug: candidate.fields.slug,
+              slug: candidate.slug,
               id: candidate.ID,
             },
           })
@@ -168,10 +162,10 @@ exports.createPages = async ({ graphql, actions }) => {
     node.Referendums &&
       node.Referendums.forEach(referendum => {
         createPage({
-          path: `/${node.Date}/referendums/${referendum.fields.slug}`,
+          path: `/${node.Date}/referendums/${referendum.slug}`,
           component: path.resolve("src/templates/referendum.js"),
           context: {
-            slug: referendum.fields.slug,
+            slug: referendum.slug,
             id: referendum.ID,
           },
         })
@@ -182,10 +176,6 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   createTypes(`
-    type NodeFields {
-      slug: String
-    }
-
     type Committee {
       Name: String
       TotalFunding: String
@@ -243,8 +233,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       FundingByGeo: GeoBreakdown
       FundingByType: FundingTypeBreakdown
       ExpenditureByType: ExpenditureTypeBreakdown
-      jsonNode: CandidatesJson @link(by: "id" from: "ID")
-      fields: NodeFields
+      jsonNode: CandidatesJson @link(by: "jsonId" from: "ID")
+      slug: String
     }
 
     type CandidatesJson implements Node {
@@ -257,6 +247,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       votersEdge: String
       apiNode: Candidate @link(by: "ID" from: "id")
       profilePhoto: String
+      slug: String
     }
 
     type Election implements Node {
@@ -265,14 +256,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       TotalContributions: Float 
       OfficeElections: [OfficeElection] @link
       Referendums: [Referendum] @link(by: "ID")
-      fields: NodeFields
     }
 
     type OfficeElection implements Node {
       Candidates: [Candidate] @link(by: "ID" from: "CandidateIDs")
+      slug: String
       Title: String
       TotalContributions: Float
-      fields: NodeFields
     }
 
     type RefElectionCycle {
@@ -325,10 +315,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       Election: RefElectionCycle
       TotalSupport: Float
       TotalOppose: Float
+      slug: String
       Support: RefCampaign
       Opposition: RefCampaign
       jsonNode: MeasuresJson @link(by: "id" from: "ID")
-      fields: NodeFields 
     }
 
     type Metadata implements Node{

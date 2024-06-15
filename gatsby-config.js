@@ -32,32 +32,32 @@ module.exports = {
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "Candidate" } },
-        source: "Name",
+        nodeType: "Candidate",
+        baseField: 'Name',
         fieldName: "slug",
       },
     },
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "CandidatesJson" } },
-        source: "name",
+        nodeType: 'CandidatesJson',
+        baseField: 'name',
         fieldName: "slug",
       },
     },
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "OfficeElection" } },
-        source: "Title",
+        nodeType: 'OfficeElection',
+        baseField: 'Title',
         fieldName: "slug",
       },
     },
     {
       resolve: "gatsby-plugin-slug-field",
       options: {
-        filter: { internal: { type: "Referendum" } },
-        source: "Name",
+        nodeType: 'Referendum',
+        baseField: 'Title',
         fieldName: "slug",
       },
     },

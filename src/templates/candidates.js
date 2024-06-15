@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import styles from "./candidates.module.scss"
+import * as styles from "./candidates.module.scss"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import CandidatesListItem from "../components/candidatesListItem"
@@ -11,7 +11,7 @@ import { sortInDescendingOrder } from "../common/util/sorting"
 export default function Candidates({ data, pageContext }) {
   const { electionDate } = pageContext
   const {
-    officeElection: { Title, Candidates, fields },
+    officeElection: { Title, Candidates, slug },
   } = data
   const sortedCandidates = sortInDescendingOrder(
     Candidates,
@@ -39,8 +39,8 @@ export default function Candidates({ data, pageContext }) {
               <SectionHeader title={Title} />
               {sortedCandidates.map(candidate => (
                 <CandidatesListItem
-                  path={`/${electionDate}/candidate/${fields.slug}/${candidate.fields.slug}`}
-                  key={candidate.fields.slug}
+                  path={`/${electionDate}/candidate/${slug}/${candidate.slug}`}
+                  key={candidate.Title}
                   highestContributions={highestContributions}
                   {...candidate}
                 />
@@ -63,17 +63,13 @@ export const query = graphql`
         id
         Name
         TotalContributions
-        fields {
-          slug
-        }
+        slug
         jsonNode {
           ballotDesignation
           profilePhoto
         }
       }
-      fields {
-        slug
-      }
+      slug
     }
   }
 `

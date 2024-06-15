@@ -1,7 +1,7 @@
 import React from "react"
 
 import Button from "../common/button"
-import styles from "./behindTheScenesItem.module.scss"
+import * as styles from "./behindTheScenesItem.module.scss"
 
 const BehindTheScenesItem = item => (
   <div className={styles.container} key={item.title}>

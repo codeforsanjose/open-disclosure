@@ -1,10 +1,12 @@
-FROM node:14 as builder
+FROM node:18
 
 WORKDIR /srv
 
-COPY package.json yarn.lock ./
-RUN npm install --legacy-peer-deps
-RUN npm config set unsafe-perm true
+COPY package.json package-lock.json ./
+RUN npm install
 RUN npm install -g gatsby-cli
 COPY . .
-ENTRYPOINT [ "sh", "./entrypoint.sh" ]
+
+EXPOSE 8000
+
+CMD ["gatsby", "develop", "-H", "0.0.0.0"]

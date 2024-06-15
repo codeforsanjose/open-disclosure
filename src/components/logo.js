@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./logo.module.scss"
+import * as styles from "./logo.module.scss"
 
 const Logo = ({ header, containerStyle }) => (
   <div className={containerStyle}>

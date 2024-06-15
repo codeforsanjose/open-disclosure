@@ -2,7 +2,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 // Styles
-import styles from "./index.module.scss"
+import * as styles from "./index.module.scss"
 // Components
 import Layout from "../components/layout"
 import Button from "../common/button/index"
@@ -120,7 +120,7 @@ export default function MainPage(props) {
             supportingIndependentExpenditures: candidate.FundingByType.IndependentSupport,
             image:
               `/images/${candidate.jsonNode?.profilePhoto}` || BlankProfile,
-            href: `/${ElectionDate}/candidate/${election.fields.slug}/${candidate.fields.slug}`,
+            href: `/${ElectionDate}/candidate/${election.Title}/${candidate.Title}`,
           })
           totalIndependent += candidate.FundingByType.IndependentSupport + candidate.FundingByType.IndependentOppose
           totalSJ += candidate.FundingByGeo.SJ
@@ -136,10 +136,10 @@ export default function MainPage(props) {
   }
 
   const candidatesPageLink = OfficeElections
-    ? `/${ElectionDate}/candidates/${OfficeElections[0].fields.slug}`
+    ? `/${ElectionDate}/candidates/${OfficeElections[0].Title}`
     : null
   const referendumsPageLink = Referendums[0]
-    ? `/${ElectionDate}/referendums/${Referendums[0].fields.slug}`
+    ? `/${ElectionDate}/referendums/${Referendums[0].slug}`
     : null
 
   const lastScrape = timestamp ? formatDate.format(new Date(timestamp)) : ""
@@ -292,18 +292,14 @@ export const query = graphql`
           OfficeElections {
             Title
             TotalContributions
-            fields {
-              slug
-            }
+            slug
             Candidates {
               Name
               jsonNode {
                 profilePhoto
               }
               TotalFunding
-              fields {
-                slug
-              }
+              slug
               FundingByGeo {
                 SJ
               }
@@ -319,9 +315,7 @@ export const query = graphql`
             Election {
               ElectionCycle
             }
-            fields {
-              slug
-            }
+            slug
           }
         }
       }

@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./landingPageHero.module.scss"
+import * as styles from "./landingPageHero.module.scss"
 
 export default function LandingPageHero({
   title,

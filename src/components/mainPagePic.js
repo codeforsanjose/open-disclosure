@@ -1,7 +1,7 @@
 import { Link } from "gatsby"
 import React from "react"
 
-import styles from "./mainPagePic.module.scss"
+import * as styles from "./mainPagePic.module.scss"
 
 const MainPagePic = props => {
   const { reversed, title, description, href, linkImg, image } = props

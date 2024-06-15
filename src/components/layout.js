@@ -2,7 +2,7 @@
 import { StaticQuery, graphql, Link } from "gatsby"
 import React from "react"
 // Styles
-import styles from "./layout.module.scss"
+import * as styles from "./layout.module.scss"
 // Components
 import SEO from "./seo"
 import Navbar from "./navbar"
@@ -33,7 +33,7 @@ export default function Layout({
     {
       name: "Join Us",
       anchor: true,
-      endpoint: "https://www.codeforsanjose.org/",
+      endpoint: "https://opensourcesanjose.org/",
     },
     {
       name: "Find your ballot",
@@ -61,15 +61,11 @@ export default function Layout({
                 OfficeElections {
                   Title
                   TotalContributions
-                  fields {
-                    slug
-                  }
+                  slug
                 }
                 Referendums {
                   Name
-                  fields {
-                    slug
-                  }
+                  slug
                 }
               }
             }
@@ -92,13 +88,13 @@ export default function Layout({
         if (election.Referendums[0]) {
           links.unshift({
             name: "Measures",
-            endpoint: `/${election.Date}/referendums/${election.Referendums[0].fields.slug}`,
+            endpoint: `/${election.Date}/referendums/${election.Referendums[0].slug}`,
           })
         }
         if (election.OfficeElections) {
           links.unshift({
             name: "Candidates",
-            endpoint: `/${election.Date}/candidates/${election.OfficeElections[0].fields.slug}`,
+            endpoint: `/${election.Date}/candidates/${election.OfficeElections[0].slug}`,
           })
         }
 

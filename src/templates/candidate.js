@@ -11,7 +11,7 @@ import ChartSection from "../components/chartSection"
 import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import NoData from "../components/noData"
 // Styles
-import styles from "./candidate.module.scss"
+import * as styles from "./candidate.module.scss"
 // Utilities
 import { ContributorCodes, ExpenditureCodes } from "../common/util/codes"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
@@ -192,7 +192,6 @@ export default function Candidate({ data }) {
                   ]}
                   showPercentages
                 />
-                {/**<TableauViz candidateName={Name} candidateSeat={seat} />**/}
               </section>
 
               {Committees && Committees.length > 0 ? (

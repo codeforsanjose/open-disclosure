@@ -5,7 +5,7 @@ import { TotalAmountPanelItem } from "../components/totalAmountItem"
 import Layout from "../components/layout"
 import SideNav from "../components/sideNav"
 import SectionHeader from "../components/sectionHeader"
-import styles from "./referendum.module.scss"
+import * as styles from "./referendum.module.scss"
 import useWindowIsLarge from "../common/hooks/useWindowIsLarge"
 import VotersEdgeIcon from "../images/votersEdge.png"
 import CommitteeCharts from "../components/committeeCharts"
@@ -204,9 +204,7 @@ export const query = graphql`
           Date
         }
       }
-      fields {
-        slug
-      }
+      slug
       jsonNode {
         ballotLanguage
         description

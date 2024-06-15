@@ -3,7 +3,7 @@ import BarChart from "./barChart"
 import SectionHeader from "./sectionHeader"
 import { ContributorCodes } from "../common/util/codes"
 
-import styles from "./committeeCharts.module.scss"
+import * as styles from "./committeeCharts.module.scss"
 
 export default function CommitteeCharts({ id, type, total, data }) {
   const { Committees, FundingByType, FundingByGeo } = data

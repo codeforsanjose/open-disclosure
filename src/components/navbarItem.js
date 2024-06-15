@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./navbarItem.module.scss"
+import * as styles from "./navbarItem.module.scss"
 import { Link } from "gatsby"
 
 export default function NavbarItem(props) {

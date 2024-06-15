@@ -1,6 +1,6 @@
 import React from "react"
 import Divider from "../common/divider"
-import styles from "./sectionHeader.module.scss"
+import * as styles from "./sectionHeader.module.scss"
 
 export default function SectionHeader({
   title,
