@@ -1,4 +1,6 @@
 chromedriver_binary
-webdriver-manager
 selenium
 pip-tools
+pandas
+openpyxl
+xlrd
