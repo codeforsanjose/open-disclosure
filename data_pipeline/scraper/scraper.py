@@ -19,6 +19,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from dirmanager import DirManager
 from preproccessing import PreProcessing
 
+from open_workbook import open_workbook
+import pandas as pd
 
 class SjcWebsite:
     """This class represents an interface to interact with the elements on the SJC website.
@@ -117,11 +119,14 @@ class SjcWebsite:
                 downloadLinkElement.click()
                 count += 1
                     
-                while(1):
+                while True:
                     if os.path.exists('./data/transactionExportGrid.xls'):
+                        wb = open_workbook('./data/transactionExportGrid.xls')
+                        data = pd.read_excel(wb)
                         countFile += 1
-                        renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xls'
-                        os.rename('./data/transactionExportGrid.xls', renamedFile)
+                        renamedFile = './data/transactionExportGrid' + '(' + str(countFile) + ').xlsx'
+                        data.to_excel(renamedFile, index=False)
+                        os.remove('./data/transactionExportGrid.xls')
                         break
                     sleep(0.1)
 
@@ -265,7 +270,7 @@ class Scraper:
 
         countFile = 0
 
-        if not os.path.exists('./data/transactionExportGrid.xls'): 
+        if not os.path.exists('./data/transactionExportGrid(1).xlsx'): 
             for search_page_num in range(1, self.website.numPages(self.driver) + 1):
                 print('PAGE {}'.format(search_page_num))
                 # Need to navigate to the page upfront so that when we get the number of entries on the page it is accurate.
@@ -305,7 +310,7 @@ class Scraper:
 start_time = time.time()
 s = Scraper()
 
-# Can use election_cycle='11/3/2020' to load only the latest elections data.
+# Can use election_cycle='11/5/2024' to load only the latest elections data.
 # Can use election_cycle=None to load all election data.
 s.scrape(election_cycle='11/5/2024')
 print(

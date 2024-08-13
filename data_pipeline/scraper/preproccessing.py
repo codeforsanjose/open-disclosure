@@ -1,9 +1,7 @@
 import csv
 import glob
 import openpyxl
-import xlrd
 
-from open_workbook import open_workbook
 from os import path, listdir, name
 import pandas as pd
 from time import sleep
@@ -27,12 +25,11 @@ class PreProcessing():
         aggregateFolder = DirManager(['aggregated_data'])
         aggregateFolder.createFolder()
         new_folder = aggregateFolder.getDirectory()
-        new_csv_file = '{}/data.csv'.format(new_folder)
 
         insertColumsFolder = self.insertCandidateFolder.getDirectory()
         filenames = sorted([insertColumsFolder + "/" + f for f in listdir(insertColumsFolder)], key=path.getmtime)
 
-        with open(new_csv_file, 'w') as new_aggregate_csv:
+        with open(f'{new_folder}/data.csv', 'w') as new_aggregate_csv:
             new_worksheet = csv.writer(new_aggregate_csv, quoting=csv.QUOTE_ALL)
 
             transactions = set()
@@ -47,19 +44,13 @@ class PreProcessing():
                 # Only pull excel header from the first file to reduce duplicates
                 if not header:
                     new_worksheet.writerow(cell.value for cell in next(sheet.rows))
-                # for rownum in range(1, sheet.max_row):
-                #     # Skip duplicated entries.
-                #     transaction_id = sheet[2]
-                #     if transaction_id in transactions:
-                #         continue
-                #     transactions.add(transaction_id)
-                #     new_worksheet.writerow(sheet.iter_rows(rownum+1, rownum+1))
+                    header = True
                 for row in sheet.iter_rows(2):
                     transaction_id = row[12].value
                     if transaction_id in transactions:
                         continue
                     transactions.add(transaction_id)
-                    new_worksheet.writerow(cell.value for cell in row)
+                    new_worksheet.writerow(cell.value for cell in row)        
 
     def insertColumns(self, numDownloads, CandidateName, ElectionDate, BallotItem):
         print('Processing {} for {}'.format(numDownloads, CandidateName))
@@ -75,14 +66,10 @@ class PreProcessing():
         electionDateHeader = "Election Date"
         ballotItemHeader = "Ballot Item"
 
-        # print(filenames)
         for fullfilepathname in filenames[-numDownloads:]:
             filename = path.basename(fullfilepathname)
-            wb = open_workbook(fullfilepathname)
-            if wb is None:
-                continue
             errordTypes = ['Cmte_ID', 'Intr_Nam L', 'Intr_City', 'Intr_ST', 'Off_S_H_Cd', 'XRef_Match']
-            data = pd.read_excel(wb, dtype={datatype: str for datatype in errordTypes})
+            data = pd.read_excel(fullfilepathname, dtype={datatype: str for datatype in errordTypes})
             if CandidateName == "   ":
                 data.insert(0, candidateHeader, "Independent")
             else:
@@ -91,8 +78,7 @@ class PreProcessing():
             data.insert(0, electionDateHeader, ElectionDate)
             data.insert(0, ballotItemHeader, BallotItem)
 
-            data.to_excel('{}/{}'.format(new_folder, filename + 'x'), index=False)
-            
+            data.to_excel('{}/{}'.format(new_folder, filename), index=False)            
     
     def insertColumnsHelper(self):
         partial_download = True
