@@ -62,3 +62,7 @@ public
 
 # Mac files
 .DS_Store
+
+insertedData/*
+aggregated_data/*
+data/*
